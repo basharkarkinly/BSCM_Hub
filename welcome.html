@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أهلاً بك — Support Channel</title>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="welcome.html" style="text-decoration:none;"><img src="assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> Support Channel</a>
+  <a class="nav-pill" href="https://basharkarkinly.github.io/BSCM-Courses/" target="_blank" rel="noopener">📘 المقررات والساعات والأسبقيات</a>
+  <div class="user-chip">
+    <button id="bell" class="bell" type="button" aria-label="الإشعارات">🔔<span id="bell-n" class="bell-n" hidden>0</span></button>
+    <span id="user-name"></span>
+    <button id="btn-logout" class="btn btn-ghost" type="button">تسجيل خروج</button>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap-wide">
+    <h1 id="hello">أهلاً بك</h1>
+    <p class="lead">هون بتلاقي مقرراتك الدراسية بشكل تفاعلي: افهم الدرس، تدرّب بدون ضغط، وامتحن حالك فصل فصل.</p>
+  </div>
+</section>
+
+<main class="wrap-wide">
+  <div id="offline-msg" class="notice" hidden>تعذّر التحقق من حسابك الآن بسبب ضعف الاتصال. جرّب تحدّث الصفحة.</div>
+
+  <h2 class="section-title">مقرراتك</h2>
+  <div id="courses-grid" class="courses-grid" aria-live="polite">
+    <div class="course-card skeleton"></div>
+    <div class="course-card skeleton"></div>
+    <div class="course-card skeleton"></div>
+  </div>
+  <p id="courses-msg" class="msg err" hidden></p>
+  <div style="height:36px"></div>
+</main>
+
+<div id="np-overlay" class="np-overlay" hidden>
+  <div class="np-panel" role="dialog" aria-modal="true" aria-labelledby="np-title">
+    <div class="np-head"><h2 id="np-title">الإشعارات</h2><button id="np-close" class="np-x" type="button" aria-label="إغلاق">×</button></div>
+    <div id="np-body"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+  </div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/auth.js"></script>
+<script>
+  SCAuth.requireLogin(function (user) {
+    var first = (user.name || "").split(" ")[0];
+    document.getElementById("hello").textContent = first ? "أهلاً " + first : "أهلاً بك";
+    document.getElementById("user-name").textContent = user.name || user.email;
+  });
+  document.getElementById("btn-logout").addEventListener("click", SCAuth.logout);
+
+  // ---- قائمة المقررات (من تبويب courses) ----
+  var CACHE_KEY = "sc_courses";
+  var coursesById = {};
+  var grid = document.getElementById("courses-grid");
+  var cmsg = document.getElementById("courses-msg");
+
+  function esc(t) { return (t == null ? "" : String(t)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+
+  function render(list) {
+    list.forEach(function (c) { coursesById[c.course_id] = c; });
+    if (!list.length) { grid.innerHTML = '<div class="soon-box" style="grid-column:1/-1">ما في مقررات متاحة حالياً.</div>'; return; }
+    grid.innerHTML = list.map(function (c) {
+      return '<a class="course-card" href="' + esc(c.url) + '">' +
+        '<span class="code-badge">' + esc(c.code) + '</span>' +
+        '<h3>' + esc(c.title) + '</h3>' +
+        (c.description ? '<p>' + esc(c.description) + '</p>' : '') +
+        '<span class="open-hint">افتح المقرر ←</span></a>';
+    }).join("");
+  }
+
+  function loadCourses() {
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null"); } catch (e) {}
+    if (cached && cached.length) render(cached);   // عرض فوري من آخر نسخة
+
+    var s = SCAuth.getSession();
+    if (!s || !s.token) return;
+    SCAuth.api("getCourses", { token: s.token }).then(function (res) {
+      if (res && res.ok) {
+        try { localStorage.setItem(CACHE_KEY, JSON.stringify(res.courses)); } catch (e) {}
+        render(res.courses); cmsg.hidden = true;
+      } else if (res && (res.error === "NO_SESSION" || res.error === "EXPIRED" || res.error === "BLOCKED")) {
+        SCAuth.clearSession(); location.replace("index.html");
+      } else if (!cached) {
+        cmsg.textContent = "تعذّر تحميل المقررات، حدّث الصفحة."; cmsg.hidden = false; grid.innerHTML = "";
+      }
+    }).catch(function () {
+      if (!cached) { cmsg.textContent = "تعذّر تحميل المقررات، تأكد من الاتصال."; cmsg.hidden = false; grid.innerHTML = ""; }
+    });
+  }
+  loadCourses();
+
+  // ---- الإشعارات (جرس) ----
+  var HOURS_PAGE = "https://basharkarkinly.github.io/BSCM-Courses/";
+  var notif = null;
+  var bell = document.getElementById("bell"), bellN = document.getElementById("bell-n");
+  var npOv = document.getElementById("np-overlay"), npBody = document.getElementById("np-body");
+
+  function placeInfo(g) {
+    var c = coursesById[g.course_id];
+    if (g.chapter_id === "info") return { label: "نقاش مادة " + g.course_id, url: HOURS_PAGE + "#" + encodeURIComponent(g.course_id) };
+    var title = c ? c.title : g.course_id;
+    var url = c ? c.url.replace(/\/?$/, "/") + "chapters/chapter-" + g.chapter_id + "-lesson.html" : null;
+    return { label: title + " — الفصل " + g.chapter_id, url: url };
+  }
+  function ago(iso) {
+    var t = Date.parse(iso); if (isNaN(t)) return "";
+    var s = Math.max(0, (Date.now() - t) / 1000);
+    if (s < 60) return "هلأ"; if (s < 3600) return "قبل " + Math.floor(s / 60) + " د";
+    if (s < 86400) return "قبل " + Math.floor(s / 3600) + " س";
+    return "قبل " + Math.floor(s / 86400) + " يوم";
+  }
+  function setBadge(n) { bellN.textContent = n > 99 ? "99+" : n; bellN.hidden = !(n > 0); }
+
+  function loadNotifs() {
+    var s = SCAuth.getSession(); if (!s || !s.token) return;
+    SCAuth.api("getNotifications", { token: s.token }).then(function (res) {
+      if (res && res.ok) { notif = res; setBadge(res.unread); }
+    }).catch(function () {});
+  }
+  function renderNotifs() {
+    var n = notif, h = "";
+    if (!n) { npBody.innerHTML = '<div class="np-empty">عم نحمّل...</div>'; return; }
+    n.announcements.forEach(function (a) {
+      h += '<div class="np-item' + (a.is_new ? " new" : "") + '"><div class="np-t">📣 ' + esc(a.title) + '</div>' +
+           (a.body ? '<div class="np-d">' + esc(a.body) + '</div>' : "") + '<div class="np-m">' + esc(ago(a.created_at)) + '</div></div>';
+    });
+    n.groups.forEach(function (g) {
+      var p = placeInfo(g);
+      var txt = g.count + (g.count === 1 ? " تعليق جديد" : " تعليقات جديدة") + (g.replies ? " (منها " + g.replies + (g.replies === 1 ? " ردّ" : " ردود") + " عليك)" : "");
+      var inner = '<div class="np-t">💬 ' + esc(p.label) + '</div><div class="np-d">' + esc(txt) + '</div><div class="np-m">' + esc(ago(g.latest_at)) + '</div>';
+      h += p.url ? '<a class="np-item new" href="' + esc(p.url) + '">' + inner + '</a>' : '<div class="np-item new">' + inner + '</div>';
+    });
+    npBody.innerHTML = h || '<div class="np-empty">ما في إشعارات جديدة.</div>';
+  }
+  function openNotifs() {
+    npOv.hidden = false; renderNotifs();
+    if (notif && notif.unread > 0) {
+      var s = SCAuth.getSession();
+      SCAuth.api("markSeen", { token: s.token }).catch(function () {});
+      setBadge(0);   // الرقم بيختفي، والعناصر الجديدة بتضل مظلّلة حتى تسكّر النافذة
+    }
+  }
+  function closeNotifs() { npOv.hidden = true; if (notif) { notif.groups = []; notif.announcements.forEach(function (a) { a.is_new = false; }); notif.unread = 0; } }
+  bell.addEventListener("click", openNotifs);
+  document.getElementById("np-close").addEventListener("click", closeNotifs);
+  npOv.addEventListener("click", function (e) { if (e.target === npOv) closeNotifs(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !npOv.hidden) closeNotifs(); });
+  loadNotifs();
+</script>
+</body>
+</html>

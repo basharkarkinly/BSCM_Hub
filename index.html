@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الدخول — Support Channel</title>
+<link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="brand" href="index.html" style="text-decoration:none;"><img src="assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> Support Channel</a>
+</div>
+
+<section class="hero auth-hero">
+  <div class="wrap-wide auth-grid">
+    <div class="auth-intro">
+      <h1>منصتك للدراسة التفاعلية</h1>
+      <p>سجّل دخولك مرة وحدة وبتوصل لكل مقرراتك: شرح مبسّط، تدريب حر، وامتحانات فصل فصل.</p>
+
+      <div class="slogan" id="slogan" role="group" aria-label="خبرتك بتفيد حدا، وخبرة حدا بتفيدك. هيك منكون مجتمع قلبه دعم.">
+        <div class="sg-stars" id="sg-stars" aria-hidden="true"></div>
+        <p class="sg-line sg-1">خبرتك بتفيد <span class="sg-word">حدا</span>،</p>
+        <p class="sg-line sg-2">وخبرة <span class="sg-word">حدا</span> بتفيدك.</p>
+        <p class="sg-line sg-3">هيك منكون مجتمع قلبه <span class="sg-heart" id="sg-heart">دعم</span>.</p>
+      </div>
+    </div>
+
+    <div class="auth-card">
+      <div id="checking" class="step">
+        <h2>لحظة...</h2>
+        <p class="sub">عم نتأكد من حسابك.</p>
+      </div>
+
+      <!-- الخطوة 1: الإيميل -->
+      <div id="step-email" class="step" hidden>
+        <h2>تسجيل الدخول</h2>
+        <p class="sub">دخّل إيميلك وبنبعتلك رمز تحقق من 6 أرقام.</p>
+        <label class="field"><span>الإيميل</span>
+          <input id="email" type="email" dir="ltr" autocomplete="email" inputmode="email" placeholder="name@example.com">
+        </label>
+        <button id="btn-send" class="btn btn-primary btn-block" type="button">إرسال الرمز</button>
+        <div id="google-wrap" hidden>
+          <div class="divider">أو</div>
+          <div id="g-btn"></div>
+        </div>
+        <p id="msg-email" class="msg" role="alert"></p>
+      </div>
+
+      <!-- الخطوة 2: الرمز -->
+      <div id="step-code" class="step" hidden>
+        <h2>دخّل الرمز</h2>
+        <p class="sub" id="code-sub">بعتنا الرمز لإيميلك. تأكد كمان من مجلد الرسائل غير المرغوبة.</p>
+        <label class="field"><span>رمز التحقق</span>
+          <input id="code" class="code-input" type="text" dir="ltr" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="••••••">
+        </label>
+        <label class="field" id="name-field" hidden><span>اسمك (أول تسجيل فقط)</span>
+          <input id="name" type="text" autocomplete="name" maxlength="80" placeholder="الاسم الكامل">
+        </label>
+        <button id="btn-verify" class="btn btn-primary btn-block" type="button">تأكيد ودخول</button>
+        <div class="row-between">
+          <button id="btn-resend" class="linkbtn" type="button">إعادة إرسال الرمز</button>
+          <button id="btn-back" class="linkbtn" type="button">تغيير الإيميل</button>
+        </div>
+        <p id="msg-code" class="msg" role="alert"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/auth.js"></script>
+<script src="assets/slogan.js" defer></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var state = { email: "", cooldownTimer: null };
+
+  var ERR = {
+    INVALID_EMAIL: "الإيميل غير صحيح، تأكد منه.",
+    BLOCKED: "هالحساب غير مفعّل. تواصل معنا على تلغرام.",
+    COOLDOWN: "استنى شوي قبل ما تطلب رمز جديد.",
+    MAIL_QUOTA: "في ضغط على الإرسال حالياً، جرّب بعد ساعة أو تواصل معنا.",
+    INVALID_CODE: "الرمز غير صحيح.",
+    EXPIRED: "انتهت صلاحية الرمز، اطلب رمز جديد.",
+    TOO_MANY: "محاولات كتيرة. اطلب رمز جديد.",
+    NAME_REQUIRED: "هاد أول تسجيل لك، اكتب اسمك لنكمّل.",
+    INVALID_TOKEN: "ما قدرنا نتحقق من حساب غوغل، جرّب مرة تانية.",
+    SERVER_ERROR: "صار خطأ عنا، جرّب بعد شوي.",
+    NET: "ما في اتصال بالسيرفر، تأكد من الإنترنت وجرّب."
+  };
+  function show(step) {
+    ["checking", "step-email", "step-code"].forEach(function (s) { $(s).hidden = (s !== step); });
+  }
+  function msg(id, text, ok) { var el = $(id); el.textContent = text || ""; el.className = "msg " + (ok ? "ok" : "err"); }
+  function errText(res) {
+    if (!res) return ERR.NET;
+    var t = ERR[res.error] || ERR.SERVER_ERROR;
+    if (res.error === "INVALID_CODE" && typeof res.left === "number") t += " (باقي " + res.left + " محاولات)";
+    return t;
+  }
+  function goWelcome() {
+    var dest = "welcome.html";
+    try {
+      var n = new URLSearchParams(location.search).get("next");
+      if (n) { var u = new URL(n, location.href); if (u.origin === location.origin) dest = u.href; }
+    } catch (e) {}
+    location.replace(dest);
+  }
+  function device() { return (navigator.userAgent || "").slice(0, 120); }
+  function startCooldown(sec) {
+    var b = $("btn-resend"); clearInterval(state.cooldownTimer);
+    b.disabled = true;
+    state.cooldownTimer = setInterval(function () {
+      sec--;
+      if (sec <= 0) { clearInterval(state.cooldownTimer); b.disabled = false; b.textContent = "إعادة إرسال الرمز"; }
+      else b.textContent = "إعادة الإرسال بعد " + sec + " ث";
+    }, 1000);
+    b.textContent = "إعادة الإرسال بعد " + sec + " ث";
+  }
+  function saveAndGo(res) {
+    SCAuth.saveSession({ token: res.token, email: res.user.email, name: res.user.name });
+    goWelcome();
+  }
+
+  function sendCode(isResend) {
+    var email = $("email").value.trim().toLowerCase();
+    if (!isResend) { msg("msg-email", ""); }
+    if (!email) { msg("msg-email", ERR.INVALID_EMAIL); return; }
+    var btn = isResend ? $("btn-resend") : $("btn-send");
+    btn.disabled = true;
+    SCAuth.api("requestOtp", { email: email }).then(function (res) {
+      if (res && res.ok) {
+        state.email = email;
+        $("code-sub").textContent = "بعتنا الرمز إلى " + email + ". تأكد كمان من مجلد الرسائل غير المرغوبة.";
+        show("step-code"); $("code").value = ""; $("code").focus();
+        msg("msg-code", "");
+        startCooldown(60);
+      } else {
+        var t = errText(res);
+        if (res && res.error === "COOLDOWN" && res.wait) t = "استنى " + res.wait + " ثانية قبل ما تطلب رمز جديد.";
+        msg(isResend ? "msg-code" : "msg-email", t);
+        if (!isResend) btn.disabled = false;
+        if (isResend && res && res.error === "COOLDOWN") startCooldown(res.wait || 30);
+      }
+    }).catch(function () {
+      msg(isResend ? "msg-code" : "msg-email", ERR.NET);
+      if (!isResend) btn.disabled = false;
+    }).then(function () { if (!isResend) $("btn-send").disabled = false; });
+  }
+
+  function verify() {
+    var code = $("code").value.replace(/\D/g, "");
+    if (code.length !== 6) { msg("msg-code", "الرمز مؤلف من 6 أرقام."); return; }
+    $("btn-verify").disabled = true;
+    SCAuth.api("verifyOtp", { email: state.email, code: code, name: $("name").value.trim(), device: device() })
+      .then(function (res) {
+        if (res && res.ok) return saveAndGo(res);
+        if (res && res.error === "NAME_REQUIRED") { $("name-field").hidden = false; $("name").focus(); }
+        msg("msg-code", errText(res));
+      })
+      .catch(function () { msg("msg-code", ERR.NET); })
+      .then(function () { $("btn-verify").disabled = false; });
+  }
+
+  // أزرار
+  $("btn-send").addEventListener("click", function () { sendCode(false); });
+  $("btn-resend").addEventListener("click", function () { sendCode(true); });
+  $("btn-verify").addEventListener("click", verify);
+  $("btn-back").addEventListener("click", function () { clearInterval(state.cooldownTimer); show("step-email"); $("email").focus(); });
+  $("email").addEventListener("keydown", function (e) { if (e.key === "Enter") sendCode(false); });
+  $("code").addEventListener("keydown", function (e) { if (e.key === "Enter") verify(); });
+  $("name").addEventListener("keydown", function (e) { if (e.key === "Enter") verify(); });
+
+  // غوغل (يظهر فقط إذا تم ضبط GOOGLE_CLIENT_ID)
+  function initGoogle() {
+    if (!SC_CONFIG.GOOGLE_CLIENT_ID) return;
+    var s = document.createElement("script");
+    s.src = "https://accounts.google.com/gsi/client"; s.async = true;
+    s.onload = function () {
+      google.accounts.id.initialize({
+        client_id: SC_CONFIG.GOOGLE_CLIENT_ID,
+        callback: function (resp) {
+          msg("msg-email", "");
+          SCAuth.api("googleLogin", { idToken: resp.credential, device: device() })
+            .then(function (res) { if (res && res.ok) saveAndGo(res); else msg("msg-email", errText(res)); })
+            .catch(function () { msg("msg-email", ERR.NET); });
+        }
+      });
+      google.accounts.id.renderButton($("g-btn"), { theme: "outline", size: "large", text: "continue_with", locale: "ar", width: 300 });
+      $("google-wrap").hidden = false;
+    };
+    document.head.appendChild(s);
+  }
+
+  // عند الفتح: إذا في جلسة محفوظة وصالحة، مباشرة للترحيب
+  if (SC_CONFIG.API_URL.indexOf("PUT_YOUR") === 0) {
+    show("step-email"); msg("msg-email", "لم يتم ضبط رابط السيرفر بعد (assets/config.js).");
+    return;
+  }
+  SCAuth.check().then(function (r) {
+    if (r.state === "valid") return goWelcome();
+    show("step-email"); initGoogle();
+    if (r.state === "offline") msg("msg-email", ERR.NET);
+  });
+})();
+</script>
+</body>
+</html>

@@ -2,8 +2,7 @@
 
 ## 1) Apps Script
 1. افتح الشيت ← Extensions ← Apps Script. (أو script.google.com مشروع جديد)
-2. الصق محتوى `apps-script/Code.gs` مكان الكود الموجود.
-3. Project Settings ← Script properties، أضف:
+2. الصق ملفات السيرفر (Code.gs وComments.gs وPlacement.gs) كل ملف بملف مستقل داخل مشروع Apps Script (الأحدث موجود عندك مو بالريبو).3. Project Settings ← Script properties، أضف:
    - `SHEET_ID` = المعرّف من رابط الشيت (بين /d/ و /edit)
    - `PEPPER` = أي نص عشوائي طويل (لا تغيّره بعدين)
 4. شغّل الدالة `authorizeOnce` مرة وحدة ووافق على الصلاحيات.

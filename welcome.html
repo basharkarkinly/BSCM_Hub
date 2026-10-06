@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أهلاً بك — Support Channel</title>
+<link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="welcome.html" style="text-decoration:none;"><img src="assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> Support Channel</a>
+  <a class="nav-pill" href="https://basharkarkinly.github.io/BSCM-Courses/" target="_blank" rel="noopener">📘 المقررات والساعات والأسبقيات</a>
+</div>
+
+<section class="hero">
+  <div class="wrap-wide hero-split">
+    <div class="hero-text">
+    <h1 id="hello">أهلاً بك</h1>
+    <p class="lead"> رح بتلاقو مجموعة من المقررات حاولنا انو نلخصها ونبسطها (ومنأكد انو للمراجعة والمساعدة وما في غنى عن المقرر الاساسي)، اشتغلناها لتكون بشكل تفاعلي: افهم الدرس، تدرّب بدون ضغط، وامتحن حالك فصل فصل.</p>
+    </div>
+
+    <div class="slogan" id="slogan" role="group" aria-label="خبرتك بتفيد حدا، وخبرة حدا بتفيدك. هيك منكون مجتمع قلبه دعم.">
+      <div class="sg-stars" id="sg-stars" aria-hidden="true"></div>
+      <p class="sg-line sg-1">خبرتك بتفيد <span class="sg-word">حدا</span>،</p>
+      <p class="sg-line sg-2">وخبرة <span class="sg-word">حدا</span> بتفيدك.</p>
+      <p class="sg-line sg-3">هيك منكون مجتمع قلبه <span class="sg-heart" id="sg-heart">دعم</span>.</p>
+    </div>
+  </div>
+</section>
+
+<main class="wrap-wide">
+  <div id="offline-msg" class="notice" hidden>تعذّر التحقق من حسابك الآن بسبب ضعف الاتصال. جرّب تحدّث الصفحة.</div>
+
+  <h2 class="section-title">المقررات</h2>
+  <div id="courses-grid" class="courses-grid" aria-live="polite">
+    <div class="course-card skeleton"></div>
+    <div class="course-card skeleton"></div>
+    <div class="course-card skeleton"></div>
+  </div>
+  <p id="courses-msg" class="msg err" hidden></p>
+  <div style="height:36px"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+  </div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/auth.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/slogan.js" defer></script>
+<script>
+  SCShell.init({
+    onReady: function (user) {
+      var first = (user.name || "").split(" ")[0];
+      document.getElementById("hello").textContent = first ? "أهلاً " + first : "أهلاً بك";
+    }
+  });
+
+  // ---- قائمة المقررات (من تبويب courses) ----
+  var CACHE_KEY = "sc_courses";
+  var coursesById = {};
+  var grid = document.getElementById("courses-grid");
+  var cmsg = document.getElementById("courses-msg");
+
+  function esc(t) { return (t == null ? "" : String(t)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+
+  function render(list) {
+    list.forEach(function (c) { coursesById[c.course_id] = c; });
+    if (!list.length) { grid.innerHTML = '<div class="soon-box" style="grid-column:1/-1">ما في مقررات متاحة حالياً.</div>'; return; }
+    grid.innerHTML = list.map(function (c) {
+      return '<a class="course-card" href="' + esc(c.url) + '">' +
+        '<span class="code-badge">' + esc(c.code) + '</span>' +
+        '<h3>' + esc(c.title) + '</h3>' +
+        (c.description ? '<p>' + esc(c.description) + '</p>' : '') +
+        '<span class="open-hint">افتح المقرر ←</span></a>';
+    }).join("");
+  }
+
+  function loadCourses() {
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null"); } catch (e) {}
+    if (cached && cached.length) render(cached);   // عرض فوري من آخر نسخة
+
+    var s = SCAuth.getSession();
+    if (!s || !s.token) return;
+    SCAuth.api("getCourses", { token: s.token }).then(function (res) {
+      if (res && res.ok) {
+        try { localStorage.setItem(CACHE_KEY, JSON.stringify(res.courses)); } catch (e) {}
+        render(res.courses); cmsg.hidden = true;
+      } else if (res && (res.error === "NO_SESSION" || res.error === "EXPIRED" || res.error === "BLOCKED")) {
+        SCAuth.clearSession(); location.replace("index.html");
+      } else if (!cached) {
+        cmsg.textContent = "تعذّر تحميل المقررات، حدّث الصفحة."; cmsg.hidden = false; grid.innerHTML = "";
+      }
+    }).catch(function () {
+      if (!cached) { cmsg.textContent = "تعذّر تحميل المقررات، تأكد من الاتصال."; cmsg.hidden = false; grid.innerHTML = ""; }
+    });
+  }
+  loadCourses();
+</script>
+</body>
+</html>

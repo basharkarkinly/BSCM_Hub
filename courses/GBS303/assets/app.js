@@ -234,7 +234,9 @@ function prepQuestionForExam(q){
   const clone = {...q};
   if(clone.type === "mcq"){
     const correctText = clone.options[clone.answerIndex];
-    const shuffled = shuffle(clone.options);
+    // خيارات «جميع الأجوبة ...» / «كل ما سبق» بتضل آخر القائمة وما بتتبعثر مع الباقي
+    const isAll = o => /^(جميع|كل ما|كل الأجوبة)/.test(o);
+    const shuffled = shuffle(clone.options.filter(o => !isAll(o))).concat(clone.options.filter(isAll));
     clone.options = shuffled;
     clone.answerIndex = shuffled.indexOf(correctText);
   }

@@ -507,5 +507,49 @@ const CH1_POOL = [
    "url": "chapters/chapter-1-lesson.html#relevance",
    "label": "الصلة (مشاركة الهدف)"
   }
+ },
+ {
+  "origin": "gen",
+  "type": "tf",
+  "question": "في الفريق يتحكم الرئيس بالمجموعة ويهيمن عليها، وتضع المنظمة الأهداف.",
+  "answer": false,
+  "explanation": "خطأ: هذه صفات مجموعات العمل التقليدية. في الفريق يضع الأعضاء الأهداف ويسهّل القائد العمل.",
+  "ref": {
+   "url": "chapters/chapter-1-lesson.html#team-vs-group",
+   "label": "الفرق بين الفريق والمجموعة"
+  }
+ },
+ {
+  "origin": "gen",
+  "type": "tf",
+  "question": "الدور المعمول به هو ما يحدده الوصف الوظيفي وبطاقة المسمى واللقب.",
+  "answer": false,
+  "explanation": "خطأ: هذا الدور المتوقع. المعمول به هو المهام الفعلية التي يؤديها الفرد.",
+  "ref": {
+   "url": "chapters/chapter-1-lesson.html#roles",
+   "label": "الأدوار"
+  }
+ },
+ {
+  "origin": "gen",
+  "type": "tf",
+  "question": "الاتصال في فريق العمل يكون باتجاه واحد من الرئيس إلى الأعضاء.",
+  "answer": false,
+  "explanation": "خطأ: بجميع الاتجاهات.",
+  "ref": {
+   "url": "chapters/chapter-1-lesson.html#team-vs-group",
+   "label": "الفرق بين الفريق والمجموعة"
+  }
+ },
+ {
+  "origin": "gen",
+  "type": "tf",
+  "question": "التمثيلات الاجتماعية معتقدات مشتركة تظهر في الكلمات فقط ولا يمكن ملاحظتها بالسلوك.",
+  "answer": false,
+  "explanation": "خطأ: تظهر بالسلوك وليس بالكلمات.",
+  "ref": {
+   "url": "chapters/chapter-1-lesson.html#social-representations",
+   "label": "التمثيلات الاجتماعية"
+  }
  }
 ];

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 8 — البحوث التجريبية | GRM501</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GRM501 — مناهج البحث العلمي</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الثامن</div>
+    <h1>البحوث التجريبية</h1>
+    <p>السببية، صلاحية التجربة، المتغيرات الدخيلة والتصاميم التجريبية.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+
+  <div class="story">
+    <span class="tag">🍽️ نكمّل مع «بيت الميزة»</span>
+    <p>الاستبيان بيّن إنو الزبائن بيشتكوا من بطء الخدمة. بس هل البطء هو <b>السبب فعلاً</b> لنزول الزبائن؟ ولا مجرد صدفة؟ صاحب المطعم بيجرّب: بيضيف نادلين بفرع ويترك الفرع التاني متل ما هو، وبيقارن. هاد هو البحث التجريبي.</p>
+  </div>
+
+  <div class="block" id="causality">
+    <h2><span class="idx">1</span> مفهوم السببية وشروطها</h2>
+    <p>التجارب بتُستخدم عادة <b>للاستدلال على العلاقات السببية</b>. السببية: لما بيحصل الحدث X (المتغير المستقل/المسبب) بيزيد احتمال حصول الحدث Y (المتغير التابع/النتيجة/الأثر).</p>
+    <ul class="timeline">
+      <li><span class="marker">1</span><h4>التغير المترافق</h4><p>حدوث X وY سوية وبشكل مترافق أو متلازم.</p></li>
+      <li><span class="marker">2</span><h4>الترتيب الزمني</h4><p>X بيحدث قبل Y أو بشكل متزامن، وما بيصح يحدث بعده.</p></li>
+      <li><span class="marker">3</span><h4>غياب عوامل سببية أخرى محتملة</h4><p>X هو التفسير السببي الوحيد للنتيجة Y.</p></li>
+      <li><span class="marker">4</span><h4>قابلية تكرار النتائج</h4><p>دليل قوي وثابت متراكم من عدة دراسات.</p></li>
+    </ul>
+    <div class="example">
+      <span class="tag">⚠️ نقطة بتتكرر بالأسئلة</span>
+      <p><b>«العينة كبيرة» مو من شروط السببية.</b> وما بيكفي تحقق الشروط الثلاثة الأولى بدون قابلية التكرار.</p>
+    </div>
+  </div>
+
+  <div class="block" id="basic-concepts">
+    <h2><span class="idx">2</span> تعريفات ومفاهيم أساسية</h2>
+    <table class="cmp">
+      <tr><th>المفهوم</th><th>المعنى</th></tr>
+      <tr><td><b>المتغيرات المتحكَّم بها (المعالج)</b></td><td>متغيرات بيتحكم الباحث بمستوياتها لقياس تأثيرها على متغير تابع</td></tr>
+      <tr><td><b>وحدات الاختبار</b></td><td>منظمات أو أفراد أو أي شيء بتُفحص استجابته للمتغيرات المتحكَّم بها</td></tr>
+      <tr><td><b>المتغيرات التابعة</b></td><td>بتقيس وتوضح أثر المتغيرات المتحكَّم بها على وحدات الاختبار</td></tr>
+      <tr><td><b>المتغيرات الخارجية</b></td><td>كل المتغيرات اللي بتؤثر على استجابة الوحدات باستثناء المتحكَّم بها؛ بتضعف مصداقية النتائج</td></tr>
+      <tr><td><b>التجربة</b></td><td>الباحث بيتحكم بمستوى أو أكثر من متغير ويقيس أثره على متغير تابع أو أكثر مع السيطرة على المتغيرات الخارجية</td></tr>
+      <tr><td><b>التصميم التجريبي</b></td><td>إجراءات بتحدد وحدات الاختبار وتقسيمها لمجموعات متجانسة، والمتغيرات المتحكَّم بها والتابعة، وكيفية السيطرة على الخارجية</td></tr>
+    </table>
+  </div>
+
+  <div class="block" id="validity">
+    <h2><span class="idx">3</span> صلاحية التجربة</h2>
+    <table class="cmp">
+      <tr><th>الصلاحية الداخلية</th><th>الصلاحية الخارجية</th></tr>
+      <tr><td>استخلاص نتائج صحيحة عن أثر المتغيرات المتحكَّم بها على مجموعة الدراسة؛ <b>مقياس لدقة الاختبار</b>. السيطرة على المتغيرات الخارجية شرط ضروري لتعزيزها</td><td>إجراء <b>تعميم صحيح</b> على المجتمع محور الاهتمام؛ هل يمكن تعميم علاقة السبب والنتيجة. بتتهدد لما ما تراعي ظروف التجربة الواقع</td></tr>
+    </table>
+    <div class="example">
+      <span class="tag">⚠️ نقطة بتتكرر بالأسئلة</span>
+      <p>غالباً بتضطر <b>تقايض</b> صلاحية على حساب الأخرى: التجربة بظروف اصطناعية بتعزز الداخلية لكنها بتقلل قابلية التعميم أي <b>الخارجية</b>.</p>
+    </div>
+  </div>
+
+  <div class="block" id="extraneous">
+    <h2><span class="idx">4</span> المتغيرات الخارجية (الدخيلة) العامة</h2>
+    <table class="cmp">
+      <tr><th>النوع</th><th>المعنى</th></tr>
+      <tr><td><b>التاريخ</b></td><td>أحداث خارجية بتحدث بنفس وقت الاختبار وبتؤثر على التابع</td></tr>
+      <tr><td><b>التغير (النضج)</b></td><td>تبدلات بالوحدات المختبرة نفسها مع مرور الزمن، مو بسبب المتغير المتحكَّم به</td></tr>
+      <tr><td><b>آثار الاختبار</b></td><td><b>الرئيسي:</b> الملاحظة المسبقة بتؤثر على اللاحقة. <b>التفاعلي:</b> قياس مسبق بيؤثر على استجابة الوحدات نحو المتحكَّم به (بيهدد الصلاحية <b>الخارجية</b>)</td></tr>
+      <tr><td><b>الأدوات</b></td><td>تغير بأداة القياس أو المراقب أو النتائج أثناء التجربة</td></tr>
+      <tr><td><b>التدرج الإحصائي</b></td><td>القيم المتطرفة العليا أو السفلى بتتحرك نحو <b>المتوسط</b> خلال التجربة</td></tr>
+      <tr><td><b>تحيز الاختيار</b></td><td>توزيع غير ملائم للوحدات بيخلق مجموعات مختلفة بالتابع (إهمال العوامل الديموغرافية والثقافية)</td></tr>
+      <tr><td><b>الفناء</b></td><td>فقدان وحدات الاختبار خلال التجربة (رفض الاستمرار)</td></tr>
+    </table>
+    <p>التجربة الواحدة ممكن تتعرض لكل هالمتغيرات بآن واحد.</p>
+  </div>
+
+  <div class="block" id="control-methods">
+    <h2><span class="idx">5</span> أساليب السيطرة على المتغيرات الخارجية</h2>
+    <table class="cmp">
+      <tr><th>الأسلوب</th><th>الفكرة</th></tr>
+      <tr><td><b>العشوائية</b></td><td>توزيع عشوائي لوحدات الاختبار وللمتغير المتحكَّم به على المجموعات. أكثر ما يضمن المساواة، لكنها ما بتكون فعالة مع العينات الصغيرة</td></tr>
+      <tr><td><b>المطابقة</b></td><td>مطابقة الوحدات حسب خصائص أساسية قبل توزيعها. مشكلتان: تُطابق لعدد محدود من الصفات، وإذا كانت الصفات غير وثيقة الصلة بالتابع فالجهد بلا طائل</td></tr>
+      <tr><td><b>السيطرة الإحصائية</b></td><td>قياس المتغيرات الخارجية وتعديل تأثيرها إحصائياً (مثل تحليل التغاير)</td></tr>
+      <tr><td><b>السيطرة على التصميم</b></td><td>باستخدام تصاميم تجريبية محددة</td></tr>
+    </table>
+  </div>
+
+  <div class="block" id="statistical-designs">
+    <h2><span class="idx">6</span> التصاميم التجريبية الإحصائية</h2>
+    <table class="cmp">
+      <tr><th>التصميم</th><th>الفكرة</th><th>القيود/العيوب</th></tr>
+      <tr><td><b>القطاعي العشوائي</b></td><td>تقسيم الوحدات لمجموعات بناءً على متغير خارجي رئيسي واحد</td><td>عدم القدرة على السيطرة على أكثر من متغير خارجي واحد</td></tr>
+      <tr><td><b>المربع اللاتيني</b></td><td>سيطرة إحصائية على <b>اثنين</b> غير متفاعلين من المتغيرات الخارجية</td><td>يتطلب عدداً متساوياً من الأعمدة والأسطر ومستويات المتحكَّم به · لا يسمح بأكثر من متغيرين خارجيين · لا يفحص التفاعل بين المتغيرات</td></tr>
+      <tr><td><b>العاملي</b></td><td>قياس أثر اثنين أو أكثر من المتحكَّم بها مع السماح بالتفاعل بينها</td><td>تعدد السيناريوهات خصوصاً إذا زادت المستويات عن ثلاثة</td></tr>
+    </table>
+  </div>
+
+  <div class="block" id="experimental-designs">
+    <h2><span class="idx">7</span> أنواع التصاميم التجريبية</h2>
+    <table class="cmp">
+      <tr><th>بين الأفراد</th><th>داخل الأفراد</th><th>المختلط</th></tr>
+      <tr><td>تقسيم العينة لمجموعات، كل منها بظرف مستقل (غير مرتبط)</td><td>تعريض جميع الأفراد لكل الظروف (قياسات متكررة / مرتبط)</td><td>يجمع التصميمين؛ ضروري لما يكون أحد المتغيرات تصنيفياً (جنس، عمر)</td></tr>
+      <tr><td><b>مزايا:</b> اختبار المؤثرات الطبيعية المسببة · نتائج المجموعات مستقلة · لا تتأثر بمؤثرات دخيلة أو بترتيب المؤثرات</td><td><b>مزايا:</b> القضاء على الفروق الفردية · تكافؤ تام · اقتصاد بالوقت والجهد · لا يتطلب عينة كبيرة · يقلل تباين الخطأ</td><td><b>مزايا:</b> مزايا بين الأفراد + تقليل الفروق الفردية</td></tr>
+      <tr><td><b>عيوب:</b> يتطلب عينة كبيرة · فروق فردية بين المجموعات (تُعالج بالعشوائية)</td><td><b>عيوب:</b> لا يصلح لاختبار الفروق بين خصائص المفردات (رجال/نساء) · يتأثر بعدة عوامل</td><td><b>عيوب:</b> لا يمكن التيقن من تطابق المؤثرات الدخيلة عبر المجموعات</td></tr>
+    </table>
+  </div>
+
+  <div class="block" id="lab-field">
+    <h2><span class="idx">8</span> التجارب المخبرية والميدانية</h2>
+    <table class="cmp">
+      <tr><th>العامل</th><th>المخبري</th><th>الميداني</th></tr>
+      <tr><td>البيئة</td><td>اصطناعية</td><td>واقعية حقيقية</td></tr>
+      <tr><td>السيطرة</td><td>مرتفعة</td><td>متدنية</td></tr>
+      <tr><td>الخطأ</td><td>مرتفع</td><td>متدني</td></tr>
+      <tr><td>الصلاحية الداخلية</td><td>مرتفعة</td><td>متدنية</td></tr>
+      <tr><td>الصلاحية الخارجية</td><td>متدنية</td><td>مرتفعة</td></tr>
+      <tr><td>الوقت</td><td>قصير</td><td>طويل</td></tr>
+      <tr><td>عدد الوحدات</td><td>صغير</td><td>كبير</td></tr>
+      <tr><td>التطبيق</td><td>سهل</td><td>صعب</td></tr>
+      <tr><td>التكاليف</td><td>منخفضة</td><td>مرتفعة</td></tr>
+    </table>
+  </div>
+
+  <div class="block" id="exp-vs-nonexp">
+    <h2><span class="idx">9</span> التجريبي مقابل غير التجريبي وعقبات التجارب</h2>
+    <ul>
+      <li>البيانات الوصفية ما بتحقق الشروط المطلوبة للسببية.</li>
+      <li>صعب على الوصفية تحقيق التساوي المسبق للمجموعات، والتجارب بتحققه بالتوزيع العشوائي.</li>
+      <li>الوصفية بتقدم قدراً قليلاً من السيطرة على العوامل المسببة الأخرى.</li>
+    </ul>
+    <p><b>عقبات التجارب:</b> تتطلب وقتاً (خاصة لقياس الأثر طويل الأمد، مثل أثر متغير على معدل دوران العمل) · يجب أن تستمر وقتاً كافياً · مكلفة وصعبة الإدارة والتنفيذ.</p>
+  </div>
+
+  <div class="block" id="activity-sort-block">
+    <h2><span class="idx">🎮</span> صنّف: مخبري ولا ميداني؟</h2>
+    <p>وزّع كل خاصية بالنوع الصح.</p>
+    <div id="activity-sort"></div>
+  </div>
+
+  <div class="block" id="flash">
+    <h2><span class="idx">🃏</span> بطاقات المصطلحات</h2>
+    <p>اضغط على البطاقة لتقلبها.</p>
+    <div id="activity-flash"></div>
+  </div>
+
+  <div class="next-actions">
+    <a href="chapter-8-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-8-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل التاسع)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GRM501",chapter_id:"8",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script>
+  renderSortGame("activity-sort", {
+    buckets:[
+      {key:"lab", label:"تجربة مخبرية"},
+      {key:"field", label:"تجربة ميدانية"}
+    ],
+    items:[
+      {text:"بيئة اصطناعية", bucket:"lab", why:"الباحث بيخلق الظروف."},
+      {text:"سيطرة مرتفعة", bucket:"lab", why:"سيطرة عالية."},
+      {text:"صلاحية داخلية مرتفعة", bucket:"lab", why:"بسبب السيطرة."},
+      {text:"وقت قصير وتكاليف منخفضة", bucket:"lab", why:"أسهل وأرخص."},
+      {text:"عدد وحدات صغير", bucket:"lab", why:"عدد الوحدات صغير."},
+      {text:"بيئة واقعية حقيقية", bucket:"field", why:"موقع بظروف حقيقية."},
+      {text:"صلاحية خارجية مرتفعة", bucket:"field", why:"أسهل بالتعميم."},
+      {text:"تطبيق صعب وتكاليف مرتفعة", bucket:"field", why:"أصعب وأغلى."},
+      {text:"وقت طويل وعدد وحدات كبير", bucket:"field", why:"حسب المقارنة."}
+    ]
+  });
+
+  renderFlashcards("activity-flash", [
+    {front:"السببية", back:"حدوث X يزيد احتمال حدوث Y."},
+    {front:"شروط السببية", back:"تغير مترافق · ترتيب زمني · غياب عوامل أخرى · قابلية تكرار النتائج."},
+    {front:"الصلاحية الداخلية", back:"مقياس لدقة الاختبار: هل التحكم بالمتغير هو سبب الأثر الملاحظ."},
+    {front:"الصلاحية الخارجية", back:"إمكانية تعميم علاقة السبب والنتيجة على المجتمع."},
+    {front:"التدرج الإحصائي", back:"ميل القيم المتطرفة نحو المتوسط خلال التجربة."},
+    {front:"الفناء", back:"فقدان وحدات الاختبار خلال التجربة."},
+    {front:"المربع اللاتيني", back:"سيطرة على متغيرين خارجيين غير متفاعلين؛ يتطلب أعداداً متساوية."},
+    {front:"التصميم العاملي", back:"قياس أثر متغيرين متحكَّم بهما أو أكثر مع التفاعل بينها."}
+  ]);
+
+</script>
+</body>
+</html>

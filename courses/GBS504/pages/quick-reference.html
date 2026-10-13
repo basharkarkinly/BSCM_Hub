@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دراسة سريعة واختصارات | GBS504</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS504 — تطبيقات حاسوبية في الإدارة</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+<div class="lesson-header"><div class="wrap"><div class="eyebrow">دراسة سريعة</div><h1>اختصارات المقرر بصفحة وحدة</h1><p>ملخص لأهم النقاط قبل الامتحان. مو بديل عن الدروس.</p></div></div>
+<div class="wrap content">
+  <div class="block" id="q-excel">
+    <h2><span class="idx">1</span> Excel: الدوال على نطاق فيه نص ومنطقية</h2>
+<div class="tbl-wrap"><table class="cmp"><tr><th>الدالة</th><th>شو بتحسب؟</th></tr><tr><td><span class="mono">SUM / COUNT / MIN / MAX / AVERAGE</span></td><td>الأرقام فقط؛ تتجاهل النص والمنطقية والفارغ</td></tr><tr><td><span class="mono">COUNTA</span></td><td>كل الخلايا غير الفارغة</td></tr><tr><td><span class="mono">MINA / MAXA / AVERAGEA</span></td><td>غير الفارغ: النص = 0 · TRUE = 1 · FALSE = 0</td></tr><tr><td><span class="mono">SUBTOTAL(9,…) / (109,…)</span></td><td>9 يُدرج الصفوف المخفية · 109 يتجاهلها</td></tr><tr><td><span class="mono">INT / TODAY</span></td><td>القيمة الصحيحة دون كسور · تاريخ اليوم</td></tr><tr><td><span class="mono">PV / FV / NPV</span></td><td>قيمة حالية · مستقبلية · صافي القيمة الحالية (مربح إذا NPV أكبر من 0)</td></tr></table></div>
+  </div>
+
+  <div class="block" id="q-refs">
+    <h2><span class="idx">2</span> Excel: المراجع والرموز وترتيب العمليات</h2>
+<div class="tbl-wrap"><table class="cmp"><tr><th>البند</th><th>الخلاصة</th></tr><tr><td><span class="mono">A1</span></td><td>نسبي: العمود والسطر يتغيّران عند النسخ</td></tr><tr><td><span class="mono">$A$1</span></td><td>مطلق: ثابت</td></tr><tr><td><span class="mono">$A1 / A$1</span></td><td>مختلط: ثبات جزئي</td></tr><tr><td><span class="mono">* ? #</span></td><td>* حروف بعدد غير محدد · ? حرف واحد · # العرض لا يتّسع</td></tr><tr><td>الترتيب</td><td>الأقواس ← الرفع لقوة ← الضرب والقسمة ← الجمع والطرح ← الضمّ & ← المقارنة</td></tr><tr><td>القيم المنطقية</td><td>TRUE = 1 · FALSE = 0 داخل العمليات الحسابية</td></tr></table></div>
+  </div>
+
+  <div class="block" id="q-db">
+    <h2><span class="idx">3</span> قواعد البيانات: المستويات واللغات والمستخدمون</h2>
+<div class="tbl-wrap"><table class="cmp"><tr><th>البند</th><th>الخلاصة</th></tr><tr><td>المستوى المنطقي</td><td>بناء الجداول وتحديد البيانات والعلاقات — أهم مرحلة</td></tr><tr><td>المستوى الفيزيائي</td><td>الأقل تجريداً: أماكن التخزين والفهارس والتشفير</td></tr><tr><td>المستوى الخارجي</td><td>مستوى المستخدم ويتطلب لغة معالجة DML/SQL</td></tr><tr><td>DDL / DML / SQL</td><td>تعريف · معالجة السجلات · استعلام</td></tr><tr><td>DBA / محلل النظم / مبرمج التطبيقات</td><td>أمن وصلاحيات · متطلبات ومواصفات · يحوّل التصميم لقاعدة فعلية</td></tr><tr><td>مساوئ الملفات التقليدية</td><td>تكرار وحشو · ملفات تابعة للبرنامج · صعوبة إضافة تطبيقات</td></tr></table></div>
+  </div>
+
+  <div class="block" id="q-models">
+    <h2><span class="idx">4</span> نماذج التصميم: المفاتيح والعلاقات والجبر</h2>
+<div class="tbl-wrap"><table class="cmp"><tr><th>البند</th><th>الخلاصة</th></tr><tr><td>مفتاح رئيسي</td><td>يميّز السجل؛ لا يتكرر ولا يُترك فارغاً</td></tr><tr><td>مفتاح أجنبي</td><td>مفتاح رئيسي بجدول آخر؛ قيمه قد تتكرر</td></tr><tr><td>1:1 / 1:N / M:N</td><td>المتعدد لمتعدد يحتاج جدولاً وسيطاً</td></tr><tr><td>UNION / INTERSECTION / A-B</td><td>كل الأسطر · المشترك · في A وليس في B (بنفس الأعمدة)</td></tr><tr><td>Join / Restriction / Projection</td><td>دمج رابطتين · اختيار أسطر · اختيار أعمدة</td></tr><tr><td>REA</td><td>موارد · أحداث · وكلاء (الوكيل-الحدث دوماً 1:N)</td></tr></table></div>
+  </div>
+
+  <div class="block" id="q-access">
+    <h2><span class="idx">5</span> Access وSQL</h2>
+<div class="tbl-wrap"><table class="cmp"><tr><th>البند</th><th>الخلاصة</th></tr><tr><td>ترتيب جملة SQL</td><td><span class="mono">SELECT ← FROM ← WHERE ← GROUP BY ← HAVING ← ORDER BY</span></td></tr><tr><td>INNER / LEFT / RIGHT JOIN</td><td>المتطابق فقط · كل الأول + المطابق · كل الثاني + المطابق</td></tr><tr><td>استعلام Select / Action</td><td>لا يعدّل البيانات · يعدّلها (حذف/إضافة/تحديث)</td></tr><tr><td>خصائص الحقل</td><td>Format · Caption · Validation Rule · Validation Text</td></tr><tr><td>مقاطع التقرير</td><td>رأس التقرير (مرة) · رأس الصفحة · رأس المجموعة · التفصيل (لكل سجل) · التذييل</td></tr><tr><td>عرض التخطيط / التصميم</td><td>التخطيط: النموذج يعمل · التصميم: تفصيلي ولا يعمل</td></tr></table></div>
+  </div>
+  <div class="next-actions"><a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a></div>
+</div>
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+</body>
+</html>

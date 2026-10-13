@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 4 — نماذج تصميم قواعد البيانات | GBS504</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS504 — تطبيقات حاسوبية في الإدارة</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الرابع</div>
+    <h1>نماذج تصميم قواعد البيانات (ERD / REA)</h1>
+    <p>المفاتيح، أنواع العلاقات، العمليات على الروابط، ونموذجا الكيان-العلاقة (ERD) والموارد-الأحداث-الوكلاء (REA).</p>
+  </div>
+</div>
+
+<div class="wrap content">
+
+  <div class="block" id="c4-keys">
+    <h2><span class="idx">1</span> المفاتيح — سؤال امتحاني متكرر</h2>
+<div class="tbl-wrap"><table class="cmp">
+      <tr><th>المفتاح</th><th>التعريف</th></tr>
+      <tr id="c4-primary"><td><b>المفتاح الرئيسي (Primary Key)</b></td><td>حقل أو مجموعة حقول تُميّز كل سجل عن غيره؛ لا يتكرر ولا يُترك فارغاً (Null) — قاعدة الكيان المتكامل.</td></tr>
+      <tr id="c4-candidate"><td><b>المفاتيح المرشحة (Candidate Keys)</b></td><td>كل الحقول المؤهلة لتكون مفتاحاً رئيسياً، تُحدد في مرحلة التصميم.</td></tr>
+      <tr id="c4-foreign"><td><b>المفتاح الأجنبي (Foreign Key)</b></td><td>حقل في رابطة معينة يكون هو المفتاح الرئيسي في رابطة أخرى — يربط بها، وقيمه <b>يمكن أن تتكرر</b> حسب الحاجة.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="block" id="c4-relation-properties">
+    <h2><span class="idx">2</span> خصائص الرابطة (الجدول)</h2>
+<ul>
+      <li id="c4-no-duplicate-rows">لا يجوز تكرار أحد الأسطر ضمن الرابطة.</li>
+      <li>أسطر الرابطة غير مرتّبة — تغيير ترتيبها لا يغيّر طبيعتها.</li>
+      <li>الصفات (الأعمدة) غير مرتبة، وقيمها <b>أحادية</b> (لا يجوز أكثر من قيمة بالحقل الواحد).</li>
+      <li id="c4-relation-degree"><b>درجة الرابطة</b> = عدد الأعمدة (الصفات) المكوّنة لها.</li>
+    </ul>
+  <div class="callout" id="c4-extra"><span class="tag">📌 من أسئلة الدورات السابقة</span><p id="c4-relational-model"><b>النموذج العلائقي (الترابطي)</b> يعتمد على مفهوم <b>الجداول (الروابط) والعلاقات</b> بينها معاً.</p></div>
+  </div>
+
+  <div class="block" id="c4-relationship-types">
+    <h2><span class="idx">3</span> أنواع العلاقات بين الجداول</h2>
+<div class="tbl-wrap"><table class="cmp">
+      <tr><th>النوع</th><th>الرمز</th><th>مثال</th></tr>
+      <tr id="c4-one-to-one"><td>واحد لواحد</td><td class="mono">1:1</td><td>Customer ↔ Account</td></tr>
+      <tr id="c4-one-to-many"><td>واحد لمتعدد</td><td class="mono">1:N</td><td>Department ↔ Employee (القسم يضم عدة عاملين، والعامل بقسم واحد)</td></tr>
+      <tr id="c4-many-to-many"><td>متعدد لمتعدد</td><td class="mono">M:N</td><td>Student ↔ Subject — تحتاج جدول وسيط</td></tr>
+    </table></div>
+    <div class="callout"><span class="tag">📌 ملاحظة</span><p id="c4-link-rule">العلاقة بين جدولين تتم عبر: حقل <b>المفتاح الرئيسي</b> في الجدول الأول وحقل <b>المفتاح الأجنبي</b> في الجدول الثاني.</p></div>
+  </div>
+
+  <div class="block" id="c4-set-operations">
+    <h2><span class="idx">4</span> العمليات على المجموعات (الروابط)</h2>
+<div class="tbl-wrap"><table class="cmp">
+      <tr><th>العملية</th><th>الشرط</th><th>النتيجة</th></tr>
+      <tr id="c4-union"><td>الاجتماع UNION</td><td>الرابطتان بنفس الأعمدة</td><td>رابطة جديدة تضم كل الأسطر (المشتركة + الباقي من كل رابطة)</td></tr>
+      <tr id="c4-intersection"><td>التقاطع INTERSECTION</td><td>نفس الأعمدة</td><td>الأسطر المشتركة فقط بين A و B</td></tr>
+      <tr id="c4-difference"><td>الفرق A-B (DIFFERENCE)</td><td>نفس الأعمدة</td><td>الأسطر الموجودة في A وغير موجودة في B</td></tr>
+    </table></div>
+    <div id="c4-relational-ops">
+<h3>العمليات الخاصة بالروابط</h3>
+    <ul>
+      <li id="c4-join"><b>الوصل (Join):</b> دمج رابطتين لهما عمود مشترك في رابطة جديدة.</li>
+      <li id="c4-restriction"><b>الانتقاء (Restriction):</b> اختيار الأسطر التي تحقق شرطاً معيناً من رابطة موجودة.</li>
+      <li id="c4-projection"><b>الإسقاط (Projection):</b> اختزال الرابطة لتحتوي فقط على الأعمدة (الصفات) المرغوبة.</li>
+    </ul>
+</div>
+  </div>
+
+  <div class="block" id="c4-erd">
+    <h2><span class="idx">5</span> نموذج الكيان-العلاقة (ERM / ERD)</h2>
+<p id="c4-erm-intro">أقدم وأهم تقنية لتصميم وتوثيق قواعد البيانات — <b>Entity-Relationship Model</b>.</p>
+    <ul>
+      <li id="c4-entity"><b>الكيان (Entity):</b> شيء مادي أو مجرد له أهمية للمنظمة (عميل، منتج، عامل، حساب).</li>
+      <li id="c4-relationships"><b>العلاقات (Relationships):</b> الروابط المنطقية بين نماذج الكيانات.</li>
+      <li id="c4-attributes"><b>الصفات (Attributes):</b> مجموعة الخواص التي تصف الكيان.</li>
+      <li id="c4-domain"><b>الظاهرة (Domain):</b> مجموعة القيم التي تأخذها صفة معينة.</li>
+    </ul>
+    <div id="c4-degree">
+<h3>درجة العلاقة</h3>
+    <ul>
+      <li id="c4-min-max"><b>الحد الأدنى:</b> 0 (قد لا يرتبط عنصر بأي عنصر آخر) أو 1 (كل عنصر مرتبط بعنصر واحد على الأقل).</li>
+      <li><b>الحد الأعلى:</b> 1 أو N — تحدد نمط العلاقة (1:1, 1:N, M:N).</li>
+    </ul>
+    <div class="example"><span class="tag">⚠️ انتبه</span><p id="c4-independence"><b>تنبيه:</b> "الاستقلالية" تعني عدم وجود تأثير للبرامج والنظم الفرعية على تراكيب البيانات — أي أن التعديلات في الاستخدامات والبرامج <b>لا يجب</b> أن تؤدي إلى تغيير تراكيب البيانات (وليس العكس).</p></div>
+</div>
+  </div>
+
+  <div class="block" id="c4-rea">
+    <h2><span class="idx">6</span> نموذج الموارد-الأحداث-الوكلاء (REA)</h2>
+<p id="c4-rea-intro"><b>REA</b> ينظر إلى المنظمة كمكوّنة من ثلاثة أنماط كيانات:</p>
+    <ul>
+      <li id="c4-resources"><b>الموارد (Resources):</b> أشياء لها قيمة اقتصادية.</li>
+      <li id="c4-events"><b>الأحداث (Events):</b> أنشطة المنظمة المختلفة.</li>
+      <li id="c4-agents"><b>الوكلاء (Agents):</b> الأشخاص والمنظمات.</li>
+    </ul>
+    <div id="c4-rea-rules">
+<h3>قواعد العلاقات في REA</h3>
+    <ul>
+      <li id="c4-rea-rule-resource">كل حدث يجب أن يتصل بعلاقة مع <b>مورد واحد</b> على الأقل.</li>
+      <li>كل حدث يجب أن يتصل بعلاقة مع <b>حدث واحد</b> على الأقل.</li>
+      <li>كل حدث يجب أن يتصل بعلاقة مع <b>وكيلين</b> على الأقل.</li>
+    </ul>
+    <div class="callout"><span class="tag">📌 ملاحظة</span><p id="c4-rea-notes">العلاقة بين الوكيل والحدث دوماً <span class="mono">1:N</span> — بين الموظف وطلب البيع <span class="mono">0:N</span> — بين المخزون (مورد) وطلب العميل (حدث) <span class="mono">M:N</span>.</p></div>
+</div>
+  </div>
+
+  <div class="block" id="act-lab-alg">
+    <h2><span class="idx">🧪</span> مختبر الجبر العلائقي: الانتقاء والإسقاط</h2>
+    <div class="lab"><p class="lab-hint">الانتقاء (Restriction) يختار <b>أسطراً</b> بشرط، والإسقاط (Projection) يختار <b>أعمدة</b>. جرّب وشوف.</p><div id="lab-alg"></div></div>
+  </div>
+  <div class="block" id="act-lab-set">
+    <h2><span class="idx">🧪</span> مختبر العمليات على المجموعات</h2>
+    <div class="lab"><p class="lab-hint">رابطتان A وB بنفس الأعمدة. اختر العملية.</p><div id="lab-set"></div></div>
+  </div>
+  <div class="block" id="act-sort">
+    <h2><span class="idx">🎮</span> لعبة: نوع العلاقة؟</h2>
+    <div id="activity-sort"></div>
+  </div>
+  <div class="block" id="act-sort2">
+    <h2><span class="idx">🎮</span> لعبة: موارد ولا أحداث ولا وكلاء (REA)؟</h2>
+    <div id="activity-sort2"></div>
+  </div>
+  <div class="block" id="flash">
+    <h2><span class="idx">🃏</span> بطاقات المصطلحات (اضغط للقلب)</h2>
+    <div id="activity-flash"></div>
+  </div>
+
+  <div class="block" id="c4-extended">
+    <h2><span class="idx">★</span> تفصيل مرجعي موسّع</h2>
+    <details class="accordion">
+      <summary>📚 افتح التفصيل المرجعي (اختياري للمراجعة العميقة)</summary>
+      <div class="accordion-body">
+<h3 id="c4-ext-1">النموذج الترابطي</h3><ul><li>يعرض البيانات للمستخدم في جداول، بينما يتولى النظام تفاصيل التخزين.</li><li>القيم ذرّية: لا تحتوي الخانة الواحدة على أكثر من قيمة.</li><li>الرابطة هي مجموعة أسطر/سجلات غير مرتبة، لا تتكرر أسطرها؛ والصفات/الأعمدة غير مرتبة. درجة الرابطة هي عدد أعمدتها.</li></ul><div class="tbl-wrap"><table class="cmp"><tr><th>نوع المفتاح</th><th>التعريف</th></tr><tr><td>رئيسي Primary</td><td>يميّز كل سجل؛ لا يتكرر ولا يكون فارغاً، ولا تُزال صفة منه إن كان مركباً.</td></tr><tr><td>مرشح Candidate</td><td>صفة أو مجموعة صفات يمكن اختيارها لتصبح مفتاحاً رئيسياً.</td></tr><tr><td>أجنبي Foreign</td><td>حقل يشير إلى مفتاح رئيسي في جدول آخر لإقامة العلاقة.</td></tr></table></div><h3 id="c4-ext-2">العلاقات وعمليات الجبر العلائقي</h3><p>العلاقات: 1:1، و1:N، وM:N (وتحتاج الأخيرة عادةً جدولاً وسيطاً). العمليات: UNION للاتحاد، INTERSECTION للتقاطع، DIFFERENCE للفرق، JOIN للوصل، RESTRICTION لاختيار السجلات بشرط، وPROJECTION لاختيار الأعمدة.</p><h3 id="c4-ext-3">التصميم وERM</h3><p>التصميم المنطقي يحوّل واقع العمل إلى نموذج بيانات، ثم يحوّل التصميم الفيزيائي ذلك النموذج إلى ملفات باستخدام DDL. في ERM: الكيان شيء مادي أو مجرد مهم للمنظمة، والصفة خاصية تصفه، والعلاقة رابط منطقي، وDomain مجموعة القيم الممكنة للصفة. أهداف البناء: منع التكرار والتناقض، التكامل، والاستقلالية.</p><h3 id="c4-ext-4">REA</h3><div class="tbl-wrap"><table class="cmp"><tr><th>الكيان</th><th>معناه</th></tr><tr><td>Resources</td><td>أشياء لها قيمة اقتصادية.</td></tr><tr><td>Events</td><td>أنشطة المنظمة.</td></tr><tr><td>Agents</td><td>الأشخاص والمنظمات.</td></tr></table></div><p>كل حدث يرتبط بمورد واحد وبحدث واحد وبوكيلين على الأقل. علاقة الوكيل بالحدث 1:N، والموظف مع طلب البيع 0:N، والمخزون مع طلب العميل M:N.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="next-actions">
+    <a href="chapter-4-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-4-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الخامس)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS504",chapter_id:"4",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script>
+
+(function(){
+ const root=document.getElementById("lab-alg");
+ const COLS=["id","name","dept","salary"], H={id:"id",name:"الاسم",dept:"القسم",salary:"الراتب"};
+ const R=[[1,"سامر","IT",900],[2,"ليلى","HR",700],[3,"رامي","IT",1200],[4,"هدى","Sales",800],[5,"نور","HR",650]];
+ const C=[["بدون شرط",()=>true,"(بدون Restriction)"],["القسم = IT",r=>r[2]==="IT","dept = 'IT'"],["القسم = HR",r=>r[2]==="HR","dept = 'HR'"],["الراتب > 750",r=>r[3]>750,"salary > 750"]];
+ let ci=0,cols=new Set(COLS);
+ function draw(){
+  const keep=R.map(r=>C[ci][1](r)), shown=COLS.filter(c=>cols.has(c));
+  root.innerHTML=`<div class="lab-row"><b>الانتقاء:</b>${C.map((c,i)=>`<button class="lab-btn ${i===ci?"on":""}" data-c="${i}">${c[0]}</button>`).join("")}</div>
+  <div class="lab-row"><b>الإسقاط:</b>${COLS.map(c=>`<button class="lab-btn ${cols.has(c)?"on":""}" data-k="${c}">${H[c]}</button>`).join("")}</div>
+  <div class="lab-out"><table><tr>${COLS.map(c=>`<th class="${cols.has(c)?"":"dim"}">${H[c]}</th>`).join("")}</tr>${R.map((r,i)=>`<tr class="${keep[i]?"":"dim"}">${r.map((v,j)=>`<td class="${cols.has(COLS[j])?"":"dim"}">${v}</td>`).join("")}</tr>`).join("")}</table></div>
+  <div class="lab-out"><b>الناتج:</b><table><tr>${shown.map(c=>`<th>${H[c]}</th>`).join("")}</tr>${R.filter((r,i)=>keep[i]).map(r=>`<tr>${shown.map(c=>`<td>${r[COLS.indexOf(c)]}</td>`).join("")}</tr>`).join("")||`<tr><td colspan="${shown.length||1}">لا أسطر</td></tr>`}</table></div>`;
+  root.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{ci=+b.dataset.c;draw();});
+  root.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(cols.has(k)){if(cols.size>1)cols.delete(k);}else cols.add(k);draw();});
+ }
+ draw();
+})();
+(function(){
+ const root=document.getElementById("lab-set");
+ const A=["سامر","ليلى","رامي"], B=["ليلى","رامي","نور"];
+ const OPS={"UNION (الاجتماع)":()=>[...new Set([...A,...B])],"INTERSECTION (التقاطع)":()=>A.filter(x=>B.includes(x)),"A - B (الفرق)":()=>A.filter(x=>!B.includes(x)),"B - A (الفرق)":()=>B.filter(x=>!A.includes(x))};
+ let k=Object.keys(OPS)[0];
+ function draw(){
+  root.innerHTML=`<div class="lab-two"><div class="lab-out"><b>A</b><table><tr><th>الاسم</th></tr>${A.map(x=>`<tr><td>${x}</td></tr>`).join("")}</table></div><div class="lab-out"><b>B</b><table><tr><th>الاسم</th></tr>${B.map(x=>`<tr><td>${x}</td></tr>`).join("")}</table></div></div>
+  <div class="lab-row">${Object.keys(OPS).map(o=>`<button class="lab-btn ${o===k?"on":""}" data-o="${o}">${o}</button>`).join("")}</div>
+  <div class="lab-out"><b>الناتج:</b><table><tr><th>الاسم</th></tr>${OPS[k]().map(x=>`<tr><td>${x}</td></tr>`).join("")||"<tr><td>لا أسطر</td></tr>"}</table></div>`;
+  root.querySelectorAll("[data-o]").forEach(b=>b.onclick=()=>{k=b.dataset.o;draw();});
+ }
+ draw();
+})();
+renderSortGame("activity-sort", { buckets:[{key:"11", label:"1:1"},{key:"1n", label:"1:N"},{key:"mn", label:"M:N (جدول وسيط)"}], items:[
+ {text:"Customer ↔ Account", bucket:"11", why:"مثال المقرر على علاقة واحد لواحد."},
+ {text:"Department ↔ Employee (القسم يضم عدة عاملين والعامل بقسم واحد)", bucket:"1n", why:"قسم واحد لعدة عاملين."},
+ {text:"Student ↔ Subject (الطالب يسجّل عدة مقررات والمقرر فيه عدة طلاب)", bucket:"mn", why:"متعدد لمتعدد وتحتاج جدولاً وسيطاً."},
+ {text:"الأب ↔ الأبناء", bucket:"1n", why:"أب واحد لعدة أبناء."},
+ {text:"المنتج ↔ طلبات البيع (المنتج بعدة طلبات والطلب بعدة منتجات)", bucket:"mn", why:"متعدد لمتعدد."},
+ {text:"الشخص ↔ جواز السفر (جواز واحد لكل شخص)", bucket:"11", why:"واحد لواحد."}
+]});
+renderSortGame("activity-sort2", { buckets:[{key:"r", label:"مورد"},{key:"e", label:"حدث"},{key:"a", label:"وكيل"}], items:[
+ {text:"المخزون", bucket:"r", why:"شيء له قيمة اقتصادية."},
+ {text:"النقد", bucket:"r", why:"شيء له قيمة اقتصادية."},
+ {text:"طلب العميل", bucket:"e", why:"نشاط من أنشطة المنظمة."},
+ {text:"استلام بضاعة", bucket:"e", why:"نشاط من أنشطة المنظمة."},
+ {text:"موظف المبيعات", bucket:"a", why:"شخص."},
+ {text:"العميل", bucket:"a", why:"شخص أو منظمة."}
+]});
+renderFlashcards("activity-flash", [
+ {front:"المفتاح الرئيسي", back:"يميّز كل سجل، لا يتكرر ولا يُترك فارغاً."},
+ {front:"المفتاح الأجنبي", back:"حقل هو مفتاح رئيسي بجدول آخر؛ يربط الجدولين وقيمه قد تتكرر."},
+ {front:"المفاتيح المرشحة", back:"كل الحقول المؤهلة لتكون مفتاحاً رئيسياً."},
+ {front:"Join / Restriction / Projection", back:"دمج رابطتين · اختيار أسطر · اختيار أعمدة."},
+ {front:"UNION / INTERSECTION / A-B", back:"الكل · المشترك · في A وليس في B (بنفس الأعمدة)."},
+ {front:"درجة الرابطة", back:"عدد أعمدتها."},
+ {front:"الحد الأدنى والأعلى", back:"الأدنى 0 أو 1 (اختياري/إلزامي) · الأعلى 1 أو N يحدد نمط العلاقة."},
+ {front:"REA", back:"موارد (قيمة اقتصادية) · أحداث (أنشطة) · وكلاء (أشخاص ومنظمات)."},
+ {front:"قواعد REA", back:"كل حدث: مورد على الأقل · حدث على الأقل · وكيلان على الأقل. الوكيل-الحدث دوماً 1:N."}
+]);
+
+</script>
+</body>
+</html>

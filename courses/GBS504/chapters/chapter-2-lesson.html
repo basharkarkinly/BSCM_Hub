@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 2 — Excel | GBS504</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS504 — تطبيقات حاسوبية في الإدارة</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الثاني</div>
+    <h1>Excel — الدوال، المراجع، وتحليل البيانات</h1>
+    <p>الخلية والمراجع ($)، ترتيب العمليات، الدوال الإحصائية والمالية، الفرز والتصفية، وأدوات التحليل.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+
+  <div class="block" id="c2-cell-file">
+    <h2><span class="idx">1</span> أساسيات الخلية والملف</h2>
+<ul>
+      <li id="c2-active-cell"><b>الخلية النشطة (Active Cell):</b> محاطة بإطار أسود سميك.</li>
+      <li id="c2-formula-bar"><b>شريط الصيغة:</b> يُظهر محتوى الخلية والعمليات الجارية فيها.</li>
+      <li id="c2-name-box"><b>مربع الاسم (Name Box):</b> يُظهر اسم/عنوان الخلية المحددة.</li>
+      <li id="c2-cell-name">خلية العمود A والسطر 5 تُسمّى <span class="mono">A5</span> — الحرف أولاً ثم رقم السطر.</li>
+      <li id="c2-save-as"><b>حفظ باسم</b> ≠ <b>حفظ</b>: "حفظ باسم" يُنشئ نسخة إضافية من الملف.</li>
+      <li id="c2-dates">تاريخ إكسل يبدأ في <span class="mono">1900/1/1</span> (يأخذ القيمة 1) وينتهي عام <span class="mono">9999</span>.</li>
+    </ul>
+  <div class="callout" id="c2-extra-types"><span class="tag">📌 من أسئلة الدورات السابقة</span><p id="c2-cell-types"><b>أنواع البيانات في الخلية:</b> يمكن لكل خلية أن تحتوي بيانات نصية أو رقمية أو تاريخاً... إلخ.</p></div>
+  </div>
+
+  <div class="block" id="c2-references">
+    <h2><span class="idx">2</span> المراجع (References) — سؤال امتحاني دائم</h2>
+<div class="tbl-wrap"><table class="cmp">
+      <tr><th>النوع</th><th>الشكل</th><th>عند النسخ/التعبئة التلقائية</th></tr>
+      <tr id="c2-ref-relative"><td>نسبي</td><td class="mono">A1</td><td>يتغيّر السطر والعمود</td></tr>
+      <tr id="c2-ref-absolute"><td>مطلق</td><td class="mono">$A$1</td><td>لا يتغيّر أي منهما ($ قبل الحرف وقبل الرقم)</td></tr>
+      <tr id="c2-ref-mixed"><td>مختلط</td><td class="mono">$A1 أو A$1</td><td>يتغيّر فقط ما لا تسبقه $</td></tr>
+    </table></div>
+    <div class="callout"><span class="tag">📌 ملاحظة</span><p id="c2-ref-example">مثال: <span class="mono">$A$2+A1</span> — الجزء <span class="mono">A1</span> فقط نسبي، فيتغيّر عند النقل، بينما <span class="mono">$A$2</span> ثابت لا يتغيّر.</p></div>
+  <div class="callout" id="c2-extra-fill"><span class="tag">📌 من أسئلة الدورات السابقة</span><p id="c2-autofill"><b>Auto Fill (التعبئة التلقائية):</b> بسحب مقبض التعبئة نحصل على أرقام أو تواريخ متسلسلة تلقائياً.</p></div>
+  </div>
+
+  <div class="block" id="c2-wildcards">
+    <h2><span class="idx">3</span> رموز البحث والتصفية النصية</h2>
+<div class="tbl-wrap"><table class="cmp">
+      <tr><th>الرمز</th><th>الدلالة</th></tr>
+      <tr><td class="mono">#</td><td>حروف وأرقام لا تتسع في الخلية</td></tr>
+      <tr><td class="mono">*</td><td>حروف وأرقام مجهولة (بعدد غير محدد)</td></tr>
+      <tr><td class="mono">?</td><td>حرف أو رقم مجهول واحد فقط</td></tr>
+    </table></div>
+  </div>
+
+  <div class="block" id="c2-database">
+    <h2><span class="idx">4</span> قاعدة بيانات Excel — الشروط الواجب توافرها</h2>
+<ul>
+      <li id="c2-db-rules">السطر الأول لأسماء الحقول (Field Names) — كل اسم مميز.</li>
+      <li>كل عمود يحتوي نفس نوع البيانات.</li>
+      <li>عمود مستقل لكل نوع معلومة نريد الفرز أو البحث فيها.</li>
+      <li>عدم ترك أعمدة أو أسطر فارغة ضمن القاعدة.</li>
+      <li>عند وجود قاعدة بيانات وبيانات أخرى بنفس الورقة: نفصل بسطر وعمود فارغين.</li>
+    </ul>
+    <p id="c2-data-entry">إدخال البيانات: مباشرة من لوحة المفاتيح، من نافذة نموذج (Form)، من قائمة منسدلة، أو باستخدام الصيغ للأعمدة المحسوبة.</p>
+    <p id="c2-validation"><b>Data Validation:</b> تقييد نوع/قيمة البيانات المُدخلة + إظهار رسالة خطأ أو رسالة إرشادية.</p>
+  </div>
+
+  <div class="block" id="c2-sort-filter">
+    <h2><span class="idx">5</span> الفرز والتصفية</h2>
+<ul>
+      <li id="c2-sort"><b>الفرز (Sort):</b> إعادة ترتيب الصفوف حسب محتوى عمود واحد أو أكثر — أمر Sort يظهر في قائمة Data.</li>
+      <li id="c2-filter"><b>التصفية (Filter):</b> إظهار السجلات المطابقة لمعيار معين وإخفاء الباقي — أمر Filter يظهر في قائمة Data.</li>
+      <li><b>التصفية المتقدمة:</b> تسمح بمعايير أكثر تعقيداً (أكثر من معيارين وعمود).</li>
+    </ul>
+  <div class="callout" id="c2-extra-find"><span class="tag">📌 من أسئلة الدورات السابقة</span><p id="c2-find-replace"><b>البحث والاستبدال (Find &amp; Replace):</b> عند استبدال كلمة (مثل «محمد») بأخرى، فتحديد خيار <b>مطابقة كل محتوى الحقل/الخلية (Match entire cell contents)</b> يمنع تغيير الخلايا التي تحتوي الكلمة ضمن نص أطول مثل «محمد أمين».</p></div>
+  </div>
+
+  <div class="block" id="c2-stat-functions">
+    <h2><span class="idx">6</span> الدوال الإحصائية الأساسية</h2>
+<div class="tbl-wrap"><table class="cmp">
+      <tr><th>الدالة</th><th>الوظيفة</th></tr>
+      <tr id="c2-sum"><td class="mono">SUM</td><td>مجموع القيم — تتجاهل النص والقيم المنطقية إن لم تُذكر مباشرة كوسيط</td></tr>
+      <tr id="c2-count"><td class="mono">COUNT</td><td>عدد الخلايا التي تحتوي أرقاماً فقط</td></tr>
+      <tr id="c2-counta"><td class="mono">COUNTA</td><td>عدد الخلايا غير الفارغة (أرقام + نص + منطقية)</td></tr>
+      <tr id="c2-minmax"><td class="mono">MIN / MAX</td><td>أصغر/أكبر قيمة رقمية (تتجاهل النص والمنطقية)</td></tr>
+      <tr id="c2-mina"><td class="mono">MINA / MAXA</td><td>كالسابق لكن تُدخل القيم المنطقية (TRUE=1, FALSE=0) في الحساب</td></tr>
+      <tr id="c2-average"><td class="mono">AVERAGE</td><td>متوسط القيم الرقمية فقط</td></tr>
+      <tr id="c2-averagea"><td class="mono">AVERAGEA</td><td>متوسط كل الخلايا غير الفارغة (تُحسب المنطقية والنص كـ0)</td></tr>
+      <tr id="c2-subtotal"><td class="mono">SUBTOTAL</td><td>مجموع فرعي — رقم الدالة 1-11 يشمل الصفوف المخفية، 101-111 يتجاهلها</td></tr>
+      <tr id="c2-int"><td class="mono">INT</td><td>القيمة الصحيحة للناتج دون كسور</td></tr>
+      <tr id="c2-today"><td class="mono">TODAY</td><td>تاريخ اليوم الحالي</td></tr>
+    </table></div>
+    <div class="callout"><span class="tag">📌 ملاحظة</span><p id="c2-bool">في الدوال المنطقية: <b>TRUE = 1</b> و <b>FALSE = 0</b> عند إدخالها في عملية حسابية.</p></div>
+  <div class="callout" id="c2-extra-syntax"><span class="tag">📌 من أسئلة الدورات السابقة</span><p id="c2-function-syntax"><b>ترتيب كتابة الدالة:</b> إشارة <b>=</b> ثم اسم الدالة ثم القوس ثم الوسائط، مثل <span class="mono">=SUM(A1:A5)</span>.</p><p id="c2-if-args"><b>وسائط دالة IF:</b> <span class="mono">logical_test</span> و<span class="mono">value_if_true</span> و<span class="mono">value_if_false</span>.</p></div>
+  </div>
+
+  <div class="block" id="c2-order-ops">
+    <h2><span class="idx">7</span> ترتيب العمليات الحسابية (أولوية التنفيذ)</h2>
+<p class="mono" style="font-size:16px;display:block;text-align:center;background:var(--paper-2);padding:10px;border-radius:8px;">() → ^ → * / → + − → & (الضم) → المقارنة (= &lt; &gt;)</p>
+    <p>الأقواس أولاً، ثم الرفع لقوة، ثم الضرب والقسمة، ثم الجمع والطرح، ثم عمليات الضمّ (&)، وأخيراً المقارنة.</p>
+  </div>
+
+  <div class="block" id="c2-financial">
+    <h2><span class="idx">8</span> الدوال المالية</h2>
+<div class="tbl-wrap"><table class="cmp">
+      <tr><th>الدالة</th><th>الاستخدام</th><th>الصيغة</th></tr>
+      <tr id="c2-pv"><td class="mono">PV</td><td>القيمة الحالية — جدوى استثمار طويل الأجل، القيمة الحالية للتدفقات النقدية</td><td class="mono">PV(rate;nper;pmt;fv;type)</td></tr>
+      <tr id="c2-fv"><td class="mono">FV</td><td>القيمة المستقبلية لاستثمار معين، دفعات دورية ثابتة</td><td class="mono">FV(rate;nper;pmt;pv;type)</td></tr>
+      <tr id="c2-npv"><td class="mono">NPV</td><td>صافي القيمة الحالية — ربحية استثمار بمعدل خصم + دفعات مستقبلية</td><td class="mono">NPV(rate;value1;value2;...)</td></tr>
+    </table></div>
+    <ul>
+      <li id="c2-fin-args"><b>rate:</b> معدل الفائدة/الخصم لكل فترة زمنية.</li>
+      <li><b>nper:</b> عدد الدفعات/العوائد الدورية.</li>
+      <li><b>pmt:</b> قيمة الدفعة الدورية.</li>
+      <li><b>type:</b> 0 = الاستحقاق بنهاية الفترة (الافتراضي)، 1 = بداية الفترة.</li>
+    </ul>
+    <div class="callout"><span class="tag">📌 ملاحظة</span><p id="c2-npv-profit"><b>الاستثمار مربح</b> إذا كانت صافي القيمة الحالية (NPV) له <b>أكبر من الصفر</b>. يمكن استخدام أداة <b>Goal Seek</b> مع NPV لتحديد تكلفة الاستثمار أو معدل الخصم الذي يجعله مربحاً.</p></div>
+  <div class="callout" id="c2-extra-pv"><span class="tag">📌 من أسئلة الدورات السابقة</span><p id="c2-pv-sign"><b>إشارة الدفعات:</b> في دوال PV وFV وNPV تُكتب الدفعات الصادرة (المدفوعة) بقيمة <b>سالبة</b> والإيرادات (الداخلة) بقيمة <b>موجبة</b>.</p></div>
+  </div>
+
+  <div class="block" id="c2-advanced">
+    <h2><span class="idx">9</span> الأدوات التحليلية المتقدمة</h2>
+<ul>
+      <li id="c2-pivot"><b>الجداول المحورية PivotTable:</b> معلومات ملخّصة لحقول محددة من مصدر بيانات.</li>
+      <li id="c2-trendline"><b>خط الاتجاه (Trendline):</b> يُستخدم للتنبؤ بقيم مستقبلية؛ كلما اقترب <b>معامل التحديد R²</b> من الواحد (1) زاد الاعتماد على خط الاتجاه.</li>
+      <li id="c2-solver"><b>Solver:</b> أداة إيجاد الحل الأمثل (أكبر ربح/أقل تكلفة) بتغيير قيم خلايا مرتبطة بخلية الهدف ضمن قيود محددة.</li>
+      <li id="c2-whatif"><b>تحليل ماذا-إذا (What-If):</b> تقييم بدائل الحل عبر سيناريوهات مختلفة يمكن حفظها بأداة إدارة السيناريو.</li>
+      <li id="c2-sensitivity"><b>تحليل الحساسية:</b> يوضّح مدى تأثّر الحل بتغيّرات طفيفة في متغيرات النموذج.</li>
+      <li id="c2-chart"><b>Chart:</b> تمثيل البيانات بشكل رسوم بيانية.</li>
+    </ul>
+    <div class="example"><span class="tag">⚠️ انتبه</span><p id="c2-excel-pm">ملاحظة: برنامج Excel <b>يمكن</b> استخدامه (بأدوات كـ Solver) في تحليلات إدارية متعددة، لكنه <b>لا</b> يُستخدم كأداة إدارة مشروع مباشرة (كـ MS Project)، وبرمجيات الحل الأمثل (Optimization) وظيفتها إيجاد أفضل قيمة لدالة هدف — وليست مراقبة جدولة المشاريع الضخمة.</p></div>
+  <div class="callout" id="c2-extra-certainty"><span class="tag">📌 من أسئلة الدورات السابقة</span><p id="c2-certainty"><b>حالة التأكد (Certainty):</b> نماذج الحل الأمثل (Solver) تفترض أن جميع بيانات النموذج معروفة ومؤكدة الدرجة بالكامل.</p></div>
+  </div>
+
+  <div class="block" id="act-lab-refs">
+    <h2><span class="idx">🧪</span> مختبر المراجع: ما الذي يتغيّر عند النسخ؟</h2>
+    <div class="lab"><p class="lab-hint">اختر نوع المرجع الموجود بصيغة الخلية <b>C3</b> (المرجع إلى A1)، وشوف شو بيصير بالصيغة لما تنسخها لليمين أو للأسفل أو بشكل مائل.</p><div id="lab-refs"></div></div>
+  </div>
+  <div class="block" id="act-lab-fn">
+    <h2><span class="idx">🔬</span> مختبر الدوال على العمود A (A1:A8)</h2>
+    <div class="lab"><p class="lab-hint">اختر الدالة والنطاق، وشوف أي الخلايا انحسبت وأيها انتجاهلت وليش. (النص = <b>أحمد</b>، <b>TRUE/FALSE</b> منطقية، A6 فارغة.)</p><div id="lab-fn"></div></div>
+  </div>
+  <div class="block" id="act-lab-ops">
+    <h2><span class="idx">🧮</span> ترتيب العمليات خطوة بخطوة</h2>
+    <div class="lab"><p class="lab-hint">اختر صيغة واضغط «الخطوة التالية» لتشوف الترتيب الفعلي لحساب Excel.</p><div id="lab-ops"></div></div>
+  </div>
+  <div class="block" id="flash">
+    <h2><span class="idx">🃏</span> بطاقات المصطلحات (اضغط للقلب)</h2>
+    <div id="activity-flash"></div>
+  </div>
+
+  <div class="block" id="c2-extended">
+    <h2><span class="idx">★</span> تفصيل مرجعي موسّع</h2>
+    <details class="accordion">
+      <summary>📚 افتح التفصيل المرجعي (اختياري للمراجعة العميقة)</summary>
+      <div class="accordion-body">
+<h3 id="c2-ext-1">جداول البيانات وExcel</h3><p>جدول البيانات أداة برمجية لإدخال الأرقام والنصوص وحسابها ومعالجتها وتحليل مجموعات البيانات. وهو شبكة من صفوف وأعمدة تظهر على الشاشة وتُخزَّن بياناتها في الذاكرة. يمكن لـExcel دعم أعمال الإدارة، الفرز والتصفية والاستعلام وإصدار تقارير تفصيلية أو ملخصة.</p><h3 id="c2-ext-2">المراجع في الصيغ</h3><div class="tbl-wrap"><table class="cmp"><tr><th>النوع</th><th>المعنى</th><th>مثال</th></tr><tr><td>نسبي</td><td>يتغير الصف والعمود عند التعبئة التلقائية.</td><td class="mono">A1</td></tr><tr><td>مطلق</td><td>يثبّت العمود والصف معاً.</td><td class="mono">$A$2</td></tr><tr><td>مختلط</td><td>يثبّت الصف أو العمود فقط.</td><td class="mono">$A1 / A$1</td></tr></table></div><h3 id="c2-ext-3">قاعدة بيانات Excel</h3><ul><li>لكل حقل اسم مميز يختلف عن أسماء الحقول الأخرى، وتكون القائمة متصلة بلا صفوف أو أعمدة فارغة داخلها.</li><li>عند وجود أكثر من قاعدة في الورقة نفسها يجب الفصل بينها بسطر وعمود فارغين؛ والأفضل تخصيص ورقة مستقلة.</li><li>الإدخال: مباشر، عبر نموذج Form، أو بصيغ للأعمدة المحسوبة.</li></ul><h3 id="c2-ext-4">التحقق والبحث والتصفية</h3><div class="tbl-wrap"><table class="cmp"><tr><th>الأداة</th><th>الاستخدام</th></tr><tr><td>Data Validation</td><td>تقييد نوع وقيمة الإدخال، وإظهار رسالة إرشاد أو رسالة خطأ.</td></tr><tr><td>Find / Replace</td><td>البحث والاستبدال عبر Ctrl+F وCtrl+H، مع الانتباه لخيار مطابقة كامل الحقل.</td></tr><tr><td>AutoFilter</td><td>تفعيل التصفية من قائمة Data ثم Filter؛ والتصفية المخصصة تضع معياراً لحقل.</td></tr></table></div><p><b>دوال مهمة:</b> الدوال المالية لتقييم الاستثمارات، ودالة TODAY للتاريخ الحالي، وSUBTOTAL للمجاميع الفرعية. تذكّر أن TRUE تعامل كـ1 وFALSE كـ0 في السياقات الحسابية المناسبة.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="next-actions">
+    <a href="chapter-2-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-2-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الثالث)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS504",chapter_id:"2",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script>
+
+(function(){
+ /* ---- مختبر المراجع ---- */
+ const root=document.getElementById("lab-refs"); let sel=0;
+ const types=[["A1","نسبي"],["$A$1","مطلق"],["$A1","مختلط (العمود ثابت)"],["A$1","مختلط (السطر ثابت)"]];
+ const col=n=>String.fromCharCode(64+n);
+ function shift(ref,dx,dy){const m=ref.match(/^(\$?)([A-Z])(\$?)(\d+)$/);let c=m[2].charCodeAt(0)-64,r=+m[4];if(!m[1])c+=dx;if(!m[3])r+=dy;return m[1]+col(c)+m[3]+r;}
+ function draw(){
+  const ref=types[sel][0];
+  root.innerHTML=`<div class="lab-row">${types.map((t,i)=>`<button class="lab-btn ${i===sel?"on":""}" data-i="${i}"><span class="mono">${t[0]}</span> — ${t[1]}</button>`).join("")}</div>
+  <div class="lab-copy"><div><b>C3 (الأصل)</b><span class="mono">=${ref}</span></div><div><b>D3 (نسخ لليمين)</b><span class="mono">=${shift(ref,1,0)}</span></div><div><b>C4 (نسخ للأسفل)</b><span class="mono">=${shift(ref,0,1)}</span></div><div><b>D4 (نسخ مائل)</b><span class="mono">=${shift(ref,1,1)}</span></div></div>
+  <div class="lab-msg">${sel===0?"كل المرجع تحرّك مع النسخ (العمود والسطر).":sel===1?"ما تغيّر شي: المرجع المطلق ثابت دائماً.":sel===2?"العمود ثابت ($A) والسطر يتحرّك.":"السطر ثابت ($1) والعمود يتحرّك."}</div>`;
+  root.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{sel=+b.dataset.i;draw();});
+ }
+ draw();
+})();
+(function(){
+ /* ---- مختبر الدوال ---- */
+ const root=document.getElementById("lab-fn");
+ const D=[{v:"أحمد",t:"text"},{v:-5,t:"num"},{v:20,t:"num"},{v:25,t:"num"},{v:true,t:"bool"},{v:null,t:"empty"},{v:true,t:"bool"},{v:false,t:"bool"}];
+ const F={
+  SUM:{a:false,note:"تجمع الأرقام فقط وتتجاهل النص والمنطقية داخل النطاق."},
+  COUNT:{a:false,note:"تعدّ الخلايا الرقمية فقط."},
+  COUNTA:{a:true,note:"تعدّ كل الخلايا غير الفارغة (نص ومنطقية وأرقام)."},
+  MIN:{a:false,note:"أصغر رقم؛ تتجاهل النص والمنطقية."},
+  MAX:{a:false,note:"أكبر رقم؛ تتجاهل النص والمنطقية."},
+  MINA:{a:true,note:"تُدخل النص كـ 0 والمنطقية كـ 1/0 وتتجاهل الفارغ."},
+  MAXA:{a:true,note:"تُدخل النص كـ 0 والمنطقية كـ 1/0 وتتجاهل الفارغ."},
+  AVERAGE:{a:false,note:"متوسط الأرقام فقط."},
+  AVERAGEA:{a:true,note:"متوسط كل الخلايا غير الفارغة: النص 0 والمنطقية 1/0."}
+ };
+ let fn="SUM",from=1,to=5;
+ function val(c,isA){ if(c.t==="num")return c.v; if(!isA)return null; if(c.t==="bool")return c.v?1:0; if(c.t==="text")return 0; return null; }
+ function calc(){
+  const isA=F[fn].a, used=[], vals=[];
+  for(let i=from-1;i<to;i++){const x=val(D[i],isA); if(x!==null){used.push(i);vals.push(x);}}
+  let r; const n=vals.length, s=vals.reduce((a,b)=>a+b,0);
+  if(fn==="SUM")r=s; else if(fn==="COUNT"||fn==="COUNTA")r=n; else if(fn==="MIN"||fn==="MINA")r=n?Math.min(...vals):0; else if(fn==="MAX"||fn==="MAXA")r=n?Math.max(...vals):0; else r=n?(Math.round(s/n*100)/100):"#DIV/0!";
+  return {used,vals,r};
+ }
+ function draw(){
+  if(to<from)to=from;
+  const c=calc(), isA=F[fn].a;
+  const opts=k=>[1,2,3,4,5,6,7,8].map(i=>`<option value="${i}" ${i===k?"selected":""}>A${i}</option>`).join("");
+  root.innerHTML=`<div class="lab-row"><select id="lf-fn">${Object.keys(F).map(k=>`<option ${k===fn?"selected":""}>${k}</option>`).join("")}</select><span>من</span><select id="lf-from">${opts(from)}</select><span>إلى</span><select id="lf-to">${opts(to)}</select></div>
+  <div class="lab-cells">${D.map((d,i)=>{const inR=i>=from-1&&i<to;const u=c.used.includes(i);const show=d.t==="empty"?"(فارغة)":(d.t==="bool"?(d.v?"TRUE":"FALSE"):d.v);const x=val(d,isA);
+   return `<div class="lab-cell ${inR?(u?"used":"skip"):""}" style="${inR?"":"opacity:.45"}"><b>A${i+1}</b><br>${show}<small>${inR?(u?("تُحسب: "+x):"متجاهلة"):"خارج النطاق"}</small></div>`;}).join("")}</div>
+  <div class="lab-out"><div class="lab-ltr lab-result">=${fn}(A${from}:A${to}) → ${c.r}</div><div class="lab-msg">${F[fn].note}</div></div>`;
+  root.querySelector("#lf-fn").onchange=e=>{fn=e.target.value;draw();};
+  root.querySelector("#lf-from").onchange=e=>{from=+e.target.value;draw();};
+  root.querySelector("#lf-to").onchange=e=>{to=+e.target.value;draw();};
+ }
+ draw();
+})();
+(function(){
+ /* ---- ترتيب العمليات ---- */
+ const root=document.getElementById("lab-ops");
+ const E=[
+  {f:"=8+8/4",steps:["القسمة قبل الجمع: 8/4 = 2","ثم الجمع: 8 + 2 = 10"],res:"10"},
+  {f:"=(2+3)*2^2",steps:["الأقواس أولاً: (2+3) = 5","ثم الرفع إلى قوة: 2^2 = 4","ثم الضرب: 5 * 4 = 20"],res:"20"},
+  {f:"=10&10+1",steps:["الجمع قبل الضمّ (&): 10+1 = 11","ثم الضمّ: \"10\" & \"11\" = \"1011\""],res:"1011"},
+  {f:"=(3*3=9/2)+11",steps:["الضرب والقسمة أولاً: 3*3 = 9 و 9/2 = 4.5","ثم المقارنة: 9 = 4.5 ← FALSE (يساوي 0 بالحساب)","ثم الجمع: 0 + 11 = 11"],res:"11"},
+  {f:"=17-1+4/4",steps:["القسمة أولاً: 4/4 = 1","ثم من اليسار: 17 - 1 = 16","ثم 16 + 1 = 17"],res:"17"}
+ ];
+ let k=0,s=0;
+ function draw(){
+  const e=E[k];
+  root.innerHTML=`<div class="lab-row">${E.map((x,i)=>`<button class="lab-btn ${i===k?"on":""}" data-i="${i}"><span class="mono">${x.f}</span></button>`).join("")}</div>
+  <div class="lab-out">${e.steps.slice(0,s).map((t,i)=>`<div>${i+1}) ${t}</div>`).join("")||"<div>اضغط «الخطوة التالية» للبدء.</div>"}${s>=e.steps.length?`<div class="lab-msg ok">الناتج: <span class="mono">${e.res}</span></div>`:""}</div>
+  <div class="lab-row"><button class="lab-btn go" id="lo-next">الخطوة التالية ▶</button><button class="lab-btn" id="lo-reset">من البداية</button></div>`;
+  root.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{k=+b.dataset.i;s=0;draw();});
+  root.querySelector("#lo-next").onclick=()=>{if(s<e.steps.length){s++;draw();}};
+  root.querySelector("#lo-reset").onclick=()=>{s=0;draw();};
+ }
+ draw();
+})();
+renderFlashcards("activity-flash", [
+ {front:"* ? #", back:"* حروف مجهولة بعدد غير محدد · ? حرف واحد مجهول · # عرض الخلية لا يتّسع."},
+ {front:"المرجع النسبي / المطلق / المختلط", back:"A1 يتغيّر · $A$1 ثابت · $A1 أو A$1 ثبات جزئي."},
+ {front:"TRUE و FALSE في الحساب", back:"TRUE = 1 و FALSE = 0."},
+ {front:"ترتيب العمليات", back:"الأقواس ← الرفع لقوة ← الضرب والقسمة ← الجمع والطرح ← الضمّ & ← المقارنة."},
+ {front:"SUM / COUNT / MIN", back:"تتعامل مع الأرقام فقط داخل النطاق."},
+ {front:"COUNTA / MINA / AVERAGEA", back:"تتعامل مع غير الفارغ: النص 0 والمنطقية 1/0."},
+ {front:"SUBTOTAL 9 مقابل 109", back:"9 يُدرج المخفي · 109 يتجاهل المخفي."},
+ {front:"PV / FV / NPV", back:"القيمة الحالية · المستقبلية · صافي القيمة الحالية. الاستثمار مربح إذا NPV أكبر من 0."},
+ {front:"R² لخط الاتجاه", back:"كلما اقترب من 1 زاد الاعتماد على خط الاتجاه."}
+]);
+
+</script>
+</body>
+</html>

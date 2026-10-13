@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 3 — نظم إدارة قواعد البيانات | GBS504</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS504 — تطبيقات حاسوبية في الإدارة</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الثالث</div>
+    <h1>نظم إدارة قواعد البيانات (DBMS)</h1>
+    <p>قاعدة البيانات ونظام إدارتها، مستويات التصميم الثلاثة، المستخدمون، ومزايا DBMS مقابل الملفات التقليدية.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+
+  <div class="block" id="c3-db-dbms">
+    <h2><span class="idx">1</span> قاعدة البيانات ونظام إدارتها</h2>
+<p id="c3-db-def"><b>قاعدة البيانات:</b> مجموعة من البيانات أو المعلومات المتصلة ذات العلاقات المتبادلة، مخزّنة بطريقة نموذجية دون تكرار.</p>
+    <p id="c3-dbms-def"><b>نظام إدارة قواعد البيانات (DBMS):</b> حزمة برمجية جاهزة تمكّن من إنشاء قاعدة البيانات وإجراء التعديلات عليها، ومعالجة البيانات المخزنة للوصول إلى المعلومات المطلوبة.</p>
+    <p id="c3-db-purpose"><b>الغرض الرئيسي</b> لنظام قاعدة البيانات المحوسب: تخزين البيانات والسماح للمستخدم باسترجاعها وتحديثها حسب حاجته.</p>
+    <div class="callout"><span class="tag">📌 ملاحظة</span><p id="c3-automated-system">يتكون نظام المعلومات المؤتمت من: قاعدة البيانات + البرمجيات (DBMS) + التجهيزات المادية + المستخدمين.</p></div>
+  <div class="callout" id="c3-extra"><span class="tag">📌 من أسئلة الدورات السابقة</span><p id="c3-db-contents"><b>محتويات قاعدة البيانات الحديثة</b> (كملف Access): الجداول والاستعلامات والنماذج والتقارير معاً.</p><p id="c3-dbms-examples"><b>أمثلة على DBMS:</b> Microsoft Access وSQL Server وOracle وMySQL. وتُستخدم DBMS في توصيف قواعد البيانات وإنشائها وإدخال المعطيات ومعالجتها.</p></div>
+  </div>
+
+  <div class="block" id="c3-relational-concepts">
+    <h2><span class="idx">2</span> مفاهيم قواعد البيانات الترابطية</h2>
+<ul>
+      <li id="c3-relation"><b>الرابطة (Relation):</b> الجدول — تتضمن مجموعة أسطر (سجلات).</li>
+      <li id="c3-record"><b>السجل (Record):</b> سطر واحد، ويتكون من مجموعة حقول (Fields).</li>
+      <li id="c3-integrated"><b>التكامل (Integrated):</b> توزيع بيانات النظام على عدة ملفات مع المحافظة على الترابط بينها بأقل تكرار وحشو.</li>
+      <li id="c3-shared"><b>التشارك (Shared):</b> عنصر البيانات الواحد يُستخدم من قبل عدة مستخدمين في الوقت نفسه.</li>
+    </ul>
+  </div>
+
+  <div class="block" id="c3-functions-languages">
+    <h2><span class="idx">3</span> وظائف ولغات نظام إدارة قواعد البيانات</h2>
+<p id="c3-dbms-functions">أهم الوظائف: تعريف الروابط، معالجة البيانات، الاستعلام، ضمان حماية البيانات ونزاهتها، ضمان استعادة البيانات، قاموس البيانات.</p>
+    <div class="tbl-wrap"><table class="cmp">
+      <tr><th>اللغة</th><th>الاختصار</th><th>الوظيفة</th></tr>
+      <tr id="c3-ddl"><td>لغة تعريف البيانات</td><td class="mono">DDL</td><td>تعريف وتوصيف الملفات والسجلات والحقول والعلاقات وشروط التكامل</td></tr>
+      <tr id="c3-dml"><td>لغة معالجة البيانات</td><td class="mono">DML</td><td>إضافة/حذف/تعديل سجلات، فتح وإغلاق ملفات، دمج وربط الملفات</td></tr>
+      <tr id="c3-sql"><td>لغة الاستعلام</td><td class="mono">SQL</td><td>استرجاع وتصنيف وترتيب مجموعات فرعية من البيانات للإجابة عن استعلام المستخدم</td></tr>
+    </table></div>
+    <div class="callout"><span class="tag">📌 ملاحظة</span><p id="c3-dictionary"><b>قاموس البيانات (Data Dictionary):</b> يمكن فهمه على أنه قاعدة بيانات خاصة بالنظام نفسه (وليست بالمستخدم) — يخزّن مواصفات كل حقل من حقول قاعدة البيانات.</p></div>
+  </div>
+
+  <div class="block" id="c3-levels">
+    <h2><span class="idx">4</span> مستويات تصميم قاعدة البيانات (الثلاثة)</h2>
+<div class="tbl-wrap"><table class="cmp">
+      <tr><th>المستوى</th><th>الوصف</th></tr>
+      <tr id="c3-logical"><td><b>المنطقي (Logical)</b></td><td>بناء الجداول بما يتوافق مع حاجة كل المستخدمين إجمالاً؛ تحديد البيانات المطلوب تخزينها والعلاقات بين الملفات — أهم مرحلة عند بناء قاعدة البيانات.</td></tr>
+      <tr id="c3-physical"><td><b>الفيزيائي (Physical)</b></td><td>الأقل تجريداً — تحديد أماكن التخزين والفهارس، وصف السجلات وحجمها، تشفير البيانات، الأنواع الداخلية للبيانات.</td></tr>
+      <tr id="c3-external"><td><b>الخارجي/المستخدم (External)</b></td><td>مستوى المستخدم المفرد (نهائي أو مبرمج) — يتطلب لغة معالجة بيانات (DML/SQL) لإجراء العمليات على الملفات.</td></tr>
+    </table></div>
+    <div class="callout"><span class="tag">📌 ملاحظة</span><p id="c3-physical-design">التصميم المادي (Physical Design): تحويل تراكيب البيانات من نموذج البيانات إلى ملفات باستخدام لغة توصيف البيانات (DDL) — <b>وليس</b> التصميم المنطقي.</p></div>
+  </div>
+
+  <div class="block" id="c3-users">
+    <h2><span class="idx">5</span> مستخدمو قاعدة البيانات</h2>
+<ul>
+      <li id="c3-dba"><b>مدير قاعدة البيانات (DBA):</b> يحدد المتطلبات، يوفر الأمن والحماية، يعيد تنظيم القاعدة، يحدد صلاحيات المستخدمين.</li>
+      <li id="c3-programmers"><b>مبرمجو التطبيقات:</b> يحوّلون التصميم إلى قاعدة فعلية، يصيغون نوافذ التخاطب والتقارير والنماذج.</li>
+      <li id="c3-endusers"><b>المستخدمون النهائيون:</b> يتحاورون مع النظام عبر البرامج أو لغات كـ SQL (SELECT, INSERT, UPDATE, DELETE).</li>
+      <li id="c3-analyst"><b>محلل النظم:</b> يحدد متطلبات المستخدم ويطوّر المواصفات المطلوبة لتحديد المطلوب من قاعدة البيانات.</li>
+    </ul>
+  </div>
+
+  <div class="block" id="c3-advantages">
+    <h2><span class="idx">6</span> مزايا استخدام قواعد البيانات (مقابل نظم الملفات التقليدية)</h2>
+<ul>
+      <li id="c3-adv-independence">استقلالية البرامج عن البيانات (تعديل الملفات لا يستوجب تعديل البرامج وبالعكس).</li>
+      <li>ندرة التكرار، أمن وسرية عالية، تكامل عالي ومتناسق.</li>
+      <li>سهولة الصيانة والاسترجاع، توفير نسخ احتياطية.</li>
+      <li>تمثيل العلاقات المعقدة بسهولة، واجهات متعددة للمستخدم.</li>
+    </ul>
+    <div class="example"><span class="tag">⚠️ انتبه</span><p id="c3-file-flaws">مساوئ نظم الملفات التقليدية (قبل DBMS): تكرار وحشو في البيانات، الملفات تابعة لبرنامج التطبيق، صعوبة إضافة تطبيقات جديدة، الرقابة على البيانات من اختصاص البرنامج نفسه فقط.</p></div>
+    <div class="callout"><span class="tag">📌 ملاحظة</span><p id="c3-when-not"><b>لا نستخدم قاعدة بيانات</b> إذا: كانت تكلفة الإعداد عالية نسبة لحجم المشروع، أو كانت البيانات بسيطة جداً، أو المشروع يحتاج سرعة استجابة قصوى، أو لا حاجة لبيئة متعددة المستخدمين.</p></div>
+  </div>
+
+  <div class="block" id="c3-types">
+    <h2><span class="idx">7</span> أنواع نظم قواعد البيانات</h2>
+<p id="c3-db-types">هرمية (Hierarchical) — شبكية (Network) — <b>ترابطية/علائقية (Relational)</b> وهي الأكثر انتشاراً واعتماداً في السوق، وتتميز بالبساطة والمرونة وسهولة العرض. تعتمد على مفهوم <b>الجداول والعلاقات</b>.</p>
+  </div>
+
+  <div class="block" id="act-sort">
+    <h2><span class="idx">🎮</span> لعبة: نظام الملفات التقليدي ولا DBMS؟</h2>
+    <div id="activity-sort"></div>
+  </div>
+  <div class="block" id="act-match">
+    <h2><span class="idx">🧩</span> طابق: المستوى ↔ شو بيعمل</h2>
+    <div id="activity-match"></div>
+  </div>
+  <div class="block" id="flash">
+    <h2><span class="idx">🃏</span> بطاقات المصطلحات (اضغط للقلب)</h2>
+    <div id="activity-flash"></div>
+  </div>
+
+  <div class="block" id="c3-extended">
+    <h2><span class="idx">★</span> تفصيل مرجعي موسّع</h2>
+    <details class="accordion">
+      <summary>📚 افتح التفصيل المرجعي (اختياري للمراجعة العميقة)</summary>
+      <div class="accordion-body">
+<h3 id="c3-ext-1">مفهوم DBMS ومكوّناته</h3><p>نظام إدارة قواعد البيانات حزمة برمجية تمكّن المصمم من إنشاء قاعدة البيانات وتعديلها، ومعالجة بياناتها للوصول إلى المعلومات المطلوبة. يتكوّن النظام المؤتمت من: قاعدة البيانات، البرمجيات/DBMS، التجهيزات المادية، والمستخدمين.</p><h3 id="c3-ext-2">اللغات والمستويات</h3><div class="tbl-wrap"><table class="cmp"><tr><th>العنصر</th><th>الدور</th></tr><tr><td>DDL</td><td>تعريف البنية المنطقية للملفات والجداول والعلاقات.</td></tr><tr><td>DML</td><td>قراءة السجلات وإضافتها وتحديثها وحذفها ودمج الملفات وإجراء المعالجات.</td></tr><tr><td>المستوى الخارجي</td><td>منظور المستخدم النهائي أو مبرمج التطبيقات.</td></tr><tr><td>المستوى المنطقي</td><td>تحليل الحاجة للمعلومات وتحديد البيانات والعلاقات والتوافق والصلاحيات.</td></tr><tr><td>المستوى الفيزيائي</td><td>أماكن التخزين والفهارس ووصف السجلات وحفظ البيانات وتشفيرها.</td></tr></table></div><h3 id="c3-ext-3">أدوار العاملين</h3><ul><li><b>DBA:</b> الأمن والحماية، الاستعادة Recovery، الصلاحيات، وإعادة التنظيم وضبط الأداء.</li><li><b>محلل النظم:</b> تحديد متطلبات المستخدم وتحويلها إلى مواصفات.</li><li><b>مبرمج التطبيقات:</b> تحويل التصميم إلى قاعدة فعلية، التحقق من الصحة، وبناء واجهات الإدخال والإخراج والتقارير.</li></ul><h3 id="c3-ext-4">لماذا DBMS؟ ومتى لا نستخدمه؟</h3><p>يعالج مشكلات نظام الملفات التقليدي: التكرار، تبعية الملفات للتطبيقات، بطء إضافة التطبيقات، وتشتت الرقابة. ويؤمن الاستقلالية، المشاركة، ضبط التكرار، الأمن والسرية، النسخ الاحتياطي والاستعادة، التكامل والمرونة وسهولة الصيانة.</p><div class="example"><span class="tag">⚠️ انتبه</span><p>قد لا يكون مناسباً إذا كانت كلفة الإعداد كبيرة مقارنة بحجم المشروع، أو كانت البيانات والتطبيقات بسيطة، أو كانت الاستجابة الفورية جداً مطلوبة، أو لا توجد بيئة متعددة المستخدمين.</p></div><p><b>الأنواع:</b> هرمي، شبكي، وترابطي. يركّز المقرر على الترابطي لانتشاره وبساطته ومرونته.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="next-actions">
+    <a href="chapter-3-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-3-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الرابع)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS504",chapter_id:"3",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script>
+
+renderSortGame("activity-sort", { buckets:[{key:"file", label:"نظام الملفات التقليدي"},{key:"db", label:"نظام DBMS"}], items:[
+ {text:"تكرار وحشو بالبيانات", bucket:"file", why:"من مساوئ نظم الملفات التقليدية."},
+ {text:"الملفات تابعة لبرنامج التطبيق", bucket:"file", why:"في DBMS البرامج مستقلة عن البيانات."},
+ {text:"صعوبة إضافة تطبيقات جديدة", bucket:"file", why:"من مساوئ الملفات التقليدية."},
+ {text:"الرقابة على البيانات من اختصاص البرنامج نفسه فقط", bucket:"file", why:"من مساوئ الملفات التقليدية."},
+ {text:"استقلالية البرامج عن البيانات", bucket:"db", why:"من مزايا DBMS."},
+ {text:"ندرة التكرار", bucket:"db", why:"من مزايا DBMS."},
+ {text:"أمن وسرية عالية", bucket:"db", why:"من مزايا DBMS."},
+ {text:"نسخ احتياطية واسترجاع للبيانات", bucket:"db", why:"من مزايا DBMS."},
+ {text:"تمثيل العلاقات المعقدة بسهولة", bucket:"db", why:"من مزايا DBMS."}
+]});
+renderMatchGame("activity-match", [
+ {left:"المستوى المنطقي", right:"بناء الجداول وتحديد البيانات المطلوب تخزينها والعلاقات (أهم مرحلة)"},
+ {left:"المستوى الفيزيائي", right:"الأقل تجريداً: أماكن التخزين والفهارس والتشفير"},
+ {left:"المستوى الخارجي", right:"مستوى المستخدم المفرد ويتطلب لغة معالجة DML/SQL"},
+ {left:"DDL", right:"تعريف الملفات والسجلات والحقول والعلاقات"},
+ {left:"DML", right:"إضافة وحذف وتعديل السجلات"},
+ {left:"قاموس البيانات", right:"قاعدة بيانات خاصة بالنظام تخزّن مواصفات كل حقل"}
+]);
+renderFlashcards("activity-flash", [
+ {front:"قاعدة البيانات", back:"بيانات متصلة ذات علاقات متبادلة مخزّنة بطريقة نموذجية دون تكرار."},
+ {front:"DBMS", back:"حزمة برمجية لإنشاء قاعدة البيانات وتعديلها ومعالجتها."},
+ {front:"التكامل / التشارك", back:"التكامل: ملفات مترابطة بأقل تكرار · التشارك: عنصر البيانات يستخدمه عدة مستخدمين معاً."},
+ {front:"مدير قاعدة البيانات DBA", back:"الأمن والحماية وصلاحيات المستخدمين وإعادة التنظيم."},
+ {front:"محلل النظم", back:"يحدد متطلبات المستخدم ويطوّر المواصفات."},
+ {front:"مبرمجو التطبيقات", back:"يحوّلون التصميم إلى قاعدة فعلية ويصيغون النوافذ والتقارير."},
+ {front:"أنواع النظم", back:"هرمية · شبكية · ترابطية (الأكثر انتشاراً)."},
+ {front:"متى لا نستخدم قاعدة بيانات؟", back:"تكلفة الإعداد عالية، بيانات بسيطة جداً، أو لا حاجة لتعدد المستخدمين."}
+]);
+
+</script>
+</body>
+</html>

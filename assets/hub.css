@@ -56,6 +56,11 @@
   border-radius:999px; padding:8px 16px; transition:background .15s ease;
 }
 .nav-pill:hover{ background:rgba(255,255,255,.2); }
+.nav-pills{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.nav-pill-hot{ background:var(--amber); border-color:var(--amber); color:#1A1200; animation:hotGlow 2.8s ease-in-out infinite; }
+.nav-pill-hot:hover{ background:var(--amber-dark); border-color:var(--amber-dark); }
+@keyframes hotGlow{ 0%,70%,100%{ box-shadow:0 0 0 0 rgba(255,159,28,0); } 35%{ box-shadow:0 0 0 6px rgba(255,159,28,.28); } }
+@media (prefers-reduced-motion: reduce){ .nav-pill-hot{ animation:none; } }
 .section-title{ margin:30px 0 16px; font-size:1.25rem; }
 .courses-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
 .course-card{
@@ -79,7 +84,9 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
   .courses-grid{ grid-template-columns:1fr; }
   .course-card{ min-height:0; padding:18px; }
   .topbar{ padding:12px 16px; }
-  .nav-pill{ order:3; width:100%; text-align:center; }
+  .nav-pills{ order:3; width:100%; flex-wrap:nowrap; }
+  .nav-pills{ align-items:stretch; }
+  .nav-pill{ flex:1 1 0; display:flex; align-items:center; justify-content:center; text-align:center; font-size:.78rem; padding:8px 10px; line-height:1.4; }
 }
 
 /* ---- سلوغان الصفحة الرئيسية (index) ---- */

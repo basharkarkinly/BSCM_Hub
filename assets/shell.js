@@ -10,8 +10,9 @@
  *
  * - بيحمي الصفحة (نفس requireLogin) وبيبني على يسار الشريط العلوي (.topbar):
  *   🏠 رجوع لكل المقررات · 🔔 الإشعارات · 🚪 خروج.
- * - تحت الشريط العلوي: شريط أبيض فيو "أهلاً الاسم" وأخبار متحرّكة (من تبويب ticker بالشيت). مو ثابت: بيطلع مع التمرير.
- *   موجود بكل الصفحات (الهب والمقررات). greet:false بيلغيه.
+ * - "أهلاً الاسم" بالشريط العلوي جنب الأيقونات.
+ * - تحت الشريط العلوي: شريط أبيض فيو أخبار متحرّكة (من تبويب ticker بالشيت) بعرض كامل، وبيختفي إذا ما في أخبار.
+ *   مو ثابت: بيطلع مع التمرير. موجود بكل الصفحات (الهب والمقررات). greet:false بيلغي الترحيب والشريط.
  * - إذا ما في .topbar بالصفحة بينشئ واحد.
  * - خيارات: { greet:false, onReady:function(user){} }
  */
@@ -32,8 +33,8 @@
     ".scs-n[hidden]{display:none}",
     ".scs-strip{display:flex;align-items:center;direction:rtl;background:#F5F7FB;border-bottom:1px solid #E3E7F0;min-height:40px;overflow:hidden;font-size:.9rem}",
     ".scs-strip[hidden]{display:none}",
-    ".scs-sh{flex:none;padding:0 18px;font-weight:800;color:var(--ink,#0F1C2E);white-space:nowrap;position:relative;z-index:1;background:#F5F7FB}",
-    ".scs-strip.nohello .scs-sh{display:none}",
+    ".scs-hi{flex:none;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:800;font-size:.92rem;color:#fff;margin-inline-end:6px}",
+    ".scs-hi:empty{display:none}",
     ".scs-sa{flex:1;min-width:0;overflow:hidden;color:#3A465A;font-weight:600;-webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent)}",
     ".scs-tk{display:flex;width:max-content;direction:rtl;animation:scsTk linear infinite;animation-duration:var(--scs-d,20s)}",
     ".scs-tk:hover,.scs-tk.hold{animation-play-state:paused}",
@@ -42,7 +43,7 @@
     ".scs-sep{flex:none;width:7px;height:7px;margin:0 26px;background:var(--amber,#FF9F1C);transform:rotate(45deg);border-radius:1px}",
     "@keyframes scsTk{from{transform:translateX(0)}to{transform:translateX(var(--scs-w,0px))}}",
     "@media (prefers-reduced-motion:reduce){.scs-tk{animation:none}.scs-sa{overflow-x:auto;-webkit-mask-image:none;mask-image:none}}",
-    "@media (max-width:700px){.topbar{padding:10px 14px;gap:8px 10px}.topbar .brand{flex:1 1 calc(100% - 140px);min-width:0;font-size:.88rem;line-height:1.35}.topbar nav{flex:1 1 100%;order:2}.scs-ico{width:38px;height:38px;font-size:1rem}.scs-cluster{gap:6px;margin-inline-start:0}}",
+    "@media (max-width:700px){.topbar{padding:10px 14px;gap:8px 10px}.topbar .brand{flex:1 1 calc(100% - 140px);min-width:0;font-size:.88rem;line-height:1.35}.topbar nav{flex:1 1 100%;order:2}.scs-ico{width:38px;height:38px;font-size:1rem}.scs-cluster{gap:4px 6px;margin-inline-start:0;flex:none;width:126px;flex-wrap:wrap;justify-content:center}.scs-hi{order:2;flex:1 1 100%;max-width:100%;text-align:center;font-size:.74rem;margin:0;opacity:.92}}",
     ".scs-ov{position:fixed;inset:0;z-index:80;background:rgba(15,28,46,.5);display:flex;justify-content:center;align-items:flex-start;padding:70px 14px 20px}",
     ".scs-ov[hidden]{display:none}",
     ".scs-panel{background:#fff;color:#16232E;width:100%;max-width:440px;max-height:calc(100vh - 100px);overflow-y:auto;border-radius:16px;box-shadow:0 12px 40px rgba(15,28,46,.25);padding:16px;text-align:right;font-family:'Alexandria',system-ui,sans-serif}",
@@ -100,6 +101,7 @@
     try { onHub = location.pathname === new URL(homeHref).pathname; } catch (e) {}
 
     c.innerHTML =
+      (opts.greet !== false ? '<span class="scs-hi" id="scs-hi"></span>' : "") +
       (onHub ? "" : '<a class="scs-ico" id="scs-home" href="' + esc(homeHref) + '" aria-label="كل المقررات" title="كل المقررات">🏠</a>') +
       '<button class="scs-ico" id="scs-bell" type="button" aria-label="الإشعارات" title="الإشعارات">🔔<span class="scs-n" id="scs-n" hidden>0</span></button>' +
       '<button class="scs-ico" id="scs-out" type="button" aria-label="تسجيل خروج" title="تسجيل خروج">🚪</button>';
@@ -107,7 +109,8 @@
 
     if (opts.greet !== false) {
       var sp = document.createElement("div"); sp.className = "scs-strip"; sp.id = "scs-strip";
-      sp.innerHTML = '<div class="scs-sh" id="scs-sh"></div><div class="scs-sa" id="scs-sa"></div>';
+      sp.hidden = true;   // بيظهر فقط إذا في أخبار
+      sp.innerHTML = '<div class="scs-sa" id="scs-sa"></div>';
       bar.parentNode.insertBefore(sp, bar.nextSibling);
     }
 
@@ -120,7 +123,7 @@
     els = {
       bell: c.querySelector("#scs-bell"), n: c.querySelector("#scs-n"),
       out: c.querySelector("#scs-out"), strip: document.getElementById("scs-strip"),
-      sh: document.getElementById("scs-sh"), sa: document.getElementById("scs-sa"),
+      hi: c.querySelector("#scs-hi"), sa: document.getElementById("scs-sa"),
       ov: ov, body: ov.querySelector("#scs-body")
     };
 
@@ -133,7 +136,7 @@
 
   function setUser(user) {
     var first = ((user && user.name) || "").split(" ")[0];
-    if (els.sh) els.sh.textContent = (first ? "أهلاً " + first : "أهلاً بك") + " 👋";
+    if (els.hi) els.hi.textContent = (first ? "أهلاً " + first : "أهلاً بك") + " 👋";
   }
 
   /* ---------- شريط الأخبار ---------- */
@@ -143,7 +146,8 @@
   function renderTicker(items) {
     var strip = els.strip, area = els.sa; if (!strip || !area) return;
     tkItems = items || [];
-    if (!tkItems.length) { area.innerHTML = ""; tkSig = ""; return; }
+    if (!tkItems.length) { area.innerHTML = ""; tkSig = ""; strip.hidden = true; return; }
+    strip.hidden = false;   // لازم يكون ظاهر قبل القياس تحت
     var cycle = tkItems.map(function (t) { return '<span class="scs-it">' + esc(t) + '</span><i class="scs-sep" aria-hidden="true"></i>'; }).join("");
     var tk = document.createElement("div"); tk.className = "scs-tk";
     var g = document.createElement("div"); g.className = "scs-g"; g.innerHTML = cycle;

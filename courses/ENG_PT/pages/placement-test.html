@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>امتحان تحديد المستوى | ENG_PT</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="guard">
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> ENG_PT — تحديد مستوى اللغة الإنكليزية</a>
+  <nav><a href="../index.html" class="home-btn">صفحة المقرر</a></nav>
+</div>
+
+<div class="stage-banner">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">امتحان تحديد المستوى</div>
+      <h1>جاوب بهدوء وبصراحة</h1>
+      <p>خلص الامتحان وشوف مستواك — نتيجتك بتنحفظ تلقائياً على حسابك، وبآخرها استبيان تقييم قصير.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap content">
+  <div id="quiz-container"></div>
+</div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="copyright">كلن ع <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">تلغرام</a> 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+  <div style="font-size:.72rem; opacity:.6; margin-top:6px;">Designed by Bashar Karkinly</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>if(window.SCShell){SCShell.init();}else{document.body.classList.remove("guard");}</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/placement-a1.js"></script>
+<script src="../assets/data/placement-a2.js"></script>
+<script src="../assets/data/placement-b1.js"></script>
+<script src="../assets/data/placement-b2.js"></script>
+<script src="../assets/data/placement-c1.js"></script>
+<script src="../assets/data/placement-c2.js"></script>
+
+<!-- حفظ النتيجة على حساب الطالب + استبيان التقييم (الجلسة من الهَب) -->
+<script src="../assets/hub-flow.js"></script>
+<script>
+  const STAGES = [
+    {key:"a1", label:"A1", pool: A1_POOL},
+    {key:"a2", label:"A2", pool: A2_POOL},
+    {key:"b1", label:"B1", pool: B1_POOL},
+    {key:"b2", label:"B2", pool: B2_POOL},
+    {key:"c1", label:"C1", pool: C1_POOL},
+    {key:"c2", label:"C2", pool: C2_POOL}
+  ];
+  renderPlacementTest("quiz-container", STAGES, {});
+</script>
+</body>
+</html>

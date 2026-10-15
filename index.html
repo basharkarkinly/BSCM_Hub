@@ -213,6 +213,7 @@
     if (r.state === "valid") return goWelcome();
     show("step-email"); initGoogle();
     if (r.state === "offline") msg("msg-email", ERR.NET);
+    if (/[?&]deleted=1/.test(location.search)) msg("msg-email", "انحذف حسابك وبياناتك. منتمنالك التوفيق 🤍", true);
   });
 })();
 </script>

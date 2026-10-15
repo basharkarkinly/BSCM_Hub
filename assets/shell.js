@@ -35,6 +35,7 @@
     ".scs-strip[hidden]{display:none}",
     ".scs-hi{flex:none;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:800;font-size:.92rem;color:#fff;margin-inline-end:6px}",
     ".scs-hi:empty{display:none}",
+    "a.scs-hi{text-decoration:none}a.scs-hi:hover{text-decoration:underline}",
     ".scs-sa{flex:1;min-width:0;overflow:hidden;color:#3A465A;font-weight:600;-webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent)}",
     ".scs-tk{display:flex;width:max-content;direction:rtl;animation:scsTk linear infinite;animation-duration:var(--scs-d,20s)}",
     ".scs-tk:hover,.scs-tk.hold{animation-play-state:paused}",
@@ -101,7 +102,7 @@
     try { onHub = location.pathname === new URL(homeHref).pathname; } catch (e) {}
 
     c.innerHTML =
-      (opts.greet !== false ? '<span class="scs-hi" id="scs-hi"></span>' : "") +
+      (opts.greet !== false ? '<a class="scs-hi" id="scs-hi" href="' + HUB + 'profile.html" title="حسابي"></a>' : "") +
       (onHub ? "" : '<a class="scs-ico" id="scs-home" href="' + esc(homeHref) + '" aria-label="كل المقررات" title="كل المقررات">🏠</a>') +
       '<button class="scs-ico" id="scs-bell" type="button" aria-label="الإشعارات" title="الإشعارات">🔔<span class="scs-n" id="scs-n" hidden>0</span></button>' +
       '<button class="scs-ico" id="scs-out" type="button" aria-label="تسجيل خروج" title="تسجيل خروج">🚪</button>';

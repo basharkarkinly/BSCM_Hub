@@ -156,3 +156,22 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .hero-split{ display:flex; align-items:center; gap:48px; flex-wrap:wrap; }
 .hero-split .hero-text{ flex:1 1 420px; }
 .hero-split .slogan{ flex:1 1 340px; margin-top:0; }
+
+
+/* ---- صفحة الحساب (profile.html) ---- */
+.pf{ padding:30px 22px 56px; max-width:640px; }
+.pf h1{ margin:0 0 6px; font-size:1.7rem; }
+.pf .pf-note{ margin:0 0 22px; color:var(--muted); font-size:.92rem; }
+.pf-card{ margin:0 0 20px; padding:20px; background:#fff; border:1px solid var(--line, #E3E8F0); border-radius:var(--radius); }
+.pf-card .field input[readonly]{ background:#F3F5F9; color:var(--muted); }
+.pf-hint{ margin:-6px 0 14px; font-size:.82rem; color:var(--muted); }
+.pf-danger{ border-color:#F6C3D1; background:#FFF8FA; }
+.pf-danger h2{ margin:0 0 8px; font-size:1.1rem; color:var(--danger); }
+.pf-danger p, .pf-danger li{ font-size:.9rem; line-height:1.85; }
+.pf-danger ul{ margin:6px 0 14px; padding-inline-start:20px; }
+.btn-danger{ background:var(--danger); color:#fff; }
+.btn-danger:hover{ filter:brightness(.93); }
+.btn-outline-danger{ background:transparent; color:var(--danger); border:2px solid var(--danger); }
+.btn-outline-danger:hover{ background:var(--danger-bg); }
+.pf-confirm{ margin-top:14px; padding-top:14px; border-top:1px dashed #F0B3C4; }
+.pf-confirm .row-between{ margin-top:8px; }

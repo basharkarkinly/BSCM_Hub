@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حسابي — Support Channel</title>
+<link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="welcome.html" style="text-decoration:none;"><img src="assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> Support Channel</a>
+</div>
+
+<main class="wrap pf">
+  <h1>حسابي</h1>
+  <p class="pf-note">🔒 هالصفحة إلك وحدك، وما حدا غيرك بيشوفها.</p>
+
+  <section class="pf-card">
+    <label class="field"><span>اسم العرض</span>
+      <input id="pf-name" type="text" maxlength="40" autocomplete="nickname" placeholder="اسمك أو اسم مستعار">
+    </label>
+    <p class="pf-hint">ممكن يكون اسم مستعار. هو الاسم اللي بيظهر مع تعليقاتك.</p>
+    <button id="pf-save" class="btn btn-primary btn-block" type="button">حفظ الاسم</button>
+    <p id="pf-msg" class="msg" role="alert"></p>
+
+    <label class="field" style="margin-top:18px;"><span>الإيميل</span>
+      <input id="pf-email" type="email" dir="ltr" readonly>
+    </label>
+    <p class="pf-hint" style="margin-bottom:0;">للدخول فقط، وما منعرضو لأي حدا. ما بيتغيّر من هون.</p>
+  </section>
+
+  <section class="pf-card pf-danger">
+    <h2>حذف الحساب</h2>
+    <p>إذا حذفت حسابك بينمسح هالشي نهائياً وما بيتراجع عنو:</p>
+    <ul>
+      <li>إيميلك واسمك.</li>
+      <li>نتائجك وأجوبتك على الاستبيانات.</li>
+      <li>تعليقاتك بتضل بس بدون اسمك.</li>
+    </ul>
+    <button id="pf-del-open" class="btn btn-outline-danger btn-block" type="button">حذف حسابي</button>
+
+    <div id="pf-confirm" class="pf-confirm" hidden>
+      <label class="field"><span>للتأكيد اكتب كلمة: <b>حذف</b></span>
+        <input id="pf-del-word" type="text" autocomplete="off" placeholder="حذف">
+      </label>
+      <button id="pf-del-go" class="btn btn-danger btn-block" type="button" disabled>أحذف حسابي نهائياً</button>
+      <div class="row-between">
+        <button id="pf-del-cancel" class="linkbtn" type="button">تراجع</button>
+      </div>
+    </div>
+    <p id="pf-del-msg" class="msg" role="alert"></p>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+  </div>
+  <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/auth.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var TG = "https://t.me/karkinlySupportGroup";
+  var ERR = {
+    INVALID_NAME: "الاسم لازم يكون بين 2 و40 حرف.",
+    NO_SESSION: "انتهت جلستك، سجّل دخولك مرة تانية.",
+    EXPIRED: "انتهت جلستك، سجّل دخولك مرة تانية.",
+    NET: "ما في اتصال بالسيرفر، تأكد من الإنترنت وجرّب."
+  };
+  function msg(id, text, ok) { var el = $(id); el.textContent = text || ""; el.className = "msg " + (ok ? "ok" : "err"); }
+
+  SCShell.init({
+    onReady: function (user) {
+      $("pf-name").value = user.name || "";
+      $("pf-email").value = user.email || "";
+    }
+  });
+
+  // ---- تعديل الاسم ----
+  function saveName() {
+    var name = $("pf-name").value.replace(/\s+/g, " ").trim();
+    if (name.length < 2 || name.length > 40) { msg("pf-msg", ERR.INVALID_NAME); return; }
+    var s = SCAuth.getSession(); if (!s) return;
+    $("pf-save").disabled = true; msg("pf-msg", "");
+    SCAuth.api("updateName", { token: s.token, name: name }).then(function (res) {
+      if (res && res.ok) {
+        var nm = (res.user && res.user.name) || name;
+        SCAuth.saveSession({ token: s.token, email: s.email, name: nm, ok_at: s.ok_at });
+        $("pf-name").value = nm;
+        var hi = $("scs-hi"); if (hi) hi.textContent = "أهلاً " + nm.split(" ")[0] + " 👋";
+        msg("pf-msg", "انحفظ الاسم ✓", true);
+      } else {
+        msg("pf-msg", (res && ERR[res.error]) || "ما قدرنا نحفظ الاسم هلأ، جرّب بعد شوي.");
+      }
+    }).catch(function () { msg("pf-msg", ERR.NET); })
+      .then(function () { $("pf-save").disabled = false; });
+  }
+  $("pf-save").addEventListener("click", saveName);
+  $("pf-name").addEventListener("keydown", function (e) { if (e.key === "Enter") saveName(); });
+
+  // ---- حذف الحساب (خطوتين + كتابة كلمة التأكيد) ----
+  $("pf-del-open").addEventListener("click", function () {
+    $("pf-confirm").hidden = false; $("pf-del-open").hidden = true; $("pf-del-word").focus();
+  });
+  $("pf-del-cancel").addEventListener("click", function () {
+    $("pf-confirm").hidden = true; $("pf-del-open").hidden = false;
+    $("pf-del-word").value = ""; $("pf-del-go").disabled = true; msg("pf-del-msg", "");
+  });
+  $("pf-del-word").addEventListener("input", function () {
+    $("pf-del-go").disabled = this.value.trim() !== "حذف";
+  });
+  $("pf-del-go").addEventListener("click", function () {
+    var s = SCAuth.getSession(); if (!s) return;
+    $("pf-del-go").disabled = true; msg("pf-del-msg", "عم نحذف حسابك...", true);
+    SCAuth.api("deleteAccount", { token: s.token }).then(function (res) {
+      if (res && res.ok) {
+        // مسح كل شي محفوظ عالجهاز (الجلسة، الموافقة، كاش المقررات...)
+        try { Object.keys(localStorage).filter(function (k) { return k.indexOf("sc_") === 0; }).forEach(function (k) { localStorage.removeItem(k); }); } catch (e) {}
+        try { sessionStorage.clear(); } catch (e) {}
+        location.replace("index.html?deleted=1");
+        return;
+      }
+      msg("pf-del-msg", "ما قدرنا نحذف الحساب هلأ. جرّب بعد شوي، أو تواصل معنا عالتلغرام: " + TG);
+      $("pf-del-go").disabled = false;
+    }).catch(function () { msg("pf-del-msg", ERR.NET); $("pf-del-go").disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>

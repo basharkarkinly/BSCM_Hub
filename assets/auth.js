@@ -33,7 +33,10 @@
     if (!s || !s.token) return Promise.resolve({ state: "invalid" });
     return api("checkSession", { token: s.token }).then(function (res) {
       if (res && res.ok) {
-        saveSession({ token: s.token, email: res.user.email, name: res.user.name });
+        // terms = رقم نسخة الخصوصية اللي وافق عليها الطالب (من السيرفر). إذا السيرفر ما رجّعو منحافظ على القيمة المحفوظة.
+        var terms = (res.user.terms != null) ? res.user.terms : s.terms;
+        saveSession({ token: s.token, email: res.user.email, name: res.user.name, terms: terms });
+        res.user.terms = terms;
         return { state: "valid", user: res.user };
       }
       // نمسح الجلسة فقط إذا رفضها السيرفر نهائياً. أي خطأ مؤقت (SERVER_ERROR وغيره) ما يطلّع المستخدم.
@@ -68,7 +71,7 @@
     // مسار سريع: جلسة تأكدنا منها مؤخراً → الصفحة تظهر فوراً، والتحقق (إذا لزم) بالخلفية
     if (s && s.token && s.email && age < FRESH_MS) {
       document.body.classList.remove("guard");
-      if (onReady) onReady({ email: s.email, name: s.name });
+      if (onReady) onReady({ email: s.email, name: s.name, terms: s.terms });
       if (age > RECHECK_MS) check().then(function (r) { if (r.state === "invalid") toLogin(); });
       return;
     }

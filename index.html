@@ -67,6 +67,22 @@
         </div>
         <p id="msg-code" class="msg" role="alert"></p>
       </div>
+
+      <!-- الخطوة 3: الموافقة على الخصوصية وشروط الاستخدام (بعد الدخول) -->
+      <div id="step-consent" class="step" hidden>
+        <h2 id="consent-title">قبل ما نكمّل 👋</h2>
+        <p id="consent-note" class="sub" hidden></p>
+        <p class="sub">باختصار، هيك منتعامل مع بياناتك:</p>
+        <ul id="consent-points" class="consent-points"></ul>
+        <label class="check"><input type="checkbox" id="consent-check">
+          <span>قرأت <a href="privacy.html" target="_blank" rel="noopener">الخصوصية وشروط الاستخدام</a> وبوافق عليها.</span>
+        </label>
+        <button id="btn-consent" class="btn btn-primary btn-block" type="button" disabled>أوافق وأكمل</button>
+        <div class="row-between">
+          <button id="btn-decline" class="linkbtn" type="button">ما بوافق (تسجيل خروج)</button>
+        </div>
+        <p id="msg-consent" class="msg" role="alert"></p>
+      </div>
     </div>
   </div>
 </section>
@@ -75,12 +91,14 @@
   <div class="footer-links">
     <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
     <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="privacy.html">🔒 الخصوصية</a>
   </div>
   <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
 </footer>
 
 <script src="assets/config.js"></script>
 <script src="assets/auth.js"></script>
+<script src="assets/policy.js"></script>
 <script src="assets/slogan.js" defer></script>
 <script>
 (function () {
@@ -101,7 +119,7 @@
     NET: "ما في اتصال بالسيرفر، تأكد من الإنترنت وجرّب."
   };
   function show(step) {
-    ["checking", "step-email", "step-code"].forEach(function (s) { $(s).hidden = (s !== step); });
+    ["checking", "step-email", "step-code", "step-consent"].forEach(function (s) { $(s).hidden = (s !== step); });
   }
   function msg(id, text, ok) { var el = $(id); el.textContent = text || ""; el.className = "msg " + (ok ? "ok" : "err"); }
   function errText(res) {
@@ -129,9 +147,42 @@
     }, 1000);
     b.textContent = "إعادة الإرسال بعد " + sec + " ث";
   }
+  // ---- الموافقة على الخصوصية: السيرفر هو المرجع (terms = آخر نسخة وافق عليها الطالب) ----
+  function termsVersion() { return Number((window.SC_CONFIG || {}).TERMS_VERSION) || 0; }
+  function proceed() {
+    var s = SCAuth.getSession() || {};
+    if ((Number(s.terms) || 0) >= termsVersion()) return goWelcome();
+    showConsent(s);
+  }
+  function showConsent(s) {
+    var P = window.SC_POLICY, had = (Number(s.terms) || 0) > 0;
+    show("step-consent");
+    $("consent-title").textContent = had ? "حدّثنا الخصوصية وشروط الاستخدام" : "قبل ما نكمّل 👋";
+    var note = $("consent-note"), last = P && P.changes && P.changes[P.changes.length - 1];
+    note.hidden = !(had && last); if (had && last) note.textContent = "شو تغيّر: " + last.note;
+    var ul = $("consent-points"); ul.innerHTML = "";
+    ((P && P.summary) || []).forEach(function (t) { var li = document.createElement("li"); li.innerHTML = P.fmt(t); ul.appendChild(li); });
+    $("consent-check").checked = false; $("btn-consent").disabled = true; msg("msg-consent", "");
+    try { document.querySelector(".auth-card").scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
+  }
+  function acceptConsent() {
+    var s = SCAuth.getSession() || {}, v = termsVersion();
+    $("btn-consent").disabled = true; msg("msg-consent", "");
+    function done() {
+      SCAuth.saveSession({ token: s.token, email: s.email, name: s.name, terms: v, ok_at: s.ok_at });
+      goWelcome();
+    }
+    function fail() { msg("msg-consent", "ما انحفظت موافقتك، جرّب مرة كمان."); $("btn-consent").disabled = false; }
+    SCAuth.api("acceptTerms", { token: s.token, version: v, device: device() }).then(function (res) {
+      if (res && res.ok) return done();
+      if (res && res.error === "UNKNOWN_ACTION") return done();   // السيرفر لسا ما انحدّث: منكمّل ومنسجّل محلياً
+      if (res && (res.error === "NO_SESSION" || res.error === "EXPIRED")) { SCAuth.clearSession(); location.reload(); return; }
+      fail();
+    }).catch(fail);
+  }
   function saveAndGo(res) {
-    SCAuth.saveSession({ token: res.token, email: res.user.email, name: res.user.name });
-    goWelcome();
+    SCAuth.saveSession({ token: res.token, email: res.user.email, name: res.user.name, terms: res.user.terms || 0 });
+    proceed();
   }
 
   function sendCode(isResend) {
@@ -178,6 +229,9 @@
   $("btn-send").addEventListener("click", function () { sendCode(false); });
   $("btn-resend").addEventListener("click", function () { sendCode(true); });
   $("btn-verify").addEventListener("click", verify);
+  $("consent-check").addEventListener("change", function () { $("btn-consent").disabled = !this.checked; });
+  $("btn-consent").addEventListener("click", acceptConsent);
+  $("btn-decline").addEventListener("click", function () { SCAuth.logout(); });
   $("btn-back").addEventListener("click", function () { clearInterval(state.cooldownTimer); show("step-email"); $("email").focus(); });
   $("email").addEventListener("keydown", function (e) { if (e.key === "Enter") sendCode(false); });
   $("code").addEventListener("keydown", function (e) { if (e.key === "Enter") verify(); });
@@ -210,7 +264,7 @@
     return;
   }
   SCAuth.check().then(function (r) {
-    if (r.state === "valid") return goWelcome();
+    if (r.state === "valid") return proceed();
     show("step-email"); initGoogle();
     if (r.state === "offline") msg("msg-email", ERR.NET);
     if (/[?&]deleted=1/.test(location.search)) msg("msg-email", "انحذف حسابك وبياناتك. منتمنالك التوفيق 🤍", true);

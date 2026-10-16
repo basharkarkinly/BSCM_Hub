@@ -261,6 +261,13 @@
       build(opts);
       if (!window.SCAuth) { document.body.classList.remove("guard"); return; }
       SCAuth.requireLogin(function (user) {
+        // ما وافق على آخر نسخة من الخصوصية → بنوديه لخطوة الموافقة بصفحة الدخول وبيرجع لهون بعدها
+        var need = Number((window.SC_CONFIG || {}).TERMS_VERSION) || 0;
+        if (need && (Number(user.terms) || 0) < need) {
+          document.body.classList.add("guard");
+          location.replace(HUB + "index.html?next=" + encodeURIComponent(location.href));
+          return;
+        }
         setUser(user);
         loadNotifs();
         loadTicker();

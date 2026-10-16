@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الخصوصية وشروط الاستخدام — Support Channel</title>
+<link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="brand" href="index.html" style="text-decoration:none;"><img src="assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> Support Channel</a>
+</div>
+
+<!-- المحتوى كله بيتبنى من assets/policy.js (هاد الملف ما بتعدّل عليه) -->
+<main class="wrap legal" id="legal"><noscript>فعّل الجافاسكربت لعرض الوثيقة.</noscript></main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="index.html">↩ رجوع</a>
+  </div>
+  <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/policy.js"></script>
+<script>
+(function () {
+  var P = window.SC_POLICY, root = document.getElementById("legal");
+  if (!P) { root.textContent = "تعذّر تحميل الوثيقة."; return; }
+  var fmt = P.fmt, h = [];
+  var ver = (window.SC_CONFIG && SC_CONFIG.TERMS_VERSION) || 1;
+
+  h.push("<h1>" + fmt(P.title) + "</h1>");
+  h.push('<p class="updated">آخر تحديث: ' + fmt(P.updated) + " · النسخة " + ver + "</p>");
+
+  h.push('<div class="summary"><b>باختصار واجب علينا نخبرك شو منعمل عهالمنصة:</b><ul>' + (P.summary || []).map(function (t) { return "<li>" + fmt(t) + "</li>"; }).join("") + "</ul></div>");
+
+  (P.sections || []).forEach(function (s, i) {
+    h.push('<h2 id="s' + (i + 1) + '">' + (i + 1) + ". " + fmt(s.title) + "</h2>");
+    (s.body || []).forEach(function (b) {
+      if (Array.isArray(b)) h.push("<ul>" + b.map(function (t) { return "<li>" + fmt(t) + "</li>"; }).join("") + "</ul>");
+      else h.push("<p>" + fmt(b) + "</p>");
+    });
+  });
+
+  if (P.changes && P.changes.length) {
+    h.push("<h2>سجل التعديلات</h2><ul>" + P.changes.slice().reverse().map(function (c) {
+      return "<li><b>النسخة " + c.version + "</b> (" + fmt(c.date) + "): " + fmt(c.note) + "</li>";
+    }).join("") + "</ul>");
+  }
+  root.innerHTML = h.join("\n");
+  document.title = P.title + " — Support Channel";
+})();
+</script>
+</body>
+</html>

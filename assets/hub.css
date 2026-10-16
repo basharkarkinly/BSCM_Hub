@@ -175,3 +175,22 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .btn-outline-danger:hover{ background:var(--danger-bg); }
 .pf-confirm{ margin-top:14px; padding-top:14px; border-top:1px dashed #F0B3C4; }
 .pf-confirm .row-between{ margin-top:8px; }
+
+/* ---- خطوة الموافقة بصفحة الدخول ---- */
+.consent-points{ margin:0 0 14px; padding-inline-start:20px; font-size:.9rem; line-height:1.85; color:var(--muted); }
+.check{ display:flex; align-items:flex-start; gap:10px; margin:4px 0 14px; font-size:.92rem; line-height:1.6; cursor:pointer; }
+.check input{ flex:none; width:20px; height:20px; margin-top:3px; accent-color:var(--teal); }
+.check a{ color:var(--teal-dark, var(--teal)); font-weight:700; }
+
+/* ---- صفحة الخصوصية ---- */
+.legal{ padding:30px 22px 56px; }
+.legal h1{ margin:0 0 6px; font-size:1.8rem; }
+.legal .updated{ margin:0 0 22px; color:var(--muted); font-size:.85rem; }
+.legal .summary{ margin:0 0 8px; padding:16px 20px; background:#EFFBF8; border:1px solid #BFEDE6; border-radius:var(--radius); }
+.legal .summary ul{ margin:8px 0 0; padding-inline-start:20px; }
+.legal h2{ margin:30px 0 8px; font-size:1.2rem; }
+.legal p, .legal li{ line-height:1.95; }
+.legal ul{ padding-inline-start:22px; }
+.legal a{ color:var(--teal-dark, var(--teal)); font-weight:700; }
+
+

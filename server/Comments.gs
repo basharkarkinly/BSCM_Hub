@@ -344,6 +344,7 @@ function addComment_(req) {
 
   const places = placesOf_(a.user.obj);
   if (!places[p.key]) { places[p.key] = row[C_AT]; savePlaces_(a.user.idx, places); }
+  activateReferral_(a.user);   // أول سؤال أو جواب = بلّش يتفاعل
 
   return { ok: true, comment: pubComment_(row, uid), mine_count: parent ? mine : mine + 1, limit: LIM.Q_PER_PLACE };
 }

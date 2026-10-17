@@ -221,3 +221,15 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
   margin:22px 0 4px; padding:16px 20px; border-radius:var(--radius); background:#FFF8EC; border:1px solid #FFD79A; }
 .stars-card p{ margin:0; font-size:.93rem; color:#5A3A00; }
 .stars-card b{ color:#3D2800; }
+
+/* ---- الدعوات بصفحة نجومي ---- */
+.inv-box{ display:flex; gap:8px; }
+.inv-box input{ flex:1; min-width:0; padding:10px 12px; border:1.5px solid var(--border); border-radius:var(--radius-sm);
+  font:inherit; font-size:.85rem; background:#F3F5F9; color:var(--ink-soft); }
+.inv-box .btn{ flex:none; padding-inline:18px; }
+.inv-share{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+.inv-btn{ flex:1; min-width:90px; text-align:center; padding:8px 12px; border-radius:999px; border:1.5px solid var(--border);
+  background:#fff; color:var(--ink-soft); font:inherit; font-size:.85rem; font-weight:700; text-decoration:none; cursor:pointer; }
+.inv-btn[hidden]{ display:none; }
+.inv-btn:hover{ border-color:var(--teal); }
+.inv-stats{ margin:12px 0 0; font-size:.86rem; color:var(--muted); }

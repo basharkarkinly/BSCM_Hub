@@ -199,6 +199,7 @@ function renderQuiz(containerId, pool, opts){
     if(timerId){ clearInterval(timerId); timerId = null; }
     const scorePercent = Math.round((correctCount / qs.length) * 100);
     const result = recordAttempt(opts.chapterKey, scorePercent);
+    if(window.SCStars) SCStars.examDone(opts.chapterKey, scorePercent);   // ⭐ نجوم الامتحان (أول نجاح بس)
     renderResult(container, {
       scorePercent, correctCount, total: qs.length,
       passed: scorePercent >= PASS_THRESHOLD,
@@ -214,6 +215,7 @@ function renderQuiz(containerId, pool, opts){
     if(timerId){ clearInterval(timerId); timerId = null; }
     const elapsedMs = Date.now() - startedAt;
     const scorePercent = Math.round((correctCount / qs.length) * 100);
+    if(window.SCStars) SCStars.examDone("final", scorePercent);          // ⭐ نجوم الفحص النهائي (أول مرة ≥ 90)
     const marksPer = opts.marksPerQuestion || 1;
     const marks = correctCount * marksPer, totalMarks = qs.length * marksPer;
     try{

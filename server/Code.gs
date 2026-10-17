@@ -26,7 +26,7 @@ const CFG = {
 /* ============ نقاط الدخول ============ */
 
 function doGet() {
-  return json_({ ok: true, service: 'support-channel-auth', version: 'v6-cache' });
+  return json_({ ok: true, service: 'support-channel-auth', version: 'v7-stars' });
 }
 
 function doPost(e) {
@@ -44,8 +44,14 @@ function doPost(e) {
       case 'getComments':      return json_(getComments_(req));
       case 'getNotifications': return json_(getNotifications_(req));
       case 'getTicker':        return json_(getTicker_(req));
+      case 'getQaStats':       return json_(getQaStats_(req));
       case 'addComment':       return json_(withLock_(() => addComment_(req)));
       case 'deleteComment':    return json_(withLock_(() => deleteComment_(req)));
+      case 'voteAnswer':       return json_(withLock_(() => voteAnswer_(req)));
+      case 'acceptAnswer':     return json_(withLock_(() => acceptAnswer_(req)));
+      // النجوم (Stars.gs)
+      case 'getMyStars':       return json_(getMyStars_(req));
+      case 'examPassed':       return json_(withLock_(() => examPassed_(req)));
       case 'markSeen':         return json_(withLock_(() => markSeen_(req)));
       case 'savePlacementResult': return json_(withLock_(() => savePlacementResult_(req)));
       case 'savePlacementSurvey': return json_(withLock_(() => savePlacementSurvey_(req)));
@@ -179,6 +185,7 @@ function verifyOtp_(req) {
   let user = findUser_(email);
   const name = cleanName_(req.name).slice(0, 80);
   if (!user && !name) return { ok: false, error: 'NAME_REQUIRED' };
+  if (!user && hasBanned_(name)) return { ok: false, error: 'INVALID_NAME' };
   if (user && user.obj.status === 'blocked') return { ok: false, error: 'BLOCKED' };
 
   updateRow_(otp, idx, { used: 'TRUE', fails: 0 });
@@ -336,7 +343,7 @@ function updateName_(req) {
   const s = checkSession_(req);
   if (!s.ok) return s;
   const name = cleanName_(req.name);
-  if (name.length < 2 || name.length > 40) return { ok: false, error: 'INVALID_NAME' };
+  if (name.length < 2 || name.length > 40 || hasBanned_(name)) return { ok: false, error: 'INVALID_NAME' };
 
   const users = table_('users');
   const idx = findEmailRow_(users, s.user.email);
@@ -364,6 +371,8 @@ function deleteAccount_(req) {
     });
   });
   if (userId) deleteRowsWhere_('consents', function (o) { return String(o.user_id) === userId; });
+  if (userId) deleteRowsWhere_('stars_ledger', function (o) { return String(o.user_id) === userId; });
+  if (userId && deleteRowsWhere_('votes', function (o) { return String(o.user_id) === userId; })) bumpCommentsCache_();
   deleteRowsWhere_('otp', function (o) { return String(o.email).trim().toLowerCase() === email; });
   deleteRowsWhere_('sessions', function (o) { return String(o.email).trim().toLowerCase() === email; });
   deleteRowsWhere_('users', function (o) { return String(o.email).trim().toLowerCase() === email; });   // آخر شي
@@ -469,11 +478,30 @@ function archiveOldComments_(cutoff) {
   return moving.length;
 }
 
-/** لما تعدّل تبويب comments يدوياً (تخفي تعليق مثلاً) → الكاش بيتفرّغ فوراً */
+/**
+ * لما تعدّل الشيت بإيدك:
+ *  - تبويب comments (تخفي جواب مثلاً): الكاش بيتفرّغ، ونجوم الأجوبة اللي انخفت بتنسحب.
+ *  - star_rules / banned_words / courses: الكاش تبعهم بيتفرّغ فوراً.
+ */
 function onSheetEdit(e) {
   try {
-    const name = e && e.range ? e.range.getSheet().getName() : '';
-    if (name === 'comments') bumpCommentsCache_();
+    if (!e || !e.range) return;
+    const sh = e.range.getSheet();
+    const name = sh.getName();
+    if (name === 'comments') {
+      const head = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].map(String);
+      const cs = head.indexOf('status'), ci = head.indexOf('comment_id'), cp = head.indexOf('parent_id');
+      const r0 = Math.max(2, e.range.getRow()), n = e.range.getLastRow() - r0 + 1;
+      if (n > 0 && cs >= 0 && ci >= 0 && cp >= 0) {
+        const ids = sh.getRange(r0, 1, n, head.length).getValues()
+          .filter(function (v) { return v[cp] && v[ci] && String(v[cs]) !== 'visible'; })
+          .map(function (v) { return String(v[ci]); });
+        if (ids.length) withLock_(function () { onCommentsHidden_(ids); }, 30000);
+      }
+      bumpCommentsCache_();
+    } else if (name === 'star_rules' || name === 'banned_words' || name === 'courses') {
+      clearStarsCaches_();
+    }
   } catch (err) { console.error(err); }
 }
 

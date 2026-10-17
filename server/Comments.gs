@@ -1,28 +1,33 @@
 /**
- * Support Channel — التعليقات والإشعارات
- * ملف مستقل بجانب Code.gs (Apps Script بيشاركهم نفس المحيط).
+ * Support Channel — أسئلة وأجوبة الفصول + الإشعارات + شريط الأخبار
+ * ملف مستقل بجانب Code.gs و Stars.gs (Apps Script بيشاركهم نفس المحيط).
+ *
+ * الفكرة (النسخة 4): النقاش تحت كل فصل صار "أسئلة هالفصل".
+ *   - تعليق بدون parent_id = سؤال.  تعليق إلو parent_id = جواب على هالسؤال.
+ *   - 👍 على الجواب (تبويب votes)، و"✓ حلّ مشكلتي" من صاحب السؤال (عمود accepted_id على صف السؤال).
+ *   - النجوم (Stars.gs): جواب مقبول = 3، صوت من حساب موثوق = 1 (مع سقف يومي). كلها من تبويب star_rules.
  *
  * التبويبات المستخدمة:
- *   comments         : comment_id, course_id, chapter_id, user_id, name, text, parent_id, created_at, status
+ *   comments         : comment_id, course_id, chapter_id, user_id, name, text, parent_id, created_at, status, accepted_id
  *   comments_archive : نفس الأعمدة (النقاشات القديمة، بينقلها التنظيف الليلي)
+ *   votes            : comment_id, user_id, created_at
  *   announcements    : ann_id, title, body, created_at, status
  *   ticker           : tick_id, text, created_at, expires_at, status   (شريط الأخبار)
- *   users            : + notif_seen_at, places
+ *   users            : + notif_seen_at, places, stars, stars_recent, stars_day
  *
- * الكاش (النسخة 3):
- *   تعليقات كل (مادة|فصل) محفوظة بـ CacheService لـ 6 ساعات. القراءة من الشيت بتصير مرة وحدة
- *   (وبتعبّي كل الأماكن دفعة وحدة)، والإضافة والحذف بيحدّثوا الكاش مباشرة.
- *   أي تعديل يدوي على تبويب comments → onSheetEdit بيفرّغ الكاش (أو شغّل clearCommentsCache).
+ * الكاش: أسئلة وأجوبة كل (مادة|فصل) محفوظة بـ CacheService لـ 6 ساعات. القراءة من الشيت مرة وحدة
+ * وبتعبّي كل الأماكن دفعة وحدة، وكل إضافة/حذف/صوت/قبول بيحدّث الكاش مباشرة.
+ * أي تعديل يدوي على تبويب comments → onSheetEdit بيفرّغ الكاش (أو شغّل clearCommentsCache).
  *
- *   users.places = {"BMN401|3":"<تاريخ أول تعليق>", ...} : الأماكن يلي الطالب علّق فيها،
- *   حتى الإشعارات تفتح بس هالأماكن بدل ما تمرق على كل التعليقات.
+ * users.places = {"BMN401|3":"<تاريخ أول مشاركة>", ...} : الأماكن يلي الطالب سأل أو جاوب فيها (للإشعارات السريعة).
  */
 
 const LIM = {
-  MAX_LEN: 500,        // أقصى طول للتعليق
-  PER_PLACE: 3,        // أقصى عدد تعليقات للمستخدم بنفس المكان (مادة/فصل) — الردود تُحسب
-  COOLDOWN_SEC: 30,    // فاصل بين أي تعليقين لنفس المستخدم
-  LIST_MAX: 300        // أقصى عدد تعليقات تُرسل للواجهة
+  MAX_LEN: 500,        // أقصى طول للسؤال أو الجواب
+  Q_PER_PLACE: 3,      // أقصى عدد أسئلة ظاهرة للطالب بنفس الفصل
+  A_PER_QUESTION: 1,   // كم جواب بيقدر الطالب يكتب على نفس السؤال
+  COOLDOWN_SEC: 30,    // فاصل بين أي مشاركتين لنفس الطالب
+  Q_LIST_MAX: 100      // أقصى عدد أسئلة (مع أجوبتها) تُرسل للواجهة
 };
 const ID_RE_ = /^[A-Za-z0-9_\-]{1,40}$/;
 
@@ -31,7 +36,7 @@ const WELCOME = {
   FROM: '2026-10-04T00:00:00Z',   // بس يلي بيسجّلوا بعد هالتاريخ بيجيهم (غيّرو لتاريخ النشر)
   DAYS: 14,                        // كم يوم بتضل بالقائمة
   TITLE: 'أهلاً فيك يا {name} 👋',
-  BODY: 'هون بتلاقي مقرراتك مشروحة ومبسّطة، مع تدريب حر وامتحانات فصل فصل. وإذا علقت بشي، اكتب بقسم النقاش تحت أي درس، وأي ردّ عليك رح يوصلك هون بالجرس 🔔 — خبرتك بتفيد حدا، وخبرة حدا بتفيدك.'
+  BODY: 'هون بتلاقي مقرراتك مشروحة ومبسّطة، مع تدريب حر وامتحانات فصل فصل. وإذا علقت بشي، اسأل تحت أي درس، وأي جواب عليك رح يوصلك هون بالجرس 🔔. وساعد غيرك بالأجوبة واكسب نجوم ⭐ — خبرتك بتفيد حدا، وخبرة حدا بتفيدك.'
 };
 
 /* ============ مساعدات ============ */
@@ -56,17 +61,25 @@ function firstName_(n) {
 // توقيت بدقة الميلي ثانية حتى ما يضيع إشعار لما يتزامن تعليقان بنفس الثانية
 function isoOf_(v) { const d = toDate_(v); return d ? d.toISOString() : ''; }
 
-/* ---- شكل التعليق جوّا الكاش: [id, parent_id, user_id, name, text, created_at] ---- */
-function cRow_(o) {
+/* ---- شكل المشاركة جوّا الكاش: [id, parent_id, user_id, name, text, created_at, accepted_id, voters[]] ---- */
+const C_ID = 0, C_PAR = 1, C_UID = 2, C_NAME = 3, C_TEXT = 4, C_AT = 5, C_ACC = 6, C_VOT = 7;
+function cRow_(o, voters) {
   return [String(o.comment_id), String(o.parent_id || ''), String(o.user_id || ''),
-          String(o.name || 'طالب'), String(o.text || '').trim(), isoOf_(o.created_at)];
+          String(o.name || 'طالب'), String(o.text || '').trim(), isoOf_(o.created_at),
+          String(o.accepted_id || ''), voters || []];
 }
 function pubComment_(c, uid) {
-  return { id: c[0], parent_id: c[1], name: c[3], text: c[4], created_at: c[5], mine: !!uid && c[2] === uid };
+  const voters = c[C_VOT] || [];
+  return {
+    id: c[C_ID], parent_id: c[C_PAR], name: c[C_NAME], text: c[C_TEXT], created_at: c[C_AT],
+    mine: !!uid && c[C_UID] === uid,
+    votes: voters.length, voted: !!uid && voters.indexOf(uid) >= 0,
+    accepted_id: c[C_PAR] ? '' : (c[C_ACC] || '')
+  };
 }
-function byTime_(x, y) { return x[5] < y[5] ? -1 : x[5] > y[5] ? 1 : 0; }
+function byTime_(x, y) { return x[C_AT] < y[C_AT] ? -1 : x[C_AT] > y[C_AT] ? 1 : 0; }
 
-/* ============ كاش التعليقات ============ */
+/* ============ الكاش ============ */
 
 const CC_TTL_ = 21600;      // 6 ساعات (أقصى مدة بيسمح فيها CacheService)
 const CC_CHUNK_ = 30000;    // حجم القطعة بالأحرف (حد CacheService هو 100KB للقيمة الوحدة)
@@ -122,13 +135,27 @@ function ccPut_(gen, map) {
   }
 }
 
+/** الأصوات من تبويب votes: { comment_id: [user_id, ...] } */
+function votersMap_() {
+  const out = {};
+  if (!ss_().getSheetByName('votes')) return out;
+  const t = table_('votes');
+  const ci = t.col('comment_id'), cu = t.col('user_id');
+  t.rows.forEach(function (r) {
+    const id = String(r[ci]), u = String(r[cu]);
+    if (!id || !u) return;
+    (out[id] = out[id] || []).push(u);
+  });
+  return out;
+}
+
 /**
- * تعليقات الأماكن المطلوبة (الظاهرة بس، مرتّبة من الأقدم). من الكاش، وإذا ناقص شي:
- * منقرأ تبويب comments مرة وحدة (جوّا القفل) ومنعبّي كاش كل الأماكن.
+ * مشاركات الأماكن المطلوبة (الظاهرة بس، مرتّبة من الأقدم). من الكاش، وإذا ناقص شي:
+ * منقرأ تبويب comments (و votes) مرة وحدة جوّا القفل ومنعبّي كاش كل الأماكن.
  */
 function loadPlaces_(places) {
   const gen = ccGen_();
-  let got = ccGet_(gen, places);
+  const got = ccGet_(gen, places);
   const missing = places.filter(function (p) { return !(p in got); });
   if (!missing.length) return got;
 
@@ -137,16 +164,17 @@ function loadPlaces_(places) {
     const again = ccGet_(gen2, places);
     if (places.every(function (p) { return p in again; })) return again;
 
+    const voters = votersMap_();
     const all = {};
     const t = table_('comments');
     t.rows.forEach(function (r) {
       const o = rowObj_(t, r);
       if (String(o.status) !== 'visible') return;
       const k = String(o.course_id) + '|' + String(o.chapter_id);
-      (all[k] = all[k] || []).push(cRow_(o));
+      (all[k] = all[k] || []).push(cRow_(o, voters[String(o.comment_id)]));
     });
     Object.keys(all).forEach(function (k) { all[k].sort(byTime_); });
-    places.forEach(function (p) { if (!all[p]) all[p] = []; });   // أماكن بدون تعليقات → قائمة فاضية
+    places.forEach(function (p) { if (!all[p]) all[p] = []; });   // أماكن بدون مشاركات → قائمة فاضية
     ccPut_(gen2, all);
     const out = {};
     places.forEach(function (p) { out[p] = all[p]; });
@@ -154,8 +182,23 @@ function loadPlaces_(places) {
   });
 }
 
-/** تحديث مكان واحد بالكاش بعد إضافة/حذف (لازم نكون جوّا القفل) */
-function ccSetPlace_(place, list) { ccPut_(ccGen_(), { [place]: list }); }
+/** تحديث مكان واحد بالكاش (لازم نكون جوّا القفل) */
+function ccSetPlace_(place, list) { const m = {}; m[place] = list; ccPut_(ccGen_(), m); }
+
+/** رقم صف المشاركة بالشيت (2-based) بدون ما نقرأ كل التبويب */
+function commentRowNum_(id) {
+  const sh = ss_().getSheetByName('comments');
+  if (!sh || sh.getLastRow() < 2) return -1;
+  const head = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0].map(String);
+  const c = head.indexOf('comment_id');
+  const f = sh.getRange(2, c + 1, sh.getLastRow() - 1, 1).createTextFinder(String(id)).matchEntireCell(true).findNext();
+  return f ? f.getRow() : -1;
+}
+function setCommentCell_(rowNum, col, value) {
+  const h = sheetHead_('comments');
+  const c = h.col(col);
+  if (c >= 0 && rowNum > 1) h.sh.getRange(rowNum, c + 1).setValue(safeCell_(value));
+}
 
 /* ---- أماكن الطالب (users.places) ---- */
 function placesOf_(userObj) {
@@ -166,7 +209,7 @@ function savePlaces_(userIdx, map) {
   updateRow_(table_('users'), userIdx, { places: JSON.stringify(map) });
 }
 
-/** بتعبّي users.places من التعليقات الحالية (setupV3 بتستدعيها). بترجع عدد الطلاب */
+/** بتعبّي users.places من المشاركات الحالية (setupV3 بتستدعيها). بترجع عدد الطلاب */
 function backfillPlaces_() {
   const users = table_('users');
   const cp = users.col('places'), cu = users.col('user_id');
@@ -192,24 +235,58 @@ function backfillPlaces_() {
   return Object.keys(map).length;
 }
 
-/* ============ قراءة التعليقات ============ */
+/* ============ قراءة الأسئلة والأجوبة ============ */
+
+/** أسئلة بلا جواب من حدا غير صاحبها */
+function qaStats_(list) {
+  const qs = list.filter(function (c) { return !c[C_PAR]; });
+  const answered = {};
+  list.forEach(function (c) {
+    if (!c[C_PAR]) return;
+    const q = qs.filter(function (x) { return x[C_ID] === c[C_PAR]; })[0];
+    if (q && q[C_UID] !== c[C_UID]) answered[c[C_PAR]] = 1;
+  });
+  return { questions: qs.length, unanswered: qs.filter(function (q) { return !answered[q[C_ID]]; }).length };
+}
 
 function getComments_(req) {
   const a = authUser_(req); if (a.err) return a.err;
   const p = place_(req); if (!p) return { ok: false, error: 'BAD_REQUEST' };
   const uid = String(a.user.obj.user_id);
   const list = loadPlaces_([p.key])[p.key] || [];
+
+  // آخر Q_LIST_MAX سؤال مع أجوبتها
+  const qs = list.filter(function (c) { return !c[C_PAR]; }).slice(-LIM.Q_LIST_MAX);
+  const keep = {};
+  qs.forEach(function (q) { keep[q[C_ID]] = 1; });
+  const out = list.filter(function (c) { return c[C_PAR] ? keep[c[C_PAR]] : keep[c[C_ID]]; });
+
   let mine = 0;
-  list.forEach(function (c) { if (c[2] === uid) mine++; });
+  list.forEach(function (c) { if (!c[C_PAR] && c[C_UID] === uid) mine++; });
+  const st = qaStats_(list);
+  const askerOf = {};
+  qs.forEach(function (q) { askerOf[q[C_ID]] = q[C_UID]; });
   return {
     ok: true,
-    comments: list.slice(-LIM.LIST_MAX).map(function (c) { return pubComment_(c, uid); }),
-    mine_count: mine,
-    limit: LIM.PER_PLACE
+    comments: out.map(function (c) {
+      const pc = pubComment_(c, uid);
+      if (c[C_PAR]) pc.by_asker = !!c[C_UID] && askerOf[c[C_PAR]] === c[C_UID];   // توضيح من صاحب السؤال، مو جواب
+      return pc;
+    }),
+    mine_count: mine, limit: LIM.Q_PER_PLACE,
+    questions: st.questions, unanswered: st.unanswered
   };
 }
 
-/* ============ إضافة تعليق ============ */
+/** للشريط الصغير تحت الدرس: كم سؤال وكم بلا جواب (من الكاش، رد صغير) */
+function getQaStats_(req) {
+  const a = authUser_(req); if (a.err) return a.err;
+  const p = place_(req); if (!p) return { ok: false, error: 'BAD_REQUEST' };
+  const st = qaStats_(loadPlaces_([p.key])[p.key] || []);
+  return { ok: true, questions: st.questions, unanswered: st.unanswered };
+}
+
+/* ============ سؤال أو جواب جديد ============ */
 
 function addComment_(req) {
   const a = authUser_(req); if (a.err) return a.err;
@@ -218,28 +295,32 @@ function addComment_(req) {
   let text = String(req.text || '').replace(/\r/g, '').replace(/\n{3,}/g, '\n\n').trim();
   if (!text) return { ok: false, error: 'EMPTY' };
   if (text.length > LIM.MAX_LEN) return { ok: false, error: 'TOO_LONG' };
+  if (hasBanned_(text)) return { ok: false, error: 'BANNED' };
   if (/^[=+\-@]/.test(text)) text = ' ' + text;   // يمنع تفسير النص كصيغة بالشيت
 
   const uid = String(a.user.obj.user_id);
   const now = new Date();
 
-  // الفاصل بين تعليقين (لأي مكان)
+  // الفاصل بين مشاركتين (لأي مكان)
   const cdKey = 'cd|' + uid;
   const last = Number(cache_().get(cdKey)) || 0;
   const wait = LIM.COOLDOWN_SEC - Math.floor((now.getTime() - last) / 1000);
   if (last && wait > 0) return { ok: false, error: 'COOLDOWN', wait: wait };
 
   const list = (loadPlaces_([p.key])[p.key] || []).slice();
-  let mine = 0;
-  list.forEach(function (c) { if (c[2] === uid) mine++; });
-  if (mine >= LIM.PER_PLACE) return { ok: false, error: 'LIMIT_REACHED', limit: LIM.PER_PLACE };
-
-  // الرد: لازم يكون على تعليق ظاهر بنفس المكان، ونسطّحه لمستوى واحد
   let parent = '';
+  let mine = 0;
+  list.forEach(function (c) { if (!c[C_PAR] && c[C_UID] === uid) mine++; });
+
   if (req.parent_id) {
-    const par = list.filter(function (c) { return c[0] === String(req.parent_id); })[0];
+    // جواب: لازم يكون على سؤال ظاهر بنفس المكان (ولو انبعت على جواب، منربطو بسؤالو)
+    const par = list.filter(function (c) { return c[C_ID] === String(req.parent_id); })[0];
     if (!par) return { ok: false, error: 'BAD_PARENT' };
-    parent = par[1] || par[0];
+    parent = par[C_PAR] || par[C_ID];
+    const myAnswers = list.filter(function (c) { return c[C_PAR] === parent && c[C_UID] === uid; }).length;
+    if (myAnswers >= LIM.A_PER_QUESTION) return { ok: false, error: 'ALREADY_ANSWERED' };
+  } else if (mine >= LIM.Q_PER_PLACE) {
+    return { ok: false, error: 'LIMIT_REACHED', limit: LIM.Q_PER_PLACE };
   }
 
   const rec = {
@@ -251,22 +332,23 @@ function addComment_(req) {
     text: text,
     parent_id: parent,
     created_at: now.toISOString(),
-    status: 'visible'
+    status: 'visible',
+    accepted_id: ''
   };
   appendRow_(sheetHead_('comments'), rec);
 
-  const row = cRow_(rec);
+  const row = cRow_(rec, []);
   list.push(row);
   ccSetPlace_(p.key, list);
   cache_().put(cdKey, String(now.getTime()), LIM.COOLDOWN_SEC + 5);
 
   const places = placesOf_(a.user.obj);
-  if (!places[p.key]) { places[p.key] = row[5]; savePlaces_(a.user.idx, places); }
+  if (!places[p.key]) { places[p.key] = row[C_AT]; savePlaces_(a.user.idx, places); }
 
-  return { ok: true, comment: pubComment_(row, uid), mine_count: mine + 1, limit: LIM.PER_PLACE };
+  return { ok: true, comment: pubComment_(row, uid), mine_count: parent ? mine : mine + 1, limit: LIM.Q_PER_PLACE };
 }
 
-/* ============ حذف تعليقي ============ */
+/* ============ حذف مشاركتي ============ */
 
 function deleteComment_(req) {
   const a = authUser_(req); if (a.err) return a.err;
@@ -277,24 +359,105 @@ function deleteComment_(req) {
   if (i < 0) return { ok: false, error: 'NOT_FOUND' };
   const o = rowObj_(t, t.rows[i]);
   if (String(o.user_id) !== uid || String(o.status) !== 'visible') return { ok: false, error: 'NOT_FOUND' };
-  updateRow_(t, i, { status: 'deleted' });
 
   const key = String(o.course_id) + '|' + String(o.chapter_id);
-  const list = (loadPlaces_([key])[key] || []).filter(function (c) { return c[0] !== id; });
+  let list = (loadPlaces_([key])[key] || []).slice();
+
+  // سؤال عليه أجوبة من غيرك → ما بينحذف (حتى ما تضيع أجوبتهم ونجومهم)
+  if (!o.parent_id && list.some(function (c) { return c[C_PAR] === id && c[C_UID] !== uid; })) {
+    return { ok: false, error: 'HAS_ANSWERS' };
+  }
+  updateRow_(t, i, { status: 'deleted' });
+  if (!o.parent_id) {   // أجوبتي أنا على سؤالي المحذوف بتنحذف معو
+    t.rows.forEach(function (r, j) {
+      if (String(r[t.col('parent_id')]) === id && String(r[t.col('status')]) === 'visible') updateRow_(t, j, { status: 'deleted' });
+    });
+  }
+
+  if (o.parent_id) {
+    reverseStarsByPrefix_('acc:' + id, 'انحذف جوابك');
+    reverseStarsByPrefix_('vote:' + id + ':', 'انحذف جوابك');
+    // إذا كان هو الجواب المقبول → السؤال برجع بلا جواب مقبول
+    const q = list.filter(function (c) { return c[C_ID] === String(o.parent_id); })[0];
+    if (q && q[C_ACC] === id) {
+      q[C_ACC] = '';
+      setCommentCell_(commentRowNum_(q[C_ID]), 'accepted_id', '');
+    }
+  }
+  list = list.filter(function (c) { return c[C_ID] !== id && c[C_PAR] !== id; });
   ccSetPlace_(key, list);
 
-  // تحديث أماكن الطالب: إذا ما ضل إلو تعليق هون منشيل المكان، وإلا منحدّث تاريخ أول تعليق
+  // تحديث أماكن الطالب: إذا ما ضل إلو مشاركة هون منشيل المكان، وإلا منحدّث تاريخ أول مشاركة
   const places = placesOf_(a.user.obj);
-  const left = list.filter(function (c) { return c[2] === uid; });
-  if (!left.length) delete places[key]; else places[key] = left[0][5];
+  const left = list.filter(function (c) { return c[C_UID] === uid; });
+  if (!left.length) delete places[key]; else places[key] = left[0][C_AT];
   savePlaces_(a.user.idx, places);
   return { ok: true };
 }
 
+/* ============ 👍 صوت على جواب ============ */
+/** req: { action:'voteAnswer', token, course_id, chapter_id, comment_id } */
+function voteAnswer_(req) {
+  const a = authUser_(req); if (a.err) return a.err;
+  const p = place_(req); if (!p) return { ok: false, error: 'BAD_REQUEST' };
+  const id = String(req.comment_id || '');
+  const uid = String(a.user.obj.user_id);
+
+  const list = (loadPlaces_([p.key])[p.key] || []).slice();
+  const ans = list.filter(function (c) { return c[C_ID] === id; })[0];
+  if (!ans || !ans[C_PAR]) return { ok: false, error: 'NOT_FOUND' };
+  if (ans[C_UID] === uid) return { ok: false, error: 'OWN_ANSWER' };
+  ans[C_VOT] = ans[C_VOT] || [];
+  if (ans[C_VOT].indexOf(uid) >= 0) return { ok: false, error: 'ALREADY_VOTED' };
+
+  appendRow_(sheetHead_('votes'), { comment_id: id, user_id: uid, created_at: new Date().toISOString() });
+  ans[C_VOT].push(uid);
+  ccSetPlace_(p.key, list);
+
+  // النجمة بس إذا المصوّت حسابو مو جديد (حماية من الحسابات الوهمية)
+  const born = toDate_(a.user.obj.created_at);
+  const trusted = born && (Date.now() - born.getTime()) >= STARS.VOTER_MIN_DAYS * 86400000;
+  if (trusted && ans[C_UID]) grantStars_(ans[C_UID], 'answer_upvote', 'vote:' + id + ':' + uid);
+
+  return { ok: true, votes: ans[C_VOT].length };
+}
+
+/* ============ ✓ "حلّ مشكلتي" ============ */
+/** req: { action:'acceptAnswer', token, course_id, chapter_id, comment_id } — صاحب السؤال بس، ومرة وحدة */
+function acceptAnswer_(req) {
+  const a = authUser_(req); if (a.err) return a.err;
+  const p = place_(req); if (!p) return { ok: false, error: 'BAD_REQUEST' };
+  const id = String(req.comment_id || '');
+  const uid = String(a.user.obj.user_id);
+
+  const list = (loadPlaces_([p.key])[p.key] || []).slice();
+  const ans = list.filter(function (c) { return c[C_ID] === id; })[0];
+  if (!ans || !ans[C_PAR]) return { ok: false, error: 'NOT_FOUND' };
+  const q = list.filter(function (c) { return c[C_ID] === ans[C_PAR]; })[0];
+  if (!q || q[C_UID] !== uid) return { ok: false, error: 'NOT_OWNER' };
+  if (ans[C_UID] === uid) return { ok: false, error: 'OWN_ANSWER' };
+  if (q[C_ACC]) return { ok: false, error: 'ALREADY_ACCEPTED' };
+
+  q[C_ACC] = id;
+  setCommentCell_(commentRowNum_(q[C_ID]), 'accepted_id', id);
+  ccSetPlace_(p.key, list);
+  if (ans[C_UID]) grantStars_(ans[C_UID], 'answer_accepted', 'acc:' + id);
+  return { ok: true, accepted_id: id };
+}
+
+/** لما الإدارة تخفي جواب من الشيت: منسحب نجومو (onSheetEdit بيستدعيها) */
+function onCommentsHidden_(ids) {
+  ids.forEach(function (id) {
+    reverseStarsByPrefix_('acc:' + id, 'جواب انخفى من الإدارة');
+    reverseStarsByPrefix_('vote:' + id + ':', 'جواب انخفى من الإدارة');
+  });
+}
+
 /* ============ الإشعارات ============ */
 /*
- * إشعار تعليقات: أي تعليق من غيري، على مكان (مادة/فصل) أنا علّقت فيه قبل،
- * وأحدث من (آخر مرة فتحت الجرس) ومن (أول تعليق لي بهالمكان).
+ * إشعار أجوبة: أي مشاركة من غيري، على مكان (مادة/فصل) أنا سألت أو جاوبت فيه،
+ * وأحدث من (آخر مرة فتحت الجرس) ومن (أول مشاركة لي بهالمكان).
+ * النجوم: أي حركة نجوم أحدث من آخر مرة فتحت الجرس.
  * الإعلانات: أي إعلان active أحدث من آخر مرة فتحت الجرس (أو من تاريخ تسجيلي أول مرة).
  * ما في أي كتابة هون — الحساب بيتم عند الطلب، ومن الكاش لأماكني بس.
  */
@@ -313,21 +476,21 @@ function getNotifications_(req) {
     const myIds = {};
     let first = toDate_(myPlaces[k]);
     list.forEach(function (c) {
-      if (c[2] !== uid) return;
-      myIds[c[0]] = true;
-      const d = toDate_(c[5]); if (d && (!first || d < first)) first = d;
+      if (c[C_UID] !== uid) return;
+      myIds[c[C_ID]] = true;
+      const d = toDate_(c[C_AT]); if (d && (!first || d < first)) first = d;
     });
     if (!first) return;
     const base = (seen && seen > first) ? seen : first;
     const parts = k.split('|');
     let g = null;
     list.forEach(function (c) {
-      if (c[2] === uid) return;
-      const d = toDate_(c[5]); if (!d || d <= base) return;
+      if (c[C_UID] === uid) return;
+      const d = toDate_(c[C_AT]); if (!d || d <= base) return;
       g = g || { course_id: parts[0], chapter_id: parts[1], count: 0, replies: 0, latest_at: '' };
       g.count++;
-      if (c[1] && myIds[c[1]]) g.replies++;
-      if (c[5] > g.latest_at) g.latest_at = c[5];
+      if (c[C_PAR] && myIds[c[C_PAR]]) g.replies++;
+      if (c[C_AT] > g.latest_at) g.latest_at = c[C_AT];
     });
     if (g) glist.push(g);
   });
@@ -357,10 +520,13 @@ function getNotifications_(req) {
     });
   }
 
-  let unread = anns.filter(function (x) { return x.is_new; }).length;
+  const starEv = starEventsSince_(a.user.obj, seen);
+
+  let unread = anns.filter(function (x) { return x.is_new; }).length + starEv.length;
   glist.forEach(function (g) { unread += g.count; });
 
-  return { ok: true, unread: unread, groups: glist, announcements: anns };
+  return { ok: true, unread: unread, groups: glist, announcements: anns,
+           star_events: starEv, stars: Number(a.user.obj.stars) || 0 };
 }
 
 function markSeen_(req) {

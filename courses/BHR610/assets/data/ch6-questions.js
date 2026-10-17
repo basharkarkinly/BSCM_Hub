@@ -91,17 +91,6 @@ const CH6_POOL = [
  },
  {
   "origin": "bank",
-  "type": "tf",
-  "question": "كثرة الأحاديث الجانبية أثناء الاجتماع من مظاهر الصراع.",
-  "answer": true,
-  "explanation": "صحيح.",
-  "ref": {
-   "url": "chapters/chapter-6-lesson.html#destructive-roles",
-   "label": "الأدوار المدمّرة"
-  }
- },
- {
-  "origin": "bank",
   "type": "mcq",
   "question": "قيادة الفريق:",
   "options": [

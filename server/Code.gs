@@ -192,6 +192,7 @@ function verifyOtp_(req) {
 
   updateRow_(otp, idx, { used: 'TRUE', fails: 0 });
   const u = upsertLoggedInUser_(email, name, 'otp');
+  if (u.isNew) onNewUser_(email, req.ref);
   return newSession_(u, req.device);
 }
 
@@ -217,6 +218,7 @@ function googleLogin_(req) {
   if (existing && existing.obj.status === 'blocked') return { ok: false, error: 'BLOCKED' };
 
   const u = upsertLoggedInUser_(email, cleanName_(p.name).slice(0, 80), 'google');
+  if (u.isNew) onNewUser_(email, req.ref);
   return newSession_(u, req.device);
 }
 
@@ -383,7 +385,14 @@ function deleteAccount_(req) {
     });
   });
   if (userId) deleteRowsWhere_('consents', function (o) { return String(o.user_id) === userId; });
-  if (userId) deleteRowsWhere_('stars_ledger', function (o) { return String(o.user_id) === userId; });
+  if (userId && ss_().getSheetByName('stars_ledger')) {
+    // حركات النجوم بتنمسح، إلا "بصمة" الترحيب والدعوة (wh:/rh: بدون رقم الطالب) حتى ما ينعاد كسبها بحساب جديد بنفس الإيميل
+    deleteRowsWhere_('stars_ledger', function (o) { return String(o.user_id) === userId && !/^(wh|rh):/.test(String(o.ref)); });
+    const led = table_('stars_ledger');
+    led.rows.forEach(function (r, i) {
+      if (String(r[led.col('user_id')]) === userId) updateRow_(led, i, { user_id: '', note: 'حساب محذوف' });
+    });
+  }
   if (userId && deleteRowsWhere_('votes', function (o) { return String(o.user_id) === userId; })) bumpCommentsCache_();
   deleteRowsWhere_('otp', function (o) { return String(o.email).trim().toLowerCase() === email; });
   deleteRowsWhere_('sessions', function (o) { return String(o.email).trim().toLowerCase() === email; });
@@ -544,7 +553,7 @@ function upsertLoggedInUser_(email, name, method) {
     verified_at: nowIso,
     last_login: nowIso
   });
-  return { email: email, name: name };
+  return { email: email, name: name, isNew: true };
 }
 
 function newSession_(user, device) {

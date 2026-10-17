@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نجومي — Support Channel</title>
+<link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="welcome.html" style="text-decoration:none;"><img src="assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> Support Channel</a>
+</div>
+
+<main class="wrap pf st">
+  <h1>نجومي ⭐</h1>
+  <p class="pf-note">النجوم بتعكس قديش ساعدت غيرك. ما بتنصرف وما بتفتح شي — هي سمعتك بالمنصة.</p>
+
+  <section class="st-balance">
+    <div class="st-num" id="st-num">—</div>
+    <div class="st-lbl">نجمة</div>
+  </section>
+  <p id="st-err" class="msg err" role="alert"></p>
+
+  <section class="pf-card">
+    <h2>كيف بتكسب نجوم؟</h2>
+    <ul class="st-rules" id="st-rules"><li class="st-skel">عم نحمّل...</li></ul>
+    <p class="pf-hint st-cta">أسرع طريق: افتح أي درس، وتحت بتلاقي <b>❓ أسئلة هالفصل</b>. جاوب على سؤال بلا جواب، وإذا حلّ مشكلة صاحبه بتاخد النجوم.</p>
+    <a class="btn btn-primary btn-block" href="welcome.html">روح عالمقررات</a>
+  </section>
+
+  <section class="pf-card">
+    <h2>حتى تضل عادلة</h2>
+    <ul class="st-fair">
+      <li>ما فيك تصوّت لجوابك، ولا تختار جوابك كحل لسؤالك.</li>
+      <li>صوت 👍 من حساب جديد (أقل من 3 أيام) بينحسب، بس ما بيعطي نجمة.</li>
+      <li>في سقف يومي لنجوم الأصوات.</li>
+      <li>إذا انحذف جواب أو انخفى لأنو مخالف، النجوم اللي أخدها بتنسحب.</li>
+      <li>نجوم الامتحانات بتنحسب أول مرة بس لكل امتحان.</li>
+    </ul>
+  </section>
+
+  <section class="pf-card">
+    <h2>آخر حركاتك</h2>
+    <ul class="st-hist" id="st-hist"><li class="st-skel">عم نحمّل...</li></ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="privacy.html">🔒 الخصوصية</a>
+  </div>
+  <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/auth.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(t) { return (t == null ? "" : String(t)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+  function when(iso) {
+    var t = Date.parse(iso); if (isNaN(t)) return "";
+    var s = Math.max(0, (Date.now() - t) / 1000);
+    if (s < 3600) return "قبل " + Math.max(1, Math.floor(s / 60)) + " د";
+    if (s < 86400) return "قبل " + Math.floor(s / 3600) + " س";
+    if (s < 2592000) return "قبل " + Math.floor(s / 86400) + " يوم";
+    return new Date(t).toLocaleDateString("ar");
+  }
+  function starsWord(n) { return n === 1 ? "نجمة" : (n === 2 ? "نجمتين" : "نجوم"); }
+
+  function render(d) {
+    $("st-num").textContent = d.stars;
+    if (window.SCShell && SCShell.setStars) SCShell.setStars(d.stars);
+    $("st-rules").innerHTML = (d.rules || []).map(function (r) {
+      return '<li><span>' + esc(r.label) + (r.daily_cap ? ' <small>(لحد ' + r.daily_cap + ' باليوم)</small>' : '') + '</span>' +
+        '<b>+' + r.stars + ' ⭐</b></li>';
+    }).join("") || '<li class="st-skel">ما في قواعد مفعّلة حالياً.</li>';
+    $("st-hist").innerHTML = (d.history || []).map(function (h) {
+      var up = h.delta > 0;
+      return '<li><span>' + esc(h.label) + '<small>' + esc(when(h.at)) + '</small></span>' +
+        '<b class="' + (up ? "up" : "down") + '">' + (up ? "+" : "−") + Math.abs(h.delta) + ' ⭐</b></li>';
+    }).join("") || '<li class="st-skel">لسا ما في حركات. أول جواب مفيد بيجيب أول ' + starsWord(1) + ' ✨</li>';
+  }
+
+  SCShell.init({
+    onReady: function () {
+      var s = SCAuth.getSession(); if (!s) return;
+      SCAuth.api("getMyStars", { token: s.token }).then(function (res) {
+        if (res && res.ok) return render(res);
+        $("st-err").textContent = "ما قدرنا نجيب نجومك هلأ، جرّب بعد شوي.";
+      }).catch(function () { $("st-err").textContent = "ما في اتصال بالسيرفر، تأكد من الإنترنت وجرّب."; });
+    }
+  });
+})();
+</script>
+</body>
+</html>

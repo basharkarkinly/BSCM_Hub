@@ -57,7 +57,14 @@
     ".scs-t{font-weight:700;font-size:.92rem}",
     ".scs-d{color:#5B6478;font-size:.86rem}",
     ".scs-m{color:#5B6478;font-size:.74rem;margin-top:2px}",
-    ".scs-empty{text-align:center;color:#5B6478;padding:22px 8px;font-size:.92rem}"
+    ".scs-empty{text-align:center;color:#5B6478;padding:22px 8px;font-size:.92rem}",
+    ".scs-star{flex:none;display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 10px;border-radius:999px;background:rgba(255,159,28,.18);border:1px solid rgba(255,159,28,.55);color:#FFD27A;font-weight:800;font-size:.85rem;text-decoration:none;white-space:nowrap}",
+    ".scs-star:hover{background:rgba(255,159,28,.3)}",
+    ".scs-star[hidden]{display:none}",
+    ".scs-item.star{background:#FFF8EC;border-color:#FFD79A}",
+    ".scs-toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:calc(100% - 32px);z-index:90;background:#0F1C2E;color:#fff;border-radius:999px;padding:10px 20px;font-family:'Alexandria',system-ui,sans-serif;font-weight:700;font-size:.95rem;box-shadow:0 10px 30px -10px rgba(15,28,46,.5);direction:rtl;transition:opacity .4s,transform .4s}",
+    ".scs-toast.out{opacity:0;transform:translateY(10px)}",
+    "@media (max-width:700px){.scs-star{order:3;height:24px;font-size:.74rem;padding:0 8px;margin:0 auto}}"
   ].join("\n");
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
@@ -103,6 +110,7 @@
 
     c.innerHTML =
       (opts.greet !== false ? '<a class="scs-hi" id="scs-hi" href="' + HUB + 'profile.html" title="حسابي"></a>' : "") +
+      '<a class="scs-star" id="scs-star" href="' + HUB + 'stars.html" title="نجومي" hidden>⭐ <b>0</b></a>' +
       (onHub ? "" : '<a class="scs-ico" id="scs-home" href="' + esc(homeHref) + '" aria-label="كل المقررات" title="كل المقررات">🏠</a>') +
       '<button class="scs-ico" id="scs-bell" type="button" aria-label="الإشعارات" title="الإشعارات">🔔<span class="scs-n" id="scs-n" hidden>0</span></button>' +
       '<button class="scs-ico" id="scs-out" type="button" aria-label="تسجيل خروج" title="تسجيل خروج">🚪</button>';
@@ -124,7 +132,7 @@
     els = {
       bell: c.querySelector("#scs-bell"), n: c.querySelector("#scs-n"),
       out: c.querySelector("#scs-out"), strip: document.getElementById("scs-strip"),
-      hi: c.querySelector("#scs-hi"), sa: document.getElementById("scs-sa"),
+      hi: c.querySelector("#scs-hi"), sa: document.getElementById("scs-sa"), star: c.querySelector("#scs-star"),
       ov: ov, body: ov.querySelector("#scs-body")
     };
 
@@ -185,12 +193,17 @@
 
   /* ---------- الإشعارات ---------- */
   function setBadge(n) { els.n.textContent = n > 99 ? "99+" : n; els.n.hidden = !(n > 0); }
+  function setStars(n) {
+    if (!els.star || n == null || isNaN(n)) return;
+    els.star.querySelector("b").textContent = n;
+    els.star.hidden = false;
+  }
 
   function placeInfo(g) {
     var c = courseMap()[g.course_id];
-    if (g.chapter_id === "info") return { label: "نقاش مادة " + g.course_id, url: HOURS_PAGE + "#" + encodeURIComponent(g.course_id) };
+    if (g.chapter_id === "info") return { label: "أسئلة مادة " + g.course_id, url: HOURS_PAGE + "#" + encodeURIComponent(g.course_id) };
     var title = c ? c.title : g.course_id;
-    var url = c ? c.url.replace(/\/?$/, "/") + "chapters/chapter-" + g.chapter_id + "-lesson.html" : null;
+    var url = c ? c.url.replace(/\/?$/, "/") + "chapters/chapter-" + g.chapter_id + "-lesson.html#comments" : null;
     return { label: title + " — الفصل " + g.chapter_id, url: url };
   }
 
@@ -210,17 +223,17 @@
   }
   function writeNC(d) { try { sessionStorage.setItem(NOTIF_KEY, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {} }
   function seenCopy(n) {   // نسخة "مقروءة" للكاش: بدون عدّاد ولا تعليقات جديدة
-    return { ok: true, unread: 0, groups: [], announcements: (n.announcements || []).map(function (a) { return Object.assign({}, a, { is_new: false }); }) };
+    return { ok: true, unread: 0, groups: [], star_events: [], stars: n.stars, announcements: (n.announcements || []).map(function (a) { return Object.assign({}, a, { is_new: false }); }) };
   }
 
   function loadNotifs() {
     var c = readNC();
-    if (c) { notif = c; setBadge(c.unread || 0); ensureCourses(); return; }
+    if (c) { notif = c; setBadge(c.unread || 0); setStars(c.stars); ensureCourses(); return; }
     var s = SCAuth.getSession(); if (!s || !s.token) return;
     ensureCourses();
     SCAuth.api("getNotifications", { token: s.token }).then(function (res) {
       if (kickIfInvalid(res)) return;
-      if (res && res.ok) { notif = res; writeNC(res); setBadge(res.unread); }
+      if (res && res.ok) { notif = res; writeNC(res); setBadge(res.unread); setStars(res.stars); }
     }).catch(function () {});
   }
 
@@ -231,9 +244,14 @@
       h += '<div class="scs-item' + (a.is_new ? " new" : "") + '"><div class="scs-t">📣 ' + esc(a.title) + '</div>' +
            (a.body ? '<div class="scs-d">' + esc(a.body) + '</div>' : "") + '<div class="scs-m">' + esc(ago(a.created_at)) + '</div></div>';
     });
+    (n.star_events || []).forEach(function (x) {
+      var up = x.delta > 0;
+      h += '<a class="scs-item star" href="' + esc(HUB + "stars.html") + '"><div class="scs-t">⭐ ' + (up ? "+" : "−") + Math.abs(x.delta) + (Math.abs(x.delta) === 1 ? " نجمة" : " نجوم") + '</div>' +
+           (x.label ? '<div class="scs-d">' + esc(x.label) + '</div>' : "") + '<div class="scs-m">' + esc(ago(x.at)) + '</div></a>';
+    });
     n.groups.forEach(function (g) {
       var p = placeInfo(g);
-      var txt = g.count + (g.count === 1 ? " تعليق جديد" : " تعليقات جديدة") + (g.replies ? " (منها " + g.replies + (g.replies === 1 ? " ردّ" : " ردود") + " عليك)" : "");
+      var txt = g.count + (g.count === 1 ? " مشاركة جديدة" : " مشاركات جديدة") + (g.replies ? " (منها " + g.replies + (g.replies === 1 ? " جواب" : " أجوبة") + " على أسئلتك)" : "");
       var inner = '<div class="scs-t">💬 ' + esc(p.label) + '</div><div class="scs-d">' + esc(txt) + '</div><div class="scs-m">' + esc(ago(g.latest_at)) + '</div>';
       h += p.url ? '<a class="scs-item new" href="' + esc(p.url) + '">' + inner + '</a>' : '<div class="scs-item new">' + inner + '</div>';
     });
@@ -251,7 +269,7 @@
   }
   function closeNotifs() {
     els.ov.hidden = true;
-    if (notif) { notif.groups = []; notif.announcements.forEach(function (a) { a.is_new = false; }); notif.unread = 0; writeNC(notif); }
+    if (notif) { notif.groups = []; notif.star_events = []; notif.announcements.forEach(function (a) { a.is_new = false; }); notif.unread = 0; writeNC(notif); }
   }
 
   /* ---------- الدخول للمكوّن ---------- */
@@ -276,5 +294,26 @@
     });
   }
 
-  window.SCShell = { init: init };
+  /* ---------- النجوم: إشعار صغير + نجوم الامتحانات ---------- */
+  function toast(text) {
+    var t = document.createElement("div"); t.className = "scs-toast out"; t.textContent = text;
+    document.body.appendChild(t);
+    requestAnimationFrame(function () { t.classList.remove("out"); });
+    setTimeout(function () { t.classList.add("out"); setTimeout(function () { t.remove(); }, 500); }, 3200);
+  }
+  /** بتنستدعى من app.js لما يخلص امتحان: exam = "ch3" أو "final" */
+  function examDone(exam, score) {
+    if (!window.SCAuth || !(score >= 90)) return;
+    var s = SCAuth.getSession(); if (!s || !s.token) return;
+    var m = /\/courses\/([A-Za-z0-9_\-]+)\//.exec(location.pathname); if (!m) return;
+    SCAuth.api("examPassed", { token: s.token, course_id: m[1], exam: String(exam || ""), score: score }).then(function (res) {
+      if (!res || !res.ok || !res.granted) return;
+      try { sessionStorage.removeItem(NOTIF_KEY); } catch (e) {}
+      if (res.total != null) setStars(res.total);
+      onDom(function () { toast("⭐ +" + res.granted + (res.granted === 1 ? " نجمة" : " نجوم") + " — برافو!"); });
+    }).catch(function () {});
+  }
+
+  window.SCShell = { init: init, setStars: setStars, toast: toast };
+  window.SCStars = { examDone: examDone };
 })();

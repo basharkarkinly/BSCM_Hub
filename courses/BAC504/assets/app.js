@@ -145,6 +145,7 @@ function renderQuiz(containerId, pool, opts){
   function finishExam(qs, opts){
     const scorePercent = Math.round((correctCount / qs.length) * 100);
     const result = recordAttempt(opts.chapterKey, scorePercent);
+    if(window.SCStars) SCStars.examDone(opts.chapterKey, scorePercent);   // ⭐ نجوم الامتحان (أول نجاح بس)
     renderResult(container, {
       scorePercent, correctCount, total: qs.length,
       passed: scorePercent >= PASS_THRESHOLD,
@@ -158,6 +159,7 @@ function renderQuiz(containerId, pool, opts){
 
   function finishFinal(qs, opts){
     const scorePercent = Math.round((correctCount / qs.length) * 100);
+    if(window.SCStars) SCStars.examDone("final", scorePercent);          // ⭐ نجوم الفحص النهائي (أول مرة ≥ 90)
     try{
       localStorage.setItem("bac504_final_result_v1", JSON.stringify({
         scorePercent, correctCount, total: qs.length, date: new Date().toISOString()

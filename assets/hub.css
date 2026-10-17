@@ -194,3 +194,30 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .legal a{ color:var(--teal-dark, var(--teal)); font-weight:700; }
 
 
+
+/* ---- صفحة نجومي ---- */
+.st .pf-card h2{ margin:0 0 12px; font-size:1.1rem; }
+.st-balance{ display:flex; align-items:baseline; justify-content:center; gap:10px; margin:0 0 20px; padding:26px 20px;
+  border-radius:var(--radius); background:linear-gradient(135deg,var(--ink),var(--ink-soft)); color:#fff; box-shadow:var(--shadow); }
+.st-num{ font-size:3rem; font-weight:800; line-height:1; color:#FFD27A; }
+.st-lbl{ font-size:1.05rem; color:#C9D3E3; }
+.st-rules,.st-hist{ list-style:none; margin:0 0 12px; padding:0; }
+.st-rules li,.st-hist li{ display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:10px 0; border-bottom:1px solid var(--border); font-size:.92rem; }
+.st-rules li:last-child,.st-hist li:last-child{ border-bottom:none; }
+.st-rules b{ flex:none; color:var(--amber-dark); }
+.st-rules small{ color:var(--muted); font-size:.78rem; }
+.st-hist span{ display:flex; flex-direction:column; }
+.st-hist small{ color:var(--muted); font-size:.76rem; }
+.st-hist b{ flex:none; }
+.st-hist b.up{ color:var(--success); }
+.st-hist b.down{ color:var(--danger); }
+.st-skel{ color:var(--muted); justify-content:center !important; }
+.st-fair{ margin:0; padding-inline-start:20px; font-size:.9rem; line-height:1.9; color:var(--ink-soft); }
+.st-cta{ margin:4px 0 14px !important; }
+
+/* ---- بطاقة النجوم بالصفحة الرئيسية ---- */
+.stars-card{ display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+  margin:22px 0 4px; padding:16px 20px; border-radius:var(--radius); background:#FFF8EC; border:1px solid #FFD79A; }
+.stars-card p{ margin:0; font-size:.93rem; color:#5A3A00; }
+.stars-card b{ color:#3D2800; }

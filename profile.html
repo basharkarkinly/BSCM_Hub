@@ -23,7 +23,7 @@
     <label class="field"><span>اسم العرض</span>
       <input id="pf-name" type="text" maxlength="40" autocomplete="nickname" placeholder="اسمك أو اسم مستعار">
     </label>
-    <p class="pf-hint">ممكن يكون اسم مستعار. هو الاسم اللي بيظهر مع تعليقاتك.</p>
+    <p class="pf-hint">ممكن يكون اسم مستعار. هو الاسم اللي بيظهر مع أسئلتك وأجوبتك.</p>
     <button id="pf-save" class="btn btn-primary btn-block" type="button">حفظ الاسم</button>
     <p id="pf-msg" class="msg" role="alert"></p>
 
@@ -39,7 +39,8 @@
     <ul>
       <li>إيميلك واسمك.</li>
       <li>نتائجك وأجوبتك على الاستبيانات.</li>
-      <li>تعليقاتك بتضل بس بدون اسمك.</li>
+      <li>نجومك وأصواتك.</li>
+      <li>أسئلتك وأجوبتك بتضل بس بدون اسمك.</li>
     </ul>
     <button id="pf-del-open" class="btn btn-outline-danger btn-block" type="button">حذف حسابي</button>
 
@@ -73,7 +74,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var TG = "https://t.me/karkinlySupportGroup";
   var ERR = {
-    INVALID_NAME: "الاسم لازم يكون بين 2 و40 حرف.",
+    INVALID_NAME: "الاسم لازم يكون بين 2 و40 حرف، وما يكون فيه كلمات مو مناسبة.",
     NO_SESSION: "انتهت جلستك، سجّل دخولك مرة تانية.",
     EXPIRED: "انتهت جلستك، سجّل دخولك مرة تانية.",
     NET: "ما في اتصال بالسيرفر، تأكد من الإنترنت وجرّب."

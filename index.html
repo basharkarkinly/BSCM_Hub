@@ -57,8 +57,8 @@
         <label class="field"><span>رمز التحقق</span>
           <input id="code" class="code-input" type="text" dir="ltr" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="••••••">
         </label>
-        <label class="field" id="name-field" hidden><span>اسمك (أول تسجيل فقط)</span>
-          <input id="name" type="text" autocomplete="name" maxlength="80" placeholder="الاسم الكامل">
+        <label class="field" id="name-field" hidden><span>اسمك (ممكن يكون مستعار)</span>
+          <input id="name" type="text" autocomplete="name" maxlength="80" placeholder="الاسم اللي بيظهر مع أسئلتك وأجوبتك">
         </label>
         <button id="btn-verify" class="btn btn-primary btn-block" type="button">تأكيد ودخول</button>
         <div class="row-between">
@@ -113,7 +113,7 @@
     INVALID_CODE: "الرمز غير صحيح.",
     EXPIRED: "انتهت صلاحية الرمز، اطلب رمز جديد.",
     TOO_MANY: "محاولات كتيرة. اطلب رمز جديد، وإذا ضلّت الرسالة تطلع استنى ساعة وجرّب.",
-    NAME_REQUIRED: "هاد أول تسجيل لك، اكتب اسمك لنكمّل.",
+    NAME_REQUIRED: "أهلاً فيك! هاد أول تسجيل إلك. شو بتحب نناديك؟ اكتب اسمك وكبس تأكيد.",
     INVALID_NAME: "اختار اسم تاني، هاد الاسم فيه كلمة مو مناسبة.",
     INVALID_TOKEN: "ما قدرنا نتحقق من حساب غوغل، جرّب مرة تانية.",
     SERVER_ERROR: "صار خطأ عنا، جرّب بعد شوي.",
@@ -219,7 +219,7 @@
     SCAuth.api("verifyOtp", { email: state.email, code: code, name: $("name").value.trim(), device: device() })
       .then(function (res) {
         if (res && res.ok) return saveAndGo(res);
-        if (res && res.error === "NAME_REQUIRED") { $("name-field").hidden = false; $("name").focus(); }
+        if (res && res.error === "NAME_REQUIRED") { $("name-field").hidden = false; $("name").focus(); return msg("msg-code", ERR.NAME_REQUIRED, true); }
         msg("msg-code", errText(res));
       })
       .catch(function () { msg("msg-code", ERR.NET); })

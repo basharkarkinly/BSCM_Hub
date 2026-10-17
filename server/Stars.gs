@@ -31,7 +31,7 @@ const STAR_RULES_DEFAULT_ = [
 /* ============ إعداد النسخة 4 (مرة وحدة) ============ */
 /** شغّلها مرة وحدة من المحرر بعد لصق الملفات. آمنة إذا انعادت. */
 function setupV4() {
-  ensureCols_('users', ['stars', 'stars_recent', 'stars_day']);
+  ensureCols_('users', ['stars', 'stars_recent', 'stars_day', 'name_changed_at']);
   ensureCols_('comments', ['accepted_id']);
   if (!ss_().getSheetByName('star_rules')) {
     const sh = ss_().insertSheet('star_rules');

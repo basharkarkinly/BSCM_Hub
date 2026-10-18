@@ -107,6 +107,7 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 
 /* الكلمة المتبدلة (حدا ← جارك / زميلك ...) */
 .sg-word{ position:relative; display:inline-grid; color:var(--amber); }
+.hello-name{ color:var(--amber); }   /* اسم الطالب بنفس برتقالي الكلمة المتبدلة */
 .sg-word::after{
   content:""; position:absolute; inset-inline:0; bottom:.05em; height:2px;
   background:linear-gradient(90deg,transparent,var(--amber),transparent); opacity:.65;
@@ -118,37 +119,99 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .sg-word > span.on{ opacity:1; transform:none; }
 .sg-word > span.out{ opacity:0; transform:translateY(-.45em); }
 
-/* كلمة «دعم» تنبض بهدوء */
-.sg-heart{
-  position:relative; display:inline-block; color:var(--teal); font-weight:800;
-  animation:sgPulse 3.4s ease-in-out 3s infinite;
+/* ---- السطر الثالث: «إيد وحدة ما بتزقف» + الإيدين ---- */
+.slogan .sg-3{
+  display:flex; align-items:center; gap:.35em; flex-wrap:wrap;
+  margin-top:14px; font-weight:800; font-size:clamp(1.85rem,4.6vw,2.9rem); line-height:1.35;
 }
-@keyframes sgPulse{
-  0%,55%,100%{ transform:scale(1); text-shadow:0 0 0 rgba(31,182,168,0); }
-  25%{ transform:scale(1.09); text-shadow:0 0 18px rgba(31,182,168,.85); }
+.sg-proverb{
+  background:linear-gradient(90deg,#FFD27A 0%,var(--amber) 45%,#7FE5DA 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.sg-not{
+  position:relative; display:inline-block;
+  background:linear-gradient(90deg,var(--amber) 0%,#FFD27A 50%,#7FE5DA 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.sg-not.glow{ animation:sgGlow 1.1s ease-out; }
+@keyframes sgGlow{ 0%{ filter:drop-shadow(0 0 0 rgba(255,210,122,0)); transform:scale(1); } 30%{ filter:drop-shadow(0 0 14px rgba(255,210,122,.9)); transform:scale(1.06); } 100%{ filter:drop-shadow(0 0 0 rgba(255,210,122,0)); transform:scale(1); } }
+
+/* زر الإيدين */
+.sg-hands{
+  position:relative; flex:0 0 auto; width:2.3em; height:1.25em; padding:0; margin:0;
+  font:inherit; font-size:.92em; line-height:1; background:none; border:0; cursor:pointer;
+  -webkit-tap-highlight-color:transparent; border-radius:14px;
+}
+.sg-hands:focus-visible{ outline:2px solid var(--teal); outline-offset:4px; }
+.sg-hand{
+  position:absolute; top:.08em; display:block; transition:transform .25s ease, opacity .45s ease;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.35));
+}
+/* RTL: الإيد الأولى عاليمين، التانية بتجي من الشمال */
+.sg-hand-a{ right:0;  transform:rotate(-14deg); }
+.sg-hand-b{ left:0;   transform:scaleX(-1) rotate(-14deg) translateX(-.5em); opacity:0; }
+.sg-hands.joined .sg-hand-b{ opacity:1; transform:scaleX(-1) rotate(-14deg); }
+.sg-hands.idle .sg-hand-a{ animation:sgBobA 3.2s ease-in-out infinite; }
+.sg-hands.idle .sg-hand-b{ animation:sgBobB 3.2s ease-in-out infinite; }
+@keyframes sgBobA{ 0%,100%{ transform:rotate(-14deg) translateY(0); } 50%{ transform:rotate(-10deg) translateY(-3px); } }
+@keyframes sgBobB{ 0%,100%{ transform:scaleX(-1) rotate(-14deg) translateY(0); } 50%{ transform:scaleX(-1) rotate(-10deg) translateY(-3px); } }
+
+/* الإيد لحالها بتحاول تصفّق بالفراغ */
+.sg-hands.solo .sg-hand-a{ animation:sgSolo 1.5s ease-in-out; }
+@keyframes sgSolo{
+  0%,100%{ transform:rotate(-14deg) translateX(0); }
+  18%{ transform:rotate(-34deg) translateX(-.42em); }
+  32%{ transform:rotate(-14deg) translateX(0); }
+  50%{ transform:rotate(-34deg) translateX(-.42em); }
+  64%{ transform:rotate(-14deg) translateX(0); }
+  80%{ transform:rotate(-8deg) translateX(.04em); }
+}
+.sg-puff{
+  position:absolute; top:-.55em; left:.25em; font-size:.55em; color:#C9D3E3; font-weight:800;
+  opacity:0; transform:translateY(6px) scale(.6); pointer-events:none;
+}
+.sg-hands.puzzled .sg-puff{ animation:sgPuff 1.3s ease-out forwards; }
+@keyframes sgPuff{ 0%{ opacity:0; transform:translateY(6px) scale(.6); } 25%{ opacity:1; transform:translateY(0) scale(1.1); } 70%{ opacity:1; transform:translateY(-2px) scale(1); } 100%{ opacity:0; transform:translateY(-10px) scale(.9); } }
+
+/* التصفيق */
+.sg-hands.clap .sg-hand-a{ animation:sgClapA .32s ease-in; }
+.sg-hands.clap .sg-hand-b{ animation:sgClapB .32s ease-in; }
+@keyframes sgClapA{ 0%,100%{ transform:rotate(-14deg) translateX(0); } 50%{ transform:rotate(-24deg) translateX(-.3em); } }
+@keyframes sgClapB{ 0%,100%{ transform:scaleX(-1) rotate(-14deg) translateX(0); } 50%{ transform:scaleX(-1) rotate(-24deg) translateX(-.3em); } }
+
+.sg-hint{
+  margin:8px 0 0 !important; color:#8FA0BA !important; font-size:.85rem !important; font-weight:500;
+  opacity:0; transition:opacity .6s ease;
+}
+.sg-hint.on{ opacity:1; }
+
+/* نجوم الانفجار عند التصفيق */
+.sg-star{ position:absolute; display:block; pointer-events:none; z-index:3; }
+.sg-star.spark{ clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%); }
+.sg-burst{ animation:sgBurst .9s cubic-bezier(.15,.7,.3,1) forwards; }
+@keyframes sgBurst{
+  0%{ opacity:1; transform:translate(-50%,-50%) scale(.4) rotate(0deg); }
+  100%{ opacity:0; transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.1) rotate(160deg); }
 }
 
-/* النجوم */
-.sg-stars{ position:absolute; inset:-30px -10px; pointer-events:none; z-index:0; overflow:hidden; }
-.sg-star{
-  position:absolute; display:block; opacity:.15; border-radius:50%;
-  animation:sgTw 3.5s ease-in-out infinite;
+/* نهفة بعد 5 تصفيقات */
+.sg-joke{
+  position:absolute; inset-inline-start:0; top:100%; margin-top:6px; z-index:4;
+  background:#fff; color:#1A2235; font-size:.9rem; font-weight:700; padding:8px 14px; border-radius:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,.25); white-space:nowrap;
+  animation:sgJoke 3.6s ease forwards;
 }
-.sg-star.spark{
-  border-radius:0;
-  clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);
-}
-@keyframes sgTw{
-  0%,100%{ opacity:.12; transform:scale(.55) rotate(0deg); }
-  50%{ opacity:.95; transform:scale(1.15) rotate(20deg); }
-}
-.sg-heart .sg-star{ animation-duration:2.2s; }
+@keyframes sgJoke{ 0%{ opacity:0; transform:translateY(8px); } 10%,85%{ opacity:1; transform:none; } 100%{ opacity:0; transform:translateY(-6px); } }
+
+/* خلفية الشبكة التفاعلية (كانفاس) */
+.has-net{ position:relative; overflow:hidden; }
+.has-net > .wrap-wide{ position:relative; z-index:1; }
+.sg-net{ position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
 
 @media (prefers-reduced-motion: reduce){
   .slogan .sg-line{ animation:none !important; opacity:1; transform:none; }
-  .sg-heart,.sg-star{ animation:none !important; }
-  .sg-star{ opacity:.35; }
   .sg-word > span{ transition:none; }
+  .sg-hand,.sg-puff,.sg-not{ animation:none !important; }
 }
 @media (max-width:520px){ .slogan{ margin-top:26px; } }
 

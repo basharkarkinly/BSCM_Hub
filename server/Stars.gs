@@ -7,7 +7,7 @@
  *   stars_ledger  : tx_id, ts, user_id, delta, reason, ref, note  ← كل حركة نجوم (المرجع الوحيد)
  *   votes         : comment_id, user_id, created_at               ← أصوات 👍 على الأجوبة
  *   banned_words  : word                                          ← كلمات ممنوعة (كلمة بكل سطر)
- *   users         : + stars, stars_recent, stars_day
+ *   users         : + stars, stars_recent, stars_day, ref_code, referred_by, ref_paid, ref_joined, ref_active
  *   comments      : + accepted_id   (على صف السؤال: رقم الجواب اللي "حلّ المشكلة")
  *
  * الرصيد بعمود users.stars بينحسب من الدفتر. إذا عدّلت الدفتر بإيدك شغّل adminRebuildStars.
@@ -25,25 +25,132 @@ const STAR_RULES_DEFAULT_ = [
   ['answer_accepted', 'جوابك حلّ مشكلة صاحب السؤال', 3, '', 'TRUE', 'TRUE'],
   ['answer_upvote', 'حدا صوّت 👍 لجوابك', 1, 10, 'TRUE', 'TRUE'],
   ['exam_chapter', 'نجحت بامتحان فصل (أول مرة)', 1, '', 'TRUE', 'TRUE'],
-  ['exam_final', 'خلّصت الفحص النهائي لمقرر بـ 90% أو أكتر (أول مرة)', 3, '', 'TRUE', 'TRUE']
+  ['exam_final', 'خلّصت الفحص النهائي لمقرر بـ 90% أو أكتر (أول مرة)', 3, '', 'TRUE', 'TRUE'],
+  ['welcome', 'نجوم الترحيب بالتسجيل', 5, '', 'TRUE', 'TRUE'],
+  ['referral', 'صديق سجّل برابطك وبلّش يدرس', 3, 15, 'TRUE', 'TRUE']
 ];
 
 /* ============ إعداد النسخة 4 (مرة وحدة) ============ */
 /** شغّلها مرة وحدة من المحرر بعد لصق الملفات. آمنة إذا انعادت. */
 function setupV4() {
-  ensureCols_('users', ['stars', 'stars_recent', 'stars_day']);
+  ensureCols_('users', ['stars', 'stars_recent', 'stars_day', 'name_changed_at',
+                         'ref_code', 'referred_by', 'ref_paid', 'ref_joined', 'ref_active']);
   ensureCols_('comments', ['accepted_id']);
   if (!ss_().getSheetByName('star_rules')) {
     const sh = ss_().insertSheet('star_rules');
     sh.getRange(1, 1, STAR_RULES_DEFAULT_.length, STAR_RULES_DEFAULT_[0].length).setValues(STAR_RULES_DEFAULT_);
     console.log('star_rules: انعمل بالقيم الافتراضية');
+  } else {
+    // قواعد جديدة ما كانت موجودة → منضيفها لآخر التبويب (بدون ما نلمس أرقامك)
+    const have = table_('star_rules').rows.map(function (r) { return String(r[0]); });
+    const sh = ss_().getSheetByName('star_rules');
+    STAR_RULES_DEFAULT_.slice(1).forEach(function (r) {
+      if (have.indexOf(r[0]) < 0) { sh.appendRow(r); console.log('star_rules: انضافت ' + r[0]); }
+    });
   }
   ensureSheet_('stars_ledger', ['tx_id', 'ts', 'user_id', 'delta', 'reason', 'ref', 'note']);
   ensureSheet_('votes', ['comment_id', 'user_id', 'created_at']);
   ensureSheet_('banned_words', ['word']);
   bumpCommentsCache_();
   clearStarsCaches_();
+  const n = welcomeExisting_();
+  console.log('نجوم ترحيب + رمز دعوة للطلاب الموجودين: ' + n);
   console.log('تمّ ✔ — عدّل الأرقام من تبويب star_rules، والكلمات الممنوعة من banned_words');
+}
+
+/* ============ الترحيب والدعوات ============ */
+
+/**
+ * "مفتاح" الإيميل لمنع التلاعب: بدون +tag، وبجيميل بدون نقاط.
+ * (name+1@gmail.com و n.a.m.e@gmail.com = نفس الشخص) — بس للحماية، مو للدخول.
+ */
+function emailKey_(email) {
+  const e = String(email || '').trim().toLowerCase();
+  const at = e.lastIndexOf('@'); if (at < 0) return e;
+  let local = e.slice(0, at).split('+')[0], dom = e.slice(at + 1);
+  if (dom === 'googlemail.com') dom = 'gmail.com';
+  if (dom === 'gmail.com') local = local.replace(/\./g, '');
+  return local + '@' + dom;
+}
+/** مراجع ثابتة حتى لو انحذف الحساب وانعمل من جديد: نفس الإيميل ما بياخد ترحيب مرتين، وما بيجيب نجوم دعوة مرتين */
+function welcomeRef_(email) { return 'wh:' + hash_('welcome|' + emailKey_(email)).slice(0, 24); }
+function referralRef_(email) { return 'rh:' + hash_('referral|' + emailKey_(email)).slice(0, 24); }
+
+/** رمز دعوة: 6 أحرف/أرقام بدون الملتبسة (0/O و 1/I/L) */
+function newRefCode_(users) {
+  const A = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  const c = users.col('ref_code');
+  const taken = {};
+  if (c >= 0) users.rows.forEach(function (r) { if (r[c]) taken[String(r[c])] = 1; });
+  for (let n = 0; n < 50; n++) {
+    const b = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, Utilities.getUuid());
+    let code = '';
+    for (let i = 0; i < 6; i++) code += A.charAt((b[i] & 0xff) % A.length);
+    if (!taken[code]) return code;
+  }
+  return Utilities.getUuid().replace(/-/g, '').slice(0, 8).toUpperCase();
+}
+
+/**
+ * طالب جديد (لازم نكون جوّا القفل): رمز دعوة + نجوم الترحيب + ربطو بمين دعاه (إذا في رابط دعوة صالح).
+ * نجوم الدعوة ما بتنعطى هون — بتنعطى لما الصديق يبلّش يدرس (activateReferral_).
+ */
+function onNewUser_(email, refCode) {
+  const users = table_('users');
+  const i = findEmailRow_(users, email);
+  if (i < 0) return;
+  const me = rowObj_(users, users.rows[i]);
+  const uid = String(me.user_id);
+  const patch = {};
+  if (!me.ref_code) patch.ref_code = newRefCode_(users);
+
+  const code = String(refCode || '').trim().toUpperCase();
+  if (/^[A-Z0-9]{4,12}$/.test(code) && users.col('ref_code') >= 0) {
+    const ri = findRow_(users, 'ref_code', code);
+    if (ri >= 0 && ri !== i) {
+      const inviter = rowObj_(users, users.rows[ri]);
+      if (String(inviter.status) === 'active' && emailKey_(inviter.email) !== emailKey_(email)) {
+        patch.referred_by = String(inviter.user_id);
+        updateRow_(users, ri, { ref_joined: (Number(inviter.ref_joined) || 0) + 1 });
+      }
+    }
+  }
+  if (Object.keys(patch).length) updateRow_(users, i, patch);
+  grantStars_(uid, 'welcome', welcomeRef_(email));
+}
+
+/**
+ * أول نشاط حقيقي للطالب (نجح بامتحان، أو سأل/جاوب) → اللي دعاه بياخد نجوم الدعوة، مرة وحدة.
+ * user = { idx, obj } من authUser_. لازم نكون جوّا القفل.
+ */
+function activateReferral_(user) {
+  const o = user.obj;
+  if (!o.referred_by || String(o.ref_paid || '').trim()) return;
+  const r = grantStars_(String(o.referred_by), 'referral', referralRef_(o.email), 'صديق دعيتو بلّش يدرس 🎉');
+  if (!r.ok && r.error !== 'DUPLICATE' && r.error !== 'NO_USER') return;   // سقف يومي/قاعدة مطفية → منجرّب بنشاط جاي
+  const users = table_('users');
+  const i = findRow_(users, 'user_id', String(o.user_id));
+  if (i >= 0) updateRow_(users, i, { ref_paid: iso_(new Date()) });
+  if (r.ok) {
+    const ri = findRow_(users, 'user_id', String(o.referred_by));
+    if (ri >= 0) updateRow_(users, ri, { ref_active: (Number(users.rows[ri][users.col('ref_active')]) || 0) + 1 });
+  }
+  o.ref_paid = 'x';
+}
+
+/** للطلاب اللي كانوا مسجّلين قبل النجوم: رمز دعوة + نجوم ترحيب (مرة وحدة). بترجع العدد */
+function welcomeExisting_() {
+  return withLock_(function () {
+    const users = table_('users');
+    let n = 0;
+    users.rows.forEach(function (r, i) {
+      const o = rowObj_(users, r);
+      if (!o.user_id || !o.email) return;
+      if (!o.ref_code && users.col('ref_code') >= 0) updateRow_(users, i, { ref_code: newRefCode_(users) });
+      if (grantStars_(String(o.user_id), 'welcome', welcomeRef_(o.email)).ok) n++;
+    });
+    return n;
+  }, 60000);
 }
 
 /* ============ القواعد (من الشيت، مع كاش 10 دقايق) ============ */
@@ -191,6 +298,7 @@ function examPassed_(req) {
   const key = exam === 'final' ? 'exam_final' : 'exam_chapter';
   const note = (exam === 'final' ? 'الفحص النهائي — ' : 'امتحان الفصل ' + m[1] + ' — ') + course;
   const r = grantStars_(uid, key, 'exam:' + uid + ':' + course + ':' + exam, note);
+  activateReferral_(a.user);   // أول نجاح بامتحان = بلّش يدرس
   if (!r.ok) return { ok: true, granted: 0, reason: r.error };
   return { ok: true, granted: r.stars, total: r.total };
 }
@@ -204,9 +312,25 @@ function getMyStars_(req) {
   let recent = [];
   try { recent = JSON.parse(String(o.stars_recent || '') || '[]'); } catch (e) {}
   const rules = starRules_();
+  let code = String(o.ref_code || '');
+  if (!code) {   // نادراً: طالب ما إلو رمز لسا
+    try {
+      code = withLock_(function () {
+        const users = table_('users');
+        const i = findRow_(users, 'user_id', String(o.user_id));
+        if (i < 0 || users.col('ref_code') < 0) return '';
+        const cur = String(users.rows[i][users.col('ref_code')] || '');
+        if (cur) return cur;
+        const c = newRefCode_(users); updateRow_(users, i, { ref_code: c }); return c;
+      }, 5000);
+    } catch (e) { code = ''; }
+  }
   return {
     ok: true,
     stars: Number(o.stars) || 0,
+    ref_code: code,
+    invited: Number(o.ref_joined) || 0,
+    invited_active: Number(o.ref_active) || 0,
     history: (Array.isArray(recent) ? recent : []).map(function (x) {
       return { at: x.t, delta: Number(x.d) || 0, label: x.n || (rules[x.k] ? rules[x.k].label : x.k) };
     }),

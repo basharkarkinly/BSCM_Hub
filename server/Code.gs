@@ -84,7 +84,7 @@ function authorizeOnce() {
  * 3) بتركّب مؤقّتين: تنظيف ليلي (dailyCleanup) + تفريغ كاش التعليقات لما تعدّل تبويب comments يدوياً (onSheetEdit)
  */
 function setupV3() {
-  ensureCols_('users', ['notif_seen_at', 'terms_version', 'terms_accepted_at', 'places']);
+  ensureCols_('users', ['notif_seen_at', 'terms_version', 'terms_accepted_at', 'places', 'name_changed_at']);
   ensureCols_('otp', ['fails', 'fails_since']);
   const n = backfillPlaces_();
   console.log('places: تعبّى لـ ' + n + ' طالب');
@@ -183,13 +183,16 @@ function verifyOtp_(req) {
 
   // الرمز صحيح — نتأكد من المستخدم قبل ما نستهلك الرمز
   let user = findUser_(email);
+  // الاسم بينطلب بس أول مرة (أو إذا الحساب موجود بس اسمو فاضي). بعدها ما بينطلب أبداً.
   const name = cleanName_(req.name).slice(0, 80);
-  if (!user && !name) return { ok: false, error: 'NAME_REQUIRED' };
-  if (!user && hasBanned_(name)) return { ok: false, error: 'INVALID_NAME' };
+  const needName = !user || !String(user.obj.name || '').trim();
+  if (needName && !name) return { ok: false, error: 'NAME_REQUIRED' };
+  if (needName && hasBanned_(name)) return { ok: false, error: 'INVALID_NAME' };
   if (user && user.obj.status === 'blocked') return { ok: false, error: 'BLOCKED' };
 
   updateRow_(otp, idx, { used: 'TRUE', fails: 0 });
   const u = upsertLoggedInUser_(email, name, 'otp');
+  if (u.isNew) onNewUser_(email, req.ref);
   return newSession_(u, req.device);
 }
 
@@ -215,6 +218,7 @@ function googleLogin_(req) {
   if (existing && existing.obj.status === 'blocked') return { ok: false, error: 'BLOCKED' };
 
   const u = upsertLoggedInUser_(email, cleanName_(p.name).slice(0, 80), 'google');
+  if (u.isNew) onNewUser_(email, req.ref);
   return newSession_(u, req.device);
 }
 
@@ -259,7 +263,8 @@ function sessionUser_(req) {
 function checkSession_(req) {
   const s = sessionUser_(req);
   if (!s.ok) return s;
-  return { ok: true, user: { email: s.email, name: s.user.obj.name, terms: termsOf_(s.user) } };
+  return { ok: true, user: { email: s.email, name: s.user.obj.name, terms: termsOf_(s.user),
+                             name_locked: !!String(s.user.obj.name_changed_at || '').trim() } };
 }
 
 function logout_(req) {
@@ -345,14 +350,23 @@ function updateName_(req) {
   const name = cleanName_(req.name);
   if (name.length < 2 || name.length > 40 || hasBanned_(name)) return { ok: false, error: 'INVALID_NAME' };
 
+  ensureCols_('users', ['name_changed_at']);
   const users = table_('users');
   const idx = findEmailRow_(users, s.user.email);
   if (idx < 0) return { ok: false, error: 'NO_SESSION' };
-  const userId = String(users.rows[idx][users.col('user_id')]);
+  const row = rowObj_(users, users.rows[idx]);
+  const userId = String(row.user_id);
+  const oldName = String(row.name || '').trim();
 
-  updateRow_(users, idx, { name: name });
+  // تغيير الاسم مسموح مرة وحدة بس (الإدارة بتقدر تفتحو من جديد بمسح خلية name_changed_at)
+  if (String(row.name_changed_at || '').trim()) return { ok: false, error: 'NAME_LOCKED' };
+  if (name === oldName) return { ok: true, user: { email: s.user.email, name: name }, name_locked: false };
+
+  const patch = { name: name };
+  if (oldName) patch.name_changed_at = iso_(new Date());   // إذا كان فاضي، تعبايتو ما بتنحسب تغيير
+  updateRow_(users, idx, patch);
   renameCommentsAuthor_(userId, firstName_(name));   // التعليقات بتعرض الاسم الأول بس (متل addComment_)، فنحدّثها بنفس الطريقة
-  return { ok: true, user: { email: s.user.email, name: name } };
+  return { ok: true, user: { email: s.user.email, name: name }, name_locked: !!patch.name_changed_at };
 }
 
 function deleteAccount_(req) {
@@ -371,7 +385,14 @@ function deleteAccount_(req) {
     });
   });
   if (userId) deleteRowsWhere_('consents', function (o) { return String(o.user_id) === userId; });
-  if (userId) deleteRowsWhere_('stars_ledger', function (o) { return String(o.user_id) === userId; });
+  if (userId && ss_().getSheetByName('stars_ledger')) {
+    // حركات النجوم بتنمسح، إلا "بصمة" الترحيب والدعوة (wh:/rh: بدون رقم الطالب) حتى ما ينعاد كسبها بحساب جديد بنفس الإيميل
+    deleteRowsWhere_('stars_ledger', function (o) { return String(o.user_id) === userId && !/^(wh|rh):/.test(String(o.ref)); });
+    const led = table_('stars_ledger');
+    led.rows.forEach(function (r, i) {
+      if (String(r[led.col('user_id')]) === userId) updateRow_(led, i, { user_id: '', note: 'حساب محذوف' });
+    });
+  }
   if (userId && deleteRowsWhere_('votes', function (o) { return String(o.user_id) === userId; })) bumpCommentsCache_();
   deleteRowsWhere_('otp', function (o) { return String(o.email).trim().toLowerCase() === email; });
   deleteRowsWhere_('sessions', function (o) { return String(o.email).trim().toLowerCase() === email; });
@@ -532,7 +553,7 @@ function upsertLoggedInUser_(email, name, method) {
     verified_at: nowIso,
     last_login: nowIso
   });
-  return { email: email, name: name };
+  return { email: email, name: name, isNew: true };
 }
 
 function newSession_(user, device) {

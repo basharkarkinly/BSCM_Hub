@@ -39,6 +39,7 @@
       <div id="step-email" class="step" hidden>
         <h2>تسجيل الدخول</h2>
         <p class="sub">دخّل إيميلك وبنبعتلك رمز تحقق من 6 أرقام.</p>
+        <p class="notice" id="ref-note" hidden style="margin:0 0 14px;">👋 صديقك دعاك للمنصة! سجّل وبتاخد نجوم ترحيب ⭐</p>
         <label class="field"><span>الإيميل</span>
           <input id="email" type="email" dir="ltr" autocomplete="email" inputmode="email" placeholder="name@example.com">
         </label>
@@ -57,8 +58,8 @@
         <label class="field"><span>رمز التحقق</span>
           <input id="code" class="code-input" type="text" dir="ltr" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="••••••">
         </label>
-        <label class="field" id="name-field" hidden><span>اسمك (أول تسجيل فقط)</span>
-          <input id="name" type="text" autocomplete="name" maxlength="80" placeholder="الاسم الكامل">
+        <label class="field" id="name-field" hidden><span>اسمك (ممكن يكون مستعار)</span>
+          <input id="name" type="text" autocomplete="name" maxlength="80" placeholder="الاسم اللي بيظهر مع أسئلتك وأجوبتك">
         </label>
         <button id="btn-verify" class="btn btn-primary btn-block" type="button">تأكيد ودخول</button>
         <div class="row-between">
@@ -113,7 +114,7 @@
     INVALID_CODE: "الرمز غير صحيح.",
     EXPIRED: "انتهت صلاحية الرمز، اطلب رمز جديد.",
     TOO_MANY: "محاولات كتيرة. اطلب رمز جديد، وإذا ضلّت الرسالة تطلع استنى ساعة وجرّب.",
-    NAME_REQUIRED: "هاد أول تسجيل لك، اكتب اسمك لنكمّل.",
+    NAME_REQUIRED: "أهلاً فيك! هاد أول تسجيل إلك. شو بتحب نناديك؟ اكتب اسمك وكبس تأكيد.",
     INVALID_NAME: "اختار اسم تاني، هاد الاسم فيه كلمة مو مناسبة.",
     INVALID_TOKEN: "ما قدرنا نتحقق من حساب غوغل، جرّب مرة تانية.",
     SERVER_ERROR: "صار خطأ عنا، جرّب بعد شوي.",
@@ -181,7 +182,16 @@
       fail();
     }).catch(fail);
   }
+  // ---- رابط الدعوة: index.html?ref=CODE — منحفظو لحد ما يكمّل التسجيل (حتى لو سكّر الصفحة ورجع) ----
+  (function () {
+    var m = /[?&]ref=([A-Za-z0-9]{4,12})/.exec(location.search);
+    if (m) { try { localStorage.setItem("sc_ref", m[1].toUpperCase()); } catch (e) {} }
+    if (savedRef()) $("ref-note").hidden = false;
+  })();
+  function savedRef() { try { return localStorage.getItem("sc_ref") || ""; } catch (e) { return ""; } }
+
   function saveAndGo(res) {
+    try { localStorage.removeItem("sc_ref"); } catch (e) {}
     SCAuth.saveSession({ token: res.token, email: res.user.email, name: res.user.name, terms: res.user.terms || 0 });
     proceed();
   }
@@ -216,10 +226,10 @@
     var code = $("code").value.replace(/\D/g, "");
     if (code.length !== 6) { msg("msg-code", "الرمز مؤلف من 6 أرقام."); return; }
     $("btn-verify").disabled = true;
-    SCAuth.api("verifyOtp", { email: state.email, code: code, name: $("name").value.trim(), device: device() })
+    SCAuth.api("verifyOtp", { email: state.email, code: code, name: $("name").value.trim(), device: device(), ref: savedRef() })
       .then(function (res) {
         if (res && res.ok) return saveAndGo(res);
-        if (res && res.error === "NAME_REQUIRED") { $("name-field").hidden = false; $("name").focus(); }
+        if (res && res.error === "NAME_REQUIRED") { $("name-field").hidden = false; $("name").focus(); return msg("msg-code", ERR.NAME_REQUIRED, true); }
         msg("msg-code", errText(res));
       })
       .catch(function () { msg("msg-code", ERR.NET); })
@@ -248,7 +258,7 @@
         client_id: SC_CONFIG.GOOGLE_CLIENT_ID,
         callback: function (resp) {
           msg("msg-email", "");
-          SCAuth.api("googleLogin", { idToken: resp.credential, device: device() })
+          SCAuth.api("googleLogin", { idToken: resp.credential, device: device(), ref: savedRef() })
             .then(function (res) { if (res && res.ok) saveAndGo(res); else msg("msg-email", errText(res)); })
             .catch(function () { msg("msg-email", ERR.NET); });
         }

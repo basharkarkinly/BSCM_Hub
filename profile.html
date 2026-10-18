@@ -23,7 +23,7 @@
     <label class="field"><span>اسم العرض</span>
       <input id="pf-name" type="text" maxlength="40" autocomplete="nickname" placeholder="اسمك أو اسم مستعار">
     </label>
-    <p class="pf-hint">ممكن يكون اسم مستعار. هو الاسم اللي بيظهر مع أسئلتك وأجوبتك.</p>
+    <p class="pf-hint" id="pf-name-hint">ممكن يكون اسم مستعار، وهو اللي بيظهر مع أسئلتك وأجوبتك. <b>فيك تغيّرو مرة وحدة بس</b>، فاختارو منيح.</p>
     <button id="pf-save" class="btn btn-primary btn-block" type="button">حفظ الاسم</button>
     <p id="pf-msg" class="msg" role="alert"></p>
 
@@ -75,16 +75,25 @@
   var TG = "https://t.me/karkinlySupportGroup";
   var ERR = {
     INVALID_NAME: "الاسم لازم يكون بين 2 و40 حرف، وما يكون فيه كلمات مو مناسبة.",
+    NAME_LOCKED: "غيّرت اسمك قبل، وتغيير الاسم مسموح مرة وحدة بس. إذا في سبب ضروري تواصل معنا عالتلغرام.",
     NO_SESSION: "انتهت جلستك، سجّل دخولك مرة تانية.",
     EXPIRED: "انتهت جلستك، سجّل دخولك مرة تانية.",
     NET: "ما في اتصال بالسيرفر، تأكد من الإنترنت وجرّب."
   };
   function msg(id, text, ok) { var el = $(id); el.textContent = text || ""; el.className = "msg " + (ok ? "ok" : "err"); }
 
+  var original = "";
+  function lockName(text) {
+    $("pf-name").readOnly = true; $("pf-save").style.display = "none";
+    $("pf-name-hint").textContent = text || "غيّرت اسمك مرة قبل، فصار ثابت. إذا في سبب ضروري لتغييره تواصل معنا عالتلغرام.";
+  }
   SCShell.init({
     onReady: function (user) {
-      $("pf-name").value = user.name || "";
+      original = user.name || "";
+      $("pf-name").value = original;
       $("pf-email").value = user.email || "";
+      // نسأل السيرفر إذا الاسم انغيّر قبل (الجلسة المحفوظة عالجهاز ما فيها هالمعلومة)
+      SCAuth.check().then(function (r) { if (r.state === "valid" && r.user.name_locked) lockName(); });
     }
   });
 
@@ -92,17 +101,21 @@
   function saveName() {
     var name = $("pf-name").value.replace(/\s+/g, " ").trim();
     if (name.length < 2 || name.length > 40) { msg("pf-msg", ERR.INVALID_NAME); return; }
+    if (name === original) { msg("pf-msg", "هاد نفس اسمك الحالي.", true); return; }
+    if (original && !window.confirm("رح يصير اسمك «" + name + "». تغيير الاسم مسموح مرة وحدة بس، وبعدها بيصير ثابت. متأكد؟")) return;
     var s = SCAuth.getSession(); if (!s) return;
     $("pf-save").disabled = true; msg("pf-msg", "");
     SCAuth.api("updateName", { token: s.token, name: name }).then(function (res) {
       if (res && res.ok) {
         var nm = (res.user && res.user.name) || name;
         SCAuth.saveSession({ token: s.token, email: s.email, name: nm, ok_at: s.ok_at });
-        $("pf-name").value = nm;
+        $("pf-name").value = nm; original = nm;
         var hi = $("scs-hi"); if (hi) hi.textContent = "أهلاً " + nm.split(" ")[0] + " 👋";
         msg("pf-msg", "انحفظ الاسم ✓", true);
+        if (res.name_locked) lockName("انحفظ اسمك الجديد. تغيير الاسم كان مسموح مرة وحدة، فصار ثابت هلأ.");
       } else {
         msg("pf-msg", (res && ERR[res.error]) || "ما قدرنا نحفظ الاسم هلأ، جرّب بعد شوي.");
+        if (res && res.error === "NAME_LOCKED") lockName();
       }
     }).catch(function () { msg("pf-msg", ERR.NET); })
       .then(function () { $("pf-save").disabled = false; });

@@ -25,6 +25,18 @@
   </section>
   <p id="st-err" class="msg err" role="alert"></p>
 
+  <section class="pf-card st-invite">
+    <h2>ادعِ أصحابك 🤝</h2>
+    <p class="pf-hint" id="inv-why" style="margin:0 0 12px;">ابعت رابطك لأصحابك. لما صاحبك يسجّل <b>ويبلّش يدرس</b> (ينجح بأول امتحان أو يسأل أو يجاوب أول مرة) بتاخد نجوم ⭐</p>
+    <div class="inv-box"><input id="inv-link" type="text" dir="ltr" readonly value="..."><button id="inv-copy" class="btn btn-primary" type="button">نسخ</button></div>
+    <div class="inv-share">
+      <a id="inv-wa" class="inv-btn" target="_blank" rel="noopener">واتساب</a>
+      <a id="inv-tg" class="inv-btn" target="_blank" rel="noopener">تلغرام</a>
+      <button id="inv-more" class="inv-btn" type="button" hidden>مشاركة…</button>
+    </div>
+    <p class="inv-stats" id="inv-stats"></p>
+  </section>
+
   <section class="pf-card">
     <h2>كيف بتكسب نجوم؟</h2>
     <ul class="st-rules" id="st-rules"><li class="st-skel">عم نحمّل...</li></ul>
@@ -75,7 +87,31 @@
   }
   function starsWord(n) { return n === 1 ? "نجمة" : (n === 2 ? "نجمتين" : "نجوم"); }
 
+  function invite(d) {
+    if (!d.ref_code) { document.querySelector(".st-invite").hidden = true; return; }
+    var link = new URL("index.html?ref=" + d.ref_code, location.href).href;
+    var text = "عم أدرس على منصة Support Channel — مقررات مشروحة ومبسّطة مع تدريب وامتحانات، ومجتمع بيساعد بعضو. سجّل من هون: ";
+    $("inv-link").value = link;
+    $("inv-wa").href = "https://wa.me/?text=" + encodeURIComponent(text + link);
+    $("inv-tg").href = "https://t.me/share/url?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent(text);
+    if (navigator.share) {
+      $("inv-more").hidden = false;
+      $("inv-more").onclick = function () { navigator.share({ title: "Support Channel", text: text, url: link }).catch(function () {}); };
+    }
+    $("inv-copy").onclick = function () {
+      var done = function () { $("inv-copy").textContent = "انتسخ ✓"; setTimeout(function () { $("inv-copy").textContent = "نسخ"; }, 1800); };
+      if (navigator.clipboard) navigator.clipboard.writeText(link).then(done, function () { $("inv-link").select(); document.execCommand("copy"); done(); });
+      else { $("inv-link").select(); document.execCommand("copy"); done(); }
+    };
+    var ref = (d.rules || []).filter(function (r) { return r.key === "referral"; })[0];
+    if (ref) $("inv-why").innerHTML = "ابعت رابطك لأصحابك. لما صاحبك يسجّل <b>ويبلّش يدرس</b> (ينجح بأول امتحان أو يسأل أو يجاوب أول مرة) بتاخد <b>" + ref.stars + " " + starsWord(ref.stars) + " ⭐</b>";
+    $("inv-stats").textContent = d.invited
+      ? "سجّل عن طريقك " + d.invited + (d.invited === 1 ? " صديق" : " أصدقاء") + "، منهم " + (d.invited_active || 0) + " بلّشوا يدرسوا."
+      : "لسا ما حدا سجّل عن طريقك. ابعت الرابط لأول صديق 😉";
+  }
+
   function render(d) {
+    invite(d);
     $("st-num").textContent = d.stars;
     if (window.SCShell && SCShell.setStars) SCShell.setStars(d.stars);
     $("st-rules").innerHTML = (d.rules || []).map(function (r) {

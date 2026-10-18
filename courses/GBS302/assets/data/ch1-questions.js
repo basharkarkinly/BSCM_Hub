@@ -140,7 +140,7 @@ const CH1_POOL = [
   "type": "tf",
   "question": "الطابعة الليزرية بطيئة وتعطي الصورة بجودة جيدة.",
   "answer": false,
-  "explanation": "خطأ — الليزرية <b>سريعة</b> وبتعطي صورة بجودة جيدة.",
+  "explanation": "خطأ — الليزرية <b>سريعة</b> وبتعطي صور بجودة <b>عالية</b>.",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#io",
    "label": "وحدات الإدخال والإخراج والطابعات"
@@ -277,7 +277,7 @@ const CH1_POOL = [
   "type": "tf",
   "question": "جهاز المودم يقوم بتحويل البيانات إلى موجات (اهتزازات) تسمى إشارات أو بيانات تماثلية.",
   "answer": true,
-  "explanation": "صح ✔️ — المودم بيحوّل البيانات الرقمية لإشارات تماثلية لتمشي على خط الهاتف وبالعكس.",
+  "explanation": "صح ✔️ — حسب المقرر المودم بيحوّل الإشارات التماثلية لرقمية وبالعكس، ليتبادل الحاسوب البيانات عبر خطوط الهاتف.",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#io",
    "label": "وحدات الإدخال والإخراج والطابعات"
@@ -374,9 +374,9 @@ const CH1_POOL = [
  {
   "origin": "bank",
   "type": "tf",
-  "question": "تتحكم سرعة المعالج بتوقيت جميع عمليات الحوسبة.",
+  "question": "تتحكم سرعة المعالج (ساعة المعالج) بتوقيت جميع عمليات الحوسبة.",
   "answer": true,
-  "explanation": "صح ✔️",
+  "explanation": "صح ✔️ — حسب المقرر: ساعة المعالج CPU Clock (كريستال كوارتز) بتتحكم بتوقيت كل عمليات الحوسبة.",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#cpu",
    "label": "اللوحة الأم والمعالج"
@@ -905,9 +905,9 @@ const CH1_POOL = [
  {
   "origin": "bank",
   "type": "tf",
-  "question": "أنظمة التشغيل iOS و MAC و LINUX لا تسمح بتعدد المستخدمين.",
+  "question": "أنظمة التشغيل LINUX و MAC و OS X لا تسمح بتعدد المستخدمين.",
   "answer": false,
-  "explanation": "خطأ — هالأنظمة <b>بتسمح</b> بتعدد المستخدمين.",
+  "explanation": "خطأ — هالأنظمة <b>بتسمح</b> بتعدد المستخدمين، وبتستخدم واجهات رسومية GUI.",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#software",
    "label": "البرمجيات وأنواعها"
@@ -955,6 +955,90 @@ const CH1_POOL = [
   ],
   "answerIndex": 1,
   "explanation": "التصميم المدعّم بالحاسوب (CAD) للرسم والتصميم.",
+  "ref": {
+   "url": "chapters/chapter-1-lesson.html#software",
+   "label": "البرمجيات وأنواعها"
+  }
+ },
+ {
+  "origin": "gen",
+  "type": "mcq",
+  "question": "تقاس سرعة وحدة المعالجة المركزية بـ:",
+  "options": [
+   "البايت",
+   "النانو ثانية",
+   "الميغاهرتز أو الغيغاهرتز",
+   "عدد الأوراق في الدقيقة"
+  ],
+  "answerIndex": 2,
+  "explanation": "سرعة المعالج بالـMHz أو GHz (الميغاهرتز = مليون دورة بالثانية). النانو ثانية لسرعة الوصول للذاكرة.",
+  "ref": {
+   "url": "chapters/chapter-1-lesson.html#cpu",
+   "label": "اللوحة الأم والمعالج"
+  }
+ },
+ {
+  "origin": "gen",
+  "type": "tf",
+  "question": "البايت يتألف من 8 بت، والبت أصغر وحدة لقياس سعة التخزين ويمثل 0 أو 1.",
+  "answer": true,
+  "explanation": "صح ✔️ — والبايت هو السعة اللازمة لتخزين محرف واحد.",
+  "ref": {
+   "url": "chapters/chapter-1-lesson.html#memory",
+   "label": "الذاكرة RAM و ROM"
+  }
+ },
+ {
+  "origin": "gen",
+  "type": "tf",
+  "question": "المسجّلات مساحات تخزين كبيرة وبطيئة خارج المعالج.",
+  "answer": false,
+  "explanation": "خطأ — المسجّلات مساحات <b>صغيرة وسريعة جوّا المعالج</b> بتحتفظ بالبيانات والتعليمات مؤقتاً، وعرضها 32 أو 64 بت.",
+  "ref": {
+   "url": "chapters/chapter-1-lesson.html#cpu",
+   "label": "اللوحة الأم والمعالج"
+  }
+ },
+ {
+  "origin": "gen",
+  "type": "tf",
+  "question": "يدعم المنفذ USB ميزة التشغيل المباشر عند الوصل دون الحاجة لإعادة تشغيل الحاسوب.",
+  "answer": true,
+  "explanation": "صح ✔️",
+  "ref": {
+   "url": "chapters/chapter-1-lesson.html#storage",
+   "label": "المنافذ ووحدات التخزين"
+  }
+ },
+ {
+  "origin": "gen",
+  "type": "mcq",
+  "question": "من أنواع الحاسوب المصغّر حسب المقرر:",
+  "options": [
+   "الحاسوب القابل للارتداء",
+   "الهاتف الذكي",
+   "الكاميرا الرقمية",
+   "جميع ما سبق"
+  ],
+  "answerIndex": 3,
+  "explanation": "الحاسوب المصغّر بيشمل: القابل للارتداء (الساعة الذكية)، الهاتف الذكي، والكاميرا الرقمية.",
+  "ref": {
+   "url": "chapters/chapter-1-lesson.html#types",
+   "label": "تعريف الحاسوب وأنواعه"
+  }
+ },
+ {
+  "origin": "gen",
+  "type": "fill",
+  "question": "يمكن جمع عدة برمجيات تطبيقية في حزمة واحدة يشار إليها باسم ______ مثل مجموعة Office.",
+  "acceptable": [
+   "مجموعة",
+   "Package",
+   "package",
+   "الحزمة",
+   "حزمة"
+  ],
+  "explanation": "المجموعة Package متل Office، وبتعتبر من البرامج المكتبية.",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#software",
    "label": "البرمجيات وأنواعها"

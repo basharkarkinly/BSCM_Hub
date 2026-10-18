@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 3 — أساسيات نظام التشغيل ويندوز 10 | GBS302</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS302 — مهارات الحاسوب</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الثالث</div>
+    <h1>أساسيات نظام التشغيل ويندوز 10</h1>
+    <p>شو الجديد بويندوز 10، سطح المكتب والفأرة، خيارات التشغيل، العمل مع الأيقونات والنوافذ، لوحة التحكم وإدارة الطباعة، وأهم الاختصارات.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">سطح المكتب Desktop</span><span class="keyword-chip">شريط المهام</span>
+          <span class="keyword-chip">السكون Sleep</span><span class="keyword-chip">السبات Hibernate</span>
+          <span class="keyword-chip">أيقونة Icon</span><span class="keyword-chip">اختصار Shortcut</span>
+          <span class="keyword-chip">شريط العنوان</span><span class="keyword-chip">لوحة التحكم</span><span class="keyword-chip">Task Manager</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تعدد ميزات ويندوز 10 ومكوّنات بيئة العمل</li>
+          <li>تفرّق بين خيارات التشغيل (سكون، سبات، تأمين، تسجيل خروج...)</li>
+          <li>تحدد وتحرّك الأيقونات وتنشئ اختصارات</li>
+          <li>تتعامل مع النوافذ: أقسامها، حجمها، إغلاقها، ترتيبها</li>
+          <li>تستخدم لوحة التحكم وتدير الطباعة، وتحفظ أهم الاختصارات</li>
+        </ul>
+      </div>
+
+      <div class="block" id="intro">
+        <h2><span class="idx">1</span> شو الجديد بويندوز 10؟</h2>
+        <p>نظام التشغيل هو الوسيط بين البرامج التطبيقية اللي بتستخدمها وبين عتاد الحاسوب. ويندوز 10 من مايكروسوفت جاب تحسينات كتير:</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>📱 نظام واحد لكل الأجهزة</b>مكتبي، محمول، لوحي، وهاتف ذكي.</div>
+          <div class="quick-card"><b>🪟 قائمة ابدأ Start</b>بتجمع القائمة الكلاسيكية (Windows 7) مع تطبيقات التصميم الحديث (Windows 8).</div>
+          <div class="quick-card"><b>🎙️ Cortana</b>مساعد رقمي صوتي: بتنفّذ المهام بنطق الأوامر.</div>
+          <div class="quick-card"><b>🌐 Microsoft Edge</b>متصفح قوي ومنافس، بيقدر يعرض النص بس لقراءة أسهل على الشاشات الصغيرة.</div>
+          <div class="quick-card"><b>🗂️ عرض المهام Task View</b>المهام اللي نفّذتها خلال <strong>آخر 30 يوم</strong>، وبيسمح بإنشاء أكتر من سطح مكتب.</div>
+        </div>
+      </div>
+
+      <div class="block" id="desktop">
+        <h2><span class="idx">2</span> سطح المكتب واستخدامات الفأرة</h2>
+        <table class="cmp">
+          <tr><th>العنصر</th><th>وظيفته</th></tr>
+          <tr><td>الأيقونات Icons</td><td>رموز صغيرة بتمثّل الملفات والمجلدات والبرامج</td></tr>
+          <tr><td>زر ابدأ Start</td><td>بيفتح لائحة خيارات</td></tr>
+          <tr><td>مربع البحث Search Box</td><td>للبحث ضمن الحاسوب أو عبر الإنترنت</td></tr>
+          <tr><td>شريط المهام Taskbar</td><td>الشريط أسفل الشاشة، بيظهر المهام الحالية</td></tr>
+          <tr><td>منطقة الإعلام Notification Area</td><td>اختصارات لبرامج ومعلومات عن حالة الحاسوب، والوقت والتاريخ</td></tr>
+        </table>
+        <ol class="timeline">
+          <li><span class="marker">1</span><h4>التأشير Point</h4><p>تمرير المؤشر على مكان بالشاشة.</p></li>
+          <li><span class="marker">2</span><h4>النقر Click</h4><p>الأيسر للتحديد، والأيمن لإظهار لائحة الأوامر السريعة.</p></li>
+          <li><span class="marker">3</span><h4>النقر المزدوج Double Click</h4><p>ضغطتين سريعتين بالأيسر، لفتح نافذة أو تشغيل برنامج.</p></li>
+          <li><span class="marker">4</span><h4>السحب والإفلات Drag &amp; Drop</h4><p>ضغط مستمر بالأيسر مع التحريك، لتحريك العناصر (ومنها نسخ الملفات).</p></li>
+        </ol>
+      </div>
+
+      <div class="block" id="power">
+        <h2><span class="idx">3</span> خيارات التشغيل (Start ← Power)</h2>
+        <p>أسوأ غلطة: تقطع الكهربا فجأة عن الحاسوب، لأنه بيأثر على استقرار النظام. لهيك في خيارات طاقة آمنة:</p>
+        <table class="cmp">
+          <tr><th>الخيار</th><th>شو بيعمل</th></tr>
+          <tr><td>إعادة التشغيل Restart</td><td>بينهي الجلسة وبيعيد تشغيل الحاسوب</td></tr>
+          <tr><td>إيقاف التشغيل Shut down</td><td>بينهي الجلسة وبيطفي الحاسوب</td></tr>
+          <tr><td><b>السبات Hibernate</b></td><td>بيفصل التغذية <b>مع الحفاظ عالجلسة</b>، وبترجع الجلسة بـ<b>زر الطاقة</b></td></tr>
+          <tr><td><b>السكون Sleep</b></td><td>بيحافظ عالجلسة لتوفير الطاقة، وبترجع بـ<b>أي زر من لوحة المفاتيح أو تحريك الفأرة</b></td></tr>
+          <tr><td>تسجيل الخروج Sign out</td><td>بيطلعك من الجلسة <b>بلا ما يطفي</b> الحاسوب</td></tr>
+          <tr><td>التأمين Lock</td><td>بيقفل الحاسوب مع الحفاظ عالجلسة</td></tr>
+          <tr><td>تغيير إعدادات الحساب</td><td>صلاحيات كاملة Administrator أو محدودة Standard</td></tr>
+        </table>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>السبات ← <b>زر الطاقة</b>. السكون ← <b>أي زر أو الفأرة</b>. والاتنين بيحافظو عالجلسة.</p>
+        </div>
+      </div>
+
+      <div class="block" id="icons">
+        <h2><span class="idx">4</span> العمل مع الأيقونات</h2>
+        <p><b>الأيقونات الأساسية لسطح المكتب:</b> This PC (مشغلات الأقراص) · ملفات المستخدم (المستندات، الصور، الموسيقى) · الشبكة · سلة المحذوفات · لوحة التحكم.
+        بتظهرها أو بتخفيها من: زر يمين على سطح المكتب ← Personalize ← Themes ← Desktop Icon Settings.</p>
+        <table class="cmp">
+          <tr><th>تحديد أيقونات متباعدة</th><th>تحديد أيقونات متجاورة</th></tr>
+          <tr><td>انقر الأولى، واضغط <b>Ctrl</b> باستمرار وانقر الباقي</td><td>انقر الأولى، واضغط <b>Shift</b> باستمرار وانقر الأخيرة</td></tr>
+        </table>
+        <p><b>تحريك الأيقونات:</b> بالسحب والإفلات، بس <b>لازم أول تلغي</b> الترتيب التلقائي: زر يمين ← View ← Auto arrange icons.</p>
+        <p><b>فتح عنصر:</b> نقر مزدوج · أو Enter بعد التحديد · أو زر يمين ← Open · أو Open من قائمة Home.</p>
+        <p><b>الاختصار Shortcut:</b> زر يمين ← Send To ← Desktop (create shortcut). بتسمّيه بـRename وبتحذفه بـDelete.</p>
+        <div class="callout">
+          <span class="tag">💡 مهم</span>
+          <p>حذف الاختصار <b>ما بيحذف العنصر الأصلي</b>.</p>
+        </div>
+      </div>
+
+      <div class="block" id="windows">
+        <h2><span class="idx">5</span> استخدام النوافذ</h2>
+        <div class="quick-grid">
+          <div class="quick-card"><b>شريط العنوان Title Bar</b>بأعلى النافذة: اسم العنصر + <strong>3 أزرار</strong>: إغلاق، تصغير (لأيقونة بشريط المهام)، تكبير.</div>
+          <div class="quick-card"><b>القائمة File</b>أوامر متل فتح عنصر بنافذة جديدة.</div>
+          <div class="quick-card"><b>شريط القوائم Ribbon</b>قوائم الأوامر.</div>
+          <div class="quick-card"><b>جزء التنقل Navigation</b>محتويات الحاسوب ببنية شجرية (هرمية).</div>
+          <div class="quick-card"><b>شريط الحالة Status Bar</b>معلومات عن النافذة المفتوحة.</div>
+          <div class="quick-card"><b>Frequent / Recent</b>المجلدات الأكتر استخداماً، وآخر الملفات المستخدمة.</div>
+        </div>
+        <table class="cmp" style="margin-top:14px;">
+          <tr><th>بدك</th><th>الطريقة</th></tr>
+          <tr><td>تحرّك النافذة</td><td>اسحب من مكان فارغ بـ<b>شريط العنوان</b></td></tr>
+          <tr><td>تغيّر الحجم أفقياً / عمودياً / الاثنين</td><td>من أحد <b>الجانبين</b> / من الحد <b>الأعلى أو الأسفل</b> / من <b>إحدى الزوايا</b></td></tr>
+          <tr><td>تسكّر النافذة</td><td>زر Close · زر يمين عليها بشريط المهام ← Close window · File ← Close · <b>Alt + F4</b></td></tr>
+          <tr><td>تبدّل بين النوافذ</td><td>من أيقوناتها بشريط المهام أو <b>Alt + Tab</b></td></tr>
+          <tr><td>ترتّب النوافذ</td><td>زر يمين على شريط المهام: متتالي Cascade · مكدّس Stacked · متجانب Side by side</td></tr>
+          <tr><td>تسكّر تطبيق ما عم يستجيب</td><td>Task Manager (Ctrl + Shift + Esc) ← حدد التطبيق ← End Task</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="control">
+        <h2><span class="idx">6</span> لوحة التحكم وإدارة الطباعة</h2>
+        <p>لوحة التحكم بتغيّر إعدادات ويندوز: الوقت والتاريخ، الصوت، الخلفية، شاشة التوقف، دقة الشاشة، اللغة...</p>
+        <table class="cmp">
+          <tr><th>المهمة</th><th>المسار</th></tr>
+          <tr><td>معلومات النظام</td><td>System and Security ← System</td></tr>
+          <tr><td>الوقت والتاريخ</td><td>Clock and Region ← Set the time and date</td></tr>
+          <tr><td>الصوت</td><td>Hardware and Sound ← Adjust system volume</td></tr>
+          <tr><td>إزالة برنامج</td><td>Programs ← Programs and Features ← Uninstall</td></tr>
+          <tr><td>تثبيت طابعة</td><td>Hardware and Sound ← Add a device</td></tr>
+          <tr><td>طابعة افتراضية</td><td>Devices and Printers ← زر يمين ← Set as Default Printer</td></tr>
+        </table>
+        <p style="margin-top:12px;"><b>الطباعة:</b> File ← Print أو <b>Ctrl + P</b>. ومهام الطباعة بتشوفها بنقر مزدوج على أيقونة الطابعة بمنطقة الإعلام:</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>⏸️ Pause</b>إيقاف مؤقت.</div>
+          <div class="quick-card"><b>▶️ Resume</b>بيكمّل <strong>من النقطة اللي وقف عندها</strong>.</div>
+          <div class="quick-card"><b>🔁 Restart</b>بيعيد الطباعة <strong>من البداية</strong>.</div>
+          <div class="quick-card"><b>⛔ Cancel</b>إيقاف كامل ونهائي.</div>
+        </div>
+      </div>
+
+      <div class="block" id="shortcuts">
+        <h2><span class="idx">7</span> أهم اختصارات ويندوز 10</h2>
+        <table class="cmp">
+          <tr><th>الاختصار</th><th>شو بيعمل</th></tr>
+          <tr><td>Ctrl + C / X / V</td><td>نسخ / قص / لصق</td></tr>
+          <tr><td>Ctrl + A</td><td>تحديد الكل</td></tr>
+          <tr><td>Ctrl + Esc</td><td>فتح قائمة ابدأ</td></tr>
+          <tr><td>Ctrl + P</td><td>طباعة مستند</td></tr>
+          <tr><td>Ctrl + Shift + Esc</td><td>مدير المهام Task Manager</td></tr>
+          <tr><td>Ctrl + Shift + N</td><td>مجلد جديد</td></tr>
+          <tr><td>Alt + F4</td><td>إغلاق النافذة</td></tr>
+          <tr><td>Alt + Tab</td><td>التبديل بين النوافذ</td></tr>
+          <tr><td>PrtSc / Alt + PrtSc</td><td>صورة للشاشة كاملة للحافظة / صورة <b>للنافذة النشطة بس</b></td></tr>
+          <tr><td>Alt + Enter</td><td>خصائص العنصر</td></tr>
+          <tr><td>Shift + Delete</td><td>حذف نهائي بلا سلة المحذوفات</td></tr>
+          <tr><td>F1 / F2</td><td>تعليمات ويندوز / إعادة تسمية</td></tr>
+          <tr><td>Win + D</td><td>عرض أو إخفاء سطح المكتب</td></tr>
+          <tr><td>Win + Ctrl + D / Win + Ctrl + F4</td><td>سطح مكتب افتراضي جديد / إغلاقه</td></tr>
+          <tr><td>Win + S</td><td>كورتانا بالوضع النصي</td></tr>
+          <tr><td>Win + E / Win + L</td><td>متصفح الملفات / قفل الجهاز</td></tr>
+          <tr><td>Win + Tab</td><td>Task View</td></tr>
+          <tr><td>Win + PrtSc</td><td>صورة للشاشة وحفظها بمجلد الصور</td></tr>
+          <tr><td>Win + Space</td><td>تغيير لغة الإدخال</td></tr>
+          <tr><td>Win + A / Win + I</td><td>الإشعارات / الإعدادات</td></tr>
+          <tr><td>Win + Left / Right</td><td>نقل النافذة لليسار / لليمين</td></tr>
+        </table>
+        <div id="activity-match" style="margin-top:16px;"></div>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-3-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-3-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الرابع)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS302",chapter_id:"3",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch3-flashcards.js"></script>
+<script>
+renderMatchGame("activity-match", [
+  {left:"Alt + F4", right:"إغلاق النافذة"},
+  {left:"Ctrl + Shift + Esc", right:"مدير المهام"},
+  {left:"Alt + PrtSc", right:"صورة للنافذة النشطة فقط"},
+  {left:"Win + L", right:"قفل الجهاز"},
+  {left:"Shift + Delete", right:"حذف نهائي بلا سلة المحذوفات"},
+  {left:"Ctrl + Shift + N", right:"إنشاء مجلد جديد"}
+]);
+
+renderCaseStudy("case-study-mount", {
+  title: "استراحة قصيرة",
+  scenario: "رامي عم يشتغل على تقرير وفاتح كذا برنامج. بدو يطلع ربع ساعة ويرجع، وبدو يوفّر طاقة، ولما يرجع بدو يكمّل شغله بس بلمسة على لوحة المفاتيح أو بتحريك الفأرة، بلا ما يكبس زر الطاقة.",
+  question: "أي خيار تشغيل بيناسب رامي؟",
+  options: [
+    "السبات Hibernate",
+    "السكون Sleep",
+    "تسجيل الخروج Sign out",
+    "إيقاف التشغيل Shut down"
+  ],
+  answerIndex: 1,
+  explanation: "السكون بيحافظ على جلسة العمل وبيوفّر طاقة، والجلسة بترجع بأي زر من لوحة المفاتيح أو بتحريك الفأرة. السبات كمان بيحافظ عالجلسة بس بترجع بزر الطاقة، وتسجيل الخروج وإيقاف التشغيل بينهوا الجلسة."
+});
+
+renderFlashcards("activity-flash", CH3_FLASHCARDS);
+</script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 9 — الصيغ والدوال في Excel | GBS302</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS302 — مهارات الحاسوب</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل التاسع</div>
+    <h1>الصيغ والدوال في Excel</h1>
+    <p>الصيغ وأولويات العمليات، رسائل الخطأ، المرجع النسبي والمطلق، والدوال: الرياضية، الإحصائية، المالية، النصية، التاريخ، البحث، المنطقية والمعلومات.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">الصيغة Formula</span><span class="keyword-chip">=</span>
+          <span class="keyword-chip">#DIV/0! · #NAME? · #REF!</span><span class="keyword-chip">$H$2</span>
+          <span class="keyword-chip">ROUND · EVEN · ODD</span><span class="keyword-chip">COUNTA</span>
+          <span class="keyword-chip">PMT · PV · FV</span><span class="keyword-chip">VLOOKUP · IF</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تكتب صيغة وتحسب ناتجها حسب أولوية العمليات</li>
+          <li>تعرف معنى كل رسالة خطأ</li>
+          <li>تفرّق بين المرجع النسبي والمطلق</li>
+          <li>تختار الدالة الصح لكل مهمة: تقريب، عد، مالية، نصوص، تاريخ، بحث، شروط</li>
+        </ul>
+      </div>
+
+      <div class="block" id="formulas">
+        <h2><span class="idx">1</span> الصيغ وأولويات العمليات</h2>
+        <p><b>الصيغة</b> معادلة رياضية فيها <b>معاملات</b> (قيمة ثابتة، مرجع خلية، نطاق، أو صيغة تانية) و<b>علامات عمليات</b>. ولحتى يفرّقها Excel عن البيانات، <b>كل صيغة بتبلّش بـ =</b>.
+        أثناء الكتابة بتظهر بالخلية وبشريط الصيغة، وبعدها الخلية بتعرض <b>النتيجة</b> وشريط الصيغة بيعرض <b>الصيغة</b>.</p>
+        <table class="cmp">
+          <tr><th>العلامة</th><th>^</th><th>*</th><th>/</th><th>+</th><th>-</th></tr>
+          <tr><td>المعنى</td><td>الأس</td><td>الضرب</td><td>القسمة</td><td>الجمع</td><td>الطرح</td></tr>
+        </table>
+        <ol class="timeline">
+          <li><span class="marker">0</span><h4>الأقواس</h4><p>اللي جوّا الأقواس قبل اللي برّا.</p></li>
+          <li><span class="marker">1</span><h4>الأس ^</h4><p>قبل أي عملية تانية.</p></li>
+          <li><span class="marker">2</span><h4>الضرب والقسمة</h4><p>بالتعاقب من اليسار لليمين.</p></li>
+          <li><span class="marker">3</span><h4>الجمع والطرح</h4><p>آخر شي، ومن اليسار لليمين.</p></li>
+        </ol>
+        <details class="accordion">
+          <summary>🧮 أمثلة محلولة من المقرر</summary>
+          <p><b>=2+4*6/3-1 = 9</b>: 4×6=24 ← ÷3=8 ← 2+8=10 ← −1=9.</p>
+          <p><b>=(2+4)*6/(3-1) = 18</b>: (2+4)=6 ← ×6=36 ← ÷(3−1)=18.</p>
+        </details>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>«Excel بينفّذ العمليات من اليسار لليمين» = <b>غلط</b>. بينفذها حسب <b>الأولوية</b>، واليسار لليمين بس جوّا نفس المرتبة.</p>
+        </div>
+      </div>
+
+      <div class="block" id="errors">
+        <h2><span class="idx">2</span> رسائل الخطأ في الصيغ</h2>
+        <table class="cmp">
+          <tr><th>الرسالة</th><th>معناها حسب المقرر</th></tr>
+          <tr><td><b>#DIV/0!</b></td><td>القسمة على صفر</td></tr>
+          <tr><td><b>#NAME?</b></td><td>أخطاء كتابية بالصيغة (أسماء خلايا خاطئة)</td></tr>
+          <tr><td><b>#VALUE!</b></td><td>تمرير قيمة غير مناسبة (أحرف بدل أرقام بعملية جمع)</td></tr>
+          <tr><td><b>#NULL!</b></td><td>خطأ مرجع الخلايا — عند كتابة تعبير ما بينحسب</td></tr>
+          <tr><td><b>#REF!</b></td><td>مرجع على خلايا <b>محذوفة أو منقولة</b></td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="refs">
+        <h2><span class="idx">3</span> المرجع النسبي والمطلق</h2>
+        <table class="cmp">
+          <tr><th>المرجع النسبي (الافتراضي)</th><th>المرجع المطلق</th></tr>
+          <tr><td>B5 — بيتغيّر رقم الصف أو اسم العمود لما تسحب الصيغة</td><td><b>$H$2</b> — <b>ما بيتغيّر</b> عند السحب ($ قبل الحرف وقبل الرقم)</td></tr>
+          <tr><td>مثال: الراتب الكلي <b>=B2+C2</b> وبتسحبها لباقي الموظفين</td><td>مثال: الضريبة <b>=D3*$E$2</b> — نسبة الضريبة ثابتة بخلية وحدة</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="math">
+        <h2><span class="idx">4</span> الدوال الرياضية والتقريب</h2>
+        <p>من أكبر مجموعات الدوال وأكترها تنوعاً.</p>
+        <table class="cmp">
+          <tr><th>الدالة</th><th>شو بتعمل</th></tr>
+          <tr><td>SUM(number1, …)</td><td>الجمع</td></tr>
+          <tr><td>PRODUCT(number1, …)</td><td>الضرب</td></tr>
+          <tr><td>SUMIF(range, criteria, [sum_range])</td><td>الجمع <b>بشرط</b></td></tr>
+          <tr><td>ROUND(number, num_digits)</td><td>تقريب لعدد خانات: آخر خانة <b>≥ 5 لفوق</b>، و <b>&lt; 5 لتحت</b></td></tr>
+          <tr><td>ROUNDUP / ROUNDDOWN</td><td>تقريب <b>للأعلى</b> دائماً / <b>للأدنى</b> دائماً</td></tr>
+          <tr><td>EVEN(number) / ODD(number)</td><td>تقريب لأقرب عدد <b>زوجي</b> أعلى / <b>فردي</b> أعلى</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="stats">
+        <h2><span class="idx">5</span> الدوال الإحصائية ودوال العد</h2>
+        <table class="cmp">
+          <tr><th>الدالة</th><th>شو بتعمل</th></tr>
+          <tr><td>AVERAGE / AVERAGEIF</td><td>المتوسط الحسابي / بشرط</td></tr>
+          <tr><td><b>COUNT</b></td><td>بتعد الخلايا اللي فيها <b>أرقام بس</b> (ومنها التواريخ والأوقات)</td></tr>
+          <tr><td><b>COUNTA</b></td><td>بتعد الخلايا <b>غير الفارغة</b>: نصوص، أرقام، تواريخ، صيغ، أخطاء</td></tr>
+          <tr><td>COUNTBLANK</td><td>بتعد الخلايا <b>الفارغة</b> بس</td></tr>
+          <tr><td>COUNTIF(range, criteria)</td><td>بتعد بشرط</td></tr>
+          <tr><td>MAX / MIN</td><td>أعلى / أدنى قيمة</td></tr>
+          <tr><td><b>LARGE(array, k)</b> / SMALL(array, k)</td><td>أكبر / أصغر قيمة بترتيب معين (تاني أكبر قيمة ← k = 2)</td></tr>
+          <tr><td>MEDIAN</td><td>القيمة الوسيطة</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="finance">
+        <h2><span class="idx">6</span> الدوال المالية</h2>
+        <table class="cmp">
+          <tr><th>الدالة</th><th>شو بتحسب</th></tr>
+          <tr><td><b>PMT</b>(rate, nper, pv, [fv], [type]) — Payment</td><td>قيمة <b>القسط</b> كل فترة</td></tr>
+          <tr><td><b>PV</b>(rate, nper, pmt, [fv], [type]) — Present Value</td><td><b>القيمة الحالية</b> (أصل المبلغ)</td></tr>
+          <tr><td><b>FV</b>(rate, nper, pmt, [pv], [type]) — Future Value</td><td><b>القيمة المستقبلية</b> للمبلغ</td></tr>
+        </table>
+        <p style="margin-top:10px;">rate = معدل الفائدة · nper = عدد الدفعات · pv = المبلغ الإجمالي · type = طريقة السداد. وللقسط الشهري من فائدة سنوية: <b>الفائدة ÷ 12</b> و<b>المدة × 12</b>.</p>
+        <details class="accordion">
+          <summary>🏥 مثال المقرر</summary>
+          <p>مشفى اشترت معدات بـ1,000,000 بالتقسيط على 4 سنين وبفائدة 8%: القسط الشهري = <b>PMT(8%/12, 4*12, 1000000)</b>.</p>
+        </details>
+      </div>
+
+      <div class="block" id="text">
+        <h2><span class="idx">7</span> الدوال النصية ودوال التاريخ والوقت</h2>
+        <table class="cmp">
+          <tr><th>النصية</th><th>التاريخ والوقت</th></tr>
+          <tr><td>PROPER (أول حرف من كل كلمة كبير) · UPPER (الكل كبير) · LOWER (الكل صغير)</td><td>NOW() التاريخ والوقت الحاليين</td></tr>
+          <tr><td>LEFT / RIGHT (أحرف من اليسار / اليمين) · <b>MID</b>(text, start_num, num_chars) من المنتصف</td><td>DATE(year, month, day) بتحوّل أرقام لتاريخ</td></tr>
+          <tr><td>SUBSTITUTE (استبدال) · CONCATENATE (دمج، متل &amp;)</td><td>DAY (1–31) · MONTH (1–12) · YEAR</td></tr>
+        </table>
+        <div class="example">
+          <span class="tag">⚠️ لا تخلط</span>
+          <p><b>MID</b> نصية (من المنتصف) و <b>MEDIAN</b> إحصائية (الوسيط). و <b>NOW</b> تاريخ ووقت، مو MID.</p>
+        </div>
+      </div>
+
+      <div class="block" id="lookup">
+        <h2><span class="idx">8</span> دوال البحث والدوال المنطقية ودوال المعلومات</h2>
+        <table class="cmp">
+          <tr><th>VLOOKUP — البحث العمودي</th><th>HLOOKUP — البحث الأفقي</th></tr>
+          <tr><td>بيدوّر بـ<b>العمود الأول</b> وبيرجّع من عمود تاني (col_index_num)</td><td>بيدوّر بـ<b>السطر الأول</b> وبيرجّع من سطر تاني (row_index_num)</td></tr>
+          <tr><td colspan="2">range_lookup: <b>True</b> تقريبي (الافتراضي) · <b>False</b> مطابق تماماً</td></tr>
+        </table>
+        <table class="cmp" style="margin-top:10px;">
+          <tr><th>الدالة</th><th>متى True</th></tr>
+          <tr><td>IF(logical_test, value_if_true, value_if_false)</td><td>بترجّع قيمة إذا تحقق الشرط وقيمة تانية إذا لا</td></tr>
+          <tr><td><b>AND</b></td><td>إذا تحققت <b>كل</b> الشروط</td></tr>
+          <tr><td><b>OR</b></td><td>إذا تحقق <b>شرط واحد عالأقل</b></td></tr>
+          <tr><td>ISBLANK · ISNUMBER · ISTEXT</td><td>الخلية فارغة · رقم · نص</td></tr>
+          <tr><td><b>ISODD</b> · <b>ISEVEN</b></td><td>رقم <b>فردي</b> · رقم <b>زوجي</b></td></tr>
+        </table>
+        <p style="margin-top:14px;"><b>🎮 وصّل كل دالة بوظيفتها:</b></p>
+        <div id="activity-match9"></div>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-9-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-9-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل العاشر)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS302",chapter_id:"9",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch9-flashcards.js"></script>
+<script>
+renderMatchGame("activity-match9", [
+  {left:"COUNTA", right:"عد الخلايا غير الفارغة"},
+  {left:"PMT", right:"قيمة القسط"},
+  {left:"LARGE", right:"أكبر قيمة بترتيب معين"},
+  {left:"VLOOKUP", right:"البحث العمودي"},
+  {left:"ROUNDUP", right:"التقريب للأعلى"},
+  {left:"ISODD", right:"فحص الرقم الفردي"}
+]);
+
+renderCaseStudy("case-study-mount", {
+  title: "نسبة ضريبة ثابتة",
+  scenario: "عمر عنده جدول رواتب: الراتب بالعمود D (من D3 لتحت)، ونسبة الضريبة مكتوبة مرة وحدة بالخلية E2. كتب بالخلية F3 صيغة الضريبة وبدو يسحبها لكل الموظفين بلا ما تتغيّر خلية النسبة.",
+  question: "أي صيغة لازم يكتب عمر بـF3؟",
+  options: [
+    "=D3*E2",
+    "=D3*$E$2",
+    "=$D$3*E2",
+    "=D3+E2"
+  ],
+  answerIndex: 1,
+  explanation: "D3 لازم يضل نسبي ليتغيّر مع كل موظف، و$E$2 مطلق ليضل ثابت على خلية النسبة. لو كتب E2 بلا $، رح تنزاح لـE3 وE4... وتطلع النتائج غلط."
+});
+
+renderFlashcards("activity-flash", CH9_FLASHCARDS);
+</script>
+</body>
+</html>

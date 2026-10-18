@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 8 — أساسيات الجداول الإلكترونية Excel | GBS302</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS302 — مهارات الحاسوب</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الثامن</div>
+    <h1>أساسيات الجداول الإلكترونية Excel</h1>
+    <p>واجهة Excel 2016، المصنفات، أوراق العمل، الأعمدة والصفوف والتجميد، الخلايا والنطاقات والتنقل، البحث والفرز، والتعبئة.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">مصنف Workbook</span><span class="keyword-chip">ورقة عمل Worksheet</span>
+          <span class="keyword-chip">خلية Cell</span><span class="keyword-chip">نطاق Range</span>
+          <span class="keyword-chip">Freeze Panes</span><span class="keyword-chip">Sort</span><span class="keyword-chip">Fill</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تعرف مكوّنات واجهة Excel وتتعامل مع المصنفات</li>
+          <li>تضيف وتحدد وتنسخ وتنقل وتحذف أوراق العمل</li>
+          <li>تدرج وتحذف الأعمدة والصفوف، تغيّر حجمها وتجمّدها</li>
+          <li>تتنقل بين الخلايا وتحرر محتواها وتفهم النطاق</li>
+          <li>تبحث وتستبدل وتفرز وتعبّي البيانات تلقائياً</li>
+        </ul>
+      </div>
+
+      <div class="block" id="interface">
+        <h2><span class="idx">1</span> واجهة Excel 2016</h2>
+        <p>Excel من حزمة Office للأرقام والعمليات الحسابية والإحصائية والمالية والمخططات. الواجهة فيها نفس عناصر Word وPowerPoint، وكمان:</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>🏷️ مربع الاسم Name Box</b>اسم الخلية المحددة (حرف العمود ورقم السطر).</div>
+          <div class="quick-card"><b>ƒx زر إدراج دالة Insert Function</b>لإدراج التوابع الرياضية.</div>
+          <div class="quick-card"><b>📝 شريط الصيغة Formula Bar</b>بيظهر بيانات الخلية المحددة.</div>
+          <div class="quick-card"><b>📊 شريط الحالة</b>معلومات، تكبير وتصغير، وطرق عرض ورقة العمل.</div>
+        </div>
+      </div>
+
+      <div class="block" id="workbook">
+        <h2><span class="idx">2</span> المصنفات</h2>
+        <p><b>المصنف Workbook</b> = ملف فيه مجموعة <b>أوراق عمل Worksheets</b>.</p>
+        <table class="cmp">
+          <tr><th>بدك</th><th>الطريقة</th></tr>
+          <tr><td>مصنف فارغ</td><td>File ← New ← Blank Workbook · <b>Ctrl + N</b></td></tr>
+          <tr><td>من قالب</td><td>File ← New ← قالب جاهز متل <b>Invoice</b> للفواتير</td></tr>
+          <tr><td>حفظ / حفظ باسم</td><td>Save أو Ctrl + S / Save As بلا حذف الأصل</td></tr>
+          <tr><td>إغلاق المصنف / البرنامج</td><td>Ctrl + W / Alt + F4</td></tr>
+          <tr><td>فتح</td><td>File ← Open · Ctrl + O</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="sheets">
+        <h2><span class="idx">3</span> أوراق العمل</h2>
+        <p>كل مصنف فيه <b>ورقة عمل افتراضية وحدة</b> = جدول إلكتروني مستقل. كل ورقة إلها علامة بـ<b>شريط أوراق العمل</b>.</p>
+        <table class="cmp">
+          <tr><th>العملية</th><th>الطريقة</th></tr>
+          <tr><td>إضافة ورقة</td><td>Home ← Cells ← Insert ← Insert Sheet · أو زر New Sheet بشريط الأوراق (اسمها Sheet2، Sheet3...)</td></tr>
+          <tr><td>إعادة التسمية</td><td>نقر مزدوج على اسمها · أو زر يمين ← Rename، ثم Enter</td></tr>
+          <tr><td>تحديد متباعدة / متجاورة</td><td><b>Ctrl</b> + نقر / الأولى + <b>Shift</b> + الأخيرة</td></tr>
+          <tr><td>التنقل</td><td>انقر عالاسم لتصير <b>نشطة</b> · أسهم الشريط · <b>Ctrl + سهم يمين</b> لآخر ورقة · <b>Ctrl + سهم يسار</b> لأول ورقة</td></tr>
+          <tr><td>الحذف</td><td>Home ← Cells ← Delete ← Delete Sheet · أو زر يمين ← Delete</td></tr>
+          <tr><td>نسخ / نقل</td><td>Home ← Cells ← Format ← Move or Copy Sheet (فعّل <b>Create a copy</b> للنسخ، و To Book لمصنف تاني) · أو اسحب: <b>مع Ctrl = نسخ</b>، بلا Ctrl = نقل</td></tr>
+        </table>
+        <div class="example">
+          <span class="tag">⚠️ مهم</span>
+          <p>ما فيك تحذف <b>كل</b> أوراق العمل — لازم تضل ورقة وحدة عالأقل.</p>
+        </div>
+      </div>
+
+      <div class="block" id="rowscols">
+        <h2><span class="idx">4</span> الأعمدة والصفوف والتجميد</h2>
+        <p><b>التحديد:</b> انقر على حرف العمود أو رقم الصف · اسحب لنطاق متجاور · <b>Ctrl</b> لأعمدة أو صفوف غير متجاورة أو مزيج منهم.</p>
+        <table class="cmp">
+          <tr><th>العملية</th><th>كيف</th></tr>
+          <tr><td>إدراج</td><td>Home ← Cells ← Insert ← Insert Sheet Columns / Rows — بينضاف <b>قبل</b> المحدد. ولتضيف 4، حدد 4.</td></tr>
+          <tr><td>حذف</td><td>Home ← Cells ← Delete ← Delete Sheet Columns / Rows · أو زر يمين ← Delete</td></tr>
+          <tr><td>العرض / الارتفاع</td><td>Format ← Column Width / Row Height · AutoFit للاحتواء التلقائي · أو <b>اسحب المحددات</b> بين الرؤوس</td></tr>
+        </table>
+        <p style="margin-top:12px;"><b>التجميد</b> (View ← Window ← Freeze Panes): بيخلّي صفوف أو أعمدة ظاهرة وقت التمرير.</p>
+        <ol class="timeline">
+          <li><span class="marker">1</span><h4>الصف الأول / العمود الأول</h4><p>Freeze Top Row / Freeze First Column.</p></li>
+          <li><span class="marker">2</span><h4>أكتر من صف أو عمود</h4><p>حدد <b>اللي بعدهم مباشرة</b> (لأول 3 سطور حدد الرابع) ← Freeze Panes.</p></li>
+          <li><span class="marker">3</span><h4>صفوف وأعمدة معاً</h4><p>حدد الخلية الناتجة عن التقاطع ← Freeze Panes.</p></li>
+          <li><span class="marker">4</span><h4>الإلغاء</h4><p>Unfreeze Panes.</p></li>
+        </ol>
+      </div>
+
+      <div class="block" id="cells">
+        <h2><span class="idx">5</span> الخلايا والنطاقات والتنقل</h2>
+        <p>الأعمدة حدها الأقصى <b>16,384</b> (بأحرف A, B, C...) والصفوف <b>1,048,576</b> (بأرقام). تقاطعهم = <b>خلية</b>، متل F3 = العمود F مع السطر 3. وفيك تدخل أرقام ونصوص وتواريخ.</p>
+        <p><b>التحديد:</b> نقرة لخلية · <b>Ctrl</b> لخلايا غير متجاورة · سحب للمتجاورة. والخلايا المتتابعة اسمها <b>نطاق Range</b>: <b>A1:D1 أفقي</b> و <b>A1:A4 عمودي</b>.</p>
+        <table class="cmp">
+          <tr><th>المفتاح</th><th>بيروح على</th></tr>
+          <tr><td>Enter / Shift + Enter</td><td>التالية / السابقة <b>بنفس العمود</b></td></tr>
+          <tr><td>Tab / Shift + Tab</td><td>التالية / السابقة <b>بنفس السطر</b></td></tr>
+          <tr><td>Home</td><td>أول خلية بالصف</td></tr>
+          <tr><td>Ctrl + Home</td><td>الخلية A1 (أول خلية بالورقة)</td></tr>
+          <tr><td>Ctrl + End</td><td>آخر خلية تم تحريرها</td></tr>
+        </table>
+        <table class="cmp" style="margin-top:10px;">
+          <tr><th>نقرة وحدة ثم كتابة</th><th>نقرتين مزدوجتين</th></tr>
+          <tr><td>بتمسح القديم وبتكتب جديد</td><td>بتعدّل <b>مع الحفاظ</b> على المحتوى القديم</td></tr>
+        </table>
+        <p style="margin-top:10px;">نسخ Ctrl + C · قص Ctrl + X · لصق Ctrl + V · مسح المحتوى: Delete أو Clear ← Clear Contents.</p>
+      </div>
+
+      <div class="block" id="find">
+        <h2><span class="idx">6</span> البحث والاستبدال والفرز</h2>
+        <p>Home ← Editing ← <b>Find &amp; Select</b>: Find (<b>Ctrl + F</b>) أو Replace (<b>Ctrl + H</b>) — Find Next · Find All · Replace · Replace All.</p>
+        <p><b>الفرز</b>: Home ← Editing ← <b>Sort &amp; Filter</b> ← Sort Largest to Smallest أو Smallest to Largest. ولعمود تاني: Custom Sort ← <b>Add Level</b> ← Then By ← Order ← OK.</p>
+      </div>
+
+      <div class="block" id="fill">
+        <h2><span class="idx">7</span> التعبئة</h2>
+        <p>ميزة بتساعدك <b>تدخل البيانات بسرعة</b>:</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>💡 تبعاً لاقتراح</b>كتبت Welcome، وبعدين W ← بيقترحها، و Enter للقبول.</div>
+          <div class="quick-card"><b>🔢 السلاسل Series</b>Home ← Editing ← Fill ← Series: Rows/Columns · Linear · Step Value · Stop Value.</div>
+          <div class="quick-card"><b>➕ مقبض التعبئة</b>المربع الأسود بزاوية الخلية: اسحبه لأرقام، تواريخ، أيام، أشهر (Jan...)، أو معادلة.</div>
+        </div>
+        <div id="activity-sort" style="margin-top:16px;"></div>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-8-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-8-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل التاسع)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS302",chapter_id:"8",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch8-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "بدك تروح لهون — أي مفتاح؟",
+  buckets: [
+    {key:"enter", label:"Enter"},
+    {key:"senter", label:"Shift + Enter"},
+    {key:"tab", label:"Tab"},
+    {key:"ch", label:"Ctrl + Home"},
+    {key:"ce", label:"Ctrl + End"}
+  ],
+  items: [
+    {text:"الخلية اللي تحتها بنفس العمود", bucket:"enter", why:"Enter تحت."},
+    {text:"الخلية اللي فوقها بنفس العمود", bucket:"senter", why:"Shift + Enter فوق."},
+    {text:"الخلية التالية بنفس السطر", bucket:"tab", why:"Tab للتالية بالسطر."},
+    {text:"الخلية A1", bucket:"ch", why:"Ctrl + Home أول خلية بالورقة."},
+    {text:"آخر خلية تم تحريرها", bucket:"ce", why:"Ctrl + End."}
+  ]
+});
+
+renderCaseStudy("case-study-mount", {
+  title: "جدول علامات طويل",
+  scenario: "مها عندها جدول علامات فيه مئات الطلاب. أول 2 سطور فيهم عناوين الأعمدة، وكل ما تنزل لتحت بيختفوا. بدها السطرين يضلو ظاهرين وقت التمرير.",
+  question: "شو لازم تحدد قبل ما تختار Freeze Panes؟",
+  options: [
+    "السطر الأول",
+    "السطر الثاني",
+    "السطر الثالث",
+    "الخلية A1"
+  ],
+  answerIndex: 2,
+  explanation: "منحدد السطر اللي بعد السطور المطلوب تجميدها مباشرة، يعني الثالث، وبعدين View ← Freeze Panes ← Freeze Panes."
+});
+
+renderFlashcards("activity-flash", CH8_FLASHCARDS);
+</script>
+</body>
+</html>

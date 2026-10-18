@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 6 — معالج النصوص Word: التنسيق والجداول والطباعة | GBS302</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS302 — مهارات الحاسوب</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل السادس</div>
+    <h1>معالج النصوص Word: التنسيق والجداول والطباعة</h1>
+    <p>تنسيق النصوص والفقرات، القوائم والأنماط ونسخ التنسيق، الجداول، الكائنات الرسومية، تخطيط الصفحة والرأس والتذييل، والتدقيق والطباعة.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">Bold / Italic / Underline</span><span class="keyword-chip">Line Break</span>
+          <span class="keyword-chip">Indent</span><span class="keyword-chip">Styles</span><span class="keyword-chip">Format Painter</span>
+          <span class="keyword-chip">Table Tools</span><span class="keyword-chip">SmartArt</span>
+          <span class="keyword-chip">Header &amp; Footer</span><span class="keyword-chip">Spelling &amp; Grammar</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تنسّق الخط وتحفظ اختصارات أنماطه</li>
+          <li>تنسّق الفقرات: المحاذاة، المسافات البادئة، التباعد، الحدود والتظليل، والفاصل السطري</li>
+          <li>تستخدم القوائم والأنماط ونسخ التنسيق</li>
+          <li>تنشئ الجداول وتحددها وتعدّلها، وتعرف شو بـLayout وشو بـDesign</li>
+          <li>تضبط الصفحة والرأس والتذييل، وتدقق وتطبع</li>
+        </ul>
+      </div>
+
+      <div class="block" id="text">
+        <h2><span class="idx">1</span> تنسيق النصوص وأنماط الخط</h2>
+        <p><b>التنسيق</b> = العمليات اللي بتعملها على الكلمات أو الجمل أو الفقرات لتعطيها طابع شخصي. وكل أوامر الخط بمجموعة <b>Font</b> بعلامة <b>Home</b>:
+        نوع الخط، الحجم (وزرّي Increase / Decrease Font Size)، اللون، تمييز النص Text Highlight (و No Color للإزالة).</p>
+        <div class="callout">
+          <span class="tag">💡 معاينة قبل الاعتماد</span>
+          <p>Word 2016 بيخلّيك <b>تعاين الخط قبل ما تعتمده</b>: بس تحط الماوس على نوع الخط، النص المحدد بيتغيّر مؤقتاً.</p>
+        </div>
+        <table class="cmp">
+          <tr><th>النمط</th><th>الاختصار</th></tr>
+          <tr><td>غامق Bold</td><td>Ctrl + B أو Ctrl + 2</td></tr>
+          <tr><td>مائل Italic</td><td>Ctrl + I أو Ctrl + 3</td></tr>
+          <tr><td>تسطير Underline</td><td>Ctrl + U أو Ctrl + 4</td></tr>
+          <tr><td>تسطير مزدوج Double Underline</td><td><b>ما إله اختصار</b></td></tr>
+        </table>
+        <p style="margin-top:10px;">كمان: <b>Subscript</b> منخفض (X₂) و <b>Superscript</b> مرتفع (X²) · <b>Change Case</b> لتغيير حالة الأحرف · <b>Clear All Formatting</b> لحذف كل التنسيقات.</p>
+      </div>
+
+      <div class="block" id="para">
+        <h2><span class="idx">2</span> تنسيق الفقرات</h2>
+        <p>تنسيق الفقرات = المسافات البادئة <b>قبل النص وبعده</b>، والمسافة بين الفقرات، وتباعد الأسطر... (Home ← Paragraph)</p>
+        <table class="cmp">
+          <tr><th>العملية</th><th>كيف</th></tr>
+          <tr><td>فقرة جديدة</td><td><b>Enter</b></td></tr>
+          <tr><td>دمج فقرتين</td><td>المؤشر ببداية التانية ← Backspace · أو بنهاية الأولى ← Delete</td></tr>
+          <tr><td><b>فاصل سطري Line Break</b></td><td><b>Shift + Enter</b>: سطر جديد <b>بلا</b> ما تبلّش فقرة جديدة</td></tr>
+          <tr><td>المحاذاة</td><td>يمين · يسار (Ctrl + L) · وسط (Ctrl + E) · ضبط تام Justified بين الهامشين</td></tr>
+        </table>
+        <p style="margin-top:12px;"><b>المسافة البادئة</b> = فراغ بين هامش الصفحة ونص الفقرة، وإلها <b>4 أنواع</b>:</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>➡️ يميناً Right</b>بين الهامش اليميني والنص (غالباً للعربي).</div>
+          <div class="quick-card"><b>⬅️ يساراً Left</b>بين الهامش اليساري والنص.</div>
+          <div class="quick-card"><b>1️⃣ السطر الأول First Line</b>للسطر الأول بس.</div>
+          <div class="quick-card"><b>🪝 المعلقة Hanging</b>السطر الأول بيحافظ على مسافته، وباقي النص مزاح عنه.</div>
+        </div>
+        <table class="cmp" style="margin-top:14px;">
+          <tr><th>تباعد الأسطر Line Spacing</th><th>تباعد الفقرات Paragraph Spacing</th></tr>
+          <tr><td>المسافة <b>العمودية</b> بين أسطر الفقرة الواحدة</td><td>المسافة <b>العمودية</b> بين الفقرات المختلفة</td></tr>
+        </table>
+        <table class="cmp" style="margin-top:10px;">
+          <tr><th>الحدود Borders</th><th>التظليل Shading</th></tr>
+          <tr><td><b>خطوط</b> فوق، تحت، يمين أو يسار الفقرة</td><td><b>لون خلفية</b> الفقرة</td></tr>
+        </table>
+        <p style="margin-top:14px;"><b>🎮 وصّل كل اختصار بوظيفته:</b></p>
+        <div id="activity-match6"></div>
+      </div>
+
+      <div class="block" id="lists">
+        <h2><span class="idx">3</span> القوائم والأنماط ونسخ التنسيق</h2>
+        <p><b>القوائم</b> بتربط الفقرات: <b>مرقمة Numbering</b> (مرتبة) أو <b>نقطية Bullets</b> (غير مرتبة). ولتغيير بداية الترقيم: Numbering ← Set Numbering Value ← Start New List أو Continue from Previous List.</p>
+        <p><b>النمط Style</b> = مجموعة تنسيقات جاهزة بتحافظ على تناسق النص وبتعطي مظهر موحد احترافي (Home ← Styles).</p>
+        <div class="callout">
+          <span class="tag">🖌️ نسخ التنسيق Format Painter</span>
+          <p>بينقل التنسيق من نص لنص لتنسّق المستند <b>بشكل موحد</b>: Home ← Clipboard ← Format Painter ← حدد النص الجديد.
+          <b>نقر مزدوج</b> عليه = تطبيق على أكتر من نص · <b>Esc</b> = إيقاف.</p>
+        </div>
+      </div>
+
+      <div class="block" id="tables">
+        <h2><span class="idx">4</span> العمل مع الجداول</h2>
+        <p><b>إدراج:</b> Insert ← Table ← اسحب على المربعات، أو Insert Table وحدد عدد الأعمدة والأسطر. ولما تكون جوّا الجدول بيطلع <b>الشريط المؤقت Table Tools</b>.</p>
+        <table class="cmp">
+          <tr><th>التنقل</th><th>المفتاح</th></tr>
+          <tr><td>الخلية <b>التالية</b> بالصف</td><td><b>Tab</b></td></tr>
+          <tr><td>الخلية <b>السابقة</b> بالصف</td><td><b>Shift + Tab</b></td></tr>
+          <tr><td>تحت / فوق بالعمود</td><td>السهم لتحت / لفوق</td></tr>
+        </table>
+        <table class="cmp" style="margin-top:10px;">
+          <tr><th>لتحديد</th><th>بالفأرة</th></tr>
+          <tr><td>خلية</td><td>نقر مزدوج جوّا الخلية</td></tr>
+          <tr><td>عدة خلايا</td><td>سحب، أو خلية + Shift + نقرة على خلية تانية</td></tr>
+          <tr><td>صف</td><td>انقر على <b>هامش الصف من خارج الجدول</b></td></tr>
+          <tr><td>عمود</td><td>انقر على <b>حافة العمود العلوية</b></td></tr>
+          <tr><td>الجدول</td><td>انقر على <b>مقبض التحريك</b> Move Handle</td></tr>
+        </table>
+        <table class="cmp" style="margin-top:10px;">
+          <tr><th>Table Tools ← Layout (التخطيط)</th><th>Table Tools ← Design (التصميم)</th></tr>
+          <tr><td>Select · Insert Above / Below / Left / Right · Delete (Cells, Columns, Rows, Table) · Height / Width · Text Direction · Cell Margins · Merge Cells · Split Cells · Split Table</td>
+              <td>Borders (و No Borders) · Shading (و No Color) · أنماط الجداول Table Styles</td></tr>
+        </table>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>الإضافة والحذف والارتفاع والعرض ← <b>Layout</b>. الحدود والتظليل والأنماط ← <b>Design</b>. وكمان بتقدر تحذف صفوف وأعمدة محددة بـBackspace.</p>
+        </div>
+      </div>
+
+      <div class="block" id="objects">
+        <h2><span class="idx">5</span> الكائنات الرسومية</h2>
+        <p>من <b>Insert ← Illustrations</b>: صورة Picture · صورة من الإنترنت Online Picture · مخطط Chart (بتنفتح نافذة بياناته) · أشكال Shapes · <b>رسمة ذكية SmartArt</b> (أداة لعرض المعلومات والأفكار بشكل مرئي).</p>
+        <table class="cmp">
+          <tr><th>العملية</th><th>كيف</th></tr>
+          <tr><td>تحديد كائن</td><td><b>نقرة واحدة</b> فبتطلع حوله المقابض</td></tr>
+          <tr><td>تغيير الحجم / التدوير</td><td>اسحب من أحد المقابض / من مقبض التدوير</td></tr>
+          <tr><td>تخطيطه مع النص</td><td>Layout Options</td></tr>
+          <tr><td>نسخ / نقل</td><td>Copy أو Cut ثم Paste</td></tr>
+          <tr><td>حذف</td><td>Delete أو Backspace</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="layout">
+        <h2><span class="idx">6</span> تخطيط الصفحة والرأس والتذييل</h2>
+        <p>من <b>Page Layout ← Page Setup</b>:</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>📏 الهوامش Margins</b>المنطقة الفارغة حوالين حدود الصفحة، والنص بينكتب بين الهوامش. Custom Margins للقيم.</div>
+          <div class="quick-card"><b>🔄 الاتجاه Orientation</b>Portrait: الطول أكبر من العرض · Landscape: العرض أكبر.</div>
+          <div class="quick-card"><b>📄 القياس Size</b>فيك تغيّر قياس الصفحة.</div>
+          <div class="quick-card"><b>✂️ فاصل صفحة Page Break</b>بينهي الصفحة وبيبلّش جديدة: Breaks ← Page أو <strong>Ctrl + Enter</strong>.</div>
+          <div class="quick-card"><b>🔢 ترقيم الأسطر</b>لإرشاد القارئ بالمستندات الطويلة والمركبة و<strong>القانونية</strong>.</div>
+        </div>
+        <p style="margin-top:12px;"><b>الرأس والتذييل:</b> مناطق ضمن الهوامش العلوية والسفلية لكل صفحة (Insert ← Header &amp; Footer). فيك تحط أرقام الصفحات، التاريخ والوقت، الشعار، العنوان، اسم الملف أو المؤلف (Quick Parts).</p>
+        <div class="example">
+          <span class="tag">⚠️ انتبه</span>
+          <p>الرأس والتذييل بيتطبقو على <b>كل الصفحات افتراضياً</b>. لتستثني صفحة الغلاف فعّل <b>Different First Page</b>.
+          وأرقام الصفحات: Top of Page · Bottom of Page · Page Margins.</p>
+        </div>
+      </div>
+
+      <div class="block" id="proof">
+        <h2><span class="idx">7</span> التدقيق والطباعة</h2>
+        <p><b>Review ← Proofing ← Spelling &amp; Grammar</b>: <b style="color:#d33">خط أحمر</b> تحت الخطأ <b>الإملائي</b>، و<b style="color:#36c">خط أزرق</b> تحت الخطأ <b>النحوي</b>. بتختار البديل ← Change، أو Ignore إذا الكلمة صح، أو Add لتضيفها للقاموس.</p>
+        <p><b>File ← Print</b>: الإعدادات عاليسار والمعاينة عاليمين — عدد النسخ، الطابعة، الصفحات، الاتجاه، الهوامش. عاين قبل ما تطبع.</p>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-6-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-6-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل السابع)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS302",chapter_id:"6",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch6-flashcards.js"></script>
+<script>
+renderMatchGame("activity-match6", [
+  {left:"Shift + Enter", right:"فاصل سطري بلا فقرة جديدة"},
+  {left:"Ctrl + Enter", right:"فاصل صفحة"},
+  {left:"Ctrl + E", right:"محاذاة للوسط"},
+  {left:"Ctrl + U / Ctrl + 4", right:"تسطير"},
+  {left:"Shift + Tab", right:"الخلية السابقة بالجدول"},
+  {left:"Esc", right:"إيقاف نسخ التنسيق"}
+]);
+
+renderCaseStudy("case-study-mount", {
+  title: "بحث تخرج بصفحة غلاف",
+  scenario: "سلمى عم تكتب بحث تخرجها بـWord. بدها رقم الصفحة يطلع أسفل كل الصفحات مع اسم الجامعة بالرأس، بس صفحة الغلاف الأولى بدها تضل نظيفة بلا رأس ولا تذييل.",
+  question: "شو لازم تعمل سلمى بعد ما تضيف الرأس والتذييل؟",
+  options: [
+    "تحذف الرأس والتذييل يدوياً من الصفحة الأولى بس",
+    "تفعّل Different First Page من Header & Footer Tools ← Design ← Options",
+    "تحط فاصل سطري Shift + Enter بعد صفحة الغلاف",
+    "تستخدم ترقيم الأسطر Line Numbers"
+  ],
+  answerIndex: 1,
+  explanation: "الرأس والتذييل بيتطبقو على كل الصفحات افتراضياً، وخيار Different First Page بيميّز الصفحة الأولى (الغلاف) عن الباقي. الفاصل السطري ما إله علاقة بالصفحات، وترقيم الأسطر للمستندات القانونية."
+});
+
+renderFlashcards("activity-flash", CH6_FLASHCARDS);
+</script>
+</body>
+</html>

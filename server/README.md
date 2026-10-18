@@ -39,3 +39,9 @@
 لإخفاء جواب مخالف: غيّر `status` تبعو بتبويب `comments` لـ `hidden` — نجومو بتنسحب لحالها.
 
 > تنبيه: هالـ repo عام، فالكود هون بيشوفه أي حدا. ما في أسرار فيه (SHEET_ID و PEPPER محفوظين بـ Script Properties)، فلا تحط أي مفتاح أو إيميل حقيقي جوّا الكود.
+
+## نسخة v8 — ساحة الأسئلة
+بس الصق `Code.gs` و `Comments.gs` الجداد واعمل Deploy ← New version. ما في setup جديد.
+- الأسئلة العامة بتنحفظ بنفس تبويب `comments` بـ `course_id = GENERAL` و `chapter_id = general`.
+- سؤال عن مقرر كامل (مو فصل): `course_id = BMN401` و `chapter_id = general`.
+

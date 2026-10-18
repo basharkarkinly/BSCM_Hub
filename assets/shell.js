@@ -202,6 +202,10 @@
   function placeInfo(g) {
     var c = courseMap()[g.course_id];
     if (g.chapter_id === "info") return { label: "أسئلة مادة " + g.course_id, url: HOURS_PAGE + "#" + encodeURIComponent(g.course_id) };
+    if (g.chapter_id === "general") {   // ساحة الأسئلة: سؤال عام أو عن مقرر كامل
+      var t = g.course_id === "GENERAL" ? "أسئلة عامة" : "أسئلة " + ((courseMap()[g.course_id] || {}).title || g.course_id);
+      return { label: "ساحة الأسئلة — " + t, url: HUB + "qa.html?c=" + encodeURIComponent(g.course_id) };
+    }
     var title = c ? c.title : g.course_id;
     var url = c ? c.url.replace(/\/?$/, "/") + "chapters/chapter-" + g.chapter_id + "-lesson.html#comments" : null;
     return { label: title + " — الفصل " + g.chapter_id, url: url };
@@ -238,24 +242,30 @@
   }
 
   function renderNotifs() {
-    var n = notif, h = "";
+    var n = notif;
     if (!n) { els.body.innerHTML = '<div class="scs-empty">عم نحمّل...</div>'; return; }
+    // كل الإشعارات بقائمة وحدة: الجديدة (اللي ما انقرت) فوق، وجوّا كل قسم الأحدث أول
+    var items = [];
     n.announcements.forEach(function (a) {
-      h += '<div class="scs-item' + (a.is_new ? " new" : "") + '"><div class="scs-t">📣 ' + esc(a.title) + '</div>' +
-           (a.body ? '<div class="scs-d">' + esc(a.body) + '</div>' : "") + '<div class="scs-m">' + esc(ago(a.created_at)) + '</div></div>';
+      items.push({ at: a.created_at, isNew: !!a.is_new, html: '<div class="scs-item' + (a.is_new ? " new" : "") + '"><div class="scs-t">📣 ' + esc(a.title) + '</div>' +
+        (a.body ? '<div class="scs-d">' + esc(a.body) + '</div>' : "") + '<div class="scs-m">' + esc(ago(a.created_at)) + '</div></div>' });
     });
     (n.star_events || []).forEach(function (x) {
       var up = x.delta > 0;
-      h += '<a class="scs-item star" href="' + esc(HUB + "stars.html") + '"><div class="scs-t">⭐ ' + (up ? "+" : "−") + Math.abs(x.delta) + (Math.abs(x.delta) === 1 ? " نجمة" : " نجوم") + '</div>' +
-           (x.label ? '<div class="scs-d">' + esc(x.label) + '</div>' : "") + '<div class="scs-m">' + esc(ago(x.at)) + '</div></a>';
+      items.push({ at: x.at, isNew: true, html: '<a class="scs-item star" href="' + esc(HUB + "stars.html") + '"><div class="scs-t">⭐ ' + (up ? "+" : "−") + Math.abs(x.delta) + (Math.abs(x.delta) === 1 ? " نجمة" : " نجوم") + '</div>' +
+        (x.label ? '<div class="scs-d">' + esc(x.label) + '</div>' : "") + '<div class="scs-m">' + esc(ago(x.at)) + '</div></a>' });
     });
     n.groups.forEach(function (g) {
       var p = placeInfo(g);
       var txt = g.count + (g.count === 1 ? " مشاركة جديدة" : " مشاركات جديدة") + (g.replies ? " (منها " + g.replies + (g.replies === 1 ? " جواب" : " أجوبة") + " على أسئلتك)" : "");
       var inner = '<div class="scs-t">💬 ' + esc(p.label) + '</div><div class="scs-d">' + esc(txt) + '</div><div class="scs-m">' + esc(ago(g.latest_at)) + '</div>';
-      h += p.url ? '<a class="scs-item new" href="' + esc(p.url) + '">' + inner + '</a>' : '<div class="scs-item new">' + inner + '</div>';
+      items.push({ at: g.latest_at, isNew: true, html: p.url ? '<a class="scs-item new" href="' + esc(p.url) + '">' + inner + '</a>' : '<div class="scs-item new">' + inner + '</div>' });
     });
-    els.body.innerHTML = h || '<div class="scs-empty">ما في إشعارات جديدة.</div>';
+    items.sort(function (x, y) {
+      if (x.isNew !== y.isNew) return x.isNew ? -1 : 1;
+      return String(x.at || "") < String(y.at || "") ? 1 : -1;
+    });
+    els.body.innerHTML = items.map(function (i) { return i.html; }).join("") || '<div class="scs-empty">ما في إشعارات جديدة.</div>';
   }
 
   function openNotifs() {

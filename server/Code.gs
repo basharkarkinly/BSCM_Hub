@@ -26,7 +26,7 @@ const CFG = {
 /* ============ نقاط الدخول ============ */
 
 function doGet() {
-  return json_({ ok: true, service: 'support-channel-auth', version: 'v7-stars' });
+  return json_({ ok: true, service: 'support-channel-auth', version: 'v8-qa' });
 }
 
 function doPost(e) {
@@ -45,6 +45,7 @@ function doPost(e) {
       case 'getNotifications': return json_(getNotifications_(req));
       case 'getTicker':        return json_(getTicker_(req));
       case 'getQaStats':       return json_(getQaStats_(req));
+      case 'getQaFeed':        return json_(getQaFeed_(req));
       case 'addComment':       return json_(withLock_(() => addComment_(req)));
       case 'deleteComment':    return json_(withLock_(() => deleteComment_(req)));
       case 'voteAnswer':       return json_(withLock_(() => voteAnswer_(req)));

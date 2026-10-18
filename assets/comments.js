@@ -9,6 +9,7 @@
  * - بيحمّل config.js و auth.js من نفس المجلد تلقائياً إذا ما كانوا محمّلين.
  * - lazy:true → بيعرض شريط صغير (كم سؤال وكم بلا جواب) وزر "عرض الأسئلة" بدل تحميل كل شي (أخف عالإنترنت البطيء).
  *   إذا الرابط بينتهي بـ #comments (جاي من الإشعارات) بيفتح كل شي مباشرة.
+ * - thread:'c_xxx' → بيعرض سؤال واحد مع أجوبتو بس (لساحة الأسئلة qa.html). onChange(data) بينادى بعد كل تحديث.
  */
 (function () {
   if (window.SCComments) return;
@@ -42,6 +43,7 @@
     ".scc{font-family:'Alexandria',system-ui,sans-serif;color:#16232E;line-height:1.7;text-align:right}",
     ".scc *{box-sizing:border-box}",
     ".scc-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:800;font-size:1rem;margin:0 0 6px}",
+    ".scc-all{margin-inline-start:auto;font-size:.8rem;font-weight:700;color:#12897E;text-decoration:none}",
     ".scc-c{font-size:.75rem;font-weight:700;color:#5B6478;background:#EEF1F7;border-radius:999px;padding:0 10px}",
     ".scc-sub{margin:0 0 12px;font-size:.84rem;color:#5B6478}",
     ".scc-sub a{color:#12897E;font-weight:700}",
@@ -142,12 +144,13 @@
     if (!el.id) el.id = "comments";
     var s = window.SCAuth && SCAuth.getSession();
     if (!s || !s.token) return renderLogin(el);
-    if (opts.lazy && !lazyOpen() && location.hash !== "#" + el.id) return renderLazy(el, opts, tag);
+    if (opts.lazy && !opts.thread && !lazyOpen() && location.hash !== "#" + el.id) return renderLazy(el, opts, tag);
     load(el, opts, tag, false);
   }
 
   function head(total) {
-    return '<div class="scc-h">❓ أسئلة هالفصل' + (total != null ? ' <span class="scc-c">' + total + '</span>' : '') + '</div>' +
+    return '<div class="scc-h">❓ أسئلة هالفصل' + (total != null ? ' <span class="scc-c">' + total + '</span>' : '') +
+      '<a class="scc-all" href="' + esc(HUB) + 'qa.html">كل الأسئلة ←</a></div>' +
       '<p class="scc-sub">ما فهمت شي؟ اسأل هون. وبتعرف الجواب؟ ساعد غيرك واكسب نجوم ⭐ — <a href="' + esc(HUB) + 'stars.html">كيف؟</a></p>';
   }
 
@@ -183,7 +186,7 @@
   function load(el, opts, tag, force) {
     var k = key(opts), c = cache[k];
     if (!force && c && Date.now() - c.t < CACHE_MS) return render(el, opts, c.data);
-    el.innerHTML = head() + '<div class="scc-load">عم نحمّل الأسئلة...</div>';
+    el.innerHTML = (opts.thread ? "" : head()) + '<div class="scc-load">عم نحمّل' + (opts.thread ? ' الأجوبة' : ' الأسئلة') + '...</div>';
     var s = SCAuth.getSession();
     SCAuth.api("getComments", { token: s.token, course_id: opts.course_id, chapter_id: opts.chapter_id })
       .then(function (res) {
@@ -270,6 +273,14 @@
     var shown = filter === "open" ? qs.filter(isOpen) : qs;
     var openCount = qs.filter(isOpen).length;
 
+    if (opts.thread) {   // سؤال واحد بس (ساحة الأسئلة)
+      var one = qs.filter(function (q) { return q.id === opts.thread; })[0];
+      el.innerHTML = one ? '<div class="scc-list" style="margin-top:0">' + questionHTML(one, (kids[one.id] || []).slice()) + '</div>'
+                         : '<div class="scc-empty">هالسؤال انحذف أو انخفى.</div>';
+      bind(el, opts, data);
+      if (opts.onChange) try { opts.onChange(data, one, kids[opts.thread] || []); } catch (e) {}
+      return;
+    }
     var html = head(qs.length) + composerHTML(left, "");
     if (qs.length) {
       html += '<div class="scc-tabs"><button type="button" class="scc-tab' + (filter === "all" ? " on" : "") + '" data-filter="all">الكل (' + qs.length + ')</button>' +
@@ -281,7 +292,10 @@
     shown.forEach(function (q) { html += questionHTML(q, (kids[q.id] || []).slice()); });
     html += "</div>";
     el.innerHTML = html;
+    bind(el, opts, data);
+  }
 
+  function bind(el, opts, data) {
     el.onclick = function (e) {
       var t = e.target;
       var f = t.closest("[data-filter]"); if (f) { el.__sccFilter = f.getAttribute("data-filter"); return render(el, opts, data); }

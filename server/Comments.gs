@@ -20,6 +20,10 @@
  * أي تعديل يدوي على تبويب comments → onSheetEdit بيفرّغ الكاش (أو شغّل clearCommentsCache).
  *
  * users.places = {"BMN401|3":"<تاريخ أول مشاركة>", ...} : الأماكن يلي الطالب سأل أو جاوب فيها (للإشعارات السريعة).
+ *
+ * ساحة الأسئلة (qa.html): كل الأسئلة من كل الأماكن (getQaFeed). وفيها كمان أسئلة مش مربوطة بفصل:
+ *   GENERAL|general  = سؤال عام (تسجيل، امتحانات، نصايح...)
+ *   BMN401|general   = سؤال عن مقرر كامل، مو عن فصل معيّن
  */
 
 const LIM = {
@@ -164,22 +168,50 @@ function loadPlaces_(places) {
     const again = ccGet_(gen2, places);
     if (places.every(function (p) { return p in again; })) return again;
 
-    const voters = votersMap_();
-    const all = {};
-    const t = table_('comments');
-    t.rows.forEach(function (r) {
-      const o = rowObj_(t, r);
-      if (String(o.status) !== 'visible') return;
-      const k = String(o.course_id) + '|' + String(o.chapter_id);
-      (all[k] = all[k] || []).push(cRow_(o, voters[String(o.comment_id)]));
-    });
-    Object.keys(all).forEach(function (k) { all[k].sort(byTime_); });
-    places.forEach(function (p) { if (!all[p]) all[p] = []; });   // أماكن بدون مشاركات → قائمة فاضية
-    ccPut_(gen2, all);
+    const all = rebuildAll_(gen2);
+    places.forEach(function (p) { if (!all[p]) { all[p] = []; const m = {}; m[p] = []; ccPut_(gen2, m); } });   // أماكن بدون مشاركات → قائمة فاضية
     const out = {};
     places.forEach(function (p) { out[p] = all[p]; });
     return out;
   });
+}
+
+/** قراءة كل التبويب مرة وحدة → كاش كل الأماكن + فهرس الأماكن (لازم نكون جوّا القفل) */
+function rebuildAll_(gen) {
+  const voters = votersMap_();
+  const all = {};
+  const t = table_('comments');
+  t.rows.forEach(function (r) {
+    const o = rowObj_(t, r);
+    if (String(o.status) !== 'visible') return;
+    const k = String(o.course_id) + '|' + String(o.chapter_id);
+    (all[k] = all[k] || []).push(cRow_(o, voters[String(o.comment_id)]));
+  });
+  Object.keys(all).forEach(function (k) { all[k].sort(byTime_); });
+  ccPut_(gen, all);
+  cache_().put(ccKey_(gen, '__idx'), JSON.stringify(Object.keys(all)), CC_TTL_);
+  return all;
+}
+
+/** كل الأماكن اللي فيها مشاركات (لساحة الأسئلة) */
+function placeIndex_() {
+  const gen = ccGen_();
+  const v = cache_().get(ccKey_(gen, '__idx'));
+  if (v) { try { return JSON.parse(v); } catch (e) {} }
+  return withLock_(function () {
+    const g2 = ccGen_();
+    const v2 = cache_().get(ccKey_(g2, '__idx'));
+    if (v2) { try { return JSON.parse(v2); } catch (e) {} }
+    return Object.keys(rebuildAll_(g2));
+  });
+}
+/** مكان جديد انضاف (أول سؤال فيه) → منضيفو للفهرس (لازم نكون جوّا القفل) */
+function indexAdd_(place) {
+  const k = ccKey_(ccGen_(), '__idx');
+  const v = cache_().get(k);
+  if (!v) return;   // الفهرس مو بالكاش → بينبنى من جديد أول ما ينطلب
+  let arr = []; try { arr = JSON.parse(v); } catch (e) { return cache_().remove(k); }
+  if (arr.indexOf(place) < 0) { arr.push(place); cache_().put(k, JSON.stringify(arr), CC_TTL_); }
 }
 
 /** تحديث مكان واحد بالكاش (لازم نكون جوّا القفل) */
@@ -286,11 +318,68 @@ function getQaStats_(req) {
   return { ok: true, questions: st.questions, unanswered: st.unanswered };
 }
 
+/* ============ ساحة الأسئلة: كل الأسئلة من كل مكان ============ */
+/**
+ * req: { action:'getQaFeed', token, filter:'new'|'open'|'top', course:'BMN401'|'GENERAL'|'' , offset:0 }
+ *  new  = الأحدث · open = بلا جواب (الأقدم بالانتظار أول) · top = الأكثر فائدة (المنحلّة وأكتر أصوات)
+ * بيرجّع ملخص لكل سؤال (بدون الأجوبة)، والأجوبة بتنجاب لما يفتح السؤال (getComments + thread).
+ */
+const FEED_PAGE = 20;
+function getQaFeed_(req) {
+  const a = authUser_(req); if (a.err) return a.err;
+  const uid = String(a.user.obj.user_id);
+  const filter = ['new', 'open', 'top'].indexOf(req.filter) >= 0 ? req.filter : 'new';
+  const course = String(req.course || '').trim();
+  if (course && !ID_RE_.test(course)) return { ok: false, error: 'BAD_REQUEST' };
+  const offset = Math.max(0, Math.min(5000, Math.floor(Number(req.offset) || 0)));
+
+  const keys = placeIndex_().filter(function (k) { return !course || k.split('|')[0] === course; });
+  const lists = keys.length ? loadPlaces_(keys) : {};
+  const items = [];
+  const counts = { all: 0, open: 0 };
+  keys.forEach(function (k) {
+    const list = lists[k] || [];
+    const parts = k.split('|');
+    const byQ = {};
+    list.forEach(function (c) { if (c[C_PAR]) (byQ[c[C_PAR]] = byQ[c[C_PAR]] || []).push(c); });
+    list.forEach(function (q) {
+      if (q[C_PAR]) return;
+      const ans = (byQ[q[C_ID]] || []).filter(function (c) { return c[C_UID] !== q[C_UID]; });   // توضيح صاحب السؤال مو جواب
+      const votes = ans.reduce(function (s, c) { return s + (c[C_VOT] || []).length; }, 0);
+      const solved = !!q[C_ACC] && ans.some(function (c) { return c[C_ID] === q[C_ACC]; });
+      const last = (byQ[q[C_ID]] || []).reduce(function (m, c) { return c[C_AT] > m ? c[C_AT] : m; }, q[C_AT]);
+      counts.all++; if (!ans.length) counts.open++;
+      items.push({
+        id: q[C_ID], course_id: parts[0], chapter_id: parts[1], name: q[C_NAME],
+        text: q[C_TEXT].length > 280 ? q[C_TEXT].slice(0, 280) + '…' : q[C_TEXT],
+        created_at: q[C_AT], last_at: last, answers: ans.length, votes: votes, solved: solved,
+        mine: q[C_UID] === uid, answered_by_me: ans.some(function (c) { return c[C_UID] === uid; })
+      });
+    });
+  });
+
+  let out = items;
+  if (filter === 'open') out = items.filter(function (x) { return !x.answers; })
+    .sort(function (x, y) { return x.created_at < y.created_at ? -1 : 1; });
+  else if (filter === 'top') out = items.filter(function (x) { return x.answers; })
+    .sort(function (x, y) {
+      if (x.solved !== y.solved) return x.solved ? -1 : 1;
+      if (x.votes !== y.votes) return y.votes - x.votes;
+      return x.last_at < y.last_at ? 1 : -1;
+    });
+  else out = items.sort(function (x, y) { return x.last_at < y.last_at ? 1 : -1; });   // الأحدث نشاطاً
+
+  return { ok: true, items: out.slice(offset, offset + FEED_PAGE), total: out.length,
+           more: offset + FEED_PAGE < out.length, counts: counts };
+}
+
 /* ============ سؤال أو جواب جديد ============ */
 
 function addComment_(req) {
   const a = authUser_(req); if (a.err) return a.err;
   const p = place_(req); if (!p) return { ok: false, error: 'BAD_REQUEST' };
+  // سؤال عام أو عن مقرر كامل: بس "عام" أو مقرر موجود ومفعّل
+  if (p.chapter === 'general' && p.course !== 'GENERAL' && !courseIds_()[p.course.toUpperCase()]) return { ok: false, error: 'BAD_REQUEST' };
 
   let text = String(req.text || '').replace(/\r/g, '').replace(/\n{3,}/g, '\n\n').trim();
   if (!text) return { ok: false, error: 'EMPTY' };
@@ -340,6 +429,7 @@ function addComment_(req) {
   const row = cRow_(rec, []);
   list.push(row);
   ccSetPlace_(p.key, list);
+  if (list.length === 1) indexAdd_(p.key);
   cache_().put(cdKey, String(now.getTime()), LIM.COOLDOWN_SEC + 5);
 
   const places = placesOf_(a.user.obj);

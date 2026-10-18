@@ -107,6 +107,7 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 
 /* الكلمة المتبدلة (حدا ← جارك / زميلك ...) */
 .sg-word{ position:relative; display:inline-grid; color:var(--amber); }
+.hello-name{ color:var(--amber); }   /* اسم الطالب بنفس برتقالي الكلمة المتبدلة */
 .sg-word::after{
   content:""; position:absolute; inset-inline:0; bottom:.05em; height:2px;
   background:linear-gradient(90deg,transparent,var(--amber),transparent); opacity:.65;
@@ -193,7 +194,7 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
   100%{ opacity:0; transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.1) rotate(160deg); }
 }
 
-/* نهفة بعد 10 تصفيقات */
+/* نهفة بعد 5 تصفيقات */
 .sg-joke{
   position:absolute; inset-inline-start:0; top:100%; margin-top:6px; z-index:4;
   background:#fff; color:#1A2235; font-size:.9rem; font-weight:700; padding:8px 14px; border-radius:12px;

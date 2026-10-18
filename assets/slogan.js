@@ -111,7 +111,7 @@
       setTimeout(function () { hands.classList.add("idle"); }, 380);
       claps++;
       if (hint) hint.classList.remove("on");
-      if (claps === 10 || (claps > 10 && claps % 25 === 0)) joke();
+      if (claps === 5 || (claps > 5 && claps % 20 === 0)) joke();
     });
   }
 

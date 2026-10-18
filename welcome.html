@@ -71,7 +71,9 @@
   SCShell.init({
     onReady: function (user) {
       var first = (user.name || "").split(" ")[0];
-      document.getElementById("hello").textContent = first ? "أهلاً " + first : "أهلاً بك";
+      var hello = document.getElementById("hello");
+      hello.textContent = first ? "أهلاً " : "أهلاً بك";
+      if (first) { var nm = document.createElement("span"); nm.className = "hello-name"; nm.textContent = first; hello.appendChild(nm); }
     }
   });
 

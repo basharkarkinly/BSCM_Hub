@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 2 — الشبكات والإنترنت | GBS302</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS302 — مهارات الحاسوب</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الثاني</div>
+    <h1>الشبكات والإنترنت</h1>
+    <p>تعريف الشبكة، أنواعها حسب الامتداد الجغرافي ووسائل الربط وبنية الشبكة، الإنترنت ومتطلبات الاتصال، تقنيات الاتصال، والعناوين والإنترانت والإكسترانت.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">LAN · MAN · WAN</span><span class="keyword-chip">الألياف البصرية</span>
+          <span class="keyword-chip">الند للند</span><span class="keyword-chip">مخدم لعميل</span>
+          <span class="keyword-chip">ISP</span><span class="keyword-chip">ADSL</span><span class="keyword-chip">4G / 5G</span>
+          <span class="keyword-chip">DNS</span><span class="keyword-chip">Intranet / Extranet</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تفرّق بين LAN و MAN و WAN بالامتداد الجغرافي</li>
+          <li>تعرف أنواع الكابلات وأسرعها، وأنظمة الربط اللاسلكي</li>
+          <li>تميّز شبكة الند للند عن شبكة مخدم لعميل</li>
+          <li>تعدد متطلبات الاتصال بالإنترنت وتقارن بين تقنيات الاتصال</li>
+          <li>تشرح اسم النطاق و DNS، والفرق بين الإنترانت والإكسترانت</li>
+        </ul>
+      </div>
+
+      <div class="block" id="definition">
+        <h2><span class="idx">1</span> شو هي الشبكة؟</h2>
+        <p>الشبكة <b>جهازين أو أكتر</b> مرتبطين ببعض بخطوط اتصال بتقدر تنقل البيانات والمعلومات. بتخلّي المستخدمين
+        <b>يتبادلو الملفات والبيانات</b>، و<b>يتشاركو البرمجيات والموارد</b> متل الطابعات.</p>
+      </div>
+
+      <div class="block" id="geo">
+        <h2><span class="idx">2</span> أنواع الشبكات حسب الامتداد الجغرافي</h2>
+        <table class="cmp">
+          <tr><th>النوع</th><th>الامتداد</th></tr>
+          <tr><td><b>المحلية LAN</b> — Local Area Network</td><td>منطقة صغيرة أو محدودة: <b>المدرسة، المكتب، المنزل</b></td></tr>
+          <tr><td><b>المناطقية (الإقليمية) MAN</b> — Metropolitan</td><td>بتصل مجموعة شبكات محلية داخل <b>المدن والبلدات</b></td></tr>
+          <tr><td><b>الواسعة WAN</b> — Wide Area Network</td><td><b>الدول والقارات</b>، متل الإنترنت وشبكات الموبايل 3G و 4G</td></tr>
+        </table>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان متكرر</span>
+          <p>«الإقليمية بتغطي الدول والقارات» = <b>غلط</b> (هاي الواسعة). و«المحلية مجموعة شبكات ضمن مدينة» = <b>غلط</b> (هاي الإقليمية).</p>
+        </div>
+      </div>
+
+      <div class="block" id="media">
+        <h2><span class="idx">3</span> أنواع الشبكات حسب وسائل الربط</h2>
+        <p><b>1) الشبكة السلكية Wired</b> — الأجهزة موصولة بخطوط سلكية:</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>📺 الكبل المحوري Coaxial</b>محور نحاس صلب + عازل + ضفائر معدنية + غطاء مطاط أو بلاستيك. مثاله كبل التلفزيون (الهوائي).</div>
+          <div class="quick-card"><b>🔗 المزدوج المجدول Twisted Pair</b>أربع توصيلات ثنائية مجدولة من أسلاك نحاسية رفيعة.</div>
+          <div class="quick-card"><b>💡 الألياف البصرية Fiber Optics</b>اسطوانة رقيقة من <strong>الزجاج النقي</strong>، والبيانات بتنبعت <strong>بومضات ليزرية</strong> — <strong>الأسرع</strong>.</div>
+        </div>
+        <p style="margin-top:14px;"><b>2) الشبكة اللاسلكية Wireless:</b></p>
+        <table class="cmp">
+          <tr><th>نظام الأقمار الصناعية</th><th>نظام البث الخلوي</th></tr>
+          <tr><td>أقمار بمدار حول الأرض كمحطات تبديل بين محطات أرضية بسرعة عالية جداً — الأسرع حول العالم</td>
+              <td>المدينة مقسومة لخلايا (مربعات)، بكل خلية جهاز بث واستقبال لاسلكي</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="arch">
+        <h2><span class="idx">4</span> أنواع الشبكات حسب بنية الشبكة</h2>
+        <table class="cmp">
+          <tr><th>الند للند Peer to Peer</th><th>مخدم لعميل Client / Server</th></tr>
+          <tr><td>كل الحواسب <b>حقوقها متساوية</b></td><td><b>الخادم Server</b> مزوّد المعلومات، و<b>العملاء Clients</b> مستخدمين</td></tr>
+          <tr><td>عددها قليل (ما بيتجاوز <b>10</b> أجهزة)، تكلفتها قليلة</td><td>الخادم هو المركز الرئيسي لموارد الشبكة</td></tr>
+          <tr><td>كل جهاز <b>زبون ومخدم بنفس الوقت</b></td><td>للمؤسسات <b>الكبيرة</b>، والخادم بدو إدارة من شخص متخصص</td></tr>
+          <tr><td>مثالها: مراكز التدريب على الحاسوب</td><td>المشاركة بتمر عن طريق الخادم</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="internet">
+        <h2><span class="idx">5</span> الإنترنت ومتطلبات الاتصال</h2>
+        <p>الإنترنت (الشبكة العنكبوتية) شبكة كبيرة مكوّنة من شبكات أصغر، بتستخدم خطوط الهاتف والأقمار الصناعية وغيرها لنقل البيانات.</p>
+        <ol class="timeline">
+          <li><span class="marker">1</span><h4>اشتراك مع مزود خدمة ISP</h4><p>الشركة اللي بتربطك بالإنترنت، وبتعطيك اسم مستخدم وكلمة مرور.</p></li>
+          <li><span class="marker">2</span><h4>حاسوب أو جهاز بيقدر يتصل</h4><p>أي جهاز بيتصل بالإنترنت.</p></li>
+          <li><span class="marker">3</span><h4>مودم Modem</h4><p>بيحوّل البيانات الرقمية (0 و 1) لإشارات تماثلية (موجات) تمشي على خط الهاتف، وبالعكس.</p></li>
+          <li><span class="marker">4</span><h4>متصفح إنترنت</h4><p>برنامج لتصفح المواقع والبحث فيها: Internet Explorer · Firefox · Google Chrome · Microsoft Edge.</p></li>
+        </ol>
+      </div>
+
+      <div class="block" id="tech">
+        <h2><span class="idx">6</span> تقنيات الاتصال بالإنترنت</h2>
+        <table class="cmp">
+          <tr><th>التقنية</th><th>أهم شي فيها</th></tr>
+          <tr><td>الاتصال الهاتفي Dial Up</td><td>مؤقت، بالخط والمودم، بطيء، <b>قديم وغير مستخدم حالياً</b></td></tr>
+          <tr><td>ISDN</td><td>أسرع من الهاتف، بتنقل صوت وصور وفيديو وبيانات بنفس الوقت على نفس الأسلاك</td></tr>
+          <tr><td><b>ADSL</b> (الخط غير المتماثل)</td><td>عبر خطوط الهاتف النحاسية، <b>المقسّم</b> بيخلّيك تحكي وتتصفح بآن واحد، متاح 24 ساعة، و<b>التنزيل أسرع من التحميل</b></td></tr>
+          <tr><td>الألياف البصرية</td><td>أسلاك زجاجية بسرعات عالية جداً، تدفق غير محدود، لعب Online وتلفاز IPTV</td></tr>
+          <tr><td>الهاتف النقال 3G · 4G · 5G</td><td>عبر شريحة SIM، <b>بيضل الاتصال حتى عند التجوال</b>. الـ4G أسرع <b>10 أضعاف</b> من 3G، والـ5G أسرع <b>100 ضعف</b> من 4G</td></tr>
+          <tr><td>الأقمار الاصطناعية</td><td><b>الأسرع</b> بالعالم بالصحون اللاقطة، بس <b>تكلفته مرتفعة</b></td></tr>
+        </table>
+        <div id="activity-sort" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="block" id="concepts">
+        <h2><span class="idx">7</span> عناوين الإنترنت، الإنترانت والإكسترانت</h2>
+        <div class="quick-grid">
+          <div class="quick-card"><b>🔢 عنوان الإنترنت</b>أرقام بتفصل بينها <strong>نقطة</strong>، مثال 74.125.224.72.</div>
+          <div class="quick-card"><b>🔤 اسم النطاق Domain Name</b>النص البديل عن العنوان الرقمي: www.google.com.</div>
+          <div class="quick-card"><b>🗂️ مخدم أسماء النطاق DNS</b>بيطابق الاسم اللي كتبته مع العنوان الرقمي المقابل.</div>
+        </div>
+        <table class="cmp" style="margin-top:14px;">
+          <tr><th>الإنترانت Intranet</th><th>الإكسترانت Extranet</th></tr>
+          <tr><td>شبكة <b>داخلية</b> بالمؤسسات الكبيرة، بتستخدم تقانة الإنترنت لمشاركة الموارد والمعلومات <b>بين موظفي الشركة فقط</b></td>
+              <td><b>مجموعة شبكات إنترانت</b> مرتبطة ببعض <b>عن طريق الإنترنت</b>، مع الحفاظ على خصوصية كل إنترانت (شركاء، مزودين، مراكز أبحاث)</td></tr>
+        </table>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-2-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-2-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الثالث)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS302",chapter_id:"2",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch2-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "هاي الميزة لأي تقنية اتصال؟",
+  buckets: [
+    {key:"adsl", label:"📞 ADSL"},
+    {key:"mob",  label:"📱 الهاتف النقال 3G/4G/5G"},
+    {key:"sat",  label:"🛰️ الأقمار الاصطناعية"},
+    {key:"dial", label:"☎️ الاتصال الهاتفي Dial Up"}
+  ],
+  items: [
+    {text:"التنزيل أسرع من التحميل", bucket:"adsl", why:"لهيك اسمه الخط غير المتماثل."},
+    {text:"مقسّم بيفصل الصوت عن البيانات", bucket:"adsl", why:"فبتحكي وبتتصفح بنفس الوقت."},
+    {text:"بيضل الاتصال حتى عند التجوال", bucket:"mob", why:"عبر شريحة SIM."},
+    {text:"أسرع 10 أضعاف من الجيل اللي قبله", bucket:"mob", why:"الـ4G مقارنة بالـ3G."},
+    {text:"الأسرع بالعالم بس تكلفته مرتفعة", bucket:"sat", why:"بالصحون اللاقطة."},
+    {text:"اتصال مؤقت بطيء وقديم وغير مستخدم حالياً", bucket:"dial", why:"تكلفته متل تكلفة المكالمة."}
+  ]
+});
+
+renderCaseStudy("case-study-mount", {
+  title: "شركة وشركاؤها",
+  scenario: "شركة أدوية عندها شبكة داخلية خاصة بموظفيها. بدها تربط شبكتها بشبكات داخلية لمورّدين ومراكز أبحاث شركاء بمشروع واحد عن طريق الإنترنت، بحيث يتشاركو ملفات المشروع بس كل شركة تحافظ على خصوصية شبكتها.",
+  question: "شو اسم الشبكة اللي بدها تبنيها الشركة؟",
+  options: [
+    "الإنترانت Intranet",
+    "الإكسترانت Extranet",
+    "الشبكة المحلية LAN",
+    "شبكة الند للند"
+  ],
+  answerIndex: 1,
+  explanation: "الإكسترانت = مجموعة شبكات إنترانت مرتبطة عن طريق الإنترنت، بتتشارك بعض الخدمات والملفات مع الحفاظ على خصوصية كل إنترانت. الإنترانت لحالها للموظفين الداخليين بس."
+});
+
+renderFlashcards("activity-flash", CH2_FLASHCARDS);
+</script>
+</body>
+</html>

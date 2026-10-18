@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 1 — العتاد الصلب والبرمجيات | GBS302</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS302 — مهارات الحاسوب</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الأول</div>
+    <h1>العتاد الصلب والبرمجيات</h1>
+    <p>شو هو الحاسوب وأنواعه، وحدات الإدخال والإخراج والطابعات، اللوحة الأم والمعالج، الذاكرة RAM و ROM، المنافذ ووحدات التخزين، والبرمجيات بنوعيها.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">Hardware</span><span class="keyword-chip">Software</span>
+          <span class="keyword-chip">المعالج CPU</span><span class="keyword-chip">اللوحة الأم</span>
+          <span class="keyword-chip">RAM</span><span class="keyword-chip">ROM</span>
+          <span class="keyword-chip">USB / HDMI</span><span class="keyword-chip">CD · DVD · Blu-ray</span>
+          <span class="keyword-chip">نظام التشغيل</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تفرّق بين أنواع الحواسيب (المخدّم، محطة العمل، المصغّر...)</li>
+          <li>تصنّف أي جهاز: إدخال، إخراج، أو الاثنين معاً — وتعرف أنواع الطابعات وخواصها</li>
+          <li>تشرح أقسام المعالج والفرق بين RAM و ROM</li>
+          <li>تعرف المنافذ ووحدات التخزين وسعات الأقراص الضوئية</li>
+          <li>تميّز برمجيات الأنظمة عن البرامج التطبيقية</li>
+        </ul>
+      </div>
+
+      <div class="block" id="types">
+        <h2><span class="idx">1</span> شو هو الحاسوب؟ وشو أنواعه؟</h2>
+        <p>
+          الحاسوب <b>جهاز رقمي</b> بيستقبل <b>البيانات</b>، بيعالجها، بيخزّنها، بيسترجعها، وبيعرضها للمستخدم بصورة تانية.
+          يعني بياخد بيانات خام وبيطلّع منها <b>معلومات</b>. وبيتألّف من شغلتين: <b>عتاد صلب Hardware</b> (القطع اللي بتلمسها)
+          و<b>برمجيات Software</b> (التعليمات اللي بتشغّلها).
+        </p>
+        <table class="cmp">
+          <tr><th>النوع</th><th>شو بيميّزه</th></tr>
+          <tr><td>الحاسوب الشخصي PC: المكتبي · المحمول · اللوحي</td><td>الأرخص والأكتر انتشاراً. المحمول بيشتغل عالبطارية (وزنه تقريباً 1.5–4 كغ)، واللوحي شاشته لمسية</td></tr>
+          <tr><td><b>الحاسوب الخادم (المخدّم) Server</b></td><td>بيتحمّل <b>التشغيل المستمر لفترات طويلة</b> (24 ساعة)، بيخدم باقي أجهزة الشبكة، وبدو كهربا مستمرة وتبريد عالي</td></tr>
+          <tr><td><b>حاسوب محطة العمل Workstation</b></td><td>بيشبه المكتبي بس <b>بمواصفات عالية</b> لمعالجة بيانات كبيرة بسرعة، متل برامج التصميم الهندسي وخرائط GIS</td></tr>
+          <tr><td><b>الحاسوب المصغّر Microcomputer</b></td><td>موجود بالهواتف والسيارات وأجهزة الفيديو والطائرات. من أنواعه: الحاسوب القابل للارتداء (الساعة الذكية)، الهاتف الذكي، والكاميرا الرقمية</td></tr>
+          <tr><td>الهاتف الذكي</td><td>جهاز محمول بيشتغل على نظام تشغيل، أشهرها <b>iOS</b> و<b>Android</b></td></tr>
+        </table>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>الأسئلة بتبدّل وصف <b>المخدّم</b> بوصف <b>محطة العمل</b>. احفظها هيك: المخدّم = <b>ما بيتعب</b> (تشغيل مستمر)، ومحطة العمل = <b>مكتبي قوي</b>.
+          وكمان انتبه: الحاسوب بيعالج <b>البيانات</b> وبيحوّلها <b>لمعلومات</b>، مو العكس.</p>
+        </div>
+      </div>
+
+      <div class="block" id="io">
+        <h2><span class="idx">2</span> وحدات الإدخال والإخراج والطابعات</h2>
+        <table class="cmp">
+          <tr><th>وحدات الإدخال (بتدخّل بيانات)</th><th>وحدات الإخراج (بتعرض النتائج)</th></tr>
+          <tr><td>لوحة المفاتيح · الفأرة · الماسح الضوئي · الميكروفون · الكاميرا الرقمية · كاميرا الويب · قارئ الباركود</td>
+              <td>الشاشة · الطابعة · مكبّرات الصوت · جهاز الإسقاط</td></tr>
+        </table>
+        <div class="callout">
+          <span class="tag">💡 إدخال وإخراج معاً</span>
+          <p><b>المودم</b> و<b>الشاشة الحساسة للمس</b>. المودم وسيط بين الحاسوب وخط الهاتف، بيحوّل الإشارات <b>التماثلية لرقمية وبالعكس</b>، فبيسمح بتبادل البيانات عبر خطوط الهاتف.
+          أما الشاشة <b>العادية</b> فهي إخراج بس.</p>
+        </div>
+        <p><b>أنواع الطابعات:</b></p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>🖨️ النقطية</b>أسنان صغيرة بتضغط على شريط الحبر، و<strong>بتصدر ضجيج</strong>.</div>
+          <div class="quick-card"><b>💧 النافثة للحبر</b>بتبخ الحبر على الورق وما بتصدر ضجيج.</div>
+          <div class="quick-card"><b>⚡ الليزرية</b><strong>سريعة</strong> وبتعطي صور بجودة <strong>عالية</strong> (بتستخدم شعاع الليزر).</div>
+          <div class="quick-card"><b>📠 متعددة المهام</b>طابعة + ماسح ضوئي بجهاز واحد.</div>
+        </div>
+        <table class="cmp" style="margin-top:14px;">
+          <tr><th>خاصية الطابعة</th><th>بتنقاس بـ</th></tr>
+          <tr><td>دقة الطباعة</td><td>عدد النقاط الحبرية لكل بوصة مربعة (كل ما زادت النقاط زادت الدقة)</td></tr>
+          <tr><td>القدرة اللونية</td><td>عدد الألوان الظاهرة (أبيض وأسود أو ملونة)</td></tr>
+          <tr><td>السرعة</td><td>عدد الأوراق المطبوعة بالدقيقة</td></tr>
+          <tr><td>الذاكرة</td><td>عدد طلبات الطباعة والملفات اللي بتستلمها بنفس الوقت وبترتّبها بالدور</td></tr>
+        </table>
+        <div id="activity-sort" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="block" id="cpu">
+        <h2><span class="idx">3</span> اللوحة الأم والمعالج</h2>
+        <p><b>وحدة النظام System Unit</b> = اللوحة الأم + المعالج + الذاكرة + منافذ الإدخال والإخراج، جوّا صندوق النظام (Case).</p>
+        <p><b>اللوحة الأم:</b> لوحة إلكترونية بترتبط فيها <b>كل</b> مكوّنات الحاسوب: المعالج، الذواكر، بطاقة الشاشة والصوت والشبكة.</p>
+        <p><b>المعالج (وحدة المعالجة المركزية):</b> هو <b>العقل المدبّر</b>، لأنه المسؤول عن تنفيذ كل عمليات المعالجة، <b>حسابية ومنطقية</b>.
+        سرعته بتنقاس بالـ<b>ميغاهرتز MHz</b> أو <b>الغيغاهرتز GHz</b>، وأشهر شركتين: Intel و AMD.</p>
+        <ol class="timeline">
+          <li><span class="marker">1</span><h4>وحدة التحكم CU</h4><p>بتوجّه البيانات <b>ضمن</b> وحدة المعالجة المركزية، بتسيّرها من وإلى الأجهزة، وبتتحكم بوحدة الحساب والمنطق والمسجّلات.</p></li>
+          <li><span class="marker">2</span><h4>وحدة الحساب والمنطق ALU</h4><p>العمليات الحسابية (جمع، طرح، ضرب، قسمة) وعمليات المقارنة (أكبر، أصغر، يساوي).</p></li>
+          <li><span class="marker">3</span><h4>المسجّلات Registers</h4><p>مساحات تخزين صغيرة وسريعة جوّا المعالج بتحتفظ بالبيانات والتعليمات مؤقتاً. عرضها 32 أو 64 بت.</p></li>
+        </ol>
+        <div class="callout">
+          <span class="tag">💡 معلومة إضافية</span>
+          <p>المعالج مو الوحيد اللي بيعالج: <b>بطاقة الشاشة</b> مثلاً فيها معالج خاص بالصور، بيخفّف العبء وبيحسّن الأداء.<br>
+          و<b>ساعة المعالج CPU Clock</b> (قطعة كريستال كوارتز بتتذبذب بتواتر ثابت) هي اللي <b>بتتحكم بتوقيت كل عمليات الحوسبة</b>.</p>
+        </div>
+      </div>
+
+      <div class="block" id="memory">
+        <h2><span class="idx">4</span> الذاكرة: RAM و ROM</h2>
+        <p>الذاكرة <b>شريحة إلكترونية</b> بتتصل باللوحة الأم أو بتكون جزء منها. سرعتها بتأثر <b>بشكل مباشر</b> على سرعة المعالجة،
+        والوصول إلها <b>أسرع بكتير</b> من الوصول للقرص الصلب. حجمها بينقاس بمضاعفات <b>البايت Byte</b> (البايت = 8 بت، وهو سعة محرف واحد؛ والبت أصغر وحدة: 0 أو 1)، وسرعة الوصول بالـ<b>نانو ثانية</b>.</p>
+        <table class="cmp">
+          <tr><th>RAM — ذاكرة الوصول العشوائي (المؤقتة)</th><th>ROM — ذاكرة القراءة فقط</th></tr>
+          <tr><td>متطايرة: محتواها <b>بيزول</b> بانقطاع الكهرباء. إذا شغّلت برامج كتير وامتلأت، بيجمد الحاسوب</td><td>بتخزّن <b>بشكل دائم</b> وما بيضيع محتواها</td></tr>
+          <tr><td>قراءة وكتابة معاً، وبتستقبل البيانات من وحدات الإدخال</td><td>المستخدم العادي <b>ما بيقدر يعدّل</b> عليها</td></tr>
+          <tr><td>كل ما كبر حجمها زادت سرعة وأداء الحاسوب وصرت تشغّل برمجيات أكبر</td><td>فيها النظام الأساسي اللازم لتشغيل الحاسوب</td></tr>
+        </table>
+        <div class="example">
+          <span class="tag">⚠️ غلطة شائعة</span>
+          <p>القرص الصلب <b>مو ذاكرة</b>، هو وحدة تخزين. أنواع الذاكرة اتنين بس: <b>RAM</b> و<b>ROM</b>.</p>
+        </div>
+      </div>
+
+      <div class="block" id="storage">
+        <h2><span class="idx">5</span> المنافذ ووحدات التخزين</h2>
+        <table class="cmp">
+          <tr><th>المنفذ</th><th>وظيفته</th></tr>
+          <tr><td><b>USB</b> — المنفذ التسلسلي الشامل</td><td>الأسرع بإرسال البيانات واستقبالها وتخزينها، وبيدعم التشغيل المباشر عند الوصل (بلا إعادة تشغيل)</td></tr>
+          <tr><td><b>HDMI</b> — المنفذ متعدد الوسائط عالي الوضوح</td><td>مقترن بالبطاقة الرسومية، بيوصّل الصورة والصوت بسرعة ووضوح عاليين (العروض السينمائية)</td></tr>
+        </table>
+        <p style="margin-top:14px;"><b>وحدات التخزين:</b></p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>💽 القرص الصلب</b>وحدة التخزين الرئيسية وأكبرها حجماً.</div>
+          <div class="quick-card"><b>🗂️ بطاقة الذاكرة</b>بلا قطع متحركة: طاقة أقل، حرارة أقل، سرعة أعلى.</div>
+          <div class="quick-card"><b>🔌 الذاكرة الومضية USB Flash</b>صغيرة وسهلة الحمل وسعتها عالية، وبتنمسح وبتنكتب أكتر من مرة.</div>
+          <div class="quick-card"><b>☁️ التخزين السحابي</b>خدمة عالإنترنت بلا ما تشتري وحدة تخزين: مساحة صغيرة مجانية، واشتراكات بأجور حسب السعة.</div>
+        </div>
+        <table class="cmp" style="margin-top:14px;">
+          <tr><th>القرص الضوئي</th><th>السعة (حسب المقرر)</th></tr>
+          <tr><td>القرص المدمج CD</td><td>650 ميغابايت</td></tr>
+          <tr><td>القرص الرقمي متعدد الاستخدامات DVD</td><td>8.17 غيغابايت</td></tr>
+          <tr><td>أقراص الليزر الأزرق Blu-ray (BD)</td><td>128 غيغابايت</td></tr>
+        </table>
+        <p>وحسب إمكانية التخزين لأكتر من مرة: قابلة للقراءة فقط · قابلة للكتابة بدون حذف · قابلة للحذف وإعادة الكتابة.</p>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>بيبدّلو وظيفة الـ<b>USB</b> بوظيفة الـ<b>HDMI</b>، وبيبدّلو سعات الأقراص (مثلاً «DVD = 128 غيغا» غلط، هاي للـBlu-ray).</p>
+        </div>
+      </div>
+
+      <div class="block" id="software">
+        <h2><span class="idx">6</span> البرمجيات وأنواعها</h2>
+        <p>البرمجيات مجموعة <b>تعليمات وتوجيهات</b> بيحتاجها الحاسوب ليأدي مهامه. و<b>العتاد الصلب ما بيقدر يشتغل</b> بشكل منتظم ومتكامل بدونها.</p>
+        <table class="cmp">
+          <tr><th>برمجيات الأنظمة (أنظمة التشغيل)</th><th>البرامج التطبيقية</th></tr>
+          <tr><td>بتنظّم العلاقة بين المستخدم والحاسوب، بتشغّل الحاسوب وبتجهّزه، بتجدول مهامه وبتدير التخزين.</td>
+              <td>معالجة النصوص · الجداول الإلكترونية (للمشاكل الإحصائية) · قواعد البيانات (جداول مترابطة) · العروض التقديمية · البريد الإلكتروني · النشر · تصفّح الويب · الترفيه · التصميم المدعّم بالحاسوب (رسم وتصميم)</td></tr>
+        </table>
+        <ol class="timeline">
+          <li><span class="marker">1</span><h4>DOS</h4><p>بيعتمد على كتابة الأوامر بلوحة المفاتيح.</p></li>
+          <li><span class="marker">2</span><h4>Windows</h4><p>بدأ عام <b>1985</b>: أكتر من تطبيق بنفس الوقت، القوائم والأشرطة والنوافذ والرسومات (<b>واجهة المستخدم الرسومية</b>)، واستخدام الفأرة.</p></li>
+          <li><span class="marker">3</span><h4>LINUX · MAC · OS X</h4><p>أنظمة تانية بواجهة رسومية وبالفأرة، و<b>بتسمح بتعدد المستخدمين</b>.</p></li>
+        </ol>
+        <div class="example">
+          <span class="tag">⚠️ انتبه</span>
+          <p>DOS <b>نظام تشغيل</b> مو تطبيق. والجداول الإلكترونية غير قواعد البيانات: الجداول للحسابات، وقواعد البيانات لتخزين بيانات بجداول مترابطة.</p>
+        </div>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-1-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-1-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الثاني)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS302",chapter_id:"1",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch1-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "هاد الجهاز إدخال، إخراج، ولا الاثنين معاً؟",
+  buckets: [
+    {key:"in",   label:"⬅️ إدخال"},
+    {key:"out",  label:"➡️ إخراج"},
+    {key:"both", label:"🔁 الاثنين معاً"}
+  ],
+  items: [
+    {text:"لوحة المفاتيح", bucket:"in", why:"بتدخّل حروف وأوامر."},
+    {text:"الماسح الضوئي", bucket:"in", why:"سطح حساس للضوء بيدخّل الورق كصورة."},
+    {text:"قارئ الباركود", bucket:"in", why:"بيقرأ الرمز وبيدخّله للحاسوب."},
+    {text:"الميكروفون", bucket:"in", why:"بيدخّل الصوت."},
+    {text:"كاميرا الويب", bucket:"in", why:"بتلتقط صور وفيديو لتبثها عالإنترنت."},
+    {text:"الطابعة", bucket:"out", why:"بتطلّع المعلومات مطبوعة."},
+    {text:"جهاز الإسقاط (البروجكتور)", bucket:"out", why:"بيعرض الصورة."},
+    {text:"مكبّرات الصوت", bucket:"out", why:"بتطلّع الصوت."},
+    {text:"المودم", bucket:"both", why:"بيرسل وبيستقبل عبر خط الهاتف."},
+    {text:"الشاشة الحساسة للمس", bucket:"both", why:"بتعرض (إخراج) وبتستقبل لمسك (إدخال)."}
+  ]
+});
+
+renderCaseStudy("case-study-mount", {
+  title: "مكتب صغير بدو طابعة",
+  scenario: "سارة فاتحة مكتب خدمات طلابية صغير. بدها جهاز واحد بيطبع الأوراق وكمان بيحوّل الأوراق المطبوعة لملفات على الحاسوب، لأن المكان ضيق وما بيساع جهازين.",
+  question: "أي نوع طابعة بيناسب سارة أكتر؟",
+  options: [
+    "الطابعة النقطية",
+    "الطابعة النافثة للحبر",
+    "الطابعة الليزرية",
+    "الطابعة متعددة المهام"
+  ],
+  answerIndex: 3,
+  explanation: "الطابعة متعددة المهام بتضم الطابعة والماسح الضوئي (وكمان ناسخ الورق والفاكس) بجهاز واحد. الليزرية سريعة وجودتها عالية بس ما فيها ماسح ضوئي."
+});
+
+renderFlashcards("activity-flash", CH1_FLASHCARDS);
+</script>
+</body>
+</html>

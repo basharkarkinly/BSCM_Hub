@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 10 — المخططات البيانية والجداول المحورية | GBS302</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS302 — مهارات الحاسوب</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل العاشر</div>
+    <h1>المخططات البيانية والجداول المحورية</h1>
+    <p>شو هي المخططات، الأنواع العمودية والدائرية والخطية، العمليات على المخططات، عناصرها وأنماطها ومرشحاتها، الجداول المحورية، والمخططات المحورية.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">Column Chart</span><span class="keyword-chip">Pie Chart</span><span class="keyword-chip">Line Chart</span>
+          <span class="keyword-chip">Chart Elements</span><span class="keyword-chip">Axis</span><span class="keyword-chip">Error Bars</span>
+          <span class="keyword-chip">Pivot Table</span><span class="keyword-chip">Pivot Chart</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تختار نوع المخطط المناسب للبيانات</li>
+          <li>تنشئ المخططات وتحددها وتعدّلها وتحذفها</li>
+          <li>تعرف عناصر المخطط وأنماطه ومرشحاته</li>
+          <li>تنشئ جدول محوري وتعرف مناطقه الأربعة، وتطلع منه مخطط محوري</li>
+        </ul>
+      </div>
+
+      <div class="block" id="intro">
+        <h2><span class="idx">1</span> شو هي المخططات؟</h2>
+        <p>«الصورة أفضل من ألف كلمة». <b>المخططات Charts</b> نوع من الرسوم البيانية بتعيد تمثيل البيانات بالأعمدة والخطوط والدوائر، وبتبيّن الاتجاهات والعلاقات اللي ما بتبين من الأرقام.
+        Excel فيه أنواع كتير، ولما تحتار استخدم الميزة الجديدة بـExcel 2016: <b>المخططات الموصى بها Recommended Charts</b> — بيحلل بياناتك وبيقترح الأفضل.</p>
+        <p>الإدراج: حدد نطاق البيانات ← <b>Insert ← Charts</b> ← اختار النوع والشكل.</p>
+      </div>
+
+      <div class="block" id="types">
+        <h2><span class="idx">2</span> المخططات العمودية والدائرية والخطية</h2>
+        <table class="cmp">
+          <tr><th>النوع</th><th>متى منستخدمه</th></tr>
+          <tr><td><b>العمودي Column</b> (Insert Column or Bar Chart)</td><td>بيانات <b>تغيّرت خلال فترة زمنية</b> أو <b>مقارنة بين العناصر</b>، وبيتعامل مع <b>عدة سلاسل</b> بيانات</td></tr>
+          <tr><td><b>الدائري Pie</b> (Insert Pie or Doughnut Chart)</td><td>بيانات بـ<b>عمود أو صف واحد فقط</b>، بتطلع كنسبة مئوية من الكل، و<b>ما بيصلح إلا لعنصر واحد</b> (مبيعات شركة وحدة خلال أرباع السنة، نسبة الذكور والإناث بصف واحد)</td></tr>
+          <tr><td><b>الخطي Line</b> (Insert Line or Area Chart)</td><td>خيار مثالي لـ<b>اتجاهات البيانات عبر فترات زمنية متساوية</b> أو عبر فئات، والقيم نقاط على خط</td></tr>
+        </table>
+        <div class="callout">
+          <span class="tag">💡 متى بتستخدم الدائري؟</span>
+          <p>سلسلة بيانات وحدة بس · ما في قيم سالبة · معظم القيم مو صفر · ما في أكتر من <b>7 فئات</b>.</p>
+        </div>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>«المخطط <b>العمودي</b> ما بيصلح إلا لعنصر واحد» = <b>غلط</b> (هاد الدائري). و«المخططات <b>المحورية</b> مفيدة لعرض التغيّر بالزمن» = <b>غلط</b> (هاد العمودي).</p>
+        </div>
+        <div id="activity-sort" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="block" id="ops">
+        <h2><span class="idx">3</span> العمليات على المخططات</h2>
+        <table class="cmp">
+          <tr><th>العملية</th><th>كيف</th></tr>
+          <tr><td>تحديد</td><td><b>نقرة وحدة</b> بالزر الأيسر ضمن إطار المخطط، فبتطلع مقابض التحديد</td></tr>
+          <tr><td>تحريك / تغيير الحجم</td><td>اسحبه / اسحب أحد المقابض لبرّا أو لجوّا</td></tr>
+          <tr><td>حذف</td><td>حدده ← <b>Delete</b></td></tr>
+          <tr><td>تغيير النوع</td><td>Design ← Type ← <b>Change Chart Type</b></td></tr>
+          <tr><td>تغيير العنوان</td><td>انقر على لصاقة <b>Chart Title</b> واكتب الجديد</td></tr>
+          <tr><td>لون الخلفية</td><td>Format ← Shape Styles ← <b>Shape Fill</b></td></tr>
+          <tr><td>الخط</td><td>Home ← Font</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="elements">
+        <h2><span class="idx">4</span> عناصر المخطط وأنماطه ومرشحاته</h2>
+        <p>تلات أزرار جنب الزاوية العلوية اليمنى للمخطط:</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>➕ عناصر المخطط Chart Elements</b><strong>Axis</strong> (إظهار وإخفاء المحورين) · Axis Titles · Chart Title · Data Labels · Data Table · <strong>Error Bars</strong> (الخطأ والانحراف المعياري) · Gridlines · Legend · Trendline.</div>
+          <div class="quick-card"><b>🖌️ أنماط المخطط Chart Styles</b>Style لتصميم المخطط، و Color لألوانه.</div>
+          <div class="quick-card"><b>🔽 مرشحات المخطط Chart Filters</b>تحديد الحقول المطلوب إظهارها أو إخفاؤها.</div>
+        </div>
+      </div>
+
+      <div class="block" id="pivot">
+        <h2><span class="idx">5</span> الجداول المحورية</h2>
+        <p>بجدول فيه أكتر من 2,000 صف صعب تحلل البيانات بالدوال والفرز. هون بيجي دور <b>الجدول المحوري Pivot Table</b>: <b>تقرير مرن ديناميكي</b> من قاعدة بيانات كبيرة جداً، بينظّم البيانات ويلخّصها ويحللها.</p>
+        <p><b>الإنشاء:</b> انقر خلية جوّا الجدول ← <b>Insert ← Tables ← PivotTable</b> ← حدد الجدول أو النطاق (أو مصدر خارجي متل Access) ← New Worksheet أو Existing Worksheet ← OK.</p>
+        <table class="cmp">
+          <tr><th>المنطقة</th><th>شو بتحط فيها</th></tr>
+          <tr><td>المرشحات Filters</td><td>الحقول اللي بدك <b>تصفّي</b> النتائج حسبها</td></tr>
+          <tr><td>الأعمدة Columns</td><td>الحقول اللي بدك عناصرها تطلع <b>بأعمدة</b></td></tr>
+          <tr><td>الصفوف Rows</td><td>الحقول اللي بدك عناصرها تطلع <b>بصفوف</b></td></tr>
+          <tr><td><b>القيم Values</b></td><td><b>نوع ملخص البيانات</b> (مجموع، متوسط...) — وبتغيّره من Value Field Settings</td></tr>
+        </table>
+        <details class="accordion">
+          <summary>🛒 مثال المقرر: مجموع المبيعات لكل صنف بكل ربع</summary>
+          <p>اسحب «صنف» لـRows، و«الربع السنوي» لـColumns، و«مبيعات» لـValues. وللمتوسط كمان: اسحب «مبيعات» مرة تانية لـValues ← Value Field Settings ← Average.</p>
+        </details>
+      </div>
+
+      <div class="block" id="pivotchart">
+        <h2><span class="idx">6</span> المخططات المحورية</h2>
+        <p><b>المخطط المحوري Pivot Chart</b> = تمثيل بياني للبيانات الملخّصة بالجدول المحوري، وبتتعامل معه متل أي مخطط عادي.
+        حدد خلية من الجدول المحوري ← <b>Insert ← Charts ← PivotChart</b> ← اختار النوع.</p>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-10-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-10-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الحادي عشر)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS302",chapter_id:"10",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch10-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "أي نوع مخطط بيناسب هالبيانات أكتر؟",
+  buckets: [
+    {key:"col",  label:"📊 عمودي"},
+    {key:"pie",  label:"🥧 دائري"},
+    {key:"line", label:"📈 خطي"}
+  ],
+  items: [
+    {text:"مقارنة علامات 3 طلاب بخمس فصول دراسية", bucket:"col", why:"مقارنة بين عناصر وعدة سلاسل."},
+    {text:"نسبة الذكور والإناث بصف واحد", bucket:"pie", why:"عنصر واحد ونسب من الكل."},
+    {text:"اتجاه درجات الحرارة يوم بيوم خلال شهر", bucket:"line", why:"اتجاه عبر فترات زمنية متساوية."},
+    {text:"توزيع إجابات استبيان: نعم / لا / غير ذلك", bucket:"pie", why:"سلسلة وحدة وفئات قليلة."},
+    {text:"مبيعات 4 فروع خلال السنة لنقارن بينها", bucket:"col", why:"مقارنة بين العناصر وتغيّر بالزمن."}
+  ]
+});
+
+renderCaseStudy("case-study-mount", {
+  title: "2000 صف مبيعات",
+  scenario: "مدير شركة لوازم منزلية عنده جدول مبيعات فيه أكتر من 2,000 صف (الصنف، الشهر، الربع، قيمة المبيعات). بدو يعرف بسرعة مجموع المبيعات لكل صنف بكل ربع من السنة، ويغيّر طريقة التلخيص بسهولة.",
+  question: "شو الأداة الأنسب؟",
+  options: [
+    "مخطط دائري",
+    "جدول محوري Pivot Table",
+    "دالة SUM لكل صنف لحاله",
+    "Freeze Panes"
+  ],
+  answerIndex: 1,
+  explanation: "الجدول المحوري تقرير مرن ديناميكي للبيانات الكبيرة: الصنف بـRows، الربع بـColumns، والمبيعات بـValues. والدائري ما بيصلح إلا لعنصر واحد."
+});
+
+renderFlashcards("activity-flash", CH10_FLASHCARDS);
+</script>
+</body>
+</html>

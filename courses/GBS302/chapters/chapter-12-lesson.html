@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 12 — البريد الإلكتروني Outlook | GBS302</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS302 — مهارات الحاسوب</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الثاني عشر</div>
+    <h1>البريد الإلكتروني Outlook</h1>
+    <p>شو هو البريد الإلكتروني وأجزاء عنوانه، إيجابياته وسلبياته، مسائل الحماية، واجهة Outlook 2016، إرسال الرسائل وإدارة الوارد، وجهات ومجموعات الاتصال.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">E-Mail</span><span class="keyword-chip">Inbox</span><span class="keyword-chip">Outbox</span>
+          <span class="keyword-chip">Junk e-mail</span><span class="keyword-chip">Draft</span><span class="keyword-chip">Attach File</span>
+          <span class="keyword-chip">Cc / Bcc</span><span class="keyword-chip">Contact</span><span class="keyword-chip">Contact Group</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تعرف أجزاء عنوان البريد ومعنى الامتدادات</li>
+          <li>تعدّد إيجابيات وسلبيات البريد ومسائل الحماية</li>
+          <li>تعرف مكونات واجهة Outlook 2016</li>
+          <li>ترسل رسالة صح (To، Cc، Bcc، مرفقات، أولوية، إشعارات)</li>
+          <li>تدير الوارد وتنشئ جهات ومجموعات اتصال</li>
+        </ul>
+      </div>
+
+      <div class="block" id="intro">
+        <h2><span class="idx">1</span> البريد الإلكتروني وأجزاء العنوان</h2>
+        <p><b>البريد الإلكتروني E-mail</b> خدمة إلكترونية لإرسال واستقبال الرسائل (نصوص، صور، ملفات صوتية...) عبر الإنترنت، لشخص محدد أو مجموعة. ولكل مستخدم عنوان بالشكل <b>UserName@provider.com</b>:</p>
+        <ol class="timeline">
+          <li><span class="marker">1</span><h4>اسم المستخدم Username</h4><p>بتختاره إنت، ولازم يكون <b>فريد وغير محجوز</b> ضمن نفس مزود الخدمة.</p></li>
+          <li><span class="marker">2</span><h4>الرمز @</h4><p>بين اسم المستخدم وباقي العنوان.</p></li>
+          <li><span class="marker">3</span><h4>اسم النطاق Domain Name</h4><p><b>Provider</b> = اسم مزود الخدمة (Gmail، Yahoo) + الامتداد اللي بيعبّر عن <b>نشاط</b> المزود.</p></li>
+        </ol>
+        <table class="cmp">
+          <tr><th>Com</th><th>Gov</th><th>Edu</th><th>Org</th><th>SY</th></tr>
+          <tr><td>تجاري</td><td>حكومي</td><td>تعليمي</td><td>هيئة أو منظمة</td><td>هيئة أو مؤسسة سورية</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="pros">
+        <h2><span class="idx">2</span> إيجابيات وسلبيات البريد الإلكتروني</h2>
+        <table class="cmp">
+          <tr><th>✅ إيجابيات</th><th>❌ سلبيات</th></tr>
+          <tr><td>السرعة: بيوصل لأي مكان خلال دقائق</td><td>لازم اتصال بالإنترنت</td></tr>
+          <tr><td>مجاني: بعد رسم الإنترنت ما في رسوم إضافية</td><td>البريد غير المرغوب SPAM (بيوصل <b>بغير رغبتك</b>)</td></tr>
+          <tr><td>متوفر دائماً، بأي وقت ومن أي مكان</td><td><b>غير آمن</b>: ممكن حدا يعترضه</td></tr>
+          <tr><td>تخزين على المدى الطويل</td><td>عدم ضمان الوصول (إذا غلطت بالعنوان)</td></tr>
+          <tr><td>صديق للبيئة (بلا ورق)</td><td><b>زيادة</b> ضغط العمل</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="security">
+        <h2><span class="idx">3</span> مسائل الحماية والأمان</h2>
+        <div class="quick-grid">
+          <div class="quick-card"><b>📨 الرسائل المخادعة SPAM</b>غالباً خبيثة (فيروسات أو احتيال) أو دعاية. <strong>لا ترد عليها</strong>: الرد بيثبت هويتك فبيغرقوك بأكتر.</div>
+          <div class="quick-card"><b>🎣 الاحتيال</b>بريد مزيف من مرسل بيتظاهر إنه جهة حقيقية، فيه رابط لموقع مزيف لسرقة بطاقة الائتمان والحسابات البنكية.</div>
+          <div class="quick-card"><b>🦠 الفيروسات</b>برنامج خبيث <strong>بيأثر سلبياً</strong> على الحاسوب بلا استئذانك، وممكن يبعت حاله لكل عناوينك. انتبه للمرسلين المجهولين وفعّل Anti Virus.</div>
+        </div>
+      </div>
+
+      <div class="block" id="ui">
+        <h2><span class="idx">4</span> واجهة Outlook 2016</h2>
+        <p>Outlook من Microsoft لإرسال واستقبال الرسائل، و<b>كمان</b> لإدارة المواعيد والمهام والأعمال والاجتماعات. التشغيل: Start ← اكتب outlook 2016 ← انقر الأيقونة.</p>
+        <table class="cmp">
+          <tr><th>المكوّن</th><th>شو فيه</th></tr>
+          <tr><td>شريط العنوان</td><td>اسم البرنامج والمجلد + Close/Minimize/Maximize + <b>Ribbon Display Options</b>: Auto-hide Ribbon · Show Tabs (العلامات بس) · Show Tabs and Commands (الاتنين سوا)</td></tr>
+          <tr><td>شريط الوصول السريع</td><td>افتراضياً: <b>Send/Receive All Folders</b> و <b>Undo</b></td></tr>
+          <tr><td>File و Ribbon</td><td>علامات تبويب (Home, Send/Receive, Folder, View) ← مجموعات منطقية (متل Respond) ← أوامر</td></tr>
+          <tr><td><b>جزء التنقل بين المجلدات</b></td><td>المجلدات: Inbox · Outbox · Sent Items · Deleted Items · Junk E-mail (View ← Layout ← Folder Pane)</td></tr>
+          <tr><td><b>جزء الرسائل</b></td><td>قائمة الرسائل: Subject · From · Received · Size · Attachment (Add Columns لإضافة غيرها)</td></tr>
+          <tr><td><b>جزء القراءة</b></td><td>محتوى الرسالة اللي نقرت عليها (Right أو Bottom من View ← Layout ← Reading Pane)</td></tr>
+          <tr><td>جزء التنقل · شريط الحالة</td><td>طريقة عرض جزء المجلدات · معلومات عن عناصر المجلد والعمليات الجارية</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="compose">
+        <h2><span class="idx">5</span> إنشاء الرسائل وإرسالها</h2>
+        <p>Home ← New ← <b>New Email</b>.</p>
+        <table class="cmp">
+          <tr><th>الحقل</th><th>معناه</th></tr>
+          <tr><td>From</td><td>عنوان المرسل</td></tr>
+          <tr><td><b>To</b></td><td>المرسل إليهم الأساسيين</td></tr>
+          <tr><td><b>Cc</b> Carbon Copy</td><td>نسخة <b>طبق الأصل</b> لشخص مو طرف بس بيهمه الأمر</td></tr>
+          <tr><td><b>Bcc</b> Blind Carbon Copy</td><td>نسخة <b>مخفية</b>: عناوينهم ما بتبين للباقيين (لإظهاره: Options ← Show fields ← Bcc)</td></tr>
+          <tr><td>Subject</td><td>عنوان الرسالة</td></tr>
+        </table>
+        <p style="margin-top:10px;">أكتر من عنوان بالحقل؟ بينهم <b>فاصلة منقوطة ;</b></p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>📎 Attach File</b>نسخة من <strong>ملف أو أكتر</strong> (Browse This PC إذا مو بالقائمة).</div>
+          <div class="quick-card"><b>✉️ Attach Item</b>نسخة من إيميل سابق (Outlook Item).</div>
+          <div class="quick-card"><b>✍️ Signature</b>توقيع بيعرّف بالمرسل (Signatures and Stationery ← New).</div>
+          <div class="quick-card"><b>❗ الأولوية</b>Message ← Tags: High = إشارة تعجب <strong>حمرا</strong> · Low = سهم <strong>أزرق</strong> لتحت.</div>
+        </div>
+        <div class="callout">
+          <span class="tag">💡 وين بتروح الرسالة؟</span>
+          <p>Send مع إنترنت ← بتنبعت وبتنحفظ نسخة بـ<b>Sent Items</b>. بلا إنترنت ← <b>Outbox</b>. سكّرتها بلا إرسال وقلت Yes ← <b>Drafts</b>.</p>
+        </div>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>إشعار الاستلام Request a Delivery Receipt وإشعار القراءة Request a Read Receipt بتفعّلهم <b>قبل</b> الإرسال (Options ← Tracking)، مو بعده.</p>
+        </div>
+      </div>
+
+      <div class="block" id="inbox">
+        <h2><span class="idx">6</span> إدارة البريد الوارد</h2>
+        <table class="cmp">
+          <tr><th>بدك</th><th>كيف</th></tr>
+          <tr><td>تفتح رسالة</td><td>نقر مزدوج، أو تحددها و <b>Enter</b></td></tr>
+          <tr><td>تفتح مرفق / تحفظه</td><td><b>نقر مزدوج</b> على أيقونته / السهم جنبه ← Save as</td></tr>
+          <tr><td>تقرأها لاحقاً</td><td>زر يميني ← Mark as Unread</td></tr>
+          <tr><td>ترد</td><td><b>Reply</b> للمرسل بس · <b>Reply All</b> للمرسل و Cc (<b>مو Bcc</b>) — والأصلية بتظهر <b>أسفل</b> الرد (فيك تلغيها: File ← Options ← Mail ← Do not include original message)</td></tr>
+          <tr><td>تبعتها لحدا تاني</td><td><b>Forward</b> وعبّي To و Cc</td></tr>
+          <tr><td>تطبع</td><td>File ← Print ← Print Options (وفيك تطبع المرفقات)</td></tr>
+          <tr><td>تنظّم</td><td>Folder ← New Folder (جوّا Inbox) ثم Home ← <b>Move</b></td></tr>
+          <tr><td>تحذف / تستعيد / تفرّغ</td><td>بتروح لـ<b>Deleted Items</b> · منه Move لأي مجلد · زر يميني ← Empty Folder</td></tr>
+        </table>
+        <div id="activity-sort" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="block" id="contacts">
+        <h2><span class="idx">7</span> جهات ومجموعات الاتصال</h2>
+        <p><b>جهة الاتصال Contact</b> = عنوان بريد لشخص محدد. <b>مجموعة الاتصال Contact Group</b> = عناوين أشخاص بيشتركو بصفة (متل طلاب صف)، فبتبعتلهم كلهم سوا <b>بلا ما تحددهم واحد واحد</b>.</p>
+        <ol class="timeline">
+          <li><span class="marker">1</span><h4>جهة اتصال</h4><p>Home ← New ← New Items ← Contact ← عبّي الحقول ← Save &amp; Close.</p></li>
+          <li><span class="marker">2</span><h4>مجموعة اتصال</h4><p>Home ← New ← New Items ← More Items ← Contact Group.</p></li>
+          <li><span class="marker">3</span><h4>إضافة أعضاء</h4><p>افتح المجموعة ← Members ← Add member ← From Outlook Contacts ← Save &amp; Close.</p></li>
+          <li><span class="marker">4</span><h4>الاستخدام</h4><p>برسالة جديدة اضغط <b>To</b> ← دفتر العناوين <b>Address Book</b> ← اختار لـTo أو Cc أو Bcc.</p></li>
+        </ol>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-12-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-12-exam.html" class="btn btn-primary">📝 امتحان الفصل (الفصل الأخير)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS302",chapter_id:"12",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch12-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "وين بتروح الرسالة أو وين بتلاقيها؟",
+  buckets: [
+    {key:"sent",   label:"📤 Sent Items"},
+    {key:"out",    label:"⏳ Outbox"},
+    {key:"draft",  label:"📝 Drafts"},
+    {key:"del",    label:"🗑️ Deleted Items"}
+  ],
+  items: [
+    {text:"ضغطت Send وإنت متصل بالإنترنت", bucket:"sent", why:"بتنبعت وبتنحفظ نسخة بالمرسلة."},
+    {text:"ضغطت Send والنت مقطوع", bucket:"out", why:"بتستنى بالصادر."},
+    {text:"سكّرت الرسالة بلا إرسال وقلت Yes للحفظ", bucket:"draft", why:"مسودة لتكملها لاحقاً."},
+    {text:"حذفت رسالة من الوارد", bucket:"del", why:"بتروح للمحذوفة وفيك ترجعها بـMove."},
+    {text:"بدك تكمّل رسالة بلّشت فيها مبارح", bucket:"draft", why:"بتفتحها من Drafts."}
+  ]
+});
+
+renderCaseStudy("case-study-mount", {
+  title: "إعلان لطلاب الصف",
+  scenario: "المدرّسة لينا بدها تبعت موعد الامتحان لـ40 طالب، وبدها المدير يوصله نسخة للاطلاع، وما بدها الطلاب يشوفو إيميلات بعض. عندها مجموعة اتصال «صف GBS302».",
+  question: "شو الطريقة الأنسب؟",
+  options: [
+    "المجموعة بـTo والمدير بـCc",
+    "المجموعة بـBcc، والمدير بـCc، وعنوانها هي بـTo",
+    "كل الطلاب واحد واحد بـCc",
+    "المجموعة بـCc والمدير بـBcc"
+  ],
+  answerIndex: 1,
+  explanation: "Bcc بيخفي عناوين الطلاب عن بعض، والمدير بـCc لأنه مو طرف بس بيهمه الأمر. ومجموعة الاتصال بتوفّر تحديدهم واحد واحد."
+});
+
+renderFlashcards("activity-flash", CH12_FLASHCARDS);
+</script>
+</body>
+</html>

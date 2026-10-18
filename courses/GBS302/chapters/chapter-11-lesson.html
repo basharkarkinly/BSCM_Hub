@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 11 — التنسيق والطباعة في Excel | GBS302</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GBS302 — مهارات الحاسوب</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الحادي عشر</div>
+    <h1>التنسيق والطباعة في Excel</h1>
+    <p>تنسيق أوراق العمل ومحتوى الخلايا، التنسيق الشرطي، ضبط إعدادات ورقة العمل (الهوامش، الاتجاه، الحجم، الرأس والتذييل، خطوط الشبكة)، والطباعة.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">Wrap Text</span><span class="keyword-chip">Merge &amp; Center</span>
+          <span class="keyword-chip">Conditional Formatting</span><span class="keyword-chip">Data Bars</span>
+          <span class="keyword-chip">Color Scales</span><span class="keyword-chip">Icon Sets</span>
+          <span class="keyword-chip">Margins</span><span class="keyword-chip">Gridlines</span><span class="keyword-chip">Print Titles</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تنسّق ورقة العمل: التفاف، محاذاة، اتجاه، دمج، حدود</li>
+          <li>تنسّق محتوى الخلايا وتحفظ اختصارات الخط</li>
+          <li>تطبّق التنسيق الشرطي وتفرّق بين أنواعه</li>
+          <li>تضبط الهوامش والاتجاه والحجم والرأس والتذييل وخطوط الشبكة</li>
+          <li>تطبع اللي بدك ياه بالضبط</li>
+        </ul>
+      </div>
+
+      <div class="block" id="sheetfmt">
+        <h2><span class="idx">1</span> تنسيق أوراق العمل</h2>
+        <p>تنسيق أوراق العمل <b>ممكن ما يكون ضروري</b>، بس بيعطي جاذبية وبيسهّل القراءة وبيساعد الآخرين يفهمو المطلوب. ومنه (Home ← Alignment):</p>
+        <table class="cmp">
+          <tr><th>التنسيق</th><th>شو بيعمل</th></tr>
+          <tr><td><b>التفاف النص Wrap Text</b></td><td>بيظهر النص على أكتر من سطر <b>بنفس الخلية</b> (ونفس الأيقونة للإلغاء)</td></tr>
+          <tr><td>المحاذاة</td><td>Top · Middle · Bottom · Left · Center · Right</td></tr>
+          <tr><td>الاتجاه Orientation</td><td>خيارات جاهزة أو زاوية، متل Angle Counterclockwise (45°)</td></tr>
+          <tr><td><b>دمج الخلايا Merge &amp; Center</b></td><td>خلايا متجاورة <b>أفقياً أو عمودياً</b> بخلية وحدة، غالباً لعناوين الأعمدة (ونفس الأيقونة للإلغاء)</td></tr>
+          <tr><td>الحدود Borders</td><td>الخلايا بتنطبع <b>بلا حدود</b>؛ ضيف Outside Borders أو غيرها</td></tr>
+        </table>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>لما تدمج خلايا مو فاضية، بيضل بس محتوى الخلية <b>العلوية اليسارية</b>. و«التفاف النص» من تنسيقات <b>أوراق العمل</b> (مو محتوى الخلية) حسب المقرر.</p>
+        </div>
+      </div>
+
+      <div class="block" id="cellfmt">
+        <h2><span class="idx">2</span> تنسيق محتوى الخلايا</h2>
+        <p>من Home ← Font: حجم الخط (أو Increase / Decrease Font Size)، نوعه، لونه Font Color، و<b>لون خلفية الخلية Fill Color</b>.</p>
+        <table class="cmp">
+          <tr><th>النمط</th><th>الاختصار</th></tr>
+          <tr><td>غامق Bold</td><td>Ctrl + B أو <b>Ctrl + 2</b></td></tr>
+          <tr><td>مائل Italic</td><td><b>Ctrl + I</b> أو Ctrl + 3</td></tr>
+          <tr><td>تسطير Underline</td><td>Ctrl + U أو <b>Ctrl + 4</b></td></tr>
+          <tr><td>تسطير مزدوج</td><td>ما إله اختصار</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="cond">
+        <h2><span class="idx">3</span> التنسيق الشرطي</h2>
+        <p>بيطبّق تنسيقات <b>تلقائياً</b> حسب محتوى الخلية (موجب ← أخضر، سالب ← أحمر). ولما تتغيّر القيم <b>بيتغيّر التنسيق لحاله</b>. ممتاز لاكتشاف <b>أخطاء الإدخال والقيم الشاذة</b>.
+        المكان: <b>Home ← Style ← Conditional Formatting</b>.</p>
+        <table class="cmp">
+          <tr><th>الخيار</th><th>شو بيعمل</th></tr>
+          <tr><td>قواعد تمييز الخلايا Highlight Cells Rules</td><td>معايير كتيرة: أكبر أو أصغر من قيمة، بين قيمتين، نص محدد، قيم مكررة، تواريخ (Equal To...)</td></tr>
+          <tr><td>القواعد العليا / الدنيا Top / Bottom Rules</td><td>حسب القيم والنسب العليا والدنيا (أعلى 10، أعلى 10%، فوق أو تحت المتوسط)</td></tr>
+          <tr><td>أشرطة البيانات Data Bars</td><td>أشرطة ملونة طولها حسب نسبة القيمة لباقي القيم</td></tr>
+          <tr><td>مقاييس الألوان Color Scales</td><td>لوحة ألوان <b>ثنائية أو ثلاثية</b> بتتدرّج حسب القيم</td></tr>
+          <tr><td>مجموعات الأيقونات Icon Sets</td><td>أيقونات لتمييز القيم ببعضها (سهم أحمر للدنيا، أصفر للوسطى، أخضر للعليا)</td></tr>
+          <tr><td>قاعدة جديدة New Rule</td><td>قاعدة خاصة بالمستخدم (متل Use a formula... =$B2="غير متوفر")</td></tr>
+          <tr><td>مسح القواعد Clear Rules</td><td>من الخلايا المحددة أو من الورقة كلها</td></tr>
+          <tr><td>إدارة القواعد Manage Rules</td><td>Conditional Formatting Rules Manager: تحرير، حذف، وتعديل الأولوية</td></tr>
+        </table>
+        <p style="margin-top:10px;">وفيك تطبّق <b>أكتر من تنسيق</b> على نفس النطاق (متل Data Bars + Icon Sets).</p>
+        <div id="activity-sort" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="block" id="setup">
+        <h2><span class="idx">4</span> ضبط إعدادات ورقة العمل (Page Layout ← Page Setup)</h2>
+        <div class="quick-grid">
+          <div class="quick-card"><b>📏 الهوامش Margins</b>المنطقة الفارغة حول حدود الصفحة، والنص <strong>بين</strong> الهوامش. معرّفة مسبقاً: Normal · Wide · Narrow، أو Custom Margins.</div>
+          <div class="quick-card"><b>🔄 الاتجاه Orientation</b>Portrait طولي (الطول أكبر) · <strong>Landscape</strong> بالعرض (العرض أكبر).</div>
+          <div class="quick-card"><b>📄 الحجم Size</b>حجم صفحة الطباعة.</div>
+          <div class="quick-card"><b>🔝 الرأس والتذييل</b>مناطق <strong>ضمن</strong> الهوامش العلوية والسفلية — Insert ← Text ← Header &amp; Footer — 3 أماكن: يسار، منتصف، يمين.</div>
+        </div>
+        <p style="margin-top:12px;"><b>حقول الرأس والتذييل</b> (من Design): Page Number · Number of Pages · Current Date · Current Time · File Path · File Name · Sheet Name · Picture. وبتحذف الحقل بتحديده و Delete. وفيك تدرج <b>رسومات بيانية</b> كمان.</p>
+        <table class="cmp">
+          <tr><th>Gridlines ← View</th><th>Gridlines ← Print</th></tr>
+          <tr><td>إظهار أو إخفاء خطوط الشبكة <b>أثناء العمل</b></td><td>إظهار أو إخفاء خطوط الشبكة <b>أثناء الطباعة</b></td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="print">
+        <h2><span class="idx">5</span> الطباعة</h2>
+        <p>File ← Print (عرض Backstage): عدد النسخ، الطابعة، نوع الطباعة، الصفحات (إذا ما حددت بيطبع الكل)، الاتجاه، الهوامش، والمعاينة.</p>
+        <table class="cmp">
+          <tr><th>بدك تطبع</th><th>من Settings</th></tr>
+          <tr><td>الورقة الحالية أو صفحات منها</td><td>Print Active Sheets (+ Pages)</td></tr>
+          <tr><td>نطاق خلايا محدد</td><td>Print Selection</td></tr>
+          <tr><td>المصنف كله</td><td>Print Entire Workbook</td></tr>
+          <tr><td>مخطط محدد</td><td>Print Selected Chart</td></tr>
+          <tr><td>عناوين الأعمدة بكل صفحة</td><td>Page Layout ← <b>Print Titles</b> ← Rows to repeat at top</td></tr>
+        </table>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-11-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-11-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الثاني عشر)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GBS302",chapter_id:"11",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch11-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "أي خيار من التنسيق الشرطي بيعمل هيك؟",
+  buckets: [
+    {key:"hl",   label:"قواعد تمييز الخلايا"},
+    {key:"tb",   label:"القواعد العليا/الدنيا"},
+    {key:"bars", label:"أشرطة البيانات"},
+    {key:"cs",   label:"مقاييس الألوان"},
+    {key:"icon", label:"مجموعات الأيقونات"}
+  ],
+  items: [
+    {text:"لوّن الخلايا اللي قيمتها أكبر من 50", bucket:"hl", why:"معيار أكبر من قيمة محددة."},
+    {text:"ميّز أعلى 10 قيم بالنطاق", bucket:"tb", why:"Top 10."},
+    {text:"شريط بكل خلية طوله حسب نسبة الإنجاز", bucket:"bars", why:"Data Bars."},
+    {text:"تدرّج لوني بثلاث ألوان حسب القيم", bucket:"cs", why:"Color Scales."},
+    {text:"أسهم أحمر وأصفر وأخضر حسب القيمة", bucket:"icon", why:"Icon Sets."},
+    {text:"ميّز القيم المكررة", bucket:"hl", why:"Duplicate Values من قواعد تمييز الخلايا."}
+  ]
+});
+
+renderCaseStudy("case-study-mount", {
+  title: "تقرير من 6 صفحات",
+  scenario: "سامر عنده جدول مبيعات طويل بينطبع على 6 صفحات. بالطباعة، عناوين الأعمدة (الصف الأول) عم تطلع بأول صفحة بس، فالقارئ ما بيعرف شو كل عمود بالصفحات التانية.",
+  question: "شو الحل؟",
+  options: [
+    "View ← Freeze Panes",
+    "Page Layout ← Print Titles ← Rows to repeat at top",
+    "Home ← Wrap Text",
+    "Page Layout ← Gridlines ← Print"
+  ],
+  answerIndex: 1,
+  explanation: "Print Titles مع Rows to repeat at top بيكرر صف العناوين بكل صفحة مطبوعة. Freeze Panes بيثبّت الصف على الشاشة بس، مو بالطباعة."
+});
+
+renderFlashcards("activity-flash", CH11_FLASHCARDS);
+</script>
+</body>
+</html>

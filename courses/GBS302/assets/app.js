@@ -407,7 +407,7 @@ function launchConfetti(){
   }
 }
 
-/* ---------- لعبة مطابقة المفكرين ---------- */
+/* ---------- لعبة الوصل (مطابقة) ---------- */
 /**
  * renderMatchGame
  * @param {string} containerId

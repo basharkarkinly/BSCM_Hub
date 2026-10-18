@@ -1,5 +1,5 @@
 /* ============================================================
-   BMN503 — نظام تصميم مشترك لمنصات Support Channel الدراسية
+   GBS302 — نظام تصميم مشترك لمنصات Support Channel الدراسية
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800;900&display=swap');
@@ -548,7 +548,7 @@ details.accordion .accordion-body{ padding:16px 18px; }
 }
 .quick-card b{ color:var(--ink); display:block; margin-bottom:4px; }
 
-/* ---------- لعبة مطابقة المفكرين ---------- */
+/* ---------- لعبة الوصل (مطابقة) ---------- */
 .match-wrap{ display:flex; gap:24px; flex-wrap:wrap; margin:18px 0; }
 .match-col{ flex:1; min-width:220px; display:flex; flex-direction:column; gap:10px; }
 .match-col h4{ margin:0 0 4px; font-size:.9rem; color:var(--muted); }

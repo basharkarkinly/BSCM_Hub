@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ساحة الأسئلة — Support Channel</title>
+<link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="welcome.html" style="text-decoration:none;"><img src="assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> Support Channel</a>
+</div>
+
+<main class="wrap qa">
+  <h1>❓ ساحة الأسئلة</h1>
+  <p class="pf-note">اسأل أي شي — عن مقرر، عن الامتحانات، أو نصيحة بالدراسة. وإذا بتعرف الجواب، ساعد غيرك واكسب نجوم ⭐</p>
+
+  <section class="qa-ask">
+    <textarea id="qa-text" maxlength="500" placeholder="شو سؤالك؟ اكتبو بوضوح، وبيوصل لكل الطلاب..."></textarea>
+    <div class="qa-ask-row">
+      <label class="qa-topic"><span>عن شو؟</span>
+        <select id="qa-topic"><option value="GENERAL">سؤال عام (تسجيل، امتحانات، نصايح...)</option></select>
+      </label>
+      <button id="qa-send" class="btn btn-primary" type="button">اسأل</button>
+    </div>
+    <p class="qa-tip">💡 سؤالك عن فقرة بفصل معيّن؟ اسألو تحت الدرس نفسو، بيوصل أسرع للي عم يدرسو هلأ.</p>
+    <p id="qa-msg" class="msg" role="alert"></p>
+  </section>
+
+  <div class="qa-bar">
+    <div class="qa-tabs" role="tablist">
+      <button type="button" class="qa-tab" data-f="open">بلا جواب <b id="qa-n-open"></b></button>
+      <button type="button" class="qa-tab" data-f="new">الأحدث</button>
+      <button type="button" class="qa-tab" data-f="top">الأكثر فائدة</button>
+    </div>
+    <select id="qa-course" aria-label="فلترة حسب المقرر"><option value="">كل المقررات</option><option value="GENERAL">أسئلة عامة</option></select>
+  </div>
+
+  <div id="qa-list" class="qa-list" aria-live="polite"></div>
+  <button id="qa-more" class="btn qa-more" type="button" hidden>عرض أسئلة أكتر</button>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="privacy.html">🔒 الخصوصية</a>
+  </div>
+  <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
+</footer>
+
+<script src="assets/config.js"></script>
+<script src="assets/auth.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/comments.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(t) { return (t == null ? "" : String(t)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+  function ago(iso) {
+    var t = Date.parse(iso); if (isNaN(t)) return "";
+    var s = Math.max(0, (Date.now() - t) / 1000);
+    if (s < 60) return "هلأ";
+    if (s < 3600) return "قبل " + Math.floor(s / 60) + " د";
+    if (s < 86400) return "قبل " + Math.floor(s / 3600) + " س";
+    if (s < 2592000) return "قبل " + Math.floor(s / 86400) + " يوم";
+    return new Date(t).toLocaleDateString("ar");
+  }
+  var ERR = {
+    EMPTY: "اكتب سؤالك أول.", TOO_LONG: "السؤال أطول من 500 حرف.",
+    LIMIT_REACHED: "عندك 3 أسئلة مفتوحة بهالقسم. احذف واحد لتسأل غيره.",
+    BANNED: "السؤال فيه كلمة مو مناسبة. عدّلو وجرّب.", BAD_REQUEST: "اختار موضوع السؤال من القائمة.",
+    NET: "ما في اتصال بالسيرفر، تأكد من الإنترنت وجرّب.", SERVER_ERROR: "صار خطأ عنا، جرّب بعد شوي."
+  };
+
+  /* ---- المقررات: course_id أو اسم المجلد بالرابط → العنوان والرابط ---- */
+  var courses = {}, courseList = [];
+  function setCourses(list) {
+    courseList = (list || []).slice(); courses = {};
+    courseList.forEach(function (c) {
+      var m = /\/courses\/([A-Za-z0-9_\-]+)\//.exec(c.url || "");
+      c.qid = m ? m[1] : c.course_id;           // المعرّف اللي بتستعملو صفحات الدروس
+      courses[c.course_id] = c; courses[c.qid] = c;
+    });
+    var topic = $("qa-topic"), filter = $("qa-course");
+    courseList.forEach(function (c) {
+      topic.insertAdjacentHTML("beforeend", '<option value="' + esc(c.qid) + '">عن مقرر ' + esc(c.code || c.qid) + ' — ' + esc(c.title) + '</option>');
+      filter.insertAdjacentHTML("beforeend", '<option value="' + esc(c.qid) + '">' + esc(c.code || c.qid) + ' — ' + esc(c.title) + '</option>');
+    });
+    if (state.course) filter.value = state.course;
+  }
+  function placeLabel(it) {
+    if (it.course_id === "GENERAL") return "عام";
+    var c = courses[it.course_id], code = c ? (c.code || c.qid) : it.course_id;
+    if (it.chapter_id === "general") return code + " · المقرر كامل";
+    if (it.chapter_id === "info") return code;
+    return code + " · الفصل " + it.chapter_id;
+  }
+  function lessonUrl(it) {
+    var c = courses[it.course_id];
+    if (!c || it.chapter_id === "general" || it.chapter_id === "info" || !/^\d+$/.test(it.chapter_id)) return "";
+    return c.url.replace(/\/?$/, "/") + "chapters/chapter-" + it.chapter_id + "-lesson.html#comments";
+  }
+
+  /* ---- الحالة ---- */
+  var params = new URLSearchParams(location.search);
+  var state = { filter: "new", course: params.get("c") || "", offset: 0, items: [], loading: false };
+  try { var f = localStorage.getItem("sc_qa_filter"); if (f) state.filter = f; } catch (e) {}
+
+  function tabs(counts) {
+    Array.prototype.forEach.call(document.querySelectorAll(".qa-tab"), function (b) { b.classList.toggle("on", b.getAttribute("data-f") === state.filter); });
+    if (counts) $("qa-n-open").textContent = counts.open ? "(" + counts.open + ")" : "";
+  }
+
+  function cardHTML(it) {
+    var status = it.solved ? '<span class="qa-chip solved">✓ انحلّ</span>'
+      : it.answers ? '<span class="qa-chip ans">' + it.answers + (it.answers === 1 ? " جواب" : " أجوبة") + '</span>'
+      : '<span class="qa-chip open">بلا جواب</span>';
+    var url = lessonUrl(it);
+    return '<article class="qa-card' + (it.answers ? "" : " open") + (it.solved ? " solved" : "") + '" data-id="' + esc(it.id) + '">' +
+      '<div class="qa-top"><span class="qa-place">' + esc(placeLabel(it)) + '</span>' + status +
+        (it.mine ? '<span class="qa-chip you">سؤالك</span>' : "") + '</div>' +
+      '<p class="qa-q">' + esc(it.text) + '</p>' +
+      '<div class="qa-meta"><span>' + esc(it.name) + '</span><span>' + esc(ago(it.created_at)) + '</span>' +
+        (it.votes ? '<span>👍 ' + it.votes + '</span>' : "") + '</div>' +
+      '<div class="qa-acts"><button type="button" class="btn ' + (it.answers ? "qa-open" : "btn-primary qa-open") + '" data-open="' + esc(it.id) + '">' +
+        (it.answers ? "شوف الأجوبة" : "جاوب واكسب ⭐") + '</button>' +
+        (url ? '<a class="qa-lesson" href="' + esc(url) + '">افتح الدرس ←</a>' : "") + '</div>' +
+      '<div class="qa-thread" hidden></div>' +
+    '</article>';
+  }
+
+  function render(append) {
+    var list = $("qa-list");
+    if (!state.items.length) {
+      var empty = state.filter === "open" ? "ما في أسئلة بلا جواب هلأ 👏 كل الأسئلة إلها أجوبة."
+        : state.filter === "top" ? "لسا ما في أسئلة إلها أجوبة."
+        : "لسا ما في أسئلة هون. كون أول واحد بيسأل!";
+      list.innerHTML = '<div class="qa-empty">' + empty + '</div>';
+      return;
+    }
+    list.innerHTML = state.items.map(cardHTML).join("");
+  }
+
+  function load(reset) {
+    if (state.loading) return;
+    var s = SCAuth.getSession(); if (!s) return;
+    if (reset) { state.offset = 0; state.items = []; $("qa-list").innerHTML = '<div class="qa-empty">عم نحمّل الأسئلة...</div>'; }
+    state.loading = true; $("qa-more").disabled = true;
+    SCAuth.api("getQaFeed", { token: s.token, filter: state.filter, course: state.course, offset: state.offset }).then(function (res) {
+      state.loading = false; $("qa-more").disabled = false;
+      if (!res || !res.ok) { $("qa-list").innerHTML = '<div class="qa-empty">ما قدرنا نجيب الأسئلة هلأ، جرّب بعد شوي.</div>'; return; }
+      state.items = state.items.concat(res.items);
+      state.offset = state.items.length;
+      tabs(res.counts); render();
+      $("qa-more").hidden = !res.more;
+    }).catch(function () {
+      state.loading = false; $("qa-more").disabled = false;
+      $("qa-list").innerHTML = '<div class="qa-empty">' + ERR.NET + '</div>';
+    });
+  }
+
+  /* ---- فتح سؤال: الأجوبة + الجواب + 👍 + حلّ مشكلتي (نفس ودجت الدروس) ---- */
+  $("qa-list").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-open]"); if (!b) return;
+    var card = b.closest(".qa-card"), box = card.querySelector(".qa-thread");
+    var it = state.items.filter(function (x) { return x.id === b.getAttribute("data-open"); })[0];
+    if (!it) return;
+    if (!box.hidden) { box.hidden = true; b.textContent = it.answers ? "شوف الأجوبة" : "جاوب واكسب ⭐"; return; }
+    box.hidden = false; b.textContent = "سكّر";
+    card.querySelector(".qa-q").hidden = true; card.querySelector(".qa-meta").hidden = true;
+    SCComments.mount(box, { course_id: it.course_id, chapter_id: it.chapter_id, thread: it.id,
+      onChange: function (data, q, answers) {
+        if (!q) return;
+        var ans = answers.filter(function (a) { return !a.by_asker; });
+        it.answers = ans.length; it.solved = !!q.accepted_id;
+        // تحديث شكل البطاقة فوراً (الحدّ والشارة)
+        card.classList.toggle("open", !it.answers); card.classList.toggle("solved", it.solved);
+        var chip = card.querySelector(".qa-top .qa-chip:not(.you)");
+        if (chip) chip.outerHTML = it.solved ? '<span class="qa-chip solved">✓ انحلّ</span>'
+          : it.answers ? '<span class="qa-chip ans">' + it.answers + (it.answers === 1 ? " جواب" : " أجوبة") + '</span>'
+          : '<span class="qa-chip open">بلا جواب</span>';
+      } });
+    if (!it.answers) setTimeout(function () { var r = box.querySelector("[data-reply]"); if (r) r.click(); }, 600);
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll(".qa-tab"), function (b) {
+    b.addEventListener("click", function () {
+      state.filter = b.getAttribute("data-f"); try { localStorage.setItem("sc_qa_filter", state.filter); } catch (e) {}
+      tabs(); load(true);
+    });
+  });
+  $("qa-course").addEventListener("change", function () {
+    state.course = this.value;
+    var u = new URL(location.href); if (state.course) u.searchParams.set("c", state.course); else u.searchParams.delete("c");
+    history.replaceState(null, "", u.href);
+    if (state.course) $("qa-topic").value = state.course;
+    load(true);
+  });
+  $("qa-more").addEventListener("click", function () { load(false); });
+
+  /* ---- سؤال جديد ---- */
+  $("qa-send").addEventListener("click", function () {
+    var text = $("qa-text").value.trim(), m = $("qa-msg");
+    m.className = "msg err"; m.textContent = "";
+    if (!text) { m.textContent = ERR.EMPTY; return; }
+    var s = SCAuth.getSession(); if (!s) return;
+    var topic = $("qa-topic").value || "GENERAL";
+    $("qa-send").disabled = true; $("qa-send").textContent = "عم ننشر...";
+    SCAuth.api("addComment", { token: s.token, course_id: topic, chapter_id: "general", text: text }).then(function (res) {
+      $("qa-send").disabled = false; $("qa-send").textContent = "اسأل";
+      if (res && res.ok) {
+        $("qa-text").value = ""; m.className = "msg ok"; m.textContent = "انتشر سؤالك ✓ رح يوصلك إشعار لما حدا يجاوب.";
+        state.filter = "new"; state.course = ""; $("qa-course").value = ""; tabs(); load(true);
+        try { sessionStorage.removeItem("sc_notif_cache"); } catch (e) {}
+        return;
+      }
+      if (res && res.error === "COOLDOWN") { m.textContent = "استنى " + (res.wait || 30) + " ثانية قبل سؤال جديد."; return; }
+      m.textContent = (res && ERR[res.error]) || ERR.SERVER_ERROR;
+    }).catch(function () { $("qa-send").disabled = false; $("qa-send").textContent = "اسأل"; m.textContent = ERR.NET; });
+  });
+
+  SCShell.init({
+    onReady: function () {
+      tabs();
+      var cached = null; try { cached = JSON.parse(localStorage.getItem("sc_courses") || "null"); } catch (e) {}
+      if (cached) setCourses(cached);
+      else SCAuth.api("getCourses", { token: SCAuth.getSession().token }).then(function (r) {
+        if (r && r.ok) { try { localStorage.setItem("sc_courses", JSON.stringify(r.courses)); } catch (e) {} setCourses(r.courses); render(); }
+      }).catch(function () {});
+      if (state.course) { $("qa-course").value = state.course; $("qa-topic").value = state.course; }
+      load(true);
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -233,3 +233,47 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .inv-btn[hidden]{ display:none; }
 .inv-btn:hover{ border-color:var(--teal); }
 .inv-stats{ margin:12px 0 0; font-size:.86rem; color:var(--muted); }
+
+/* ---- ساحة الأسئلة ---- */
+.qa{ padding:30px 22px 56px; max-width:760px; }
+.qa h1{ margin:0 0 6px; font-size:1.7rem; }
+.qa .pf-note{ margin:0 0 18px; color:var(--muted); font-size:.92rem; }
+.qa-ask{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow-sm); }
+.qa-ask textarea{ width:100%; min-height:84px; resize:vertical; border:1.5px solid var(--border); border-radius:var(--radius-sm);
+  padding:10px 12px; font:inherit; font-size:.95rem; color:var(--text); }
+.qa-ask textarea:focus,.qa select:focus{ outline:none; border-color:var(--teal); box-shadow:0 0 0 3px rgba(31,182,168,.18); }
+.qa-ask-row{ display:flex; align-items:flex-end; gap:10px; margin-top:10px; flex-wrap:wrap; }
+.qa-topic{ flex:1; min-width:200px; }
+.qa-topic span{ display:block; font-size:.8rem; font-weight:700; color:var(--ink-soft); margin-bottom:4px; }
+.qa select{ width:100%; padding:9px 10px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font:inherit; font-size:.88rem; background:#fff; color:var(--text); }
+.qa-ask .btn{ flex:none; padding-inline:26px; }
+.qa-tip{ margin:10px 0 0; font-size:.8rem; color:var(--muted); }
+.qa-bar{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin:22px 0 12px; }
+.qa-tabs{ display:flex; gap:6px; flex-wrap:wrap; }
+.qa-tab{ border:1.5px solid var(--border); background:#fff; border-radius:999px; padding:6px 14px; font:inherit; font-size:.85rem; font-weight:700; color:var(--muted); cursor:pointer; }
+.qa-tab.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+.qa-tab b{ color:var(--amber-dark); }
+.qa-tab.on b{ color:#FFD27A; }
+.qa-bar select{ width:auto; max-width:100%; flex:0 1 240px; }
+.qa-list{ display:flex; flex-direction:column; gap:12px; }
+.qa-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow-sm); }
+.qa-card.open{ border-inline-start:4px solid var(--amber); }
+.qa-card.solved{ border-inline-start:4px solid var(--success); }
+.qa-top{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:6px; }
+.qa-place{ font-size:.76rem; font-weight:800; color:var(--teal-dark); background:#EFFBF8; border-radius:999px; padding:1px 10px; }
+.qa-chip{ font-size:.72rem; font-weight:700; border-radius:999px; padding:0 9px; border:1px solid; }
+.qa-chip.open{ color:#8A5300; background:#FFF4E2; border-color:#FFD79A; }
+.qa-chip.solved{ color:#0B7A57; background:var(--success-bg); border-color:#A9E8D2; }
+.qa-chip.ans{ color:var(--ink-soft); background:#F3F5F9; border-color:var(--border); }
+.qa-chip.you{ color:var(--teal-dark); background:#fff; border-color:#BFEDE6; }
+.qa-q{ margin:0 0 6px; font-size:.98rem; font-weight:600; line-height:1.8; white-space:pre-wrap; word-break:break-word; }
+.qa-meta{ display:flex; gap:12px; font-size:.78rem; color:var(--muted); flex-wrap:wrap; }
+.qa-acts{ display:flex; align-items:center; gap:12px; margin-top:10px; flex-wrap:wrap; }
+.qa-acts .btn{ padding:6px 16px; font-size:.85rem; }
+.qa-open:not(.btn-primary){ background:#fff; border:1.5px solid var(--border); color:var(--ink-soft); }
+.qa-lesson{ font-size:.82rem; font-weight:700; color:var(--teal-dark); text-decoration:none; }
+.qa-thread{ margin-top:12px; }
+.qa-thread .scc-q{ border:none; padding:0; box-shadow:none; }
+.qa-empty{ text-align:center; color:var(--muted); background:#fff; border:1.5px dashed var(--border); border-radius:var(--radius); padding:26px 16px; font-size:.92rem; }
+.qa-more{ display:block; margin:16px auto 0; background:#fff; border:1.5px solid var(--border); color:var(--ink-soft); }
+@media (max-width:700px){ .qa{ padding:22px 16px 48px; } .qa-bar select{ flex:1 1 100%; } }

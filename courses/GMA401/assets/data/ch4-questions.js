@@ -2,7 +2,7 @@
    origin:"bank" = من النماذج المحلولة وأسئلة الدورات (الإجابة محقّقة من المقرر وبالحساب)، origin:"gen" = مكتوب من محتوى المقرر. */
 const CH4_POOL = [
  {
-  "origin": "bank",
+  "origin": "gen",
   "type": "tf",
   "question": "المتتالية \\(1,\\frac12,\\frac13,\\dots\\) حدها العام \\(a_n=\\frac1n\\) ومنطلقها \\(\\mathbb{N}^*\\).",
   "answer": true,
@@ -132,7 +132,7 @@ const CH4_POOL = [
   }
  },
  {
-  "origin": "bank",
+  "origin": "gen",
   "type": "tf",
   "question": "في المتتالية الحسابية، مجموع أي حدين متساويي البعد عن الطرفين ثابت ويساوي مجموع الطرفين.",
   "answer": true,
@@ -143,7 +143,7 @@ const CH4_POOL = [
   }
  },
  {
-  "origin": "bank",
+  "origin": "gen",
   "type": "tf",
   "question": "أي حد في المتتالية الحسابية هو وسط حسابي بين حدين مجاورين له.",
   "answer": true,
@@ -154,7 +154,7 @@ const CH4_POOL = [
   }
  },
  {
-  "origin": "bank",
+  "origin": "gen",
   "type": "tf",
   "question": "إضافة (أو طرح) عدد ثابت إلى حدود متتالية حسابية يعطي متتالية حسابية جديدة لها نفس الأساس.",
   "answer": true,
@@ -165,7 +165,7 @@ const CH4_POOL = [
   }
  },
  {
-  "origin": "bank",
+  "origin": "gen",
   "type": "tf",
   "question": "ضرب حدود متتالية حسابية بعدد ثابت غير معدوم يعطي متتالية حسابية لها نفس الأساس.",
   "answer": false,
@@ -457,7 +457,7 @@ const CH4_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(9,\\ 12,\\ 15\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">نفرض \\(a-b,\\ a,\\ a+b\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(3a=36\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(a=12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\((12-b)^2+144+(12+b)^2=450\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(2b^2=18\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(b=\\pm3\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">الأعداد \\(9,12,15\\) (أو بالعكس)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(9,\\ 12,\\ 15\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">نفرض</span><div class=\"m\">\\(a-b,\\ a,\\ a+b\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(3a=36\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(a=12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\((12-b)^2+144+(12+b)^2=450\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(2b^2=18\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(b=\\pm3\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">الأعداد \\(9,12,15\\) (أو بالعكس)</div></div>",
   "ref": {
    "url": "chapters/chapter-4-lesson.html#aprob",
    "label": "مسائل على المتتالية الحسابية"
@@ -482,7 +482,7 @@ const CH4_POOL = [
   }
  },
  {
-  "origin": "bank",
+  "origin": "gen",
   "type": "tf",
   "question": "لحل مسائل المتتالية الحسابية نكتب الحدود بدلالة \\(a\\) و \\(r\\) (\\(a_n=a+(n-1)r\\)) ونحوّل المعطيات لمعادلات.",
   "answer": true,
@@ -547,7 +547,7 @@ const CH4_POOL = [
   }
  },
  {
-  "origin": "bank",
+  "origin": "gen",
   "type": "tf",
   "question": "إذا كان أساس المتتالية الهندسية مساوياً للواحد فإن جميع حدودها متساوية ومساوية للحد الأول.",
   "answer": true,
@@ -558,18 +558,18 @@ const CH4_POOL = [
   }
  },
  {
-  "origin": "bank",
+  "origin": "gen",
   "type": "tf",
   "question": "لوغاريتمات حدود متتالية هندسية حدها الأول وأساسها موجبان تشكل متتالية حسابية.",
   "answer": true,
-  "explanation": "<b>✅ الجواب الصحيح: صح</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\ln a,\\ \\ln a+\\ln r,\\ \\ln a+2\\ln r,\\dots\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">حسابية أساسها \\(\\ln r\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: صح</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\ln a,\\ \\ln a+\\ln r,\\ \\ln a+2\\ln r,\\dots\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">حسابية أساسها</span><div class=\"m\">\\(\\ln r\\)</div></div></div>",
   "ref": {
    "url": "chapters/chapter-4-lesson.html#geo",
    "label": "المتتالية الهندسية: أنواعها والحد النوني"
   }
  },
  {
-  "origin": "bank",
+  "origin": "gen",
   "type": "tf",
   "question": "أي حد في المتتالية الهندسية هو وسط هندسي بين حدين مجاورين له.",
   "answer": true,
@@ -699,7 +699,7 @@ const CH4_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\frac{37}{99}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\frac{37}{100}+\\frac{37}{100^2}+\\dots\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">هندسية \\(a=\\frac{37}{100},\\ r=\\frac1{100}\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(S_\\infty=\\frac{0.37}{1-0.01}=\\frac{37}{99}\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\frac{37}{99}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\frac{37}{100}+\\frac{37}{100^2}+\\dots\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">هندسية</span><div class=\"m\">\\(a=\\frac{37}{100},\\ r=\\frac1{100}\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(S_\\infty=\\frac{0.37}{1-0.01}=\\frac{37}{99}\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-4-lesson.html#gsum",
    "label": "مجموع حدود المتتالية الهندسية"

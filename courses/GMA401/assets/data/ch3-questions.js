@@ -256,7 +256,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 3,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\mathbb{R}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\Delta=1-4=-3\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">ما في جذور</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">الإشارة دايماً متل \\(a=1\\gt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">محققة لكل \\(x\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\mathbb{R}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\Delta=1-4=-3\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">ما في جذور</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">الإشارة دايماً متل</span><div class=\"m\">\\(a=1\\gt0\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">محققة لكل</span><div class=\"m\">\\(x\\)</div></div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#deg1",
    "label": "المتراجحات ذات المجهول الواحد"
@@ -476,7 +476,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(]-\\infty,-2[\\,\\cup\\,]-1,1[\\,\\cup\\,]2,\\infty[\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">\\(\\frac{(x-1)(x-2)}{(x+1)(x+2)}\\gt0\\)، الشرط \\(x\\ne-1,-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">النقاط</span><div class=\"m\">\\(-2,\\ -1,\\ 1,\\ 2\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">الإشارة \\(+\\ -\\ +\\ -\\ +\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(]-\\infty,-2[\\,\\cup\\,]-1,1[\\,\\cup\\,]2,\\infty[\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">\\(\\frac{(x-1)(x-2)}{(x+1)(x+2)}\\gt0\\)، الشرط \\(x\\ne-1,-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">النقاط</span><div class=\"m\">\\(-2,\\ -1,\\ 1,\\ 2\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">الإشارة</span><div class=\"m\">\\(+\\ -\\ +\\ -\\ +\\)</div></div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#product",
    "label": "المتراجحات ذات الجداء والكسرية"
@@ -494,7 +494,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 1,
-  "explanation": "<b>✅ الجواب الصحيح: \\(]-\\infty,1[\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\frac{2x+3}{x-1}-2\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\frac{2x+3-2x+2}{x-1}\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\frac{5}{x-1}\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">البسط موجب، فلازم \\(x-1\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x\\lt1\\)</div></div><b>❌ انتبه:</b> ما فينا نضرب بـ\\((x-1)\\) مباشرة لأن إشارته مجهولة.",
+  "explanation": "<b>✅ الجواب الصحيح: \\(]-\\infty,1[\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\frac{2x+3}{x-1}-2\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\frac{2x+3-2x+2}{x-1}\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\frac{5}{x-1}\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">البسط موجب، فلازم</span><div class=\"m\">\\(x-1\\lt0\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x\\lt1\\)</div></div><b>❌ انتبه:</b> ما فينا نضرب بـ\\((x-1)\\) مباشرة لأن إشارته مجهولة.",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#product",
    "label": "المتراجحات ذات الجداء والكسرية"
@@ -722,7 +722,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{4,2\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">إما \\(2x-6=2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=4\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">أو \\(2x-6=-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=2\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{4,2\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(2x-6=2\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=4\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(2x-6=-2\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=2\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -740,7 +740,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 2,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{-6,-\\frac14\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">إما \\(5x+7=3x-5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(2x=-12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-6\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">أو \\(5x+7=-(3x-5)\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(8x=-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac14\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{-6,-\\frac14\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(5x+7=3x-5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(2x=-12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-6\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(5x+7=-(3x-5)\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(8x=-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac14\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -758,7 +758,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac27,\\frac{12}{11}\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">إما \\(9x-7=2x-5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(7x=2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac27\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">أو \\(9x-7=5-2x\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(11x=12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac{12}{11}\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac27,\\frac{12}{11}\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(9x-7=2x-5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(7x=2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac27\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(9x-7=5-2x\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(11x=12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac{12}{11}\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -776,7 +776,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{-2,-\\frac{12}{7}\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">إما \\(4x+7=3x+5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">أو \\(4x+7=-3x-5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(7x=-12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac{12}{7}\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{-2,-\\frac{12}{7}\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(4x+7=3x+5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(4x+7=-3x-5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(7x=-12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac{12}{7}\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -794,7 +794,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{12,-\\frac29\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">إما \\(4x+7=5x-5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">أو \\(4x+7=-5x+5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(9x=-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac29\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{12,-\\frac29\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(4x+7=5x-5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(4x+7=-5x+5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(9x=-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac29\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -812,7 +812,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{-3,-1\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">إما \\(3x+1=5x+7\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(-2x=6\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-3\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">أو \\(3x+1=-5x-7\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(8x=-8\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-1\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{-3,-1\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(3x+1=5x+7\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(-2x=6\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-3\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(3x+1=-5x-7\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(8x=-8\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-1\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -830,7 +830,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac{8}{11},-\\frac27\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">إما \\(3-9x=2x-5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(11x=8\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac8{11}\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">أو \\(3-9x=-(2x-5)\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(-7x=2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac27\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac{8}{11},-\\frac27\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(3-9x=2x-5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(11x=8\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac8{11}\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(3-9x=-(2x-5)\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(-7x=2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac27\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -848,7 +848,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac83,-\\frac67\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">إما \\(2x+7=5x-1\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(3x=8\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac83\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">أو \\(2x+7=-5x+1\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(7x=-6\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac67\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac83,-\\frac67\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(2x+7=5x-1\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(3x=8\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac83\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(2x+7=-5x+1\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(7x=-6\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac67\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -866,7 +866,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac73,-1\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">إما \\(3x-2=5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac73\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">أو \\(3x-2=-5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-1\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac73,-1\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(3x-2=5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac73\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(3x-2=-5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-1\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -884,7 +884,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac65,-\\frac{14}{5}\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">إما \\(5x+4=10\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac65\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">أو \\(5x+4=-10\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac{14}{5}\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac65,-\\frac{14}{5}\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(5x+4=10\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac65\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(5x+4=-10\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac{14}{5}\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -902,7 +902,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{4,-\\frac13\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">إما \\(4x-3=2x+5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=4\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">أو \\(4x-3=-2x-5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(6x=-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac13\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{4,-\\frac13\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(4x-3=2x+5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=4\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(4x-3=-2x-5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(6x=-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac13\\)</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -1219,7 +1219,7 @@ const CH3_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 1,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{1,4\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\log x^2=\\log(5x-4)\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x^2-5x+4=0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\((x-1)(x-4)=0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">\\(x=1\\) و \\(x=4\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">الاتنين موجبين و \\(5x-4\\gt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">مقبولين</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(\\{1,4\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\log x^2=\\log(5x-4)\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x^2-5x+4=0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\((x-1)(x-4)=0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">\\(x=1\\) و \\(x=4\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">الاتنين موجبين و</span><div class=\"m\">\\(5x-4\\gt0\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">مقبولين</div></div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#logq",
    "label": "المعادلات اللوغاريتمية"

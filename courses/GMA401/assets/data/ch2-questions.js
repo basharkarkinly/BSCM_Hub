@@ -115,7 +115,7 @@ const CH2_POOL = [
   "type": "tf",
   "question": "في حال كان المميز \\(\\Delta\\) لمعادلة من الدرجة الثانية سالباً فيكون للمعادلة جذران حقيقيان.",
   "answer": false,
-  "explanation": "<b>✅ الجواب الصحيح: خطأ</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\Delta\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><b>ما في جذور حقيقية</b> (جذرين تخيليين)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">الجذرين الحقيقيين المختلفين لما \\(\\Delta\\gt0\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: خطأ</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\Delta\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><b>ما في جذور حقيقية</b> (جذرين تخيليين)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">الجذرين الحقيقيين المختلفين لما</span><div class=\"m\">\\(\\Delta\\gt0\\)</div></div></div>",
   "ref": {
    "url": "chapters/chapter-2-lesson.html#deg2",
    "label": "المعادلة من الدرجة الثانية"
@@ -288,7 +288,7 @@ const CH2_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: دوماً موجبة</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\Delta=0-32\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">ما إله جذور</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">إشارته دايماً من إشارة \\(a=1\\gt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">موجب</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: دوماً موجبة</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\Delta=0-32\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">ما إله جذور</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">إشارته دايماً من إشارة</span><div class=\"m\">\\(a=1\\gt0\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">موجب</div></div>",
   "ref": {
    "url": "chapters/chapter-2-lesson.html#deg2",
    "label": "المعادلة من الدرجة الثانية"
@@ -335,7 +335,7 @@ const CH2_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 1,
-  "explanation": "<b>✅ الجواب الصحيح: \\((a-b)^2\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\((a\\pm b)^2=a^2\\pm2ab+b^2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">بالإشارة السالبة \\((a-b)^2\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\((a-b)^2\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\((a\\pm b)^2=a^2\\pm2ab+b^2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">بالإشارة السالبة</span><div class=\"m\">\\((a-b)^2\\)</div></div></div>",
   "ref": {
    "url": "chapters/chapter-2-lesson.html#deg2",
    "label": "المعادلة من الدرجة الثانية"
@@ -656,7 +656,7 @@ const CH2_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 3,
-  "explanation": "<b>✅ الجواب الصحيح: 60</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(a_n=1\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">الجذر الصحيح (إذا وجد) قاسم للحد المطلق \\(a_0=60\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: 60</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(a_n=1\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">الجذر الصحيح (إذا وجد) قاسم للحد المطلق</span><div class=\"m\">\\(a_0=60\\)</div></div></div>",
   "ref": {
    "url": "chapters/chapter-2-lesson.html#degn",
    "label": "المعادلة من الدرجة n (بيزوت والجذور الكسرية)"

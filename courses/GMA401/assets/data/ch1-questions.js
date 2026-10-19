@@ -173,7 +173,7 @@ const CH1_POOL = [
   "type": "tf",
   "question": "الصفر ينتمي لمجموعة الأعداد الطبيعية \\(\\mathbb{N}\\) حسب المقرر.",
   "answer": true,
-  "explanation": "<b>✅ الجواب الصحيح: صح</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">المقرر بيعرّف \\(\\mathbb{N}=\\{0,1,2,3,\\dots\\}\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: صح</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">المقرر بيعرّف</span><div class=\"m\">\\(\\mathbb{N}=\\{0,1,2,3,\\dots\\}\\)</div></div></div>",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#sets",
    "label": "مجموعات الأعداد"
@@ -382,7 +382,7 @@ const CH1_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 2,
-  "explanation": "<b>✅ الجواب الصحيح: \\(]-2,1]\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\lt\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">قوس مفتوح عند \\(-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\le\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">قوس مغلق عند 1</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: \\(]-2,1]\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\lt\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">قوس مفتوح عند</span><div class=\"m\">\\(-2\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\le\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">قوس مغلق عند 1</div></div>",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#intervals",
    "label": "المجالات والجوار"
@@ -418,7 +418,7 @@ const CH1_POOL = [
    "غير ذلك"
   ],
   "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: المركز 5 ونصف القطر 3</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">المركز \\(\\alpha=\\frac{a+b}{2}=\\frac{2+8}{2}=5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">نصف القطر \\(\\varepsilon=b-\\alpha=8-5=3\\)</div></div><b>❌ انتبه:</b> طول المجال 6، ونصف القطر نصّه.",
+  "explanation": "<b>✅ الجواب الصحيح: المركز 5 ونصف القطر 3</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">المركز</span><div class=\"m\">\\(\\alpha=\\frac{a+b}{2}=\\frac{2+8}{2}=5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">نصف القطر</span><div class=\"m\">\\(\\varepsilon=b-\\alpha=8-5=3\\)</div></div></div><b>❌ انتبه:</b> طول المجال 6، ونصف القطر نصّه.",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#intervals",
    "label": "المجالات والجوار"
@@ -613,7 +613,7 @@ const CH1_POOL = [
   "type": "tf",
   "question": "لأي عددين حقيقيين \\(x,y\\): \\(|x\\cdot y|=|x|\\cdot|y|\\).",
   "answer": true,
-  "explanation": "<b>✅ الجواب الصحيح: صح</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">مبرهنة (1-4) بالمقرر، ومعها \\(\\left|\\frac{x}{y}\\right|=\\frac{|x|}{|y|}\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: صح</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">مبرهنة (1-4) بالمقرر، ومعها</span><div class=\"m\">\\(\\left|\\frac{x}{y}\\right|=\\frac{|x|}{|y|}\\)</div></div></div>",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#abs",
    "label": "القيمة المطلقة وخواصها"
@@ -1194,7 +1194,7 @@ const CH1_POOL = [
   "type": "tf",
   "question": "\\(\\log_a 1=0\\) لأي أساس \\(a\\gt0,\\ a\\ne1\\).",
   "answer": true,
-  "explanation": "<b>✅ الجواب الصحيح: صح</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">لأن \\(a^0=1\\)</div></div>",
+  "explanation": "<b>✅ الجواب الصحيح: صح</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">لأن</span><div class=\"m\">\\(a^0=1\\)</div></div></div>",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#logs",
    "label": "اللوغاريتمات"

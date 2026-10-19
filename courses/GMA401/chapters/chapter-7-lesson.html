@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 7 — مقلوب مصفوفة وحل جملة معادلات خطية | GMA401</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GMA401 — الرياضيات</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل السابع</div>
+    <h1>مقلوب مصفوفة وحل جملة معادلات خطية</h1>
+    <p>مقلوب المصفوفة وشرط وجوده، المصغرات والمرافقات والمصفوفة المساعدة، حل جمل المعادلات الخطية بالمقلوب، والرتبة والتحويلات الأولية — نص أسئلة الامتحان تقريباً بتجي على «جملة معادلات» من هالفصل.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">Inverse matrix</span><span class="keyword-chip">Cofactors</span><span class="keyword-chip">Adjoint</span>
+          <span class="keyword-chip">Linear system</span><span class="keyword-chip">Rank</span><span class="keyword-chip">Elementary operations</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تحدد إذا المقلوب موجود وتحسبه لمصفوفة 2×2 و3×3</li>
+          <li><b>تطلّع أي عنصر من مصفوفة المصغرات أو المرافقات أو المساعدة أو المقلوب</b> (سؤال ثابت)</li>
+          <li>تحل جملة معادلتين أو تلات معادلات بالمقلوب</li>
+          <li>تحسب الرتبة وتعرف إذا الجملة متوافقة</li>
+        </ul>
+      </div>
+
+      <div class="block" id="inv2">
+        <h2><span class="idx">1</span> مقلوب مصفوفة من المرتبة الثانية</h2>
+        <p>مقلوب المصفوفة المربعة \(A\) هو \(A^{-1}\) بحيث \(A\cdot A^{-1}=A^{-1}\cdot A=I\). بيوجد بس إذا <b>\(\Delta\ne0\)</b>؛ وإذا \(\Delta=0\) المصفوفة <b>شاذة</b> ما إلها مقلوب.</p>
+        $$A=\begin{bmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{bmatrix}\ \Rightarrow\ A^{-1}=\frac{1}{\Delta}\begin{bmatrix}a_{22}&-a_{12}\\-a_{21}&a_{11}\end{bmatrix}$$
+        <details class="accordion">
+          <summary>✍️ مثال المقرر (1-7): \(A=\begin{bmatrix}2&-1\\1&5\end{bmatrix}\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(\Delta=2\times5-(-1)\times1=11\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(Adj(A)=\begin{bmatrix}5&1\\-1&2\end{bmatrix}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(A^{-1}=\frac1{11}\begin{bmatrix}5&1\\-1&2\end{bmatrix}\)</div></div>
+        </details>
+      </div>
+
+      <div class="block" id="inv3">
+        <h2><span class="idx">2</span> مقلوب مصفوفة من المرتبة الثالثة</h2>
+        <ol class="timeline">
+          <li><span class="marker">1</span><h4>المعين \(\Delta\)</h4><p>إذا \(\Delta=0\) ما في مقلوب.</p></li>
+          <li><span class="marker">2</span><h4>مصفوفة المصغرات ثم المرافقات \(A^c\)</h4><p>كل عنصر بنحط مكانه مصغّره، وبعدين منعكس إشارة اللي \(i+j\) تبعهم فردي.</p></li>
+          <li><span class="marker">3</span><h4>المساعدة \(Adj(A)=(A^c)^T\)</h4><p><b>مدور</b> مصفوفة المرافقات.</p></li>
+          <li><span class="marker">4</span><h4>\(A^{-1}=\frac{Adj(A)}{\Delta}\)</h4><p>كل عنصر من المساعدة ÷ المعين.</p></li>
+        </ol>
+        <div class="callout">
+          <span class="tag">💡 سؤال الامتحان: «العنصر الواقع في تقاطع السطر \(i\) مع العمود \(j\)»</span>
+          <p>بالمصغرات: \(M(a_{ij})\) · بالمرافقات: \((-1)^{i+j}M(a_{ij})\) · <b>بالمساعدة: المرافق \(a^c_{ji}\) (بدّل!)</b> · بالمقلوب: \(\frac{a^c_{ji}}{\Delta}\).</p>
+        </div>
+        <details class="accordion">
+          <summary>✍️ نموذج امتحاني: \(3x-y+z=3,\ x+y-2z=2,\ 3x-2y+4z=1\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(A=\begin{bmatrix}3&-1&1\\1&1&-2\\3&-2&4\end{bmatrix}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\Delta=5\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">المصغرات</span><div class="m">\(\begin{bmatrix}0&10&-5\\-2&9&-3\\1&-7&4\end{bmatrix}\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">المرافقات</span><div class="m">\(\begin{bmatrix}0&-10&-5\\2&9&3\\1&7&4\end{bmatrix}\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">المساعدة (المدور)</span><div class="m">\(\begin{bmatrix}0&2&1\\-10&9&7\\-5&3&4\end{bmatrix}\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(X=\frac15\,Adj\cdot B=\frac15\begin{bmatrix}0&2&1\\-10&9&7\\-5&3&4\end{bmatrix}\begin{bmatrix}3\\2\\1\end{bmatrix}=\begin{bmatrix}1\\-1\\-1\end{bmatrix}\)</div></div>
+        </details>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>المساعدة <b>مو</b> مصفوفة المرافقات — هي مدورها. فعنصر السطر الأول والعمود التاني بالمساعدة = مرافق العنصر \(a_{21}\).</p>
+        </div>
+        <div id="activity-sort" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="block" id="invp">
+        <h2><span class="idx">3</span> خواص المقلوب</h2>
+        <div class="quick-grid">
+          <div class="quick-card"><b>🔁 أساسية</b>\(AA^{-1}=A^{-1}A=I\) · \((A^{-1})^{-1}=A\)</div>
+          <div class="quick-card"><b>✖️ الجداء والمدور</b>\((AB)^{-1}=B^{-1}A^{-1}\) · \((A^T)^{-1}=(A^{-1})^T\)</div>
+          <div class="quick-card"><b>📐 القطرية</b>مقلوبها قطرية عناصرها \(\frac{1}{a_{ii}}\)</div>
+        </div>
+      </div>
+
+      <div class="block" id="sys">
+        <h2><span class="idx">4</span> حل جملة معادلات خطية بمقلوب مصفوفة الأمثال</h2>
+        <p>منكتب الجملة \(AX=B\): \(A\) مصفوفة الأمثال، \(X\) شعاع المجاهيل، \(B\) الحدود المطلقة. منضرب من <b>اليسار</b> بـ\(A^{-1}\):</p>
+        $$X=A^{-1}\cdot B$$
+        <details class="accordion">
+          <summary>✍️ مثال المقرر (4-7): \(2x+3y=-1,\ x-2y=3\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(\Delta=\begin{vmatrix}2&3\\1&-2\end{vmatrix}=-7\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(A^{-1}=-\frac17\begin{bmatrix}-2&-3\\-1&2\end{bmatrix}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\begin{bmatrix}x\\y\end{bmatrix}=-\frac17\begin{bmatrix}-2&-3\\-1&2\end{bmatrix}\begin{bmatrix}-1\\3\end{bmatrix}=\begin{bmatrix}1\\-1\end{bmatrix}\)</div></div>
+        </details>
+        <p>وللمعادلتين في طريقة <b>المعينات (كرامر)</b>: \(x=\frac{\Delta_x}{\Delta},\ y=\frac{\Delta_y}{\Delta}\) حيث \(\Delta_x\) نبدّل فيه عمود \(x\) بالحدود المطلقة.</p>
+      </div>
+
+      <div class="block" id="rank">
+        <h2><span class="idx">5</span> رتبة المصفوفة والتحويلات الأولية</h2>
+        <p><b>الرتبة \(r(A)\)</b> = مرتبة أكبر مصغّر (معين جزئي) غير معدوم. المربعة النظامية رتبتها \(n\)، وإذا معينها صفر منجرّب المصغرات الأصغر. ودايماً \(r(A_{(m,n)})\le\min(m,n)\).</p>
+        <table class="cmp">
+          <tr><th>التحويل الأولي</th><th>الرمز</th></tr>
+          <tr><td>تبديل صفين (أو عمودين)</td><td>\(R_{ij}\)</td></tr>
+          <tr><td>ضرب صف بعدد \(K\ne0\)</td><td>\(R_i(K)\)</td></tr>
+          <tr><td>إضافة مضاعف صف لصف تاني</td><td>\(R_i+KR_j\)</td></tr>
+        </table>
+        <p style="margin-top:10px;">هالتحويلات <b>ما بتغيّر الرتبة</b>، ومنستعملها لنوصل للصورة القياسية \(\begin{bmatrix}I_r&0\\0&0\end{bmatrix}\)، أو لحساب المقلوب: \((A|I)\sim(I|A^{-1})\).</p>
+      </div>
+
+      <div class="block" id="consist">
+        <h2><span class="idx">6</span> توافق الجملة والحل بالتحويلات الأولية</h2>
+        <table class="cmp">
+          <tr><th>الحالة</th><th>النتيجة</th></tr>
+          <tr><td>\(r(A)=r(A|B)=n\) (عدد المجاهيل)</td><td>متوافقة، <b>حل وحيد</b></td></tr>
+          <tr><td>\(r(A)=r(A|B)=r\lt n\)</td><td>متوافقة، <b>حلول لا نهائية</b> بـ\(n-r\) مجهول اختياري</td></tr>
+          <tr><td>\(r(A)\ne r(A|B)\)</td><td><b>مستحيلة الحل</b></td></tr>
+        </table>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-7-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-7-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الثامن)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GMA401",chapter_id:"7",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="../assets/math.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch7-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "للجملة \\(3x-y-2z=1,\\ x-3y+z=-2,\\ x+y-3z=-3\\): كل قيمة لوين بتنتمي؟",
+  buckets: [
+    {key:"min", label:"مصغّر \\(M(a_{12})\\)"},
+    {key:"cof", label:"مرافق \\(a^c_{21}\\)"},
+    {key:"adj", label:"مساعدة \\(Adj_{33}\\)"},
+    {key:"det", label:"المعين \\(\\Delta\\)"}
+  ],
+  items: [
+    {text:"\\(-4\\)", bucket:"min", why:"\\(\\begin{vmatrix}1&1\\\\1&-3\\end{vmatrix}=-3-1=-4\\)."},
+    {text:"\\(-5\\)", bucket:"cof", why:"\\(M(a_{21})=5\\) و\\(2+1\\) فردي ← \\(-5\\)."},
+    {text:"\\(-8\\)", bucket:"adj", why:"\\(Adj_{33}=a^c_{33}=\\begin{vmatrix}3&-1\\\\1&-3\\end{vmatrix}=-8\\)."},
+    {text:"\\(12\\)", bucket:"det", why:"\\(3(8)+1(-4)-2(4)=12\\)."}
+  ]
+});
+
+renderMathProblem("case-study-mount", {
+  title: "سؤال الامتحان: حل جملة بالمقلوب (نموذج F19)",
+  scenario: "حل الجملة \\(3x-y-2z=1,\\ x-3y+z=-2,\\ x+y-3z=-3\\) بطريقة مقلوب مصفوفة الأمثال.",
+  steps: [
+    {type:"choice", q:"معين مصفوفة الأمثال:",
+     options:["\\(12\\)","\\(-12\\)","\\(4\\)","\\(-4\\)"], answer:0,
+     hint:"انشر وفق السطر الأول: \\(3(9-1)-(-1)(-3-1)+(-2)(1+3)\\).", explain:"\\(24-4-8=12\\ne0\\) ← المقلوب موجود", result:{label:"\\(\\Delta\\)", value:"12"}},
+    {type:"choice", q:"المصفوفة المساعدة \\(Adj(A)\\):",
+     options:["\\(\\begin{bmatrix}8&-5&-7\\\\4&-7&-5\\\\4&-4&-8\\end{bmatrix}\\)","\\(\\begin{bmatrix}8&4&4\\\\-5&-7&-4\\\\-7&-5&-8\\end{bmatrix}\\)","\\(\\begin{bmatrix}8&-4&4\\\\5&-7&4\\\\-7&5&-8\\end{bmatrix}\\)","\\(\\begin{bmatrix}8&5&7\\\\4&7&5\\\\4&4&8\\end{bmatrix}\\)"], answer:0,
+     hint:"المرافقات \\(\\begin{bmatrix}8&4&4\\\\-5&-7&-4\\\\-7&-5&-8\\end{bmatrix}\\) — خد مدورها.", explain:"\\(Adj=(A^c)^T\\)", result:{label:"المساعدة", value:"\\(\\begin{bmatrix}8&-5&-7\\\\4&-7&-5\\\\4&-4&-8\\end{bmatrix}\\)"}},
+    {type:"choice", q:"\\(Adj\\cdot B\\) حيث \\(B=\\begin{bmatrix}1\\\\-2\\\\-3\\end{bmatrix}\\):",
+     options:["\\(\\begin{bmatrix}39\\\\33\\\\36\\end{bmatrix}\\)","\\(\\begin{bmatrix}-1\\\\-5\\\\-8\\end{bmatrix}\\)","\\(\\begin{bmatrix}39\\\\-33\\\\36\\end{bmatrix}\\)","\\(\\begin{bmatrix}13\\\\11\\\\12\\end{bmatrix}\\)"], answer:0,
+     hint:"السطر الأول: \\(8(1)+(-5)(-2)+(-7)(-3)\\).", explain:"\\(8+10+21=39\\) ← \\(4+14+15=33\\) ← \\(4+8+24=36\\)", result:{label:"\\(Adj\\cdot B\\)", value:"\\((39,\\ 33,\\ 36)\\)"}},
+    {type:"choice", q:"الحل \\(X=\\frac{1}{\\Delta}Adj\\cdot B\\):",
+     options:["\\(x=\\frac{13}{4},\\ y=\\frac{11}{4},\\ z=3\\)","\\(x=39,\\ y=33,\\ z=36\\)","\\(x=\\frac{38}{12},\\ y=\\frac{33}{12},\\ z=3\\)","\\(x=\\frac74,\\ y=\\frac{11}{4},\\ z=3\\)"], answer:0,
+     hint:"قسّم على 12.", explain:"\\(\\frac{39}{12}=\\frac{13}{4}\\) ← \\(\\frac{33}{12}=\\frac{11}{4}\\) ← \\(\\frac{36}{12}=3\\)", result:{label:"الحل", value:"\\((\\frac{13}{4},\\ \\frac{11}{4},\\ 3)\\)"}}
+  ],
+  finish: "<p>بالنموذج الحقيقي ما كان \\(\\frac{39}{12}\\) بين الخيارات، فالجواب كان <b>«غير ذلك»</b>.</p>"
+});
+
+renderFlashcards("activity-flash", CH7_FLASHCARDS);
+</script>
+</body>
+</html>

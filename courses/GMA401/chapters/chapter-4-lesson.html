@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 4 — المتتاليات (المتواليات) العددية | GMA401</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GMA401 — الرياضيات</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الرابع</div>
+    <h1>المتتاليات (المتواليات) العددية</h1>
+    <p>المتتالية الحسابية والهندسية: الحد العام، الخواص، مجموع الحدود، والمسائل اللي بتتحول لمعادلات بـ\(a\) و \(r\) — سؤال المتتاليات ثابت بالامتحان.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">Numerical sequences</span><span class="keyword-chip">Arithmetic</span><span class="keyword-chip">Geometric</span>
+          <span class="keyword-chip">n-th term</span><span class="keyword-chip">Sum</span><span class="keyword-chip">Infinite geometric series</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تميّز المتتالية الحسابية من الهندسية وتعرف نوعها</li>
+          <li>تحسب الحد العام وترتيب حد معيّن</li>
+          <li>تحسب مجموع \(n\) حد، ومجموع الهندسية اللانهائية</li>
+          <li><b>تحوّل مسألة كلامية لمعادلتين بـ\(a\) و \(r\)</b> وتحلها</li>
+        </ul>
+      </div>
+
+      <div class="block" id="def">
+        <h2><span class="idx">1</span> تعريف المتتالية</h2>
+        <p><b>المتتالية</b> تسلسل (ترتيب) لأعداد حقيقية \(a_1,a_2,\dots,a_n,\dots\). منسمي \(a_n\) <b>الحد العام (النوني)</b>، و\(n\) رتبته. مثال: \(1,\frac12,\frac13,\dots\) حدها العام \(a_n=\frac1n\) ومنطلقها \(\mathbb{N}^*=\{1,2,3,\dots\}\).</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>➕ حسابية</b>كل حد = السابق <strong>+</strong> عدد ثابت \(r\) (الأساس)</div>
+          <div class="quick-card"><b>✖️ هندسية</b>كل حد = السابق <strong>×</strong> عدد ثابت \(r\ne0\) (الأساس)</div>
+        </div>
+      </div>
+
+      <div class="block" id="arith">
+        <h2><span class="idx">2</span> المتتالية الحسابية: الحد العام وخواصها</h2>
+        $$a_n=a_1+(n-1)r\qquad\quad r=a_2-a_1=a_3-a_2=\dots$$
+        <p><div class="sol"><div class="sol-step m">\(r\gt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><b>متزايدة</b> (\(2,4,6,\dots\)) · \(r\lt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><b>متناقصة</b> (\(-3,-5,-7,\dots\))</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">وأساسها من الطرفين</span><div class="m">\(r=\frac{a_n-a_1}{n-1}\)</div></div></div></p>
+        <table class="cmp">
+          <tr><th>الخاصة</th><th>مثال</th></tr>
+          <tr><td>مجموع حدين متساويي البعد عن الطرفين ثابت</td><td>\(3+25=5+23=7+21\)</td></tr>
+          <tr><td>كل حد وسط حسابي لجاريه</td><td>\(7=\frac{5+9}{2}\)</td></tr>
+          <tr><td><div class="sol"><div class="sol-step">إضافة ثابت لكل الحدود</div><div class="sol-arrow">⬇</div><div class="sol-step">حسابية بنفس الأساس</div></div></td><td><div class="sol"><div class="sol-step m">\(1,3,5\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(2,4,6\)</div></div></td></tr>
+          <tr><td><div class="sol"><div class="sol-step"><span class="sol-lbl">ضرب كل الحدود بثابت</span><div class="m">\(k\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">حسابية أساسها</span><div class="m">\(kr\)</div></div></div></td><td><div class="sol"><div class="sol-step m">\(3,5,7\) × 2</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(6,10,14\)</div></div></td></tr>
+        </table>
+        <details class="accordion">
+          <summary>✍️ مثال المقرر (3-4): حدها العاشر 27 وأساسها 3، شو حدها الأول؟ <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(a_{10}=a_1+(10-1)r\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(27=a_1+9\times3\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(a_1=0\)</div></div>
+        </details>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>القانون فيه \((n-1)\) مو \(n\). و«أدخل 5 أعداد بين −2 و 28» يعني صار عنا <b>7 حدود</b>.</p>
+        </div>
+      </div>
+
+      <div class="block" id="asum">
+        <h2><span class="idx">3</span> مجموع حدود المتتالية الحسابية</h2>
+        $$S_n=\frac n2\,[a_1+a_n]=\frac n2\,[2a_1+(n-1)r]$$
+        <details class="accordion">
+          <summary>✍️ مثال المقرر (10-4): 30 حد مجموعها 2325 وآخر حد 150، شو الأساس؟ <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(2325=\frac{30}{2}[a_1+150]\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(2325=15a_1+2250\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(a_1=5\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(150=5+(30-1)r\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(r=\frac{145}{29}=5\)</div></div>
+        </details>
+      </div>
+
+      <div class="block" id="aprob">
+        <h2><span class="idx">4</span> مسائل على المتتالية الحسابية</h2>
+        <p>الطريقة دايماً: اكتب كل حد بدلالة \(a\) و \(r\) (\(a_3=a+2r,\ a_6=a+5r,\dots\))، حوّل كل جملة لمعادلة، وحل الجملة. ولما يكونو <b>3 أعداد</b> افرضهم \(a-b,\ a,\ a+b\) (مجموعهم \(3a\)).</p>
+        <details class="accordion">
+          <summary>✍️ نموذج امتحاني (مثال المقرر 15-4): الحد الثامن <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <p>متتالية حسابية متناقصة، حدها الأول ينقص بـ1 عن مجموع الثالث والسادس، والسابع ينقص عن مجموع الثالث والخامس بـ43.</p>
+          <div class="sol"><div class="sol-step"><span class="sol-lbl">الجملة الأولى</span><div class="m">\(a+1=(a+2r)+(a+5r)\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(a+7r=1\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الجملة التانية</span><div class="m">\(a+6r+43=(a+2r)+(a+4r)\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(a=43\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(43+7r=1\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(r=-6\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(a_8=a+7r=1\)</div></div>
+        </details>
+        <div id="activity-sort" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="block" id="geo">
+        <h2><span class="idx">5</span> المتتالية الهندسية: أنواعها والحد النوني</h2>
+        $$a_n=a_1\cdot r^{\,n-1}\qquad\quad r=\frac{a_2}{a_1}=\frac{a_3}{a_2}=\dots$$
+        <table class="cmp">
+          <tr><th>الأساس</th><th>النوع</th><th>مثال</th></tr>
+          <tr><td>\(r\gt1\)</td><td>متزايدة</td><td>\(3,6,12,24\)</td></tr>
+          <tr><td>\(0\lt r\lt1\)</td><td>متناقصة</td><td>\(1,\frac12,\frac14,\frac18\)</td></tr>
+          <tr><td>\(r\lt0\)</td><td>متناوبة الإشارة</td><td>\(1,-2,4,-8\)</td></tr>
+          <tr><td>\(r=1\)</td><td>كل الحدود متساوية</td><td>\(5,5,5\)</td></tr>
+        </table>
+        <p style="margin-top:10px;"><b>خواص:</b> كل حد وسط هندسي لجاريه (\(4=\sqrt{2\times8}\)) · جداء حدين متساويي البعد عن الطرفين ثابت (\(1\times256=2\times128\)) · لوغاريتمات حدودها (إذا \(a,r\gt0\)) بتشكل متتالية <b>حسابية</b>.</p>
+      </div>
+
+      <div class="block" id="gsum">
+        <h2><span class="idx">6</span> مجموع حدود المتتالية الهندسية</h2>
+        $$S_n=a\,\frac{r^n-1}{r-1}\ \ (r\gt1)\qquad S_n=a\,\frac{1-r^n}{1-r}\ \ (0\lt r\lt1)\qquad S_\infty=\frac{a}{1-r}\ \ (|r|\lt1)$$
+        <p>وإذا \(r=1\): \(S_n=n\,a\). ومن أهم التطبيقات: <b>الكسر الدوري</b> \(0.\overline{37}=\frac{37}{99}\).</p>
+        <details class="accordion">
+          <summary>✍️ مثال المقرر (23-4): كم حد من \(3,12,\dots\) مجموعها 255؟ <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(r=\frac{12}{3}=4\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(255=3\cdot\frac{4^n-1}{4-1}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(255=4^n-1\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(4^n=256\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(n=4\)</div></div>
+        </details>
+      </div>
+
+      <div class="block" id="gprob">
+        <h2><span class="idx">7</span> مسائل على المتتالية الهندسية</h2>
+        <p>اكتب الحدود \(a,\ ar,\ ar^2,\dots\)، وغالباً منقسم المعادلتين على بعض لنتخلص من \(a\) ونطلّع \(r\). وانتبه للشروط (حدود موجبة، متزايدة، متناقصة) لترفض الحل الغلط.</p>
+        <details class="accordion">
+          <summary>✍️ مثال المقرر (22-4): مجموع الثلاثة الأولى 62، ومجموع الثاني والثالث والرابع 310 <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(a(1+r+r^2)=62\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(ar(1+r+r^2)=310\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">بالقسمة</span><div class="m">\(r=\frac{310}{62}=5\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(a=\frac{62}{1+5+25}=2\)</div></div>
+        </details>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-4-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-4-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الخامس)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GMA401",chapter_id:"4",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="../assets/math.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch4-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "شو نوع المتتالية؟",
+  buckets: [
+    {key:"a", label:"➕ حسابية"},
+    {key:"g", label:"✖️ هندسية"},
+    {key:"n", label:"✕ ولا وحدة"}
+  ],
+  items: [
+    {text:"\\(2,\\ 4,\\ 6,\\ 8\\)", bucket:"a", why:"منضيف 2 كل مرة."},
+    {text:"\\(3,\\ 6,\\ 12,\\ 24\\)", bucket:"g", why:"منضرب بـ2 كل مرة."},
+    {text:"\\(1,\\ -2,\\ 4,\\ -8\\)", bucket:"g", why:"\\(r=-2\\) متناوبة الإشارة."},
+    {text:"\\(-3,\\ -5,\\ -7\\)", bucket:"a", why:"\\(r=-2\\) متناقصة."},
+    {text:"\\(1,\\ 4,\\ 9,\\ 16\\)", bucket:"n", why:"الفروق 3، 5، 7 مو ثابتة، والنسب كمان مو ثابتة."},
+    {text:"\\(5,\\ 5,\\ 5\\)", bucket:"g", why:"هندسية أساسها 1 (وكمان حسابية أساسها 0)."}
+  ]
+});
+
+renderMathProblem("case-study-mount", {
+  title: "مسألة امتحان: متتالية حسابية",
+  scenario: "متتالية حسابية حدها الثامن يزيد على حدها الأول بـ84، وحدها السادس يزيد على ضعف حدها الثاني بـ49. شو حدها الخامس عشر؟ (مثال المقرر 16-4)",
+  steps: [
+    {type:"choice", q:"الجملة الأولى «الثامن يزيد على الأول بـ84» بتعطي:",
+     options:["\\(7r=84\\)","\\(8r=84\\)","\\(a+8r=84\\)","\\(a=84\\)"], answer:0,
+     hint:"\\(a_8=a+7r\\).", explain:"\\(a+7r=a+84\\) ← \\(7r=84\\) ← \\(r=12\\)", result:{label:"الأساس", value:"\\(r=12\\)"}},
+    {type:"choice", q:"الجملة التانية «السادس يزيد على ضعف الثاني بـ49»:",
+     options:["\\(a+5r=2(a+r)+49\\)","\\(a+6r=2(a+2r)+49\\)","\\(a+5r+49=2(a+r)\\)","\\(2(a+5r)=a+r+49\\)"], answer:0,
+     hint:"\\(a_6=a+5r\\) و \\(a_2=a+r\\).", explain:"\\(a+5r=2a+2r+49\\)", result:{label:"المعادلة 2", value:"\\(a+5r=2(a+r)+49\\)"}},
+    {type:"choice", q:"عوّض \\(r=12\\): قيمة \\(a\\)",
+     options:["\\(-13\\)","\\(13\\)","\\(11\\)","\\(-11\\)"], answer:0,
+     hint:"\\(a+60=2a+24+49\\).", explain:"\\(a+60=2a+73\\) ← \\(a=-13\\)", result:{label:"الحد الأول", value:"\\(a=-13\\)"}},
+    {type:"choice", q:"الحد الخامس عشر \\(a_{15}\\):",
+     options:["155","168","143","180"], answer:0,
+     hint:"\\(a_{15}=a+14r\\).", explain:"\\(a_{15}=-13+14\\times12\\) ← \\(=155\\)", result:{label:"الجواب", value:"\\(a_{15}=155\\)"}}
+  ],
+  finish: "<p>كل مسائل المتتاليات: <b>اكتب الحدود بـ\\(a\\) و \\(r\\) ← معادلتين ← حل</b>.</p>"
+});
+
+renderFlashcards("activity-flash", CH4_FLASHCARDS);
+</script>
+</body>
+</html>

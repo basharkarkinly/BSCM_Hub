@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 2 — المعادلات الرياضية وطرائق حلها | GMA401</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GMA401 — الرياضيات</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الثاني</div>
+    <h1>المعادلات الرياضية وطرائق حلها</h1>
+    <p>المطابقة والمعادلة، معادلات الدرجة الأولى والتانية والتالتة والدرجة n (مبرهنة بيزو والجذور الكسرية)، المعادلات الكسرية، والمعادلات المتعددة المجهول.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">Equation with one unknown</span><span class="keyword-chip">First degree</span><span class="keyword-chip">Second degree</span>
+          <span class="keyword-chip">Third degree</span><span class="keyword-chip">Bezout</span><span class="keyword-chip">Rational equation</span>
+          <span class="keyword-chip">Linear equation</span><span class="keyword-chip">Nonlinear equation</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تحل معادلة من الدرجة الأولى والتانية وتدرس إشارتها</li>
+          <li>تستخدم المميز ومجموع وجداء الجذور</li>
+          <li><b>تحل معادلة من الدرجة التالتة</b> بقواسم الحد المطلق والقسمة (سؤال ثابت بالامتحان)</li>
+          <li>تحل معادلة كسرية بشرط المقام</li>
+          <li>تميّز المعادلات الخطية من غير الخطية</li>
+        </ul>
+      </div>
+
+      <div class="block" id="intro">
+        <h2><span class="idx">1</span> التعابير الرياضية وتصنيفاتها</h2>
+        <p>التركيب الجبري نوعين:</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>♾️ مطابقة</b>محققة <strong>مهما كانت</strong> قيمة المجهول (ضمن تعريفه): \(\frac{x+1+x^2}{x^2(1+x)}\equiv\frac{1}{x^2}+\frac{1}{x+1}\)</div>
+          <div class="quick-card"><b>🎯 معادلة</b>محققة <strong>لقيم معينة</strong> بس، اسمها جذور المعادلة: \(x^2-5x+4=0\) محققة لـ\(x=1\) و \(x=4\)</div>
+        </div>
+      </div>
+
+      <div class="block" id="deg1">
+        <h2><span class="idx">2</span> المعادلة من الدرجة الأولى</h2>
+        <p>\(ax+b=0\) حيث \(a\ne0\)، إلها جذر وحيد: $$x=-\frac{b}{a}$$</p>
+        <div class="callout">
+          <span class="tag">💡 إشارة \(ax+b\)</span>
+          <p><b>قبل</b> الجذر: إشارة <b>مخالفة</b> لإشارة \(a\). <b>بعد</b> الجذر: إشارة <b>موافقة</b> لإشارة \(a\). مثال: \(4x+4\) جذره \(-1\)، فعند \(x=-2\) (قبل الجذر) الإشارة سالبة.</p>
+        </div>
+      </div>
+
+      <div class="block" id="deg2">
+        <h2><span class="idx">3</span> المعادلة من الدرجة الثانية</h2>
+        <p>\(ax^2+bx+c=0\)، منحسب المميز \(\Delta=b^2-4ac\):</p>
+        <table class="cmp">
+          <tr><th>المميز</th><th>الجذور</th></tr>
+          <tr><td>\(\Delta\gt0\)</td><td>جذرين حقيقيين مختلفين: \(x_{1,2}=\frac{-b\pm\sqrt\Delta}{2a}\)</td></tr>
+          <tr><td>\(\Delta=0\)</td><td>جذر مضاعف: \(x_1=x_2=-\frac{b}{2a}\)</td></tr>
+          <tr><td>\(\Delta\lt0\)</td><td><b>ما في جذور حقيقية</b> (جذرين تخيليين)</td></tr>
+        </table>
+        <p style="margin-top:10px;">ومن القانون: <b>مجموع الجذرين</b> \(x_1+x_2=-\frac ba\) و<b>جداؤهما</b> \(x_1\cdot x_2=\frac ca\).</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>➕ إشارة \(ax^2+bx+c\)</b>\(\Delta\gt0\): بين الجذرين <strong>عكس</strong> \(a\)، وبرّاهم <strong>متل</strong> \(a\) · \(\Delta=0\): متل \(a\) (وصفر عند الجذر) · \(\Delta\lt0\): <strong>دايماً متل</strong> \(a\)</div>
+          <div class="quick-card"><b>🧩 متطابقات شهيرة</b>\((a\pm b)^2=a^2\pm2ab+b^2\) · \(a^2-b^2=(a-b)(a+b)\) · \(a^3\pm b^3=(a\pm b)(a^2\mp ab+b^2)\) · \((a\pm b)^3=a^3\pm3a^2b+3ab^2\pm b^3\)</div>
+        </div>
+        <details class="accordion">
+          <summary>✍️ مثال المقرر (12-1): \(15x^2-32x-47=0\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(\Delta=(-32)^2-4(15)(-47)=1024+2820=3844\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\sqrt\Delta=62\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x_{1,2}=\frac{32\pm62}{30}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x_1=\frac{94}{30}=\frac{47}{15}\) · \(x_2=\frac{-30}{30}=-1\)</div></div>
+        </details>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>انتبه لإشارة \(c\) بـ\(-4ac\). وتحقق من أي تحليل بفك الأقواس: \((x-6)(x+5)=x^2-x-30\) مو \(x^2-x-2\).</p>
+        </div>
+      </div>
+
+      <div class="block" id="degn">
+        <h2><span class="idx">4</span> المعادلة من الدرجة الثالثة والدرجة \(n\)</h2>
+        <p>الشكل العام: \(a_nx^n+a_{n-1}x^{n-1}+\dots+a_1x+a_0=0\) حيث \(a_n\ne0\). لكل معادلة من الدرجة \(n\) عدد من الحلول = \(n\) (حقيقية أو عقدية أو مكررة).</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>📐 مبرهنة بيزو</b>إذا \(f(A)=0\) فإن \(f(x)\) <strong>بيقبل القسمة</strong> على \((x-A)\)، والعكس صحيح.</div>
+          <div class="quick-card"><b>🔎 الجذور الكسرية</b>إذا \(\frac pq\) جذر (والأمثال صحيحة): \(p\) قاسم لـ\(a_0\) و \(q\) قاسم لـ\(a_n\). وإذا \(a_n=1\): الجذر الصحيح قاسم لـ\(a_0\).</div>
+        </div>
+        <h4 style="margin:14px 0 6px;">خطوات الحل (هي طريقة الامتحان):</h4>
+        <ol class="timeline">
+          <li><span class="marker">1</span><h4>اكتب المعادلة = 0</h4><p>وتأكد إنو الأمثال صحيحة.</p></li>
+          <li><span class="marker">2</span><h4>عدّد قواسم الحد المطلق \(a_0\)</h4><p>(ومقسومة على قواسم \(a_n\) إذا ما كان 1).</p></li>
+          <li><span class="marker">3</span><h4>جرّب القواسم</h4><p>لحتى تلاقي \(x_1\) اللي بيصفّر المعادلة.</p></li>
+          <li><span class="marker">4</span><h4>اقسم على \((x-x_1)\)</h4><p>بيطلع ناتج \(h(x)\) من الدرجة \(n-1\).</p></li>
+          <li><span class="marker">5</span><h4>كرّر أو حل الدرجة التانية</h4><p>بالمميز أو التحليل.</p></li>
+        </ol>
+        <details class="accordion">
+          <summary>✍️ مثال محلول (تمارين الفصل): \(x^3-4x^2-17x+60=0\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step"><span class="sol-lbl">قواسم 60</span><div class="m">\(\pm1,\pm2,\pm3,\pm4,\pm5,\pm6,\pm10,\pm12,\pm15,\pm20,\pm30,\pm60\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x=3\): \(27-36-51+60=0\) ✓</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">القسمة على \((x-3)\)</span><div class="m">\(x^2-x-20\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x^2-x-20=(x-5)(x+4)\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الجذور</span><div class="m">\(\{3,\ 5,\ -4\}\)</div></div></div>
+        </details>
+        <details class="accordion">
+          <summary>✍️ طريقة أسرع أحياناً: التجميع \(x^3-3x^2-16x+48=0\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(x(x^2-16)-3(x^2-16)=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\((x^2-16)(x-3)=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\((x-4)(x+4)(x-3)=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الجذور</span><div class="m">\(\{3,\ 4,\ -4\}\)</div></div></div>
+        </details>
+        <div id="activity-sort" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="block" id="frac">
+        <h2><span class="idx">5</span> المعادلات الكسرية</h2>
+        <p>حدودها كسور فيها مجهول بالمقام. الحل: <b>1)</b> اشترط المقامات \(\ne0\) <b>2)</b> وحّد المقامات <b>3)</b> حل المعادلة الناتجة <b>4)</b> ارفض أي جذر بيصفّر مقام.</p>
+        <details class="accordion">
+          <summary>✍️ مثال المقرر (4-2): \(\frac{x^2+3x+4}{x-2}-\frac47=\frac{x^3+4x-1}{x^2-4}\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step">الشرط: \(x\ne\pm2\) (لأن \(x^2-4=(x-2)(x+2)\))</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">توحيد المقامات</span><div class="m">\(7(x+2)(x^2+3x+4)-4(x^2-4)=7(x^3+4x-1)\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">بتطلع معادلة من الدرجة التالتة ومنحلها متل ما شفنا</div></div>
+        </details>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p><div class="sol"><div class="sol-step">\(\frac{x}{x-3}=\frac{3}{x-3}\) بتعطي \(x=3\)، بس هي القيمة الممنوعة</div><div class="sol-arrow">⬇</div><div class="sol-step">المعادلة <b>ما إلها حل</b></div></div></p>
+        </div>
+      </div>
+
+      <div class="block" id="multi">
+        <h2><span class="idx">6</span> المعادلات المتعددة المجهول</h2>
+        <table class="cmp">
+          <tr><th>النوع</th><th>شو هي</th><th>أمثلة</th></tr>
+          <tr><td><b>خطية</b></td><td>كل مجهول قوته 1 (وما في جداء مجاهيل)</td><td>\(3x+10=0\) · \(2x+y+z=5\)</td></tr>
+          <tr><td><b>غير خطية</b></td><td>بتشذ عن الصيغة الخطية</td><td>\(ax^2+by^2+cxy+dx+ey+f=0\)</td></tr>
+        </table>
+        <p style="margin-top:10px;">المعادلة الخطية بأكتر من مجهول إلها حلول لا نهائية، فلحتى يطلع حل وحيد بدنا <b>جملة معادلات مستقلة عددها = عدد المجاهيل</b> (رح نحلها بالمصفوفات بالفصل 7). وللجملة غير الخطية: منطلّع مجهول من المعادلة الخطية ومنعوّضه بالتانية.</p>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-2-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-2-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الثالث)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GMA401",chapter_id:"2",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="../assets/math.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch2-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "قيمة \\(x\\) هي جذر للمعادلة \\(x^3-6x^2-x+6=0\\) أو لأ؟ (عوّض واحسب)",
+  buckets: [
+    {key:"yes", label:"✓ جذر"},
+    {key:"no",  label:"✕ مو جذر"}
+  ],
+  items: [
+    {text:"\\(x=1\\)", bucket:"yes", why:"\\(1-6-1+6=0\\)"},
+    {text:"\\(x=2\\)", bucket:"no", why:"\\(8-24-2+6=-12\\ne0\\)"},
+    {text:"\\(x=-1\\)", bucket:"yes", why:"\\(-1-6+1+6=0\\)"},
+    {text:"\\(x=3\\)", bucket:"no", why:"\\(27-54-3+6=-24\\ne0\\)"},
+    {text:"\\(x=6\\)", bucket:"yes", why:"\\(216-216-6+6=0\\)"},
+    {text:"\\(x=-6\\)", bucket:"no", why:"\\(-216-216+6+6=-420\\ne0\\)"}
+  ]
+});
+
+renderMathProblem("case-study-mount", {
+  title: "سؤال الامتحان: معادلة من الدرجة التالتة",
+  scenario: "أوجد مجموعة حلول المعادلة \\(x^3+3x^2-6x-8=0\\) (من حلول تمارين المعادلات).",
+  steps: [
+    {type:"choice", q:"شو القيم اللي منجرّبها كجذور؟",
+     options:["قواسم 8: \\(\\pm1,\\pm2,\\pm4,\\pm8\\)","قواسم 3: \\(\\pm1,\\pm3\\)","قواسم 6: \\(\\pm1,\\pm2,\\pm3,\\pm6\\)","أي عدد من 0 لـ10"], answer:0,
+     hint:"\\(a_n=1\\) ← الجذر الصحيح قاسم للحد المطلق.", explain:"الحد المطلق \\(a_0=-8\\) ← قواسمه \\(\\pm1,\\pm2,\\pm4,\\pm8\\).", result:{label:"المرشحين", value:"\\(\\pm1,\\pm2,\\pm4,\\pm8\\)"}},
+    {type:"choice", q:"أي قيمة بتصفّر المعادلة؟",
+     options:["\\(x=1\\)","\\(x=-1\\)","\\(x=4\\)","\\(x=-2\\)"], answer:1,
+     hint:"عوّض: \\(P(-1)=-1+3+6-8\\).", explain:"\\(P(1)=1+3-6-8=-10\\) · \\(P(-1)=-1+3+6-8=0\\) ✓", result:{label:"جذر أول", value:"\\(x_1=-1\\)"}},
+    {type:"choice", q:"ناتج قسمة \\(x^3+3x^2-6x-8\\) على \\((x+1)\\):",
+     options:["\\(x^2+2x-8\\)","\\(x^2+4x-2\\)","\\(x^2-2x-8\\)","\\(x^2+3x-6\\)"], answer:0,
+     hint:"تحقق: \\((x+1)(x^2+2x-8)\\) وفكّ الأقواس.", explain:"\\((x+1)(x^2+2x-8)=x^3+2x^2-8x+x^2+2x-8=x^3+3x^2-6x-8\\) ✓", result:{label:"الناتج", value:"\\(x^2+2x-8\\)"}},
+    {type:"choice", q:"جذور \\(x^2+2x-8=0\\):",
+     options:["\\(4,\\ -2\\)","\\(-4,\\ 2\\)","\\(8,\\ -1\\)","\\(-8,\\ 1\\)"], answer:1,
+     hint:"عددين جداؤهم \\(-8\\) ومجموعهم \\(-2\\).", explain:"\\((x+4)(x-2)=0\\) ← \\(x=-4\\) أو \\(x=2\\).", result:{label:"الحل", value:"\\(\\{-1,\\ -4,\\ 2\\}\\)"}}
+  ],
+  finish: "<p>هي نفس خطوات سؤال الدرجة التالتة بالامتحان: <b>قواسم ← تجريب ← قسمة ← مميز</b>.</p>"
+});
+
+renderFlashcards("activity-flash", CH2_FLASHCARDS);
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 9 — الاشتقاق وقواعده | GMA401</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GMA401 — الرياضيات</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل التاسع</div>
+    <h1>الاشتقاق وقواعده</h1>
+    <p>تعريف المشتق ومعناه الهندسي، وقواعد الاشتقاق: القوى، الجداء، القسمة، المركب، العكسي، اللوغاريتمي، الأسي، الأصم، والمشتقات المتتالية والجزئية — ومن الامتحان سؤال «قيمة \(k\) بمشتق التابع».</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">Derivative</span><span class="keyword-chip">Product rule</span><span class="keyword-chip">Quotient rule</span>
+          <span class="keyword-chip">Chain rule</span><span class="keyword-chip">Logarithmic derivative</span><span class="keyword-chip">Partial derivative</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تعرف المشتق ومعناه الهندسي (ميل المماس)</li>
+          <li>تشتق أي تابع بالقواعد: جداء، قسمة، مركب</li>
+          <li><b>تشتق التوابع اللوغاريتمية والأسية والجذرية</b> وتطلّع قيمة \(k\)</li>
+          <li>تحسب المشتقات المتتالية والجزئية</li>
+        </ul>
+      </div>
+
+      <div class="block" id="def">
+        <h2><span class="idx">1</span> تعريف المشتق ومعناه الهندسي</h2>
+        $$y'=f'(x)=\lim_{\Delta x\to0}\frac{\Delta y}{\Delta x}=\lim_{\Delta x\to0}\frac{f(x+\Delta x)-f(x)}{\Delta x}$$
+        <p><b>هندسياً:</b> \(f'(x_0)=\tan\alpha\) = <b>ميل المماس</b> للمنحني عند \(x_0\). إذا \(y'\gt0\) الزاوية حادة (متزايد)، إذا \(y'\lt0\) منفرجة (متناقص)، وإذا \(y'=0\) المماس موازي لمحور السينات.</p>
+        <details class="accordion">
+          <summary>✍️ مثال المقرر (1-9): مشتق \(y=x^2-3x+1\) بالتعريف <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(\Delta y=(x+\Delta x)^2-3(x+\Delta x)+1-(x^2-3x+1)\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\Delta y=\Delta x(2x-3+\Delta x)\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\frac{\Delta y}{\Delta x}=2x-3+\Delta x\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\Delta x\to0\): \(y'=2x-3\)</div></div>
+        </details>
+      </div>
+
+      <div class="block" id="basic">
+        <h2><span class="idx">2</span> مشتق الثابت والقوى والمجموع</h2>
+        <table class="cmp">
+          <tr><th>التابع</th><th>المشتق</th></tr>
+          <tr><td>\(c\) (ثابت)</td><td>\(0\)</td></tr>
+          <tr><td>\(x\)</td><td>\(1\)</td></tr>
+          <tr><td>\(x^n\)</td><td>\(n\,x^{n-1}\)</td></tr>
+          <tr><td>\(f_1+f_2+\dots+f_n\)</td><td>\(f_1'+f_2'+\dots+f_n'\)</td></tr>
+        </table>
+      </div>
+
+      <div class="block" id="prodq">
+        <h2><span class="idx">3</span> مشتق الجداء والقسمة</h2>
+        $$(u\cdot v)'=u'v+uv'\qquad\qquad\left(\frac uv\right)'=\frac{u'v-uv'}{v^2}$$
+        <details class="accordion">
+          <summary>✍️ مثال المقرر: \(y=\frac{3x}{x^2+3}\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(u=3x\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(u'=3\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(v=x^2+3\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(v'=2x\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y'=\frac{3(x^2+3)-3x\cdot2x}{(x^2+3)^2}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y'=\frac{-3x^2+9}{(x^2+3)^2}\)</div></div>
+        </details>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>مشتق الجداء <b>مو</b> جداء المشتقات. وبالقسمة: «مشتق الفوقاني × التحتاني» أول، وبعدين الطرح.</p>
+        </div>
+      </div>
+
+      <div class="block" id="chain">
+        <h2><span class="idx">4</span> مشتق التابع المركب والعكسي</h2>
+        <p><b>المركب:</b> إذا \(y=f(z)\) و \(z=g(x)\): \(y'_x=y'_z\cdot z'_x\) — «مشتق الخارجي × مشتق الداخلي». ومنها: \((f^n)'=n\,f^{n-1}\cdot f'\).</p>
+        <p><div class="sol"><div class="sol-step"><span class="sol-lbl"><b>العكسي:</b></span><div class="m">\(x'_y=\frac{1}{y'_x}\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">مثال المقرر</span><div class="m">\(y=4x^2+5\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x'_y=\frac{1}{8x}\)</div></div></p>
+        <details class="accordion">
+          <summary>✍️ مثال: \(y=(5x^2+1)^{10}\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step"><span class="sol-lbl">الخارجي</span><div class="m">\(10(5x^2+1)^9\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">مشتق الداخلي</span><div class="m">\(10x\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y'=100x(5x^2+1)^9\)</div></div>
+        </details>
+      </div>
+
+      <div class="block" id="logexp">
+        <h2><span class="idx">5</span> مشتق التابع اللوغاريتمي والأسي</h2>
+        <table class="cmp">
+          <tr><th>التابع</th><th>المشتق</th></tr>
+          <tr><td>\(\ln f(x)\)</td><td>\(\frac{f'(x)}{f(x)}\)</td></tr>
+          <tr><td>\(\log_a f(x)\)</td><td>\(\frac{f'(x)}{f(x)\,\ln a}\)</td></tr>
+          <tr><td>\(e^{f(x)}\)</td><td>\(f'(x)\,e^{f(x)}\)</td></tr>
+          <tr><td>\(a^{f(x)}\)</td><td>\(f'(x)\,a^{f(x)}\,\ln a\)</td></tr>
+        </table>
+        <details class="accordion">
+          <summary>✍️ نموذج F19: \(y=\log_4(5x^2+4x+3)^2\) و \(y'=\frac{10x+4}{(5x^2+4x+3)\ln4}\,k\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(\log_4 f^2=2\log_4 f\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y'=2\cdot\frac{10x+4}{(5x^2+4x+3)\ln4}\)</div><div class="sol-arrow">⬇</div><div class="sol-step">نقارن مع الصيغة</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(k=2\)</div></div>
+        </details>
+        <details class="accordion">
+          <summary>✍️ نموذج امتحاني: \(y=5^{\ln x}\) و \(y'=\frac kx\,5^{\ln x}\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step">\(a^{f}\) مع \(f=\ln x\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(f'=\frac1x\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y'=\frac1x\cdot5^{\ln x}\cdot\ln5\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(k=\ln5\)</div></div>
+        </details>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>\(a^x\) مو قوة: \((2^x)'\ne x\,2^{x-1}\). ولا تنسى \(\ln a\) بالأساس غير \(e\).</p>
+        </div>
+        <div id="activity-sort" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="block" id="root">
+        <h2><span class="idx">6</span> مشتق التابع الأصم</h2>
+        $$\left(\sqrt{f}\right)'=\frac{f'}{2\sqrt f}\qquad\qquad \sqrt[n]{f^m}=f^{m/n}\ \Rightarrow\ \left(f^{m/n}\right)'=\frac mn f^{\frac mn-1}f'$$
+        <details class="accordion">
+          <summary>✍️ مثال المقرر: \(y=\sqrt[3]{(3x-2)^5}\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(y=(3x-2)^{5/3}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y'=\frac53(3x-2)^{2/3}\cdot3\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y'=5\sqrt[3]{(3x-2)^2}\)</div></div>
+        </details>
+      </div>
+
+      <div class="block" id="higher">
+        <h2><span class="idx">7</span> المشتقات المتتالية والجزئية</h2>
+        <p><div class="sol"><div class="sol-step"><span class="sol-lbl"><b>المتتالية:</b> \(y''=(y')'\)، \(y'''=(y'')'\)… مثال المقرر</span><div class="m">\(y=x^3-4x^2+5x-17\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y'=3x^2-8x+5\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y''=6x-8\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y'''=6\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y^{(4)}=0\)</div></div></p>
+        <p><b>الجزئية:</b> لتابع بأكتر من متحول \(z=f(x,y)\): \(\frac{\partial z}{\partial x}\) منشتق بالنسبة لـ\(x\) ومنعامل \(y\) كثابت، والعكس. والمشتق المختلط ما بيتأثر بالترتيب: \(\frac{\partial^2 f}{\partial x\partial y}=\frac{\partial^2 f}{\partial y\partial x}\).</p>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-9-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-9-exam.html" class="btn btn-primary">📝 امتحان الفصل (الفصل الأخير)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GMA401",chapter_id:"9",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="../assets/math.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch9-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "أي قاعدة لازم تستعمل أول شي؟",
+  buckets: [
+    {key:"p",  label:"الجداء"},
+    {key:"q",  label:"القسمة"},
+    {key:"ln", label:"اللوغاريتمي"},
+    {key:"ex", label:"الأسي"},
+    {key:"ch", label:"المركب (قوة لتابع)"}
+  ],
+  items: [
+    {text:"\\((x^2-3x)(2x+x^3)\\)", bucket:"p", why:"جداء تابعين."},
+    {text:"\\(\\frac{3x}{x^2+3}\\)", bucket:"q", why:"قسمة تابعين."},
+    {text:"\\(\\ln(3x^2-2x+1)\\)", bucket:"ln", why:"\\(\\frac{f'}{f}\\)."},
+    {text:"\\(2^{x^2-1}\\)", bucket:"ex", why:"\\(f'a^f\\ln a\\)."},
+    {text:"\\((5x^2+1)^{10}\\)", bucket:"ch", why:"\\(nf^{n-1}f'\\)."},
+    {text:"\\(e^{5x-1}\\)", bucket:"ex", why:"\\(f'e^f\\)."}
+  ]
+});
+
+renderMathProblem("case-study-mount", {
+  title: "سؤال الامتحان: قيمة \\(k\\)",
+  scenario: "ليكن \\(y=\\log_4(5x^2+4x+3)^2\\)، ولنفرض أن مشتقه \\(y'=\\frac{10x+4}{(5x^2+4x+3)\\ln4}\\,k\\). أوجد \\(k\\) (نموذج F19).",
+  steps: [
+    {type:"choice", q:"أول خطوة نبسّط اللوغاريتم:",
+     options:["\\(y=2\\log_4(5x^2+4x+3)\\)","\\(y=\\log_4 2(5x^2+4x+3)\\)","\\(y=(\\log_4(5x^2+4x+3))^2\\)","ما في تبسيط"], answer:0,
+     hint:"\\(\\log_a f^n=n\\log_a f\\).", explain:"الأس بينزل قدام اللوغاريتم", result:{label:"التبسيط", value:"\\(2\\log_4 f\\)"}},
+    {type:"choice", q:"مشتق \\(\\log_4 f\\):",
+     options:["\\(\\frac{f'}{f\\ln4}\\)","\\(\\frac{f'}{f}\\)","\\(\\frac{1}{f\\ln4}\\)","\\(f'\\ln4\\)"], answer:0,
+     hint:"\\((\\log_a f)'=\\frac{f'}{f\\ln a}\\).", explain:"\\(f=5x^2+4x+3\\) ← \\(f'=10x+4\\)", result:{label:"المشتق", value:"\\(y'=2\\cdot\\frac{10x+4}{(5x^2+4x+3)\\ln4}\\)"}},
+    {type:"choice", q:"بالمقارنة مع \\(y'=\\frac{10x+4}{(5x^2+4x+3)\\ln4}\\,k\\):",
+     options:["\\(k=2\\)","\\(k=4\\)","\\(k=1\\)","\\(k=\\ln4\\)"], answer:0,
+     hint:"شو الفرق بين مشتقنا والصيغة؟", explain:"الفرق الوحيد هو العامل 2 ← \\(k=2\\)", result:{label:"الجواب", value:"\\(k=2\\)"}}
+  ],
+  finish: "<p>بأسئلة \\(k\\): <b>اشتق كامل، وقارن مع الصيغة المعطاة</b>.</p>"
+});
+
+renderFlashcards("activity-flash", CH9_FLASHCARDS);
+</script>
+</body>
+</html>

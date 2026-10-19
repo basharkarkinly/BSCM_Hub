@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 5 — المصفوفات والعمليات عليها | GMA401</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body class="guard">
+
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GMA401 — الرياضيات</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الخامس</div>
+    <h1>المصفوفات والعمليات عليها</h1>
+    <p>شو هي المصفوفة وأشكالها (مربعة، قطرية، واحدية، مثلثية، متناظرة...)، الجمع والضرب بعدد، ضرب مصفوفتين، والمدور — الأساس لحل جمل المعادلات بالفصلين 6 و7.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+      <div class="chapter-intro-box">
+        <h4>🔑 كلمات مفتاحية</h4>
+        <div>
+          <span class="keyword-chip">Matrix</span><span class="keyword-chip">Square</span><span class="keyword-chip">Identity</span>
+          <span class="keyword-chip">Diagonal</span><span class="keyword-chip">Triangular</span><span class="keyword-chip">Symmetric</span>
+          <span class="keyword-chip">Product</span><span class="keyword-chip">Transpose</span>
+        </div>
+        <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+        <ul>
+          <li>تميّز أشكال المصفوفات</li>
+          <li>تجمع المصفوفات وتضربها بعدد</li>
+          <li>تعرف متى الضرب ممكن، وتحسب جداء مصفوفتين</li>
+          <li>توجد المدور وتحلل مصفوفة لمتناظرة ومتعاكسة التناظر</li>
+        </ul>
+      </div>
+
+      <div class="block" id="def">
+        <h2><span class="idx">1</span> تعريف المصفوفة</h2>
+        <p>المصفوفة مجموعة منتهية من الأعداد الحقيقية بجدول مستطيل أو مربع، على شكل <b>أسطر</b> و<b>أعمدة</b>. \(A_{(m,n)}\) فيها \(m\) سطر و \(n\) عمود، والعنصر \(a_{ij}\) موجود بالسطر \(i\) والعمود \(j\).</p>
+        $$A_{(2,3)}=\begin{bmatrix}a_{11}&a_{12}&a_{13}\\a_{21}&a_{22}&a_{23}\end{bmatrix}$$
+      </div>
+
+      <div class="block" id="types">
+        <h2><span class="idx">2</span> أشكال المصفوفات</h2>
+        <table class="cmp">
+          <tr><th>الشكل</th><th>الوصف</th><th>مثال</th></tr>
+          <tr><td>مربعة</td><td>\(n\times n\)، وعناصر \(s_{11},s_{22},\dots\) قطرها الرئيسي</td><td>\(\begin{bmatrix}1&2\\3&4\end{bmatrix}\)</td></tr>
+          <tr><td>صفرية \(O\)</td><td>كل عناصرها أصفار</td><td>\(\begin{bmatrix}0&0\\0&0\end{bmatrix}\)</td></tr>
+          <tr><td>سطر / عمود</td><td>\(m=1\) / \(n=1\)</td><td>\([1\ 2\ 3]\)</td></tr>
+          <tr><td>واحدية \(I\)</td><td>القطر 1 والباقي 0</td><td>\(\begin{bmatrix}1&0\\0&1\end{bmatrix}\)</td></tr>
+          <tr><td>قطرية</td><td>كل شي برّا القطر 0</td><td>\(\begin{bmatrix}3&0\\0&-2\end{bmatrix}\)</td></tr>
+          <tr><td>عددية</td><td>قطرية وعناصر قطرها متساوية</td><td>\(\begin{bmatrix}5&0\\0&5\end{bmatrix}\)</td></tr>
+          <tr><td>مثلثية عليا</td><td>الأصفار <b>تحت</b> القطر</td><td>\(\begin{bmatrix}1&4\\0&2\end{bmatrix}\)</td></tr>
+          <tr><td>مثلثية دنيا</td><td>الأصفار <b>فوق</b> القطر</td><td>\(\begin{bmatrix}1&0\\4&2\end{bmatrix}\)</td></tr>
+          <tr><td>ماركوفية</td><td>عناصر \(\ge0\) ومجموع كل عمود = 1</td><td>\(\begin{bmatrix}0.3&0.6\\0.7&0.4\end{bmatrix}\)</td></tr>
+          <tr><td>متناظرة</td><td>\(x_{ij}=x_{ji}\)</td><td>\(\begin{bmatrix}2&1\\1&3\end{bmatrix}\)</td></tr>
+          <tr><td>متعاكسة التناظر</td><td>\(x_{ij}=-x_{ji}\) (القطر أصفار)</td><td>\(\begin{bmatrix}0&1\\-1&0\end{bmatrix}\)</td></tr>
+        </table>
+        <p style="margin-top:10px;">المصفوفتان <b>متساويتان</b> إذا لهما نفس المرتبة وكل عنصر بيساوي مقابله. والقطرية والواحدية متناظرتان.</p>
+        <div id="activity-sort" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="block" id="add">
+        <h2><span class="idx">3</span> جمع المصفوفات وضربها بعدد</h2>
+        <p><b>الجمع:</b> بشرط نفس المرتبة، منجمع كل عنصر مع مقابله. تبديلي وتجميعي، والحيادي \(O\)، ونظير \(X\) هو \(-X\).</p>
+        <p><div class="sol"><div class="sol-step"><span class="sol-lbl"><b>الضرب بعدد:</b></span><div class="m">\(\alpha X\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">كل عنصر بينضرب بـ\(\alpha\)</div></div></p>
+        <details class="accordion">
+          <summary>✍️ مثال: \(3A-2B\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <p>\(A=\begin{bmatrix}1&2&0\\3&-1&4\end{bmatrix}\) و \(B=\begin{bmatrix}-1&1&1\\-2&3&5\end{bmatrix}\)</p>
+          <div class="sol"><div class="sol-step m">\(3A=\begin{bmatrix}3&6&0\\9&-3&12\end{bmatrix}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(2B=\begin{bmatrix}-2&2&2\\-4&6&10\end{bmatrix}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(3A-2B=\begin{bmatrix}5&4&-2\\13&-9&2\end{bmatrix}\)</div></div>
+        </details>
+      </div>
+
+      <div class="block" id="mult">
+        <h2><span class="idx">4</span> ضرب مصفوفة بمصفوفة</h2>
+        <div class="callout">
+          <span class="tag">💡 الشرط</span>
+          <p>عدد <b>أعمدة</b> الأولى = عدد <b>أسطر</b> التانية: \(X_{(m,n)}\cdot Y_{(n,p)}=Z_{(m,p)}\)</p>
+        </div>
+        <p>العنصر \(z_{ik}\) = السطر \(i\) من الأولى «ضرب» العمود \(k\) من التانية (عنصر بعنصر ومنجمع): \(z_{ik}=\sum_j x_{ij}\,y_{jk}\).</p>
+        <details class="accordion">
+          <summary>✍️ مثال: \(\begin{bmatrix}2&-1\\1&1\end{bmatrix}\cdot\begin{bmatrix}1&3\\0&2\end{bmatrix}\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
+          <div class="sol"><div class="sol-step m">\(z_{11}=2(1)+(-1)(0)=2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(z_{12}=2(3)+(-1)(2)=4\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(z_{21}=1(1)+1(0)=1\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(z_{22}=1(3)+1(2)=5\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الناتج</span><div class="m">\(\begin{bmatrix}2&4\\1&5\end{bmatrix}\)</div></div></div>
+        </details>
+        <table class="cmp" style="margin-top:10px;">
+          <tr><th>خاصة</th><th>ملاحظة</th></tr>
+          <tr><td>مو تبديلي</td><td>\(AB\ne BA\) عادةً (إلا مع \(I\) أو القطريات)</td></tr>
+          <tr><td>تجميعي وتوزيعي</td><td>\((AB)C=A(BC)\) · \(Z(X+Y)=ZX+ZY\)</td></tr>
+          <tr><td>\(AI=IA=A\)</td><td>الواحدية متل الرقم 1</td></tr>
+          <tr><td>ممكن \(AB=O\)</td><td>بدون ما تكون وحدة منهم صفرية</td></tr>
+          <tr><td>ما في اختصار</td><td>\(XY=XZ\) ما بتعني \(Y=Z\)</td></tr>
+        </table>
+        <div class="example">
+          <span class="tag">⚠️ فخ امتحان</span>
+          <p>\(A^2=A\cdot A\) مو تربيع كل عنصر. وجداء سطر \((1,n)\) بعمود \((n,1)\) بيعطي <b>عدد</b>، بس العكس بيعطي مصفوفة \((n,n)\).</p>
+        </div>
+      </div>
+
+      <div class="block" id="trans">
+        <h2><span class="idx">5</span> منقول (مدور) المصفوفة والمتناظرة</h2>
+        <p>\(X^T\): الأسطر بتصير أعمدة، والمرتبة \((m,n)\) بتصير \((n,m)\).</p>
+        <div class="quick-grid">
+          <div class="quick-card"><b>📐 خواص المدور</b>\((X+Y)^T=X^T+Y^T\) · \((\alpha X)^T=\alpha X^T\) · \((XY)^T=Y^TX^T\) · \((X^T)^T=X\)</div>
+          <div class="quick-card"><b>🔁 التحليل</b>كل مربعة \(M=S+A\): \(S=\frac12(M+M^T)\) متناظرة و \(A=\frac12(M-M^T)\) متعاكسة التناظر.</div>
+        </div>
+      </div>
+
+      <div id="case-study-mount"></div>
+
+      <div class="block" id="flash">
+        <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+        <div id="activity-flash"></div>
+      </div>
+
+  <div class="next-actions">
+    <a href="chapter-5-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-5-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل السادس)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GMA401",chapter_id:"5",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="../assets/math.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch5-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "شو شكل هالمصفوفة؟",
+  buckets: [
+    {key:"I",  label:"واحدية"},
+    {key:"D",  label:"قطرية"},
+    {key:"U",  label:"مثلثية عليا"},
+    {key:"S",  label:"متناظرة"},
+    {key:"A",  label:"متعاكسة التناظر"}
+  ],
+  items: [
+    {text:"\\(\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}\\)", bucket:"I", why:"القطر 1 والباقي 0."},
+    {text:"\\(\\begin{bmatrix}3&0\\\\0&-2\\end{bmatrix}\\)", bucket:"D", why:"برّا القطر أصفار وعناصر القطر مختلفة."},
+    {text:"\\(\\begin{bmatrix}1&4\\\\0&2\\end{bmatrix}\\)", bucket:"U", why:"الصفر تحت القطر."},
+    {text:"\\(\\begin{bmatrix}2&1\\\\1&3\\end{bmatrix}\\)", bucket:"S", why:"\\(a_{12}=a_{21}=1\\)."},
+    {text:"\\(\\begin{bmatrix}0&5\\\\-5&0\\end{bmatrix}\\)", bucket:"A", why:"\\(a_{12}=-a_{21}\\) والقطر أصفار."},
+    {text:"\\(\\begin{bmatrix}1&2&0\\\\0&3&1\\\\0&0&4\\end{bmatrix}\\)", bucket:"U", why:"كل الأصفار تحت القطر."}
+  ]
+});
+
+renderMathProblem("case-study-mount", {
+  title: "حلها معي: ضرب مصفوفتين",
+  scenario: "احسب \\(P\\cdot Q\\) حيث \\(P=\\begin{bmatrix}2&-1\\\\1&1\\end{bmatrix}\\) و \\(Q=\\begin{bmatrix}1&3\\\\0&2\\end{bmatrix}\\).",
+  steps: [
+    {type:"choice", q:"هل الضرب ممكن؟ وشو مرتبة الناتج؟",
+     options:["ممكن، الناتج \\((2,2)\\)","غير ممكن","ممكن، الناتج عدد","ممكن، الناتج \\((4,4)\\)"], answer:0,
+     hint:"\\((2,2)\\cdot(2,2)\\).", explain:"أعمدة \\(P\\) = أسطر \\(Q\\) = 2 ← الناتج \\((2,2)\\)", result:{label:"المرتبة", value:"\\((2,2)\\)"}},
+    {type:"choice", q:"\\(z_{11}\\) = السطر الأول من \\(P\\) × العمود الأول من \\(Q\\):",
+     options:["2","1","3","-1"], answer:0,
+     hint:"\\(2\\times1+(-1)\\times0\\).", explain:"\\(z_{11}=2(1)+(-1)(0)=2\\)", result:{label:"\\(z_{11}\\)", value:"2"}},
+    {type:"choice", q:"\\(z_{12}\\) = السطر الأول من \\(P\\) × العمود التاني من \\(Q\\):",
+     options:["4","8","-3","6"], answer:0,
+     hint:"\\(2\\times3+(-1)\\times2\\).", explain:"\\(z_{12}=6-2=4\\)", result:{label:"\\(z_{12}\\)", value:"4"}},
+    {type:"choice", q:"السطر التاني من الناتج \\((z_{21},z_{22})\\):",
+     options:["\\((1,\\ 5)\\)","\\((1,\\ 3)\\)","\\((0,\\ 2)\\)","\\((3,\\ 5)\\)"], answer:0,
+     hint:"\\((1,1)\\) ضرب كل عمود.", explain:"\\(z_{21}=1+0=1\\) ← \\(z_{22}=3+2=5\\)", result:{label:"الناتج", value:"\\(\\begin{bmatrix}2&4\\\\1&5\\end{bmatrix}\\)"}}
+  ],
+  finish: "<p>جرّب تحسب \\(Q\\cdot P\\) لحالك: رح يطلع \\(\\begin{bmatrix}5&2\\\\2&2\\end{bmatrix}\\) — الضرب مو تبديلي.</p>"
+});
+
+renderFlashcards("activity-flash", CH5_FLASHCARDS);
+</script>
+</body>
+</html>

@@ -482,14 +482,14 @@ const CH9_POOL = [
   "type": "mcq",
   "question": "مشتق \\(y=\\ln(3x^2-2x+1)\\) هو:",
   "options": [
-   "\\(\\frac{6x-2}{3x^2-2x+1}\\)",
+   "\\(\\frac{6x+2}{3x^2-2x+1}\\)",
    "\\(\\frac{1}{3x^2-2x+1}\\)",
    "\\(6x-2\\)",
    "\\(\\frac{6x}{3x^2-2x+1}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\frac{6x-2}{3x^2-2x+1}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\frac{f'}{f}\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(\\frac{6x-2}{3x^2-2x+1}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\frac{f'}{f}\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-9-lesson.html#logexp",
    "label": "مشتق التابع اللوغاريتمي والأسي"
@@ -536,14 +536,14 @@ const CH9_POOL = [
   "type": "mcq",
   "question": "مشتق \\(y=e^{x^2-3x}\\) هو:",
   "options": [
-   "\\((2x-3)e^{x^2-3x}\\)",
+   "\\((2x+3)e^{x^2-3x}\\)",
    "\\(e^{x^2-3x}\\)",
    "\\((x^2-3x)e^{x^2-3x-1}\\)",
    "\\(2x\\,e^{x^2-3x}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\((2x-3)e^{x^2-3x}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(f'=2x-3\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\((2x-3)e^{x^2-3x}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(f'=2x-3\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-9-lesson.html#logexp",
    "label": "مشتق التابع اللوغاريتمي والأسي"
@@ -609,13 +609,13 @@ const CH9_POOL = [
   "question": "ليكن التابع \\(y=\\ln(5x-3)\\)، ولنفرض أن مشتقه \\(y'=\\frac{k}{5x-3}\\). عندئذ قيمة \\(k\\):",
   "options": [
    "\\(1\\)",
-   "\\(5\\)",
+   "\\(-5\\)",
    "\\(-3\\)",
    "\\(\\frac{1}{5}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 1,
-  "explanation": "<b>✅ الجواب الصحيح: \\(5\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\frac{f'}{f}=\\frac{5}{5x-3}\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(k=5\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(5\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\frac{f'}{f}=\\frac{5}{5x-3}\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(k=5\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-9-lesson.html#logexp",
    "label": "مشتق التابع اللوغاريتمي والأسي"
@@ -716,14 +716,14 @@ const CH9_POOL = [
   "type": "mcq",
   "question": "مشتق \\(y=\\sqrt{x^2-3x+1}\\) هو:",
   "options": [
-   "\\(\\frac{2x-3}{2\\sqrt{x^2-3x+1}}\\)",
+   "\\(\\frac{2x+3}{2\\sqrt{x^2-3x+1}}\\)",
    "\\(\\frac{1}{2\\sqrt{x^2-3x+1}}\\)",
    "\\(\\frac{2x-3}{\\sqrt{x^2-3x+1}}\\)",
    "\\(2\\sqrt{2x-3}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\frac{2x-3}{2\\sqrt{x^2-3x+1}}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\((\\sqrt f)'=\\frac{f'}{2\\sqrt f}\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(\\frac{2x-3}{2\\sqrt{x^2-3x+1}}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\((\\sqrt f)'=\\frac{f'}{2\\sqrt f}\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-9-lesson.html#root",
    "label": "مشتق التابع الأصم"

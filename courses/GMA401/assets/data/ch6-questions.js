@@ -53,14 +53,14 @@ const CH6_POOL = [
   "type": "mcq",
   "question": "قيمة المعين \\(\\begin{vmatrix}-2 & 3 \\\\ -1 & 4\\end{vmatrix}\\) هي:",
   "options": [
-   "-5",
+   "\\(-4\\)",
    "-11",
    "5",
    "11",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: -5</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\((-2)(4)-(3)(-1)\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(=-8+3=-5\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة -5</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\((-2)(4)-(3)(-1)\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(=-8+3=-5\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-6-lesson.html#det2",
    "label": "المعين من المرتبة الثانية"
@@ -368,14 +368,14 @@ const CH6_POOL = [
   "type": "mcq",
   "question": "معين مصفوفة أمثال الجملة \\(3x-y+z=3,\\ x+y-2z=2,\\ 3x-2y+4z=1\\) (نموذج امتحاني): \\(\\begin{vmatrix}3 & -1 & 1 \\\\ 1 & 1 & -2 \\\\ 3 & -2 & 4\\end{vmatrix}\\) هي:",
   "options": [
-   "5",
+   "\\(6\\)",
    "-5",
    "15",
    "1",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: 5</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">النشر وفق السطر الأول:</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(3(4-4)-(-1)(4+6)+1(-2-3)\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(=0+10-5=5\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة 5</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">النشر وفق السطر الأول:</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(3(4-4)-(-1)(4+6)+1(-2-3)\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(=0+10-5=5\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-6-lesson.html#bezout",
    "label": "المعين من المرتبة الثالثة: طريقة النشر (بيزوت)"
@@ -523,14 +523,14 @@ const CH6_POOL = [
   "type": "mcq",
   "question": "بطريقة ساروس، قيمة المعين (مثال المقرر) \\(\\begin{vmatrix}7 & 0 & 2 \\\\ 0 & 1 & 3 \\\\ 2 & -1 & 0\\end{vmatrix}\\) هي:",
   "options": [
-   "17",
+   "\\(18\\)",
    "-17",
    "-25",
    "25",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: 17</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">النازلة</span><div class=\"m\">\\(0+0+0=0\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">الصاعدة</span><div class=\"m\">\\(4-21+0=-17\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\Delta=0-(-17)=17\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة 17</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">النازلة</span><div class=\"m\">\\(0+0+0=0\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">الصاعدة</span><div class=\"m\">\\(4-21+0=-17\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\Delta=0-(-17)=17\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-6-lesson.html#sarrus",
    "label": "طريقة الأقطار المتوازية (ساروس)"

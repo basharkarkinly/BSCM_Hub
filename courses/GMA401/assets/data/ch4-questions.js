@@ -82,14 +82,14 @@ const CH4_POOL = [
   "type": "mcq",
   "question": "الحد التاسع والتسعون من المتتالية الحسابية \\(13,\\ 15,\\ 17,\\dots\\) هو:",
   "options": [
-   "209",
+   "\\(-209\\)",
    "211",
    "198",
    "111",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: 209</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(a=13,\\ r=2,\\ n=99\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(a_{99}=13+98\\times2=209\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة 209</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(a=13,\\ r=2,\\ n=99\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(a_{99}=13+98\\times2=209\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-4-lesson.html#arith",
    "label": "المتتالية الحسابية: الحد العام وخواصها"
@@ -306,14 +306,14 @@ const CH4_POOL = [
   "type": "mcq",
   "question": "مجموع العشرين حداً الأولى من المتتالية \\(3,\\ 7,\\ 11,\\dots\\) هو:",
   "options": [
-   "820",
+   "\\(-820\\)",
    "800",
    "410",
    "1640",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: 820</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(a=3,\\ r=4,\\ n=20\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(S_{20}=\\frac{20}{2}[2(3)+19\\times4]\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(=10\\times82=820\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة 820</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(a=3,\\ r=4,\\ n=20\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(S_{20}=\\frac{20}{2}[2(3)+19\\times4]\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(=10\\times82=820\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-4-lesson.html#asum",
    "label": "مجموع حدود المتتالية الحسابية"
@@ -432,14 +432,14 @@ const CH4_POOL = [
   "type": "mcq",
   "question": "متتالية حسابية متزايدة من 4 حدود حدها الأول 5، وحاصل جداء طرفيها يقل بـ72 عن جداء الثاني والثالث (مثال المقرر 11-4). مجموعها:",
   "options": [
-   "56",
+   "\\(-56\\)",
    "48",
    "72",
    "38",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: 56</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">الحدود</span><div class=\"m\">\\(5,\\ 5+b,\\ 5+2b,\\ 5+3b\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(5(5+3b)+72=(5+b)(5+2b)\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(b^2=36\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(b=6\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(S=\\frac42[2\\times5+3\\times6]=56\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة 56</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">الحدود</span><div class=\"m\">\\(5,\\ 5+b,\\ 5+2b,\\ 5+3b\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(5(5+3b)+72=(5+b)(5+2b)\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(b^2=36\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(b=6\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(S=\\frac42[2\\times5+3\\times6]=56\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-4-lesson.html#aprob",
    "label": "مسائل على المتتالية الحسابية"
@@ -710,14 +710,14 @@ const CH4_POOL = [
   "type": "mcq",
   "question": "الكسر العادي المولد للكسر \\(0.252121\\dots=0.25\\overline{21}\\) هو:",
   "options": [
-   "\\(\\frac{2496}{9900}\\)",
+   "\\(- \\frac{208}{825}\\)",
    "\\(\\frac{2521}{9999}\\)",
    "\\(\\frac{25}{99}\\)",
    "\\(\\frac{21}{99}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\frac{2496}{9900}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(0.25+\\frac1{100}(0.\\overline{21})\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(0.\\overline{21}=\\frac{21}{99}\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\frac{25}{100}+\\frac{21}{9900}=\\frac{2475+21}{9900}=\\frac{2496}{9900}\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(\\frac{2496}{9900}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(0.25+\\frac1{100}(0.\\overline{21})\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(0.\\overline{21}=\\frac{21}{99}\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\frac{25}{100}+\\frac{21}{9900}=\\frac{2475+21}{9900}=\\frac{2496}{9900}\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-4-lesson.html#gsum",
    "label": "مجموع حدود المتتالية الهندسية"

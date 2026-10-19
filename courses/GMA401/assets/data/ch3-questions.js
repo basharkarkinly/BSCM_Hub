@@ -751,14 +751,14 @@ const CH3_POOL = [
   "type": "mcq",
   "question": "حل المعادلة \\(|9x-7|=|2x-5|\\) (مثال المقرر 27-3) هو:",
   "options": [
-   "\\(\\{\\frac27,\\frac{12}{11}\\}\\)",
+   "\\(\\{\\frac27,-\\frac{12}{11}\\}\\)",
    "\\(\\{-\\frac27,\\frac{12}{11}\\}\\)",
    "\\(\\{\\frac27\\}\\)",
    "\\(\\{\\frac{7}{2},\\frac{11}{12}\\}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac27,\\frac{12}{11}\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(9x-7=2x-5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(7x=2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac27\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(9x-7=5-2x\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(11x=12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac{12}{11}\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(\\{\\frac27,\\frac{12}{11}\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(9x-7=2x-5\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(7x=2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac27\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(9x-7=5-2x\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(11x=12\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac{12}{11}\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -877,14 +877,14 @@ const CH3_POOL = [
   "type": "mcq",
   "question": "حل المعادلة \\(|5x+4|=10\\) هو:",
   "options": [
-   "\\(\\{\\frac65,-\\frac{14}{5}\\}\\)",
+   "\\(\\{\\frac65,\\frac{14}5\\}\\)",
    "\\(\\{2,-2\\}\\)",
    "\\(\\{\\frac65\\}\\)",
    "\\(\\{-\\frac65,\\frac{14}{5}\\}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{\\frac65,-\\frac{14}{5}\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(5x+4=10\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac65\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(5x+4=-10\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac{14}{5}\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(\\{\\frac65,-\\frac{14}{5}\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">إما</span><div class=\"m\">\\(5x+4=10\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac65\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">أو</span><div class=\"m\">\\(5x+4=-10\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=-\\frac{14}{5}\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#absq",
    "label": "معادلات القيمة المطلقة"
@@ -1014,14 +1014,14 @@ const CH3_POOL = [
   "type": "mcq",
   "question": "حل المعادلة \\(\\dfrac{3^{4x+3}}{9^{x+4}}=1\\) (نموذج امتحاني) هو:",
   "options": [
-   "\\(x=\\frac52\\)",
+   "\\(x=\\frac{1}{3}\\)",
    "\\(x=\\frac12\\)",
    "\\(x=-\\frac52\\)",
    "\\(x=5\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(x=\\frac52\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(9^{x+4}=3^{2x+8}\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(4x+3=2x+8\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(2x=5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac52\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(x=\\frac52\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(9^{x+4}=3^{2x+8}\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(4x+3=2x+8\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(2x=5\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x=\\frac52\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-3-lesson.html#expq",
    "label": "المعادلات الأسية"

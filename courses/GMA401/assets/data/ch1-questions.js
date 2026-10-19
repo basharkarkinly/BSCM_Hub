@@ -459,13 +459,13 @@ const CH1_POOL = [
   "question": "القيمة المطلقة للعدد \\(|-5|\\) هي:",
   "options": [
    "\\(-5\\)",
-   "\\(5\\)",
+   "\\(6\\)",
    "\\(\\pm5\\)",
    "\\(0\\)",
    "غير ذلك"
   ],
-  "answerIndex": 1,
-  "explanation": "<b>✅ الجواب الصحيح: \\(5\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">\\(|x|=-x\\) إذا \\(x\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(|-5|=-(-5)=5\\)</div></div><b>❌ انتبه:</b> القيمة المطلقة ما بتكون سالبة أبداً.",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(5\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">\\(|x|=-x\\) إذا \\(x\\lt0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(|-5|=-(-5)=5\\)</div></div><b>❌ انتبه:</b> القيمة المطلقة ما بتكون سالبة أبداً.<div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#abs",
    "label": "القيمة المطلقة وخواصها"
@@ -672,13 +672,13 @@ const CH1_POOL = [
   "question": "\\(\\sqrt{(-9)^2}\\) يساوي:",
   "options": [
    "-9",
-   "9",
+   "\\(10\\)",
    "81",
    "\\(\\pm9\\)",
    "غير ذلك"
   ],
-  "answerIndex": 1,
-  "explanation": "<b>✅ الجواب الصحيح: 9</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\sqrt{x^2}=|x|\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\sqrt{(-9)^2}=|-9|=9\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة 9</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\sqrt{x^2}=|x|\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\sqrt{(-9)^2}=|-9|=9\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#abs",
    "label": "القيمة المطلقة وخواصها"
@@ -809,13 +809,13 @@ const CH1_POOL = [
   "question": "قيمة \\(\\dfrac{2^{-3}}{3^0}\\) هي:",
   "options": [
    "\\(-8\\)",
-   "\\(\\frac{1}{8}\\)",
+   "\\(\\frac{9}{8}\\)",
    "0",
    "\\(-\\frac{1}{8}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 1,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\frac{1}{8}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(3^0=1\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(2^{-3}=\\frac{1}{2^3}=\\frac18\\)</div></div><b>❌ انتبه:</b> الأس السالب بيقلب العدد، ما بيخليه سالب.",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(\\frac{1}{8}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(3^0=1\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(2^{-3}=\\frac{1}{2^3}=\\frac18\\)</div></div><b>❌ انتبه:</b> الأس السالب بيقلب العدد، ما بيخليه سالب.<div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#powers",
    "label": "القوى (الأسس)"
@@ -1053,14 +1053,14 @@ const CH1_POOL = [
   "type": "mcq",
   "question": "\\(\\sqrt{\\frac{27}{4}}\\) يساوي:",
   "options": [
-   "\\(\\frac{3\\sqrt{3}}{2}\\)",
+   "\\(- \\frac{3 \\sqrt{3}}{2}\\)",
    "\\(\\frac{9}{2}\\)",
    "\\(\\frac{3\\sqrt{3}}{4}\\)",
    "\\(\\frac{27}{2}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\frac{3\\sqrt{3}}{2}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\sqrt{\\frac{27}{4}}=\\frac{\\sqrt{27}}{\\sqrt4}\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\sqrt{27}=\\sqrt{9\\cdot3}=3\\sqrt3\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\frac{3\\sqrt3}{2}\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(\\frac{3\\sqrt{3}}{2}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(\\sqrt{\\frac{27}{4}}=\\frac{\\sqrt{27}}{\\sqrt4}\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\sqrt{27}=\\sqrt{9\\cdot3}=3\\sqrt3\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\frac{3\\sqrt3}{2}\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#roots",
    "label": "الجذور"
@@ -1277,14 +1277,14 @@ const CH1_POOL = [
   "type": "mcq",
   "question": "قيمة \\(\\log 1000\\) (الأساس 10) هي:",
   "options": [
-   "3",
+   "\\(-3\\)",
    "100",
    "10",
    "4",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: 3</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">\\(\\log x\\) بدون أساس = أساس 10</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(10^3=1000\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">3</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة 3</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">\\(\\log x\\) بدون أساس = أساس 10</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(10^3=1000\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">3</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-1-lesson.html#logs",
    "label": "اللوغاريتمات"

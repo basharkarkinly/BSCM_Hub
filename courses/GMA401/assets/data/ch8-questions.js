@@ -288,14 +288,14 @@ const CH8_POOL = [
   "type": "mcq",
   "question": "مجموعة تعريف التابع \\(y=\\sqrt{2x-3}\\) هي:",
   "options": [
-   "\\([\\frac32,\\infty[\\)",
+   "\\([-\\frac32,\\infty[\\)",
    "\\(]\\frac32,\\infty[\\)",
    "\\(]-\\infty,\\frac32]\\)",
    "\\(\\mathbb{R}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\([\\frac32,\\infty[\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">جذر تربيعي (مو بالمقام)</span><div class=\"m\">\\(2x-3\\ge0\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x\\ge\\frac32\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\([\\frac32,\\infty[\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">جذر تربيعي (مو بالمقام)</span><div class=\"m\">\\(2x-3\\ge0\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x\\ge\\frac32\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-8-lesson.html#domain",
    "label": "مجموعة تعريف التابع"
@@ -342,14 +342,14 @@ const CH8_POOL = [
   "type": "mcq",
   "question": "مجموعة تعريف التابع \\(f(x)=\\frac{x}{x^2-9}\\) هي:",
   "options": [
-   "\\(\\mathbb{R}\\setminus\\{-3,3\\}\\)",
+   "\\(\\mathbb{R}\\setminus\\{-9,9\\}\\)",
    "\\(\\mathbb{R}\\setminus\\{9\\}\\)",
    "\\(]-3,3[\\)",
    "\\(\\mathbb{R}\\setminus\\{0\\}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\mathbb{R}\\setminus\\{-3,3\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(x^2-9\\ne0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x\\ne\\pm3\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(\\mathbb{R}\\setminus\\{-3,3\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(x^2-9\\ne0\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x\\ne\\pm3\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-8-lesson.html#domain",
    "label": "مجموعة تعريف التابع"
@@ -555,14 +555,14 @@ const CH8_POOL = [
   "type": "mcq",
   "question": "\\(\\lim_{x\\to3}\\frac{x^2-4x+3}{x-3}\\) (مثال المقرر) يساوي:",
   "options": [
-   "2",
+   "\\(-2\\)",
    "\\(\\frac00\\)",
    "0",
    "3",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: 2</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">التعويض بيعطي</span><div class=\"m\">\\(\\frac00\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">حالة عدم تعيين</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">نحلل</span><div class=\"m\">\\(\\frac{(x-3)(x-1)}{x-3}=x-1\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\lim_{x\\to3}(x-1)=2\\)</div></div><b>❌ انتبه:</b> \\(\\frac00\\) مو جواب — هي إشارة إنو لازم نحلل ونختصر.",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة 2</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\"><span class=\"sol-lbl\">التعويض بيعطي</span><div class=\"m\">\\(\\frac00\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">حالة عدم تعيين</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">نحلل</span><div class=\"m\">\\(\\frac{(x-3)(x-1)}{x-3}=x-1\\)</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(\\lim_{x\\to3}(x-1)=2\\)</div></div><b>❌ انتبه:</b> \\(\\frac00\\) مو جواب — هي إشارة إنو لازم نحلل ونختصر.<div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-8-lesson.html#lim",
    "label": "النهايات وطرائق حسابها"
@@ -764,14 +764,14 @@ const CH8_POOL = [
   "type": "mcq",
   "question": "\\(\\lim_{x\\to\\infty}\\frac{2x+7}{x^2+3}\\) يساوي:",
   "options": [
-   "0",
+   "\\(1\\)",
    "2",
    "\\(\\infty\\)",
    "\\(\\frac23\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: 0</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">درجة البسط أصغر من درجة المقام</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">النهاية صفر</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة 0</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">درجة البسط أصغر من درجة المقام</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">النهاية صفر</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-8-lesson.html#liminf",
    "label": "النهايات عند اللانهاية"

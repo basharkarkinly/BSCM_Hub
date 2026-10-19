@@ -469,14 +469,14 @@ const CH2_POOL = [
   "type": "mcq",
   "question": "جذور المعادلة \\(x^3+3x^2-10x-24=0\\) هي:",
   "options": [
-   "\\(\\{3,-2,-4\\}\\)",
+   "\\(\\{3,\\ 2,\\ -4\\}\\)",
    "\\(\\{-3,2,4\\}\\)",
    "\\(\\{3,2,4\\}\\)",
    "\\(\\{1,-2,-4\\}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{3,-2,-4\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">قواسم 24</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">جرّب \\(x=3\\)</span><div class=\"m\">\\(27+27-30-24=0\\) ✓</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\((x^3+3x^2-10x-24)\\div(x-3)=x^2+6x+8\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x^2+6x+8=(x+2)(x+4)\\)</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(\\{3,-2,-4\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">قواسم 24</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">جرّب \\(x=3\\)</span><div class=\"m\">\\(27+27-30-24=0\\) ✓</div></div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\((x^3+3x^2-10x-24)\\div(x-3)=x^2+6x+8\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(x^2+6x+8=(x+2)(x+4)\\)</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-2-lesson.html#degn",
    "label": "المعادلة من الدرجة n (بيزوت والجذور الكسرية)"
@@ -505,14 +505,14 @@ const CH2_POOL = [
   "type": "mcq",
   "question": "جذور المعادلة \\(x^3-5x^2-2x+24=0\\) هي:",
   "options": [
-   "\\(\\{3,4,-2\\}\\)",
+   "\\(\\{3,\\ -4,\\ 2\\}\\)",
    "\\(\\{-3,-4,2\\}\\)",
    "\\(\\{2,3,4\\}\\)",
    "\\(\\{1,4,6\\}\\)",
    "غير ذلك"
   ],
-  "answerIndex": 0,
-  "explanation": "<b>✅ الجواب الصحيح: \\(\\{3,4,-2\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(x=3\\): \\(27-45-6+24=0\\) ✓</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">القسمة</span><div class=\"m\">\\(x^2-2x-8=(x-4)(x+2)\\)</div></div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(\\{3,4,-2\\}\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(x=3\\): \\(27-45-6+24=0\\) ✓</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">القسمة</span><div class=\"m\">\\(x^2-2x-8=(x-4)(x+2)\\)</div></div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-2-lesson.html#degn",
    "label": "المعادلة من الدرجة n (بيزوت والجذور الكسرية)"

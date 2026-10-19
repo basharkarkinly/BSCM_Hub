@@ -208,11 +208,11 @@ const CH7_POOL = [
    "\\(3\\)",
    "\\(7\\)",
    "\\(-10\\)",
-   "\\(2\\)",
+   "\\(-2\\)",
    "غير ذلك"
   ],
-  "answerIndex": 3,
-  "explanation": "<b>✅ الجواب الصحيح: \\(2\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(Adj=(A^c)^T\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">عنصر \\((1,2)\\) بالمساعدة = عنصر \\((2,1)\\) بالمرافقات</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(M(a_{21})=\\begin{vmatrix}-1&1\\\\-2&4\\end{vmatrix}=-4+2=-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">\\(2+1\\) فردي</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">المرافق</span><div class=\"m\">\\(=2\\)</div></div></div><b>❌ انتبه:</b> المساعدة مدور المرافقات: بدّل السطر بالعمود.",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة \\(2\\)</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step m\">\\(Adj=(A^c)^T\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">عنصر \\((1,2)\\) بالمساعدة = عنصر \\((2,1)\\) بالمرافقات</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step m\">\\(M(a_{21})=\\begin{vmatrix}-1&1\\\\-2&4\\end{vmatrix}=-4+2=-2\\)</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">\\(2+1\\) فردي</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\"><span class=\"sol-lbl\">المرافق</span><div class=\"m\">\\(=2\\)</div></div></div><b>❌ انتبه:</b> المساعدة مدور المرافقات: بدّل السطر بالعمود.<div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-7-lesson.html#inv3",
    "label": "مقلوب مصفوفة من المرتبة الثالثة (المصغرات والمرافقات والمساعدة)"
@@ -368,13 +368,13 @@ const CH7_POOL = [
   "question": "المصفوفة \\(B=\\begin{bmatrix}1&-1&2\\\\3&1&2\\\\2&3&-1\\end{bmatrix}\\):",
   "options": [
    "مقلوبها موجود",
-   "شاذة (\\(\\Delta=0\\)) فليس لها مقلوب",
+   "\\(-1\\)",
    "مقلوبها هي نفسها",
    "متناظرة",
    "غير ذلك"
   ],
-  "answerIndex": 1,
-  "explanation": "<b>✅ الجواب الصحيح: شاذة (\\(\\Delta=0\\)) فليس لها مقلوب</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">العمود الأول = العمود التاني + العمود التالت</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">المعين صفر</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">ما إلها مقلوب</div></div>",
+  "answerIndex": 4,
+  "explanation": "<b>✅ الجواب الصحيح: غير ذلك — القيمة الصحيحة شاذة (\\(\\Delta=0\\)) فليس لها مقلوب</b><br><b>🧮 كيف حلّيناها:</b><div class=\"sol\"><div class=\"sol-step\">العمود الأول = العمود التاني + العمود التالت</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">المعين صفر</div><div class=\"sol-arrow\">⬇</div><div class=\"sol-step\">ما إلها مقلوب</div></div><div class=\"sol-step\" style=\"margin-top:6px\">القيمة الصحيحة مو بين الخيارات الأربعة ← «غير ذلك»</div>",
   "ref": {
    "url": "chapters/chapter-7-lesson.html#inv3",
    "label": "مقلوب مصفوفة من المرتبة الثالثة (المصغرات والمرافقات والمساعدة)"

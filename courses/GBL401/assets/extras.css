@@ -1,0 +1,70 @@
+/* ============================================================
+   GBL401 — مكوّنات تفاعلية إضافية (لعبة التصنيف، الحالة العملية، ...)
+   منفصلة عن style.css المشترك حتى ما نلمس المحرك الأساسي.
+   ============================================================ */
+
+/* ---------- لعبة التصنيف (Tap-to-sort) ---------- */
+.x-sort{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow-sm); }
+.x-sort-top{ display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:.85rem; color:var(--muted); margin-bottom:10px; flex-wrap:wrap; }
+.x-sort-bar{ flex:1; min-width:120px; height:8px; border-radius:99px; background:#EEF1F7; overflow:hidden; }
+.x-sort-bar > div{ height:100%; width:0; background:linear-gradient(90deg,var(--teal),var(--amber)); transition:width .3s ease; }
+.x-sort-card{ background:var(--ink); color:#fff; border-radius:14px; padding:22px 18px; text-align:center; font-weight:700; font-size:1.02rem; line-height:1.8; min-height:92px; display:flex; align-items:center; justify-content:center; transition:background .25s ease, transform .25s ease; }
+.x-sort-card.ok{ background:var(--success); transform:scale(1.02); }
+.x-sort-card.no{ background:var(--danger); animation:shake .35s ease; }
+.x-sort-btns{ display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-top:14px; }
+.x-sort-btns button{ font-family:inherit; font-weight:700; font-size:.92rem; padding:12px 10px; border-radius:12px; border:2px solid var(--border); background:#fff; color:var(--ink); cursor:pointer; transition:all .15s ease; }
+.x-sort-btns button:hover{ border-color:var(--teal); background:#F1FBFA; }
+.x-sort-btns button:disabled{ opacity:.5; cursor:default; }
+.x-sort-hint{ min-height:1.6em; margin-top:12px; font-size:.9rem; color:var(--muted); text-align:center; }
+.x-sort-hint b{ color:var(--ink); }
+.x-sort-done{ text-align:center; padding:8px 4px; }
+.x-sort-done .big{ font-size:2rem; font-weight:900; color:var(--teal-dark); }
+.x-sort-buckets{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:16px; text-align:right; }
+.x-sort-buckets > div{ background:#F7F9FC; border:1px dashed var(--border); border-radius:12px; padding:10px 12px; font-size:.82rem; }
+.x-sort-buckets h5{ margin:0 0 6px; font-size:.86rem; color:var(--ink); }
+.x-sort-buckets ul{ margin:0; padding:0 16px 0 0; color:var(--muted); }
+
+
+@media (max-width:640px){
+  .x-sort-card{ font-size:.95rem; padding:18px 12px; }
+}
+
+/* ---------- توقيع الإعداد بالفوتر ---------- */
+.prepared-by{ margin:8px 0 4px; font-weight:800; font-size:.95rem; letter-spacing:.02em; direction:ltr; color:#FF9F1C; opacity:.95; }
+/* اسم المقرر بالهيدر أطول → نسمح له يلتف على الموبايل بدل ما يكسر الشريط */
+.topbar .brand{ line-height:1.35; }
+@media (max-width:640px){ .topbar .brand{ font-size:.86rem; } }
+
+/* ---------- بانر تنبيه (هاي منصة مراجعة فقط) ---------- */
+.disclaimer-banner{
+  background:#FFF3E0; border:1px solid #FFD794; color:var(--amber-dark);
+  border-radius:var(--radius); padding:16px 20px; margin:0 0 26px;
+  font-size:.92rem; line-height:1.8; display:flex; gap:12px; align-items:flex-start;
+}
+.disclaimer-banner .ico{ font-size:1.3rem; flex-shrink:0; }
+.disclaimer-banner b{ color:#8A5300; }
+/* ---------- بطاقة الحالة العملية ---------- */
+.case-card{
+  background:linear-gradient(135deg, #F4FBFA, #FFFFFF);
+  border:1px solid var(--border); border-radius:var(--radius);
+  padding:22px 24px; margin:18px 0;
+}
+.case-tag{
+  display:inline-block; background:var(--teal); color:#fff;
+  font-size:.72rem; font-weight:800; padding:4px 12px; border-radius:999px; margin-bottom:10px;
+}
+.case-card h4{ margin:0 0 10px; font-size:1.05rem; }
+.case-scenario{ color:var(--text); margin:0 0 14px; }
+.case-question{ margin:0 0 12px; }
+/* ---------- بطاقة كلمة مفتاحية (تظهر بمقدمة كل فصل) ---------- */
+.keyword-chip{
+  display:inline-block; background:#EAF1FF; color:#2C5CC5;
+  font-size:.8rem; padding:5px 12px; border-radius:999px; margin:3px 4px 3px 0;
+}
+.chapter-intro-box{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:20px 22px; margin-bottom:24px;
+}
+.chapter-intro-box h4{ margin:0 0 10px; font-size:.95rem; color:var(--teal-dark); }
+.chapter-intro-box ul{ margin:0; padding-inline-start:20px; }
+.chapter-intro-box li{ margin-bottom:5px; font-size:.92rem; }

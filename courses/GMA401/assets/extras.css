@@ -157,3 +157,19 @@
 .gp-num{ direction:ltr; }
 .syllabus-note{ background:#FFF3E0; border:2px solid #F59E0B; color:#7C2D12; border-radius:14px; padding:14px 18px; font-weight:800; font-size:1.02rem; line-height:1.9; margin:0 auto 18px; }
 .syllabus-note small{ display:block; font-weight:600; font-size:.88rem; color:#9A3412; }
+
+/* ---------- الحل خطوة بسطر + سهم بين الخطوات (حتى ما يختلط العربي بالرموز) ---------- */
+.sol{ margin:8px 0 6px; display:flex; flex-direction:column; align-items:stretch; gap:2px; }
+.sol-step{ background:#fff; border:1px solid var(--border); border-radius:10px; padding:6px 12px; line-height:1.9; }
+.sol-step.m, .sol-step .m{ direction:ltr; text-align:center; }
+.sol-step .m{ margin-top:2px; }
+.sol-lbl{ display:block; font-size:.85rem; font-weight:700; color:var(--muted); }
+.sol-arrow{ text-align:center; color:var(--teal); font-size:.9rem; line-height:1.2; }
+.feedback .sol-step{ background:rgba(255,255,255,.75); }
+.sol-hint{ font-weight:600; font-size:.85rem; color:var(--teal-dark); }
+.katex{ padding:0 2px; color:#1E3A8A; }
+.flash-front .katex{ color:#fff; }
+.flash-back .katex{ color:#065F46; }
+td .sol{ margin:0; }
+td .sol-step{ padding:2px 8px; border:none; background:transparent; }
+.callout .sol-step, .example .sol-step{ background:rgba(255,255,255,.7); }

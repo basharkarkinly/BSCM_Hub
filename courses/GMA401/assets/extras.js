@@ -128,6 +128,14 @@ function xParseMath(s){
   if(m) return Number(m[1]) / Number(m[2]);
   return /^-?\d+(?:\.\d+)?$/.test(t) ? Number(t) : NaN;
 }
+/* نفس قاعدة بنك الأسئلة: كل خطوة بسطر، والسهم ← بالنص بيصير سطر جديد مع ⬇ بين السطور */
+function xSolLines(html){
+  const parts = String(html).split("←").map(p => p.trim()).filter(Boolean);
+  if(parts.length < 2) return html;
+  const mathOnly = p => /^\\\(/.test(p) && !/[\u0600-\u06FF]/.test(p.replace(/\\\(.*?\\\)/g, ""));
+  return `<div class="sol">${parts.map((p, i) =>
+    (i ? `<div class="sol-arrow">⬇</div>` : "") + `<div class="sol-step${mathOnly(p) ? " m" : ""}">${p}</div>`).join("")}</div>`;
+}
 function renderMathProblem(containerId, cfg){
   const root = document.getElementById(containerId);
   let idx, clean;
@@ -155,7 +163,7 @@ function renderMathProblem(containerId, cfg){
       <div class="gp-actions">
         <button class="btn btn-teal" data-a="check">تحقق ✓</button>
         <button class="btn btn-ghost" data-a="hint">💡 تلميح</button>
-        <button class="btn btn-ghost" data-a="show">👁️ وريني الحل</button>
+        <button class="btn btn-ghost" data-a="show">👁️ ورجيني الحل</button>
       </div>`;
     const inEl = box.querySelector(".gp-input"), msg = box.querySelector(".gp-msg");
     const btn = a => box.querySelector(`[data-a="${a}"]`);
@@ -182,7 +190,7 @@ function renderMathProblem(containerId, cfg){
       else inEl.querySelectorAll(".gp-opt").forEach((x, i) => { x.disabled = true; x.classList.toggle("right", i === s.answer); });
       ["check","hint","show"].forEach(a => btn(a).style.display = "none");
       msg.className = "gp-msg ok";
-      msg.innerHTML = (usedHelp ? "👁️ هيك الحل:" : wrong ? "✓ صح بالنهاية!" : "✓ صح!") + `<div class="gp-explain">${s.explain}</div>`;
+      msg.innerHTML = (usedHelp ? "👁️ هيك الحل:" : wrong ? "✓ صح بالنهاية!" : "✓ صح!") + `<div class="gp-explain">${xSolLines(s.explain)}</div>`;
       const val = s.result.value ?? (s.shown ?? String(s.answer));
       document.getElementById(`${containerId}-board`).insertAdjacentHTML("beforeend",
         `<div class="gp-chip"><b>${s.result.label}</b><span>${val}</span></div>`);

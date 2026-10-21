@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 7 — التكاملات الرياضية وتطبيقاتها | GMA403</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body class="guard">
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GMA403 — الرياضيات الاقتصادية والإدارية</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل السابع</div>
+    <h1>التكاملات الرياضية وتطبيقاتها</h1>
+    <p>التكامل هو عكس الاشتقاق: منرجع من التابع الحدي للتابع الكلي، ومنحسب بالتكامل المحدود المساحات — وأهمها فائض المستهلك وفائض المنتج.</p>
+  </div>
+</div>
+<div class="wrap content">
+<div class="chapter-intro-box"><h4>🔑 كلمات مفتاحية</h4><div><span class="keyword-chip">Integration</span><span class="keyword-chip">Antiderivative</span><span class="keyword-chip">Indefinite integral</span><span class="keyword-chip">Definite integral</span><span class="keyword-chip">Consumer surplus</span><span class="keyword-chip">Producer surplus</span></div><h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4><ul><li>تعرف شرطي التابع الأصلي وتطبّق قواعد التكامل</li><li>توجد التكاليف أو الإيرادات الكلية من التابع الحدي وتحدد الثابت</li><li>تحسب تكامل محدود</li><li>تحسب <b>فائض المستهلك</b> و<b>فائض المنتج</b> هندسياً وجبرياً</li></ul></div>
+<div class="block" id="antideriv"><h2><span class="idx">1</span> التابع الأصلي وقواعد التكامل</h2>
+<p>\(Y\) تابع أصلي لـ\(y\) إذا: (1) \(Y'=y\)، و(2) إلهم نفس مجموعة التعريف. والتكامل غير المحدود دايماً معه ثابت \(+c\).</p>
+<table class="cmp"><tr><th>التابع</th><th>التكامل</th></tr><tr><td>\(a\) (ثابت)</td><td>\(ax+c\)</td></tr><tr><td>\(x^n\) (\(n\ne-1\))</td><td>\(\frac{x^{n+1}}{n+1}+c\)</td></tr><tr><td>\(\frac1x\)</td><td>\(\ln x+c\)</td></tr><tr><td>\(e^{ax}\)</td><td>\(\frac1a e^{ax}+c\)</td></tr><tr><td>\(\sin x\) ، \(\cos x\)</td><td>\(-\cos x+c\) ، \(\sin x+c\)</td></tr></table><p style="margin-top:10px">وتكامل مجموع = مجموع التكاملات، والثابت المضروب بيطلع برّا.</p><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>\(\int2\,dx=2x+c\) مو \(2+c\)، و \(\int x^4dx=\frac{x^5}5\) مو \(\frac{x^4}4\).</p></div></div>
+<div class="block" id="totals"><h2><span class="idx">2</span> من التابع الحدي إلى التابع الكلي</h2><table class="cmp"><tr><th>الحدي</th><th>بالتكامل بيعطي</th></tr><tr><td>التكاليف الحدية \(MC\)</td><td>التكاليف الكلية \(TC\) (الثابت = التكاليف الثابتة)</td></tr><tr><td>الإيرادات الحدية \(MR\)</td><td>الإيرادات الكلية \(TR\) (وغالباً \(TR(0)=0\) ← \(c=0\))</td></tr><tr><td>الأرباح الحدية</td><td>الأرباح الكلية (مو الإيرادات!)</td></tr></table><p style="margin-top:10px">ولإيجاد السعر (الطلب): \(P=AR=\frac{TR}{Q}\).</p><details class="accordion"><summary>✍️ مثال الملخص: \(MC=3x^2+x+8\) والتكاليف الثابتة 200، و \(MR=20-7x\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(TC=x^3+\frac{x^2}2+8x+200\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(TR=20x-\frac72x^2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(P=\frac{TR}x=20-\frac72x\)</div></div></details></div>
+<div class="block" id="definite"><h2><span class="idx">3</span> التكامل المحدود</h2>
+$$\int_a^b f(x)\,dx=\big[F(x)\big]_a^b=F(b)-F(a)$$
+<p>ما في ثابت هون، والناتج رقم (مساحة).</p>
+<details class="accordion"><summary>✍️ \(\int_1^2 3x^2\,dx\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(=\big[x^3\big]_1^2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(=8-1=7\)</div></div></details><details class="accordion"><summary>✍️ مثال الملخص: استخراج النفط بمعدل \(30t^2-4t^3\) خلال 5 سنوات <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(\int_0^5(30t^2-4t^3)dt\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(=\big[10t^3-t^4\big]_0^5\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(=1250-625=625\)</div></div></details></div>
+<div class="block" id="surplus"><h2><span class="idx">4</span> فائض المستهلك وفائض المنتج</h2><div class="quick-grid"><div class="quick-card"><b>فائض المستهلك</b>المساحة <strong>تحت منحنى الطلب وفوق سعر السوق</strong>: \(\int_{P_0}^{a/b}(a-bP)\,dP\)</div><div class="quick-card"><b>فائض المنتج</b>المساحة <strong>فوق منحنى العرض وتحت سعر السوق</strong>: \(\int_{c/d}^{P_0}(-c+dP)\,dP\)</div><div class="quick-card"><b>هندسياً</b>إذا التابع خطي: مساحة مثلث = (القاعدة × الارتفاع) ÷ 2</div></div><details class="accordion"><summary>✍️ سؤال دورات: \(Q=100-0.5P\) و \(P=40\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step"><span class="sol-lbl">نقاط الرسم</span><div class="m">\(P=0\Rightarrow Q=100\) ، \(Q=0\Rightarrow P=200\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الكمية عند 40</span><div class="m">\(Q=100-20=80\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">هندسياً</span><div class="m">\(\frac{(200-40)\times80}2=6400\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">جبرياً</span><div class="m">\(\big[100P-0.25P^2\big]_{40}^{200}=10000-3600=6400\)</div></div></div></details><details class="accordion"><summary>✍️ مثال الملخص: العرض \(S=-100+5P\) و \(P=50\): فائض المنتج <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(S=0\Rightarrow P=20\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(S(50)=150\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\frac{(50-20)\times150}2=2250\)</div></div></details></div>
+<div id="case-study-mount"></div>
+<div class="block" id="flash"><h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2><div id="activity-flash"></div></div>
+<div class="next-actions">
+    <a href="chapter-7-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-7-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الثامن)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GMA403",chapter_id:"7",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="../assets/math.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch7-flashcards.js"></script>
+<script>
+renderMathProblem("case-study-mount", {
+  title: "حلها معي: فائض المستهلك",
+  scenario: "تابع الطلب \\(Q=100-0.5P\\) والسلعة بتنباع بسعر \\(P=40\\). احسب فائض المستهلك. (سؤال دورات)",
+  steps: [
+    {type:"choice", q:"السعر اللي بينعدم عنده الطلب (\\(Q=0\\)):", options:["200","100","50","80"], answer:0,
+     hint:"\\(0=100-0.5P\\).", explain:"\\(0.5P=100\\) ← \\(P=200\\)", result:{label:"رأس المثلث", value:"\\(P=200\\)"}},
+    {type:"choice", q:"الكمية المطلوبة عند \\(P=40\\):", options:["80","60","120","20"], answer:0,
+     hint:"عوّض 40.", explain:"\\(100-0.5(40)\\) ← \\(=80\\)", result:{label:"الكمية", value:"\\(Q=80\\)"}},
+    {type:"choice", q:"فائض المستهلك (مساحة المثلث):", options:["6400","12800","3200","8000"], answer:0,
+     hint:"القاعدة \\(200-40\\) والارتفاع 80.", explain:"\\(\\frac{160\\times80}{2}\\) ← \\(=6400\\)", result:{label:"الجواب", value:"\\(6400\\)"}}
+  ],
+  finish: "<p>وجبرياً بنفس النتيجة: \\(\\int_{40}^{200}(100-0.5P)\\,dP=6400\\).</p>"
+});
+
+renderFlashcards("activity-flash", CH7_FLASHCARDS);
+</script>
+</body>
+</html>

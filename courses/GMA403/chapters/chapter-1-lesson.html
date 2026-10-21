@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 1 — مراجعة تأسيسية | GMA403</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body class="guard">
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GMA403 — الرياضيات الاقتصادية والإدارية</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الأول</div>
+    <h1>مراجعة تأسيسية</h1>
+    <p>تذكير سريع بالأساسيات اللي رح نحتاجها بكل المقرر: الأعداد وقواعد الحساب، النسب المئوية (التضخم والسعر قبل الضريبة)، الأسس واللوغاريتم، ومعنى إشارة المشتق.</p>
+  </div>
+</div>
+<div class="wrap content">
+<div class="chapter-intro-box"><h4>🔑 كلمات مفتاحية</h4><div><span class="keyword-chip">Real numbers</span><span class="keyword-chip">Percentage</span><span class="keyword-chip">Inflation rate</span><span class="keyword-chip">Powers & roots</span><span class="keyword-chip">Logarithm</span><span class="keyword-chip">Derivative sign</span></div><h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4><ul><li>تعرف خواص الأعداد الحقيقية وترتيب العمليات الحسابية</li><li>تحسب نسبة مئوية، معدل تضخم، و<b>السعر قبل الضريبة</b></li><li>تتذكر قواعد الأسس والجذور واللوغاريتم الأساسية</li><li>تعرف شو بتعني إشارة المشتق الأول والثاني</li></ul></div>
+<div class="block" id="numbers"><h2><span class="idx">1</span> الأعداد الحقيقية وقواعد الحساب</h2>
+<p>المجموعات: الطبيعية \(\mathbb{N}\) ⊂ الصحيحة \(\mathbb{Z}\) ⊂ الكسرية \(\mathbb{Q}\) ⊂ الحقيقية \(\mathbb{R}\). والجمع والضرب بـ\(\mathbb{R}\) <b>تبديليين وتجميعيين</b>، والضرب <b>توزيعي</b> على الجمع.</p>
+<table class="cmp"><tr><th>الخاصة</th><th>مثال</th></tr><tr><td>تبديلية</td><td>\(3+8=8+3\) · \(2\times5=5\times2\)</td></tr><tr><td>تجميعية</td><td>\((2+3)+4=2+(3+4)\)</td></tr><tr><td>توزيعية</td><td>\(a(b+c)=ab+ac\)</td></tr><tr><td>قسمة كسرين</td><td>\(\frac ab\div\frac cd=\frac ab\times\frac dc\) (جداء الأول بمقلوب التاني)</td></tr></table>
+<p style="margin-top:10px"><b>أولويات العمليات:</b> الأقواس ← القوى والجذور ← الضرب والقسمة ← الجمع والطرح. يعني <b>في ترتيب محدد</b>، مو «أي ترتيب».</p>
+<div class="quick-grid"><div class="quick-card"><b>المجال المغلق \([a,b]\)</b>\(a\le x\le b\) — بيضم الطرفين</div><div class="quick-card"><b>المجال المفتوح \(]a,b[\)</b>\(a\lt x\lt b\) — ما بيضم ولا طرف</div><div class="quick-card"><b>نصف مفتوح \(]a,b]\)</b>بيضم \(b\) بس، و<strong>ما بيضم \(a\)</strong></div></div><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>سؤال دورات: «\(]a,b]\) جميع الأعداد بين \(a\) و \(b\) بما فيها \(a\)» ← <b>خطأ</b>، لأن القوس مفتوح من جهة \(a\).</p></div></div>
+<div class="block" id="percent"><h2><span class="idx">2</span> النسب المئوية وتطبيقاتها</h2>
+<table class="cmp"><tr><th>الفكرة</th><th>القانون</th></tr><tr><td>النسبة المئوية</td><td>(الجزء ÷ الكل) × 100</td></tr><tr><td>معدل التضخم / نسبة التغير</td><td>(السعر الجديد − السعر القديم) ÷ السعر القديم × 100</td></tr><tr><td>مؤشر تغير الأسعار</td><td>الجديد ÷ القديم (مثلاً \(\frac{585}{500}=1.17\) يعني زيادة 17%)</td></tr><tr><td>السعر قبل الضريبة</td><td>\(P=\) سعر البيع ÷ \((1+t)\)</td></tr></table><details class="accordion"><summary>✍️ سؤال دورات: سعر بيع 1540 متضمناً ضريبة 10%، شو سعر التكلفة قبل الضريبة؟ <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(1540=P+0.1P\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(1540=P(1+0.1)=1.1P\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(P=\frac{1540}{1.1}=1400\)</div></div></details><details class="accordion"><summary>✍️ مثال الملخص: سلعة سعرها 200 وصار 250، شو معدل التضخم؟ <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(\frac{250-200}{200}\times100\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(=25\%\)</div></div></details><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>السعر قبل الضريبة <b>مو</b> \(1540-10\%\times1540=1386\)! الضريبة محسوبة على السعر الأصلي \(P\)، فمنقسم على \(1.1\).</p></div></div>
+<div class="block" id="powers"><h2><span class="idx">3</span> الأسس والجذور واللوغاريتم (تذكير)</h2><div class="quick-grid"><div class="quick-card"><b>القوة</b>\(a^n=a\times a\times\dots\times a\) (\(n\) مرة) · \(a^0=1\) · \(a^{-n}=\frac1{a^n}\)</div><div class="quick-card"><b>الجذر</b>\(\sqrt[n]{a}=a^{1/n}\) · \(\sqrt[n]{0}=0\) قيمة وحدة</div><div class="quick-card"><b>اللوغاريتم</b>\(\log 1=0\) · \(\log_x x=1\) · \(\ln=\log_e\)</div></div>
+<p style="margin-top:10px">القواعد التفصيلية للأسس واللوغاريتم رح نرجعلها بالفصل الخامس.</p>
+<details class="accordion"><summary>✍️ احسب \(2^3\times3^2\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step">\(2^3=8\) ، \(3^2=9\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(8\times9=72\)</div></div></details></div>
+<div class="block" id="deriv"><h2><span class="idx">4</span> تذكير بالمشتق: التزايد والتقعر</h2><table class="cmp"><tr><th>الإشارة</th><th>المعنى</th></tr><tr><td>\(f'(x)\gt0\)</td><td>التابع <b>متزايد</b></td></tr><tr><td>\(f'(x)\lt0\)</td><td>التابع <b>متناقص</b></td></tr><tr><td>\(f'(x)=0\) و \(f''(x)\lt0\)</td><td>تقعر نحو العينات السالبة (للأسفل) ← <b>نهاية عظمى</b></td></tr><tr><td>\(f'(x)=0\) و \(f''(x)\gt0\)</td><td>تقعر نحو العينات الموجبة (للأعلى) ← <b>نهاية صغرى</b></td></tr></table><div class="callout"><span class="tag">💡 بالاقتصاد</span><p>المشتق الأول لأي تابع اقتصادي (دخل، ربح، تكاليف) هو <b>التابع الحدي</b> (الهامشي) — تفاصيله بالفصل السادس.</p></div></div>
+<div class="block" id="apps"><h2><span class="idx">5</span> تطبيق: موازنة الدعاية والمبيعات</h2>
+<p>العلاقة بين المبيعات \(V\) وموازنة الدعاية \(P\) خطية: \(V=5000+10P\).</p>
+<details class="accordion"><summary>✍️ بدون دعاية؟ ولنوصل لمبيعات 20000 قديش لازم ندفع دعاية؟ <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step"><span class="sol-lbl">بدون دعاية</span><div class="m">\(V=5000+10(0)=5000\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(20000=5000+10P\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(P=\frac{15000}{10}=1500\)</div></div></details></div>
+<div id="case-study-mount"></div>
+<div class="block" id="flash"><h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2><div id="activity-flash"></div></div>
+<div class="next-actions">
+    <a href="chapter-1-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-1-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الثاني)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GMA403",chapter_id:"1",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="../assets/math.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch1-flashcards.js"></script>
+<script>
+renderMathProblem("case-study-mount", {
+  title: "حلها معي: السعر قبل الضريبة",
+  scenario: "سعر بيع أحد المنتجات 600 ل.س متضمناً ضريبة الاستهلاك البالغة 13%. شو سعر التكلفة قبل الضريبة؟ (تطبيق الملخص)",
+  steps: [
+    {type:"choice", q:"إذا سعر التكلفة \\(P\\)، فالضريبة هي:", options:["\\(0.13P\\)","\\(0.13\\times600\\)","\\(13P\\)","\\(P-13\\)"], answer:0,
+     hint:"الضريبة نسبة من السعر الأصلي مو من سعر البيع.", explain:"الضريبة = 13% من \\(P\\) ← \\(0.13P\\)", result:{label:"الضريبة", value:"\\(0.13P\\)"}},
+    {type:"choice", q:"معادلة سعر البيع:", options:["\\(600=1.13P\\)","\\(600=0.87P\\)","\\(P=600\\times1.13\\)","\\(600=P-0.13P\\)"], answer:0,
+     hint:"سعر البيع = السعر + الضريبة.", explain:"\\(600=P+0.13P\\) ← \\(600=1.13P\\)", result:{label:"المعادلة", value:"\\(600=1.13P\\)"}},
+    {type:"choice", q:"سعر التكلفة \\(P\\) تقريباً:", options:["531","522","678","587"], answer:0,
+     hint:"اقسم 600 على 1.13.", explain:"\\(P=\\frac{600}{1.13}\\) ← \\(\\approx531\\)", result:{label:"الجواب", value:"\\(P\\approx531\\)"}}
+  ],
+  finish: "<p>القاعدة: <b>السعر قبل الضريبة = سعر البيع ÷ (1 + نسبة الضريبة)</b>.</p>"
+});
+
+renderFlashcards("activity-flash", CH1_FLASHCARDS);
+</script>
+</body>
+</html>

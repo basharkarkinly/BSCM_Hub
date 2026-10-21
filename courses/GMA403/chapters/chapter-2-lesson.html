@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 2 — التوابع الصحيحة من الدرجتين الأولى والثانية | GMA403</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body class="guard">
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GMA403 — الرياضيات الاقتصادية والإدارية</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الثاني</div>
+    <h1>التوابع الصحيحة من الدرجتين الأولى والثانية</h1>
+    <p>توابع الدرجة الأولى والثانية وحل جمل المعادلات، وتطبيقاتها الاقتصادية: الإيرادات والتكاليف والربح، العرض والطلب وسعر التوازن، والدخل القومي.</p>
+  </div>
+</div>
+<div class="wrap content">
+<div class="chapter-intro-box"><h4>🔑 كلمات مفتاحية</h4><div><span class="keyword-chip">Linear function</span><span class="keyword-chip">Slope</span><span class="keyword-chip">Quadratic</span><span class="keyword-chip">Discriminant</span><span class="keyword-chip">Profit</span><span class="keyword-chip">Supply & Demand</span><span class="keyword-chip">Equilibrium</span><span class="keyword-chip">MPC / MPS</span></div><h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4><ul><li>تحسب ميل مستقيم وتدرس إشارة تابع من الدرجة الأولى والثانية</li><li>تحل جملة معادلتين خطيتين بالحذف أو التعويض</li><li>تكتب توابع التكاليف والإيرادات والربح وتعرف <b>متى المعمل رابح</b></li><li>تحسب <b>سعر وكمية التوازن</b> بمساواة العرض بالطلب</li><li>تحسب <b>الدخل التوازني</b> والنزعة الحدية للاستهلاك والادخار</li></ul></div>
+<div class="block" id="linear"><h2><span class="idx">1</span> تابع الدرجة الأولى: الميل والإشارة</h2>
+<p>الشكل العام \(y=ax+b\): خطه البياني <b>مستقيم دايماً</b>، ميله \(a\)، وجذره \(x=-\frac ba\). ومنرسمه بنقطتين.</p>
+<table class="cmp"><tr><th>الإشارة</th><th>قبل الجذر \(-\frac ba\)</th><th>بعد الجذر</th></tr><tr><td>\(y=ax+b\)</td><td>عكس إشارة \(a\)</td><td>نفس إشارة \(a\)</td></tr></table><details class="accordion"><summary>✍️ سؤال دورات: ميل المستقيم \(2y=4x-10\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(2y=4x-10\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">نقسم على 2</span><div class="m">\(y=2x-5\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">الميل \(a=2\)</div></div></details><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>الميل مو 4: لازم أول شي نخلي \(y\) لحالها.</p></div></div>
+<div class="block" id="systems"><h2><span class="idx">2</span> حل جملة معادلتين خطيتين</h2><div class="quick-grid"><div class="quick-card"><b>بيانياً</b>نرسم المستقيمين (نقطتين لكل واحد)، و<strong>نقطة التقاطع</strong> هي الحل المشترك.</div><div class="quick-card"><b>جبرياً</b>بالحذف (نضرب ونجمع/نطرح) أو بالتعويض (مجهول بدلالة التاني).</div></div><details class="accordion"><summary>✍️ \(y=x\) و \(y=6x-10\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(x=6x-10\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(5x=10\)</div><div class="sol-arrow">⬇</div><div class="sol-step">\(x=2\) ، \(y=2\)</div></div></details></div>
+<div class="block" id="quadratic"><h2><span class="idx">3</span> تابع الدرجة الثانية والمميز</h2>
+<p>\(ax^2+bx+c=0\): إذا أمثال \(x^2\) مو 1 منحسب المميز \(\Delta=b^2-4ac\)، وإذا 1 فينا نحلل مباشرة (عددين جداؤهم \(c\) ومجموعهم \(b\)).</p>
+<table class="cmp"><tr><th>\(\Delta\)</th><th>الحلول</th></tr><tr><td>\(\Delta\gt0\)</td><td>حلّين \(x=\frac{-b\pm\sqrt\Delta}{2a}\)</td></tr><tr><td>\(\Delta=0\)</td><td>حل وحيد (مضاعف)</td></tr><tr><td>\(\Delta\lt0\)</td><td><b>ما في حلول حقيقية</b> (مستحيلة)</td></tr></table>
+<p style="margin-top:10px"><b>الإشارة:</b> برّا الجذرين متل إشارة \(a\)، وبينهم عكسها. وإذا \(\Delta\lt0\) الإشارة دايماً متل \(a\) (مثلاً \(x^2+8\) دوماً موجبة).</p>
+<details class="accordion"><summary>✍️ سؤال دورات: حلول \(3x^2-27=0\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(3x^2=27\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x^2=9\)</div><div class="sol-arrow">⬇</div><div class="sol-step">\(x=+3\) أو \(x=-3\)</div></div></details></div>
+<div class="block" id="cost"><h2><span class="idx">4</span> الإيرادات والتكاليف والربح</h2><table class="cmp"><tr><th>التابع</th><th>القانون</th></tr><tr><td>التكاليف الكلية</td><td>\(C(x)=F_c+V(x)\) (ثابتة <b>+</b> متغيرة)</td></tr><tr><td>الإيرادات (الدخل الكلي)</td><td>\(R(x)=P(x)\cdot x\) (السعر × الكمية)</td></tr><tr><td>تابع الطلب = تابع السعر</td><td>\(D(x)=P(x)\)</td></tr><tr><td>الربح</td><td>\(F(x)=R(x)-C(x)\)</td></tr></table><div class="quick-grid"><div class="quick-card"><b>متى المعمل رابح؟</b>\(F(x)\gt0\): نحل بالمميز وندرس الإشارة</div><div class="quick-card"><b>متى الربح أعظمي؟</b>\(F'(x)=0\) ونتأكد \(F''\lt0\)</div></div><details class="accordion"><summary>✍️ مثال الملخص: \(P(x)=50-0.3x\) و \(C(x)=2.3x^2+4x+60\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(R(x)=(50-0.3x)x=50x-0.3x^2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(F(x)=R-C=-2.6x^2+46x-60\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">جذور الربح</span><div class="m">\(x_1\approx1.42\) ، \(x_2\approx16.27\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(a\lt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step">موجب بين الجذرين</div><div class="sol-arrow">⬇</div><div class="sol-step">رابح لما \(x\in]1.42,\,16.27[\)</div></div></details><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>«التكاليف الكلية = الثابتة − المتغيرة» ← <b>خطأ</b>، الصح <b>+</b>.</p></div></div>
+<div class="block" id="market"><h2><span class="idx">5</span> العرض والطلب وسعر التوازن</h2>
+<p>الطلب \(D=a-bP\) (علاقة <b>عكسية</b> مع السعر)، العرض \(S=-c+dP\) (علاقة <b>طردية</b>). <b>التوازن:</b> \(D=S\) ← الحل المشترك (نقطة تقاطع المنحنيين).</p>
+<div class="quick-grid"><div class="quick-card"><b>السلعة البديلة</b>سعر سلعة ↑ ← الطلب على بديلتها ↑ : <strong>طردية</strong></div><div class="quick-card"><b>السلعة المكملة</b>سعر سلعة ↑ ← الطلب على مكملتها ↓ : <strong>عكسية</strong></div><div class="quick-card"><b>مو دايماً خطية</b>العرض والطلب ممكن يكونو غير خطيين (درجة ثانية، كسر...)</div></div><details class="accordion"><summary>✍️ سؤال دورات: \(Q_D=120-0.3P\) و \(Q_S=-90+0.4P\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(120-0.3P=-90+0.4P\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(210=0.7P\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(P^*=300\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الكمية</span><div class="m">\(Q^*=120-0.3(300)=30\)</div></div></div></details>
+<div id="activity-sort" style="margin-top:16px;"></div>
+<p style="margin-top:10px"><b>طلب غير خطي بدلالة الزمن:</b> إذا \(Q(P)\) و \(P(t)\) معطيين، منعوّض \(P(t)\) بـ\(Q\) لنحصل \(Q(t)\)، و«اللحظة الحالية» يعني \(t=0\).</p>
+<div class="example"><span class="tag">⚠️ فخ امتحان</span><p>إذا الناتج (300) مو بالخيارات ← الجواب «غير ذلك»، لا تختار 210 (هي \(0.7P\) مو \(P\)).</p></div></div>
+<div class="block" id="income"><h2><span class="idx">6</span> الدخل القومي: الاستهلاك والادخار</h2><table class="cmp"><tr><th>الفكرة</th><th>القانون</th></tr><tr><td>الدخل</td><td>\(Y=C+I\) (استهلاك + ادخار/استثمار)</td></tr><tr><td>تابع الاستهلاك</td><td>\(C=\alpha+\beta Y\)</td></tr><tr><td>النزعة الحدية للاستهلاك</td><td>\(MPC=\beta\)</td></tr><tr><td>النزعة الحدية للادخار</td><td>\(MPS=1-\beta\) ، و \(MPC+MPS=1\)</td></tr><tr><td>مع حكومة وضرائب</td><td>\(Y=C+I+G\) ، \(C=\alpha+\beta(Y-T)\) ، \(T=rY\)</td></tr></table><details class="accordion"><summary>✍️ سؤال دورات: \(C=70+0.8Y\) و \(I=20\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(Y=70+0.8Y+20\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(0.2Y=90\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(Y^*=450\)</div></div></details><details class="accordion"><summary>✍️ مثال الملخص: \(C=30+0.8(Y-T)\) ، \(T=0.2Y\) ، \(I=30\) ، \(G=18\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(Y=30+0.8(Y-0.2Y)+30+18\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(Y=78+0.64Y\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(0.36Y=78\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(Y^*\approx216.67\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">حصيلة الضريبة</span><div class="m">\(T=0.2Y\approx43.33\)</div></div></div></details><div class="callout"><span class="tag">💡 الادخار</span><p>إذا \(Y=C+S\) و \(C=aY+b\) ← \(S=Y-C=(1-a)Y-b\).</p></div></div>
+<div id="case-study-mount"></div>
+<div class="block" id="flash"><h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2><div id="activity-flash"></div></div>
+<div class="next-actions">
+    <a href="chapter-2-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-2-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الثالث)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GMA403",chapter_id:"2",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="../assets/math.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch2-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "شو نوع العلاقة؟",
+  buckets: [{key:"t", label:"↗️ طردية"}, {key:"e", label:"↘️ عكسية"}],
+  items: [
+    {text:"السعر والكمية المطلوبة", bucket:"e", why:"كل ما غلي السعر بيقل الطلب."},
+    {text:"السعر والكمية المعروضة", bucket:"t", why:"سعر أعلى يشجع المنتج يعرض أكتر."},
+    {text:"سعر سلعة والطلب على بديلتها", bucket:"t", why:"غلي الشاي ← الناس بتروح عالقهوة."},
+    {text:"سعر سلعة والطلب على مكملتها", bucket:"e", why:"غليت السيارات ← بيقل الطلب على الإطارات."},
+    {text:"الدخل القومي والاستهلاك", bucket:"t", why:"الاستهلاك والادخار بيزيدو مع زيادة الدخل."}
+  ]
+});
+
+renderMathProblem("case-study-mount", {
+  title: "حلها معي: توازن السوق",
+  scenario: "تابع الطلب \\(D=120-0.2P\\) وتابع العرض \\(S=-90+0.5P\\). أوجد سعر وكمية التوازن. (تطبيق الملخص)",
+  steps: [
+    {type:"choice", q:"شرط التوازن:", options:["\\(120-0.2P=-90+0.5P\\)","\\(120-0.2P=0\\)","\\(-90+0.5P=0\\)","\\(120=0.5P\\)"], answer:0,
+     hint:"العرض = الطلب.", explain:"\\(D=S\\) ← \\(120-0.2P=-90+0.5P\\)", result:{label:"المعادلة", value:"\\(D=S\\)"}},
+    {type:"choice", q:"سعر التوازن \\(P^*\\):", options:["300","210","420","150"], answer:0,
+     hint:"المجاهيل لطرف والمعاليم لطرف.", explain:"\\(210=0.7P\\) ← \\(P^*=300\\)", result:{label:"السعر", value:"\\(P^*=300\\)"}},
+    {type:"choice", q:"كمية التوازن:", options:["60","30","90","240"], answer:0,
+     hint:"عوّض بتابع الطلب أو العرض.", explain:"\\(D=120-0.2(300)\\) ← \\(=60\\)", result:{label:"الكمية", value:"\\(Q^*=60\\)"}}
+  ],
+  finish: "<p>تأكد دايماً: عوّض بالعرض كمان \\(-90+0.5(300)=60\\) ✔️</p>"
+});
+
+renderFlashcards("activity-flash", CH2_FLASHCARDS);
+</script>
+</body>
+</html>

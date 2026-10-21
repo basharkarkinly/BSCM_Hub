@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 5 — التوابع اللوغاريتمية والأسية | GMA403</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body class="guard">
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GMA403 — الرياضيات الاقتصادية والإدارية</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الخامس</div>
+    <h1>التوابع اللوغاريتمية والأسية</h1>
+    <p>قواعد الأسس واللوغاريتم، توابع الإنتاج من نمط كوب-دوغلاس ودرجة التجانس، وحساب معدل النمو الاقتصادي من الشكل الأسي.</p>
+  </div>
+</div>
+<div class="wrap content">
+<div class="chapter-intro-box"><h4>🔑 كلمات مفتاحية</h4><div><span class="keyword-chip">Exponent rules</span><span class="keyword-chip">Logarithm</span><span class="keyword-chip">Natural log ln</span><span class="keyword-chip">Cobb-Douglas</span><span class="keyword-chip">Degree of homogeneity</span><span class="keyword-chip">Growth rate</span></div><h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4><ul><li>تطبّق قواعد الأسس وتحوّل بين الشكل الأسي واللوغاريتمي</li><li>تستخدم خواص اللوغاريتم (جداء، قسمة، قوة)</li><li>تحسب <b>درجة التجانس</b> وأثر مضاعفة عوامل الإنتاج</li><li>تحسب <b>معدل النمو</b> والزمن من صيغة أسية</li></ul></div>
+<div class="block" id="powers"><h2><span class="idx">1</span> قواعد الأسس</h2><table class="cmp"><tr><th>القاعدة</th><th>مثال</th></tr><tr><td>\(x^m\cdot x^n=x^{m+n}\)</td><td>\(2^3\cdot2^2=2^5=32\)</td></tr><tr><td>\(\frac{x^m}{x^n}=x^{m-n}\)</td><td>\(\frac{4^7}{4^5}=4^2=16\)</td></tr><tr><td>\((x^m)^n=x^{mn}\)</td><td>\((x^3)^3=x^9\)</td></tr><tr><td>\(x^{-m}=\frac1{x^m}\)</td><td>\(2^{-2}=\frac14\)</td></tr><tr><td>\(x^{\frac nm}=\sqrt[m]{x^n}\)</td><td>\(x^{\frac12}=\sqrt x\)</td></tr></table><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>\(\sqrt{-4}\) <b>مو معرّف</b> بالأعداد الحقيقية (مو ±2).</p></div></div>
+<div class="block" id="cobb"><h2><span class="idx">2</span> تابع الإنتاج كوب-دوغلاس ودرجة التجانس</h2>
+$$Q=A\,K^{\alpha}L^{\beta}$$
+<p>\(K\) رأس المال، \(L\) العمل، \(A\) ثابت موجب. حد وحيد (ما في + أو −). \(\alpha\) مرونة \(Q\) بالنسبة لـ\(K\)، و\(\beta\) مرونته بالنسبة لـ\(L\).</p>
+<div class="quick-grid"><div class="quick-card"><b>درجة التجانس</b>\(t=\alpha+\beta\)</div><div class="quick-card"><b>الأثر</b>إذا ضربنا \(K\) و\(L\) بـ\(\lambda\) ← \(Q\) بتنضرب بـ\(\lambda^{t}\)</div></div><details class="accordion"><summary>✍️ درجة التجانس 2 وضربنا العوامل بـ\(\lambda=3\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(\lambda^t=3^2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(=9\)</div><div class="sol-arrow">⬇</div><div class="sol-step">الإنتاج بيتضاعف 9 مرات</div></div></details><details class="accordion"><summary>✍️ سؤال دورات: درجة التجانس 0.5 و \(\lambda=4\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(4^{0.5}=\sqrt4=2\)</div><div class="sol-arrow">⬇</div><div class="sol-step">الإنتاج بيتضاعف مرتين</div></div></details></div>
+<div class="block" id="logs"><h2><span class="idx">3</span> اللوغاريتم وخواصه</h2>
+<p>\(\log_a M=n \iff a^n=M\). نوعين: <b>طبيعي</b> \(\ln\) أساسه \(e\approx2.71828\)، و<b>عشري</b> أساسه 10. ومعرّف بس للأعداد <b>الموجبة</b>.</p>
+<table class="cmp"><tr><th>الخاصة</th><th>الصيغة</th></tr><tr><td>أساسيات</td><td>\(\log_a1=0\) ، \(\log_aa=1\)</td></tr><tr><td>الجداء</td><td>\(\log(xy)=\log x+\log y\)</td></tr><tr><td>القسمة</td><td>\(\log\frac xy=\log x-\log y\)</td></tr><tr><td>القوة</td><td>\(\log x^n=n\log x\)</td></tr></table><details class="accordion"><summary>✍️ \(\log_5125\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(5^n=125=5^3\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\log_5125=3\)</div></div></details><details class="accordion"><summary>✍️ \(4\ln x-3\ln y+5\ln z\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(=\ln x^4-\ln y^3+\ln z^5\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(=\ln\left(\frac{x^4}{y^3}z^5\right)\)</div></div></details></div>
+<div class="block" id="growth"><h2><span class="idx">4</span> النمو الاقتصادي بالشكل الأسي</h2>
+$$G_t=G_0\,e^{r\,t}\qquad\Longrightarrow\qquad r=\frac{\ln G_t-\ln G_0}{t}=\frac1t\ln\frac{G_t}{G_0}$$
+<p>ولمعرفة <b>الزمن</b>: منقسم على الأمثال ونأخد \(\ln\) للطرفين.</p>
+<details class="accordion"><summary>✍️ مثال الملخص: \(y=20e^{0.05x}\): أول قيمة؟ ومتى يصل لـ40؟ <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step"><span class="sol-lbl">أول قيمة</span><div class="m">\(x=0\) ← \(y=20\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(40=20e^{0.05x}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(e^{0.05x}=2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(0.05x=\ln2=0.693\)</div><div class="sol-arrow">⬇</div><div class="sol-step">\(x\approx13.86\approx14\) سنة</div></div></details><details class="accordion"><summary>✍️ \(G_0=15\) ، \(G_t=20\) ، \(t=1\): معدل النمو <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(r=\ln20-\ln15\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(=\ln\frac43\approx0.288\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(r\approx28.8\%\)</div></div></details><div class="callout"><span class="tag">💡 معدل النمو السنوي</span><p>من \(y=20e^{0.05x}\): \(\frac{y_{x+1}-y_x}{y_x}=e^{0.05}-1\approx5.13\%\).</p></div></div>
+<div id="case-study-mount"></div>
+<div class="block" id="flash"><h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2><div id="activity-flash"></div></div>
+<div class="next-actions">
+    <a href="chapter-5-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-5-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل السادس)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GMA403",chapter_id:"5",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="../assets/math.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch5-flashcards.js"></script>
+<script>
+renderMathProblem("case-study-mount", {
+  title: "حلها معي: الناتج المحلي",
+  scenario: "حدّد المكتب المركزي للإحصاء صيغة تطور الناتج المحلي الإجمالي \\(y=20e^{0.05x}\\) (\\(x\\) بالسنوات). (تطبيق الملخص)",
+  steps: [
+    {type:"choice", q:"أول رقم مسجّل للناتج:", options:["20","1","21","0.05"], answer:0,
+     hint:"عوّض \\(x=0\\).", explain:"\\(y=20e^{0}\\) ← \\(=20\\)", result:{label:"البداية", value:"\\(20\\)"}},
+    {type:"choice", q:"لما يصير الناتج 40، المعادلة بتصير:", options:["\\(e^{0.05x}=2\\)","\\(e^{0.05x}=40\\)","\\(0.05x=2\\)","\\(e^{x}=20\\)"], answer:0,
+     hint:"اقسم على أمثال \\(e\\).", explain:"\\(40=20e^{0.05x}\\) ← \\(e^{0.05x}=2\\)", result:{label:"المعادلة", value:"\\(e^{0.05x}=2\\)"}},
+    {type:"choice", q:"الزمن \\(x\\) تقريباً:", options:["13.86","40","1.39","20"], answer:0,
+     hint:"خود \\(\\ln\\) للطرفين: \\(\\ln e=1\\).", explain:"\\(0.05x=\\ln2=0.693\\) ← \\(x\\approx13.86\\)", result:{label:"الجواب", value:"\\(\\approx14\\) سنة"}}
+  ],
+  finish: "<p>الطريقة: <b>اقسم على الأمثال ← خود ln ← حل</b>.</p>"
+});
+
+renderFlashcards("activity-flash", CH5_FLASHCARDS);
+</script>
+</body>
+</html>

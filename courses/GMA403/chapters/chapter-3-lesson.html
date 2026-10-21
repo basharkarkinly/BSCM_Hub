@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 3 — المتراجحات وتطبيقاتها | GMA403</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+</head>
+<body class="guard">
+<div class="topbar">
+  <a class="brand" href="../index.html" style="text-decoration:none;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> GMA403 — الرياضيات الاقتصادية والإدارية</a>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الثالث</div>
+    <h1>المتراجحات وتطبيقاتها</h1>
+    <p>خواص المتراجحات وحلها بمتغير وبمتغيرين، وتمثيل القيود الاقتصادية كمتراجحات: متى المحل رابح، تغطية التكاليف الثابتة، والبرمجة الخطية.</p>
+  </div>
+</div>
+<div class="wrap content">
+<div class="chapter-intro-box"><h4>🔑 كلمات مفتاحية</h4><div><span class="keyword-chip">Inequality</span><span class="keyword-chip">Interval</span><span class="keyword-chip">System of inequalities</span><span class="keyword-chip">Break-even</span><span class="keyword-chip">Linear programming</span><span class="keyword-chip">Objective function</span></div><h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4><ul><li>تعرف متى بيتغير اتجاه المتراجحة ومتى لا</li><li>تحل متراجحة خطية وتربيعية وجملة متراجحتين، وتتحقق إذا قيمة معينة حل</li><li>تحل مسائل «متى رابح؟» و«كم قطعة لتغطية الثابتة؟»</li><li>تعرف مكونات البرنامج الخطي وتحله بالرسم ونقاط التقاطع</li></ul></div>
+<div class="block" id="props"><h2><span class="idx">1</span> خواص المتراجحات</h2><table class="cmp"><tr><th>العملية</th><th>الاتجاه</th></tr><tr><td>إضافة (أو طرح) عدد حقيقي للطرفين</td><td><b>ما بيتغير</b></td></tr><tr><td>ضرب (أو قسمة) الطرفين بعدد <b>موجب</b></td><td><b>ما بيتغير</b></td></tr><tr><td>ضرب (أو قسمة) الطرفين بعدد <b>سالب</b></td><td><b>بيتعكس</b></td></tr><tr><td>قلب الطرفين (\(\frac1a,\frac1b\)) لعددين بنفس الإشارة</td><td><b>بيتعكس</b>: \(2\lt3\) ← \(\frac12\gt\frac13\)</td></tr><tr><td>جمع متراجحتين بنفس الاتجاه</td><td>نفس الاتجاه</td></tr></table><div id="activity-sort" style="margin-top:16px;"></div><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>«ضرب طرفي المتراجحة بعدد حقيقي لا يغير اتجاهها» ← <b>خطأ</b>، لأنه بيعتمد على إشارة العدد.</p></div></div>
+<div class="block" id="onevar"><h2><span class="idx">2</span> حل متراجحة بمتغير وحيد</h2>
+<p>الحل مجال مو قيمة وحدة. الخطية متل المعادلة (مع انتباه للسالب)، والتربيعية: منوجد الجذور وندرس الإشارة (برّا الجذرين متل \(a\)).</p>
+<details class="accordion"><summary>✍️ \(2x-4\lt0\) و \(3x+12\lt0\) (جملة) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step">\(x\lt2\) و \(x\lt-4\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الحل المشترك = تقاطع المجالين</span><div class="m">\(x\in]-\infty,-4[\)</div></div></div></details><details class="accordion"><summary>✍️ \(x^2+2x-3\ge0\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\((x+3)(x-1)\ge0\)</div><div class="sol-arrow">⬇</div><div class="sol-step">الجذرين \(-3\) و \(1\) ، و \(a\gt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step">موجب برّا</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x\in]-\infty,-3]\cup[1,+\infty[\)</div></div></details><div class="callout"><span class="tag">💡 هل القيمة حل؟</span><p>عوّض القيمة بكل متراجحة: إذا حققت <b>الكل</b> ← حل مشترك، وإذا فشلت بوحدة ← «لا تحقق المتراجحتين معاً».</p></div><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>\(x^2\gt0\) حلها كل الأعداد الحقيقية <b>عدا الصفر</b> (لأنو \(0^2=0\) مو أكبر من 0).</p></div></div>
+<div class="block" id="twovar"><h2><span class="idx">3</span> جملة متراجحات بمتغيرين</h2>
+<p>منحوّل كل متراجحة لمعادلة، منرسم المستقيم (نقطتين: \(x=0\) ثم \(y=0\))، منوجد نقطة التقاطع بالحل المشترك، ومنحدد المنطقة المشتركة. <b>الرسم بيشتغل بس لمتغيرين</b> (مو لأي عدد متغيرات).</p>
+<details class="accordion"><summary>✍️ \(4x+y\ge20\) و \(3x+2y\ge30\): نقطة التقاطع <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(8x+2y=40\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(3x+2y=30\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">بالطرح</span><div class="m">\(5x=10\) ← \(x=2\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y=12\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(M(2,12)\)</div></div></details></div>
+<div class="block" id="breakeven"><h2><span class="idx">4</span> القيود الاقتصادية: الربح ونقطة التعادل</h2><table class="cmp"><tr><th>السؤال</th><th>المتراجحة</th></tr><tr><td>متى المحل رابح؟</td><td>\(F(x)=R(x)-C(x)\gt0\)</td></tr><tr><td>كم قطعة لتغطية التكاليف الثابتة؟</td><td>\(R(x)\ge F_c\)</td></tr></table><details class="accordion"><summary>✍️ مثال الملخص: ثابتة 5000، تكلفة القطعة 100، سعر بيعها 150 <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step">\(C(x)=5000+100x\) ، \(R(x)=150x\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(F(x)=50x-5000\gt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step">رابح لما \(x\gt100\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">تغطية الثابتة</span><div class="m">\(150x\ge5000\) ← \(x\ge33.33\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">يعني 34 قطعة على الأقل</div></div></details></div>
+<div class="block" id="lp"><h2><span class="idx">5</span> البرمجة الخطية</h2><div class="quick-grid"><div class="quick-card"><b>دالة الهدف</b>تعظيم ربح <strong>Max</strong> أو تخفيض تكلفة <strong>Min</strong></div><div class="quick-card"><b>القيود</b>متراجحات تمثل الموارد المحدودة</div><div class="quick-card"><b>شرط عدم السلبية</b>كل المتغيرات \(\ge0\)</div></div>
+<p style="margin-top:10px">الحل: نحول القيود لمعادلات، نرسمها، نوجد نقطة التقاطع بالحل المشترك، ونعوّضها بدالة الهدف. (قيود ≤ ← المنطقة تحت المستقيمات وغالباً Max، وقيود ≥ ← فوقها وغالباً Min.)</p>
+<details class="accordion"><summary>✍️ \(\max Z=10x_1+15x_2\) مع \(2x_1+4x_2\le40\) و \(6x_1+2x_2\le60\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step">\(2x_1+4x_2=40\) و \(12x_1+4x_2=120\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">بالطرح</span><div class="m">\(10x_1=80\) ← \(x_1=8\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x_2=6\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(Z=10(8)+15(6)=170\)</div></div></details></div>
+<div id="case-study-mount"></div>
+<div class="block" id="flash"><h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2><div id="activity-flash"></div></div>
+<div class="next-actions">
+    <a href="chapter-3-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-3-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل الرابع)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"GMA403",chapter_id:"3",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="../assets/math.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch3-flashcards.js"></script>
+<script>
+renderSortGame("activity-sort", {
+  hint: "بيتغير اتجاه المتراجحة؟",
+  buckets: [{key:"y", label:"🔄 بيتعكس"}, {key:"n", label:"➡️ ما بيتغير"}],
+  items: [
+    {text:"ضرب الطرفين بـ\\(-2\\)", bucket:"y", why:"الضرب بسالب بيعكس."},
+    {text:"إضافة 7 للطرفين", bucket:"n", why:"الجمع ما بيأثر عالاتجاه."},
+    {text:"قسمة الطرفين على 5", bucket:"n", why:"القسمة على موجب ما بتعكس."},
+    {text:"قلب الطرفين \\(\\frac1a\\) ، \\(\\frac1b\\) (نفس الإشارة)", bucket:"y", why:"\\(2\\lt3\\) ← \\(\\frac12\\gt\\frac13\\)."},
+    {text:"طرح 10 من الطرفين", bucket:"n", why:"متل الجمع."}
+  ]
+});
+
+renderMathProblem("case-study-mount", {
+  title: "حلها معي: معمل المفروشات",
+  scenario: "التكاليف الثابتة لمعمل مفروشات 100 ألف شهرياً، وتكلفة القطعة 50 ألف، ويبيع القطعة بـ75 ألف. متى يكون رابحاً؟ (مسألة المقرر 3-6)",
+  steps: [
+    {type:"choice", q:"تابع التكاليف الكلية (بالألف):", options:["\\(C(x)=100+50x\\)","\\(C(x)=100x+50\\)","\\(C(x)=75x\\)","\\(C(x)=50x\\)"], answer:0,
+     hint:"ثابتة + متغيرة.", explain:"\\(C(x)=F_c+V(x)\\) ← \\(100+50x\\)", result:{label:"التكاليف", value:"\\(100+50x\\)"}},
+    {type:"choice", q:"تابع الربح:", options:["\\(F(x)=25x-100\\)","\\(F(x)=125x+100\\)","\\(F(x)=75x-100\\)","\\(F(x)=25x+100\\)"], answer:0,
+     hint:"\\(R(x)=75x\\) والربح = إيرادات − تكاليف.", explain:"\\(75x-(100+50x)\\) ← \\(25x-100\\)", result:{label:"الربح", value:"\\(25x-100\\)"}},
+    {type:"choice", q:"المعمل رابح لما:", options:["\\(x\\gt4\\)","\\(x\\lt4\\)","\\(x\\gt2\\)","\\(x\\ge100\\)"], answer:0,
+     hint:"\\(F(x)\\gt0\\).", explain:"\\(25x-100\\gt0\\) ← \\(x\\gt4\\)", result:{label:"الجواب", value:"\\(x\\gt4\\) قطع"}}
+  ],
+  finish: "<p>ولتغطية الثابتة بس: \\(75x\\ge100\\) ← \\(x\\ge1.33\\) يعني قطعتين على الأقل.</p>"
+});
+
+renderFlashcards("activity-flash", CH3_FLASHCARDS);
+</script>
+</body>
+</html>

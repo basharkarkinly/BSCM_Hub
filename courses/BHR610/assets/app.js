@@ -425,8 +425,8 @@ function buildMatchRound(container, containerId, pairs){
 
   container.innerHTML = `
     <div class="match-wrap">
-      <div class="match-col"><h4>الاسم</h4><div id="${containerId}-left"></div></div>
-      <div class="match-col"><h4>الفكرة / النظرية</h4><div id="${containerId}-right"></div></div>
+      <div class="match-col"><h4>المصطلح</h4><div id="${containerId}-left"></div></div>
+      <div class="match-col"><h4>المعنى</h4><div id="${containerId}-right"></div></div>
     </div>
     <div class="match-status" id="${containerId}-status">0 من ${pairs.length} تطابقات صحيحة</div>
   `;

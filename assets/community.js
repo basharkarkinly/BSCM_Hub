@@ -30,7 +30,6 @@
       '<div class="cm-members">' +
         '<div class="cm-num">' + num(d.members || 0) + '</div>' +
         '<div class="cm-lbl">طالب مشترك بالمنصة 👥</div>' +
-        '<p class="cm-sub">إيد وحدة ما بتزقف — كل واحد منهم ممكن يساعدك، وإنت كمان فيك تساعدهم.</p>' +
       '</div>' +
       '<div class="cm-top">' +
         '<h3>⭐ الأوائل بالنجوم</h3>' +

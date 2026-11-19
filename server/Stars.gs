@@ -34,7 +34,7 @@ const STAR_RULES_DEFAULT_ = [
 /** شغّلها مرة وحدة من المحرر بعد لصق الملفات. آمنة إذا انعادت. */
 function setupV4() {
   ensureCols_('users', ['stars', 'stars_recent', 'stars_day', 'name_changed_at',
-                         'ref_code', 'referred_by', 'ref_paid', 'ref_joined', 'ref_active']);
+                         'ref_code', 'referred_by', 'ref_paid', 'ref_joined', 'ref_active', 'hide_top']);
   ensureCols_('comments', ['accepted_id']);
   if (!ss_().getSheetByName('star_rules')) {
     const sh = ss_().insertSheet('star_rules');
@@ -174,7 +174,7 @@ function starRules_() {
   return out;
 }
 
-function clearStarsCaches_() { cache_().removeAll(['star_rules', 'banned_words', 'courses_ids']); }
+function clearStarsCaches_() { cache_().removeAll(['star_rules', 'banned_words', 'courses_ids', 'pub_stats']); }
 
 /* ============ منح وسحب النجوم ============ */
 
@@ -412,4 +412,44 @@ function hasBanned_(text) {
     else if (tokens[w]) return true;
   }
   return false;
+}
+
+
+/* ============ الصفحة الرئيسية: عدد المشتركين + أول 5 بالنجوم (عام، بدون تسجيل دخول) ============ */
+
+const PUBLIC_TTL_ = 600;   // 10 دقايق: الأرقام بتتحدّث كل 10 دقايق بالكتير
+
+/**
+ * req: { action:'getPublicStats' } — ما بيحتاج تسجيل دخول.
+ * بيرجّع بس: عدد الطلاب المفعّلين، وأول 5 (الاسم الأول + عدد النجوم).
+ * الترتيب: أكتر نجوم، وإذا تساووا: اللي سجّل أول. اللي اختار يخفي اسمو (users.hide_top) ما بيطلع.
+ */
+function getPublicStats_() {
+  const c = cache_().get('pub_stats');
+  if (c) { try { return JSON.parse(c); } catch (e) {} }
+  const users = table_('users');
+  const active = users.rows.map(function (r) { return rowObj_(users, r); })
+    .filter(function (o) { return o.user_id && String(o.status) === 'active'; });
+  const top = active
+    .filter(function (o) { return (Number(o.stars) || 0) > 0 && !isTrue_(o.hide_top); })
+    .map(function (o) { const d = toDate_(o.created_at); return { o: o, s: Number(o.stars) || 0, t: d ? d.getTime() : Infinity }; })
+    .sort(function (x, y) { return (y.s - x.s) || (x.t - y.t); })
+    .slice(0, 5)
+    .map(function (x) { return { name: firstName_(x.o.name), stars: x.s }; });
+  const out = { ok: true, members: active.length, top: top, at: new Date().toISOString() };
+  cache_().put('pub_stats', JSON.stringify(out), PUBLIC_TTL_);
+  return out;
+}
+
+/** req: { action:'setHideTop', token, hide:true|false } — من صفحة "حسابي" */
+function setHideTop_(req) {
+  const a = authUser_(req); if (a.err) return a.err;
+  ensureCols_('users', ['hide_top']);
+  const users = table_('users');
+  const i = findRow_(users, 'user_id', String(a.user.obj.user_id));
+  if (i < 0) return { ok: false, error: 'NO_SESSION' };
+  const hide = req.hide === true || req.hide === 'true';
+  updateRow_(users, i, { hide_top: hide ? 'TRUE' : '' });
+  cache_().remove('pub_stats');
+  return { ok: true, hide_top: hide };
 }

@@ -26,7 +26,7 @@ const CFG = {
 /* ============ نقاط الدخول ============ */
 
 function doGet() {
-  return json_({ ok: true, service: 'support-channel-auth', version: 'v8-qa' });
+  return json_({ ok: true, service: 'support-channel-auth', version: 'v9-top5' });
 }
 
 function doPost(e) {
@@ -52,6 +52,9 @@ function doPost(e) {
       case 'acceptAnswer':     return json_(withLock_(() => acceptAnswer_(req)));
       // النجوم (Stars.gs)
       case 'getMyStars':       return json_(getMyStars_(req));
+      case 'setHideTop':       return json_(withLock_(() => setHideTop_(req)));
+      // عام (بدون تسجيل دخول): عدد المشتركين + أول 5 بالنجوم — من الكاش، 10 دقايق
+      case 'getPublicStats':   return json_(getPublicStats_());
       case 'examPassed':       return json_(withLock_(() => examPassed_(req)));
       case 'markSeen':         return json_(withLock_(() => markSeen_(req)));
       case 'savePlacementResult': return json_(withLock_(() => savePlacementResult_(req)));
@@ -265,7 +268,8 @@ function checkSession_(req) {
   const s = sessionUser_(req);
   if (!s.ok) return s;
   return { ok: true, user: { email: s.email, name: s.user.obj.name, terms: termsOf_(s.user),
-                             name_locked: !!String(s.user.obj.name_changed_at || '').trim() } };
+                             name_locked: !!String(s.user.obj.name_changed_at || '').trim(),
+                             hide_top: isTrue_(s.user.obj.hide_top) } };
 }
 
 function logout_(req) {
@@ -521,7 +525,7 @@ function onSheetEdit(e) {
         if (ids.length) withLock_(function () { onCommentsHidden_(ids); }, 30000);
       }
       bumpCommentsCache_();
-    } else if (name === 'star_rules' || name === 'banned_words' || name === 'courses') {
+    } else if (name === 'star_rules' || name === 'banned_words' || name === 'courses' || name === 'users') {
       clearStarsCaches_();
     }
   } catch (err) { console.error(err); }

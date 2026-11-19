@@ -375,8 +375,9 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
   .hero-3 .cm-lbl{ margin-top:0; }
 }
 /* داخل الهيرو الغامق: شكل زجاجي بدل الأبيض */
-.cm-hero .cm-members{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); box-shadow:none; backdrop-filter:blur(4px); }
-.cm-hero .cm-top{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); box-shadow:none; color:#fff; backdrop-filter:blur(4px); }
+.cm-hero .cm-members{ background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.2); box-shadow:0 12px 30px -16px rgba(0,0,0,.6); backdrop-filter:blur(6px); }
+.cm-hero .cm-top{ background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.2); box-shadow:0 12px 30px -16px rgba(0,0,0,.6); color:#fff; backdrop-filter:blur(6px); }
+.cm-hero .cm-stars{ min-width:84px; text-align:left; }
 .cm-hero .cm-top h3{ color:#fff; }
 .cm-hero .cm-row{ border-bottom-color:rgba(255,255,255,.1); padding:7px 2px; }
 .cm-hero .cm-name, .cm-hero .cm-podium .cm-name{ color:#fff; }

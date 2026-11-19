@@ -33,6 +33,15 @@
     <p class="pf-hint" style="margin-bottom:0;">للدخول فقط، وما منعرضو لأي حدا. ما بيتغيّر من هون.</p>
   </section>
 
+  <section class="pf-card">
+    <h2 style="margin:0 0 8px;font-size:1.05rem;">⭐ قائمة الأوائل</h2>
+    <label class="check"><input type="checkbox" id="pf-top" checked>
+      <span>اظهر اسمي بقائمة الأوائل إذا كنت من أكتر 5 عندهم نجوم</span>
+    </label>
+    <p class="pf-hint" style="margin-bottom:0;">القائمة بالصفحة الرئيسية وبيشوفها أي زائر: بيظهر اسمك الأول وعدد نجومك بس. إذا شلت الإشارة، اسمك ما بيطلع والي بعدك بياخد مكانك.</p>
+    <p id="pf-top-msg" class="msg" role="alert"></p>
+  </section>
+
   <section class="pf-card pf-danger">
     <h2>حذف الحساب</h2>
     <p>إذا حذفت حسابك بينمسح هالشي نهائياً وما بيتراجع عنو:</p>
@@ -87,13 +96,29 @@
     $("pf-name").readOnly = true; $("pf-save").style.display = "none";
     $("pf-name-hint").textContent = text || "غيّرت اسمك مرة قبل، فصار ثابت. إذا في سبب ضروري لتغييره تواصل معنا عالتلغرام.";
   }
+  $("pf-top").addEventListener("change", function () {
+    var box = this, s = SCAuth.getSession(); if (!s) return;
+    box.disabled = true; msg("pf-top-msg", "");
+    SCAuth.api("setHideTop", { token: s.token, hide: !box.checked }).then(function (res) {
+      box.disabled = false;
+      if (res && res.ok) {
+        try { localStorage.removeItem("sc_public_stats"); } catch (e) {}
+        msg("pf-top-msg", box.checked ? "تمام، اسمك بيظهر إذا كنت من الأوائل ✓" : "تمام، اسمك ما رح يظهر بقائمة الأوائل ✓", true);
+      } else { box.checked = !box.checked; msg("pf-top-msg", "ما قدرنا نحفظ هلأ، جرّب بعد شوي."); }
+    }).catch(function () { box.disabled = false; box.checked = !box.checked; msg("pf-top-msg", "ما في اتصال بالسيرفر، جرّب مرة تانية."); });
+  });
+
   SCShell.init({
     onReady: function (user) {
       original = user.name || "";
       $("pf-name").value = original;
       $("pf-email").value = user.email || "";
       // نسأل السيرفر إذا الاسم انغيّر قبل (الجلسة المحفوظة عالجهاز ما فيها هالمعلومة)
-      SCAuth.check().then(function (r) { if (r.state === "valid" && r.user.name_locked) lockName(); });
+      SCAuth.check().then(function (r) {
+        if (r.state !== "valid") return;
+        if (r.user.name_locked) lockName();
+        $("pf-top").checked = !r.user.hide_top;
+      });
     }
   });
 

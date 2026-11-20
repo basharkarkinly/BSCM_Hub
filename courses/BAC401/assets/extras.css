@@ -290,3 +290,11 @@
 .adj-legend i.u{ background:#FF9F1C; } .adj-legend i.l{ background:#2EC4B6; }
 .adj-entry{ margin-top:10px; background:#F5F7FB; border-radius:12px; padding:10px 12px; font-size:.9rem; }
 .adj-entry small{ color:#5B6478; display:block; margin-top:4px; }
+
+/* ---------- 🔢 رتّب الخطوات ---------- */
+.og-done{ list-style:none; counter-reset:og; padding:0; margin:8px 0 10px; }
+.og-done li{ counter-increment:og; display:flex; gap:10px; align-items:center; padding:7px 10px; margin-bottom:6px; border-radius:10px; background:#E7F9F3; font-weight:700; font-size:.9rem; animation:eqsHl 1s ease; }
+.og-done li::before{ content:counter(og); flex:none; width:24px; height:24px; border-radius:50%; background:#0B7A57; color:#fff; display:grid; place-items:center; font-size:.8rem; }
+.og-done li.og-next{ background:#F5F7FB; color:#9AA6BA; animation:none; }
+.og-done li.og-next::before{ background:#9AA6BA; }
+.og-chip{ cursor:pointer; }

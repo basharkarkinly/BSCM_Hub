@@ -875,3 +875,31 @@ function renderAdjustSlider(containerId, cfg){
   }
   draw();
 }
+
+/* ============================================================
+   🔢 رتّب الخطوات — اضغط على الخطوات بالترتيب الصحيح
+   cfg = { title, hint, steps:["…","…"], finish }
+   ============================================================ */
+function renderOrderGame(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let done, pool, mistakes;
+  function reset(){ done = []; mistakes = 0; pool = shuffle(cfg.steps.map((t, i) => ({ t, i }))); draw(); }
+  function draw(){
+    const fin = done.length === cfg.steps.length;
+    root.innerHTML = `
+      <div class="eqs og">
+        <div class="eqs-head"><span class="gp-tag">🔢 رتّب</span><h4>${cfg.title}</h4></div>
+        <ol class="og-done">${done.map(i => `<li>${cfg.steps[i]}</li>`).join("")}${fin ? "" : `<li class="og-next">؟</li>`}</ol>
+        ${fin ? `<div class="eqs-msg ok">✅ <b>رتّبتها كلها!</b> عدد الأخطاء: ${mistakes}. ${cfg.finish || ""}</div><button type="button" class="btn btn-teal og-again">🔁 عيد</button>`
+              : `<p class="eqs-hint">${cfg.hint || "اضغط على الخطوة الجاية بالترتيب."}</p><div class="eqs-tray">${pool.filter(p => !done.includes(p.i)).map(p => `<button type="button" class="eqs-chip og-chip" data-i="${p.i}">${p.t}</button>`).join("")}</div><div class="eqs-msg" id="${containerId}-msg"></div>`}
+      </div>`;
+    root.querySelectorAll(".og-chip").forEach(b => b.addEventListener("click", () => {
+      const i = +b.dataset.i;
+      if(i === done.length){ done.push(i); if(done.length === cfg.steps.length && typeof launchConfetti === "function") launchConfetti(); draw(); }
+      else { mistakes++; b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake");
+        const m = document.getElementById(`${containerId}-msg`); m.className = "eqs-msg bad"; m.innerHTML = "❌ مو هي الخطوة الجاية، فكّر شو لازم يصير قبلها."; }
+    }));
+    const a = root.querySelector(".og-again"); if(a) a.addEventListener("click", reset);
+  }
+  reset();
+}

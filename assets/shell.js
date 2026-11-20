@@ -14,13 +14,15 @@
  * - تحت الشريط العلوي: شريط أبيض فيو أخبار متحرّكة (من تبويب ticker بالشيت) بعرض كامل، وبيختفي إذا ما في أخبار.
  *   مو ثابت: بيطلع مع التمرير. موجود بكل الصفحات (الهب والمقررات). greet:false بيلغي الترحيب والشريط.
  * - إذا ما في .topbar بالصفحة بينشئ واحد.
- * - خيارات: { greet:false, onReady:function(user){} }
+ * - خيارات: { greet:false, onReady:function(user){}, guest:function(){} }
+ *   guest: للصفحات المفتوحة للزوار (صفحة المواد). بدون جلسة ما منحوّل لصفحة الدخول: الصفحة بتظهر،
+ *   والشريط فيو زر «تسجيل الدخول» بس، وبتنستدعى guest(). إذا في جلسة صالحة الصفحة بتشتغل عادي.
  */
 (function () {
   if (window.SCShell) return;
 
   var SELF = document.currentScript && document.currentScript.src || "";
-  var HUB = SELF ? new URL("../", SELF).href : "";            // جذر الهب (فيو welcome.html)
+  var HUB = SELF ? new URL("../", SELF).href : "";            // جذر الهب (فيو index.html = صفحة المواد)
   var HOURS_PAGE = "https://basharkarkinly.github.io/BSCM-Courses/";
   var CACHE_KEY = "sc_courses";
 
@@ -45,6 +47,9 @@
     "@keyframes scsTk{from{transform:translateX(0)}to{transform:translateX(var(--scs-w,0px))}}",
     "@media (prefers-reduced-motion:reduce){.scs-tk{animation:none}.scs-sa{overflow-x:auto;-webkit-mask-image:none;mask-image:none}}",
     "@media (max-width:700px){.topbar{padding:10px 14px;gap:8px 10px}.topbar .brand{flex:1 1 calc(100% - 140px);min-width:0;font-size:.88rem;line-height:1.35}.topbar nav{flex:1 1 100%;order:2}.scs-ico{width:38px;height:38px;font-size:1rem}.scs-cluster{gap:4px 6px;margin-inline-start:0;flex:none;width:126px;flex-wrap:wrap;justify-content:center}.scs-hi{order:2;flex:1 1 100%;max-width:100%;text-align:center;font-size:.74rem;margin:0;opacity:.92}}",
+    ".scs-login{flex:none;display:inline-flex;align-items:center;gap:6px;text-decoration:none;background:var(--amber,#FF9F1C);color:#1A1200;font-weight:800;font-size:.9rem;border-radius:999px;padding:9px 18px;white-space:nowrap}",
+    ".scs-login:hover{filter:brightness(.95)}",
+    "@media (max-width:700px){.scs-guest{width:auto}.scs-login{font-size:.82rem;padding:8px 14px}}",
     ".scs-ov{position:fixed;inset:0;z-index:80;background:rgba(15,28,46,.5);display:flex;justify-content:center;align-items:flex-start;padding:70px 14px 20px}",
     ".scs-ov[hidden]{display:none}",
     ".scs-panel{background:#fff;color:#16232E;width:100%;max-width:440px;max-height:calc(100vh - 100px);overflow-y:auto;border-radius:16px;box-shadow:0 12px 40px rgba(15,28,46,.25);padding:16px;text-align:right;font-family:'Alexandria',system-ui,sans-serif}",
@@ -104,9 +109,9 @@
     if (!bar) { bar = document.createElement("div"); bar.className = "topbar"; document.body.insertBefore(bar, document.body.firstChild); }
 
     var c = document.createElement("div"); c.className = "scs-cluster";
-    var homeHref = HUB + "welcome.html";
+    var homeHref = HUB + "index.html";
     var onHub = false;
-    try { onHub = location.pathname === new URL(homeHref).pathname; } catch (e) {}
+    try { onHub = location.pathname.replace(/index\.html$/, "") === new URL(HUB).pathname; } catch (e) {}
 
     c.innerHTML =
       (opts.greet !== false ? '<a class="scs-hi" id="scs-hi" href="' + HUB + 'profile.html" title="حسابي"></a>' : "") +
@@ -286,24 +291,43 @@
   }
 
   /* ---------- الدخول للمكوّن ---------- */
+  /* زائر بدون حساب (بالصفحات المفتوحة بس): زر دخول بالشريط بدل الأيقونات */
+  function showGuest(opts) {
+    var bar = document.querySelector(".topbar");
+    if (!bar) { bar = document.createElement("div"); bar.className = "topbar"; document.body.insertBefore(bar, document.body.firstChild); }
+    if (!bar.querySelector(".scs-guest")) {
+      var c = document.createElement("div"); c.className = "scs-cluster scs-guest";
+      c.innerHTML = '<a class="scs-login" href="' + esc(HUB + "login.html") + '">🔑 تسجيل الدخول</a>';
+      bar.appendChild(c);
+    }
+    document.body.classList.add("is-guest");
+    document.body.classList.remove("guard");
+    if (opts.guest) opts.guest();
+  }
+
   function init(opts) {
     opts = opts || {};
     onDom(function () {
+      if (opts.guest && window.SCAuth) {
+        var s0 = SCAuth.getSession();
+        if (!s0 || !s0.token) return showGuest(opts);
+      }
       build(opts);
       if (!window.SCAuth) { document.body.classList.remove("guard"); return; }
+      var onInvalid = opts.guest ? function () { location.reload(); } : null;   // الجلسة انتهت → منرجع نفتح الصفحة كزائر
       SCAuth.requireLogin(function (user) {
         // ما وافق على آخر نسخة من الخصوصية → بنوديه لخطوة الموافقة بصفحة الدخول وبيرجع لهون بعدها
         var need = Number((window.SC_CONFIG || {}).TERMS_VERSION) || 0;
         if (need && (Number(user.terms) || 0) < need) {
           document.body.classList.add("guard");
-          location.replace(HUB + "index.html?next=" + encodeURIComponent(location.href));
+          location.replace(HUB + "login.html?next=" + encodeURIComponent(location.href));
           return;
         }
         setUser(user);
         loadNotifs();
         loadTicker();
         if (opts.onReady) opts.onReady(user);
-      });
+      }, onInvalid);
     });
   }
 

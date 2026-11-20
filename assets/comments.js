@@ -157,7 +157,7 @@
   }
 
   function renderLogin(el) {
-    var url = HUB + "index.html?next=" + encodeURIComponent(location.href);
+    var url = HUB + "login.html?next=" + encodeURIComponent(location.href);
     el.innerHTML = head() + '<div class="scc-login">سجّل دخولك لتسأل وتشوف الأجوبة.<br><a href="' + esc(url) + '">تسجيل الدخول</a></div>';
   }
 

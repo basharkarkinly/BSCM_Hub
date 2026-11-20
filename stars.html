@@ -6,13 +6,13 @@
 <title>نجومي ومستواي — Support Channel</title>
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/style.css?v=20261120a">
-<link rel="stylesheet" href="assets/hub.css?v=20261120a">
+<link rel="stylesheet" href="assets/style.css?v=20261121a">
+<link rel="stylesheet" href="assets/hub.css?v=20261121a">
 </head>
 <body class="guard">
 
 <div class="topbar">
-  <a class="brand" href="welcome.html" style="text-decoration:none;"><img src="assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> Support Channel</a>
+  <a class="brand" href="index.html" style="text-decoration:none;"><img src="assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> Support Channel</a>
 </div>
 
 <main class="wrap pf st">
@@ -92,9 +92,9 @@
   <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
 </footer>
 
-<script src="assets/config.js?v=20261120a"></script>
-<script src="assets/auth.js?v=20261120a"></script>
-<script src="assets/shell.js?v=20261120a"></script>
+<script src="assets/config.js?v=20261121a"></script>
+<script src="assets/auth.js?v=20261121a"></script>
+<script src="assets/shell.js?v=20261121a"></script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -158,7 +158,7 @@
 
   function invite(d) {
     if (!d.ref_code) { document.querySelector(".st-invite").hidden = true; return; }
-    var link = new URL("index.html?ref=" + d.ref_code, location.href).href;
+    var link = new URL("login.html?ref=" + d.ref_code, location.href).href;
     var text = "عم أدرس على منصة Support Channel — مقررات مشروحة ومبسّطة مع تدريب وامتحانات، ومجتمع بيساعد بعضو. سجّل من هون: ";
     $("inv-link").value = link;
     $("inv-wa").href = "https://wa.me/?text=" + encodeURIComponent(text + link);

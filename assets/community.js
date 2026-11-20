@@ -1,6 +1,6 @@
 /*
  * Support Channel — مربع "مجتمعنا": عدد المشتركين + أول 5 بالنجوم ⭐
- * بيشتغل حتى قبل تسجيل الدخول (index.html) وبعده (welcome.html).
+ * بصفحة المواد (index.html) للطلاب المسجّلين بس (مخفي للزوار).
  *
  *   <section id="community" class="community" hidden></section>
  *   <script src="assets/community.js"></script>   (بعد config.js و auth.js)

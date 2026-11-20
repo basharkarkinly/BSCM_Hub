@@ -3,92 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تسجيل الدخول — Support Channel</title>
+<title>المقررات — Support Channel</title>
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/style.css?v=20261120a">
-<link rel="stylesheet" href="assets/hub.css?v=20261120a">
+<link rel="stylesheet" href="assets/style.css?v=20261121a">
+<link rel="stylesheet" href="assets/hub.css?v=20261121a">
+<script>
+  // روابط قديمة لصفحة الدخول (كانت index.html): ?next= و ?ref= (رابط الدعوة) و ?deleted=1 → login.html
+  if (/[?&](next|ref|deleted)=/.test(location.search)) location.replace("login.html" + location.search + location.hash);
+</script>
 </head>
-<body>
+<body class="guard">
 
 <div class="topbar">
   <a class="brand" href="index.html" style="text-decoration:none;"><img src="assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"> Support Channel</a>
+  <div class="nav-pills members-only">
+    <a class="nav-pill" href="https://basharkarkinly.github.io/BSCM-Courses/" target="_blank" rel="noopener">📘 المقررات والساعات والأسبقيات</a>
+    <a class="nav-pill" href="qa.html">❓ ساحة الأسئلة</a>
+    <a class="nav-pill nav-pill-hot" href="courses/ENG_PT/">🎯 جرّب حالك بالانكليزي</a>
+  </div>
 </div>
 
-<section class="hero auth-hero">
-  <div class="wrap-wide auth-grid">
-    <div class="auth-intro">
-      <h1>منصتك للدراسة التفاعلية</h1>
-      <p>سجّل دخولك مرة وحدة وبتوصل لكل مقرراتك: شرح مبسّط، تدريب حر، وامتحانات فصل فصل.</p>
-
-      <div class="slogan" id="slogan" role="group" aria-label="خبرتك بتفيد حدا، وخبرة حدا بتفيدك. إيد وحدة ما بتزقف.">
-        <p class="sg-line sg-1">خبرتك بتفيد <span class="sg-word">حدا</span>،</p>
-        <p class="sg-line sg-2">وخبرة <span class="sg-word">حدا</span> بتفيدك.</p>
-        <p class="sg-line sg-3"><button type="button" class="sg-hands" id="sg-hands" aria-label="صفّق 👏" title="صفّق 👏"><span class="sg-hand sg-hand-a" aria-hidden="true">🤚</span><span class="sg-hand sg-hand-b" aria-hidden="true">🤚</span><span class="sg-puff" aria-hidden="true">؟</span></button><span class="sg-proverb">إيد وحدة <span class="sg-not">ما بتزقف</span></span></p>
+<section class="hero">
+  <div class="wrap-wide hero-split hero-3">
+    <div class="slogan" id="slogan" role="group" aria-label="خبرتك بتفيد حدا، وخبرة حدا بتفيدك. إيد وحدة ما بتزقف.">
+      <p class="sg-line sg-1">خبرتك بتفيد <span class="sg-word">حدا</span>،</p>
+      <p class="sg-line sg-2">وخبرة <span class="sg-word">حدا</span> بتفيدك.</p>
+      <p class="sg-line sg-3"><button type="button" class="sg-hands" id="sg-hands" aria-label="صفّق 👏" title="صفّق 👏"><span class="sg-hand sg-hand-a" aria-hidden="true">🤚</span><span class="sg-hand sg-hand-b" aria-hidden="true">🤚</span><span class="sg-puff" aria-hidden="true">؟</span></button><span class="sg-proverb">إيد وحدة <span class="sg-not">ما بتزقف</span></span></p>
       <p class="sg-hint" id="sg-hint" aria-hidden="true">اضغط على الإيدين وصفّق معنا 👏</p>
-      </div>
+    </div>
+    <div class="hero-text">
+    <h1 id="hello">أهلاً بك</h1>
+    <p class="lead"> رح بتلاقي مجموعة من المقررات حاولنا انو نلخصها ونبسطها (ومنأكد انو للمراجعة والمساعدة وما في غنى عن المقرر الاساسي)، اشتغلناها لتكون بشكل تفاعلي: افهم الدرس، تدرّب بدون ضغط، وامتحن حالك فصل فصل.</p>
     </div>
 
-    <div class="auth-card">
-      <div id="checking" class="step">
-        <h2>لحظة...</h2>
-        <p class="sub">عم نتأكد من حسابك.</p>
-      </div>
 
-      <!-- الخطوة 1: الإيميل -->
-      <div id="step-email" class="step" hidden>
-        <h2>تسجيل الدخول</h2>
-        <p class="sub">دخّل إيميلك الشخصي (غوغل، هوتميل،...) وبنبعتلك رمز تحقق عليه من 6 أرقام.</p>
-        <p class="notice" id="ref-note" hidden style="margin:0 0 14px;">👋 صديقك دعاك للمنصة! سجّل وبتاخد نجوم ترحيب ⭐</p>
-        <label class="field"><span>الإيميل</span>
-          <input id="email" type="email" dir="ltr" autocomplete="email" inputmode="email" placeholder="name@example.com">
-        </label>
-        <button id="btn-send" class="btn btn-primary btn-block" type="button">إرسال الرمز</button>
-        <div id="google-wrap" hidden>
-          <div class="divider">أو</div>
-          <div id="g-btn"></div>
-        </div>
-        <p id="msg-email" class="msg" role="alert"></p>
-      </div>
-
-      <!-- الخطوة 2: الرمز -->
-      <div id="step-code" class="step" hidden>
-        <h2>دخّل الرمز</h2>
-        <p class="sub" id="code-sub">بعتنا الرمز لإيميلك. تأكد كمان من مجلد الرسائل غير المرغوبة.</p>
-        <label class="field"><span>رمز التحقق</span>
-          <input id="code" class="code-input" type="text" dir="ltr" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="••••••">
-        </label>
-        <label class="field" id="name-field" hidden><span>اسمك (ممكن يكون مستعار)</span>
-          <input id="name" type="text" autocomplete="name" maxlength="80" placeholder="الاسم اللي بيظهر مع أسئلتك وأجوبتك">
-        </label>
-        <button id="btn-verify" class="btn btn-primary btn-block" type="button">تأكيد ودخول</button>
-        <div class="row-between">
-          <button id="btn-resend" class="linkbtn" type="button">إعادة إرسال الرمز</button>
-          <button id="btn-back" class="linkbtn" type="button">تغيير الإيميل</button>
-        </div>
-        <p id="msg-code" class="msg" role="alert"></p>
-      </div>
-
-      <!-- الخطوة 3: الموافقة على الخصوصية وشروط الاستخدام (بعد الدخول) -->
-      <div id="step-consent" class="step" hidden>
-        <h2 id="consent-title">قبل ما نكمّل 👋</h2>
-        <p id="consent-note" class="sub" hidden></p>
-        <p class="sub">باختصار، هيك منتعامل مع بياناتك:</p>
-        <ul id="consent-points" class="consent-points"></ul>
-        <label class="check"><input type="checkbox" id="consent-check">
-          <span>قرأت <a href="privacy.html" target="_blank" rel="noopener">الخصوصية وشروط الاستخدام</a> وبوافق عليها.</span>
-        </label>
-        <button id="btn-consent" class="btn btn-primary btn-block" type="button" disabled>أوافق وأكمل</button>
-        <div class="row-between">
-          <button id="btn-decline" class="linkbtn" type="button">ما بوافق (تسجيل خروج)</button>
-        </div>
-        <p id="msg-consent" class="msg" role="alert"></p>
-      </div>
-    </div>
+    <section id="community" class="community cm-hero members-only" hidden aria-label="مجتمعنا"></section>
   </div>
 </section>
 
-<div class="wrap-wide"><section id="community" class="community" hidden aria-label="مجتمعنا"></section></div>
+<main class="wrap-wide">
+  <div id="offline-msg" class="notice" hidden>تعذّر التحقق من حسابك الآن بسبب ضعف الاتصال. جرّب تحدّث الصفحة.</div>
+
+  <div class="stars-card members-only">
+    <p>⭐ <b>ساعد غيرك واكسب نجوم.</b> جاوب على أسئلة الطلاب تحت كل درس، وادعِ أصحابك برابطك الخاص.</p>
+    <a class="btn btn-primary" href="stars.html">نجومي ورابط الدعوة</a>
+  </div>
+
+  <h2 class="section-title">المقررات</h2>
+  <div id="courses-grid" class="courses-grid" aria-live="polite">
+    <div class="course-card skeleton"></div>
+    <div class="course-card skeleton"></div>
+    <div class="course-card skeleton"></div>
+  </div>
+  <p id="courses-msg" class="msg err" hidden></p>
+  <div style="height:36px"></div>
+</main>
+
+<div class="gate-ov" id="gate" hidden>
+  <div class="gate-box" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <button class="gate-x" id="gate-x" type="button" aria-label="إغلاق">×</button>
+    <div class="gate-ico" aria-hidden="true">🔒</div>
+    <h2 id="gate-title">سجّل دخولك لتفتح المادة</h2>
+    <p class="gate-course" id="gate-course"></p>
+    <p class="gate-sub">التسجيل مجاني وبياخد دقيقة: إيميلك وبس. وبعدها بتفوت عالمادة دغري، وتقدّمك بينحفظ.</p>
+    <a class="btn btn-primary btn-block" id="gate-go" href="login.html">🔑 تسجيل الدخول</a>
+    <button class="btn btn-block gate-no" id="gate-no" type="button">مو هلأ</button>
+  </div>
+</div>
 
 <footer class="site-footer">
   <div class="footer-links">
@@ -99,191 +81,85 @@
   <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
 </footer>
 
-<script src="assets/config.js?v=20261120a"></script>
-<script src="assets/auth.js?v=20261120a"></script>
-<script src="assets/policy.js?v=20261120a"></script>
-<script src="assets/community.js?v=20261120a" defer></script>
-<script src="assets/slogan.js?v=20261120a" defer></script>
+<script src="assets/config.js?v=20261121a"></script>
+<script src="assets/auth.js?v=20261121a"></script>
+<script src="assets/shell.js?v=20261121a"></script>
+<script src="assets/community.js?v=20261121a" defer></script>
+<script src="assets/slogan.js?v=20261121a" defer></script>
 <script>
-(function () {
-  var $ = function (id) { return document.getElementById(id); };
-  var state = { email: "", cooldownTimer: null };
-
-  var ERR = {
-    INVALID_EMAIL: "الإيميل غير صحيح، تأكد منه.",
-    BLOCKED: "هالحساب غير مفعّل. تواصل معنا على تلغرام.",
-    COOLDOWN: "استنى شوي قبل ما تطلب رمز جديد.",
-    MAIL_QUOTA: "في ضغط على الإرسال حالياً، جرّب بعد ساعة أو تواصل معنا.",
-    INVALID_CODE: "الرمز غير صحيح.",
-    EXPIRED: "انتهت صلاحية الرمز، اطلب رمز جديد.",
-    TOO_MANY: "محاولات كتيرة. اطلب رمز جديد، وإذا ضلّت الرسالة تطلع استنى ساعة وجرّب.",
-    NAME_REQUIRED: "أهلاً فيك! هاد أول تسجيل إلك. شو بتحب نناديك؟ اكتب اسمك وكبس تأكيد.",
-    INVALID_NAME: "اختار اسم تاني، هاد الاسم فيه كلمة مو مناسبة.",
-    INVALID_TOKEN: "ما قدرنا نتحقق من حساب غوغل، جرّب مرة تانية.",
-    SERVER_ERROR: "صار خطأ عنا، جرّب بعد شوي.",
-    NET: "ما في اتصال بالسيرفر، تأكد من الإنترنت وجرّب."
-  };
-  function show(step) {
-    ["checking", "step-email", "step-code", "step-consent"].forEach(function (s) { $(s).hidden = (s !== step); });
-  }
-  function msg(id, text, ok) { var el = $(id); el.textContent = text || ""; el.className = "msg " + (ok ? "ok" : "err"); }
-  function errText(res) {
-    if (!res) return ERR.NET;
-    var t = ERR[res.error] || ERR.SERVER_ERROR;
-    if (res.error === "INVALID_CODE" && typeof res.left === "number") t += " (باقي " + res.left + " محاولات)";
-    return t;
-  }
-  function goWelcome() {
-    var dest = "welcome.html";
-    try {
-      var n = new URLSearchParams(location.search).get("next");
-      if (n) { var u = new URL(n, location.href); if (u.origin === location.origin) dest = u.href; }
-    } catch (e) {}
-    location.replace(dest);
-  }
-  function device() { return (navigator.userAgent || "").slice(0, 120); }
-  function startCooldown(sec) {
-    var b = $("btn-resend"); clearInterval(state.cooldownTimer);
-    b.disabled = true;
-    state.cooldownTimer = setInterval(function () {
-      sec--;
-      if (sec <= 0) { clearInterval(state.cooldownTimer); b.disabled = false; b.textContent = "إعادة إرسال الرمز"; }
-      else b.textContent = "إعادة الإرسال بعد " + sec + " ث";
-    }, 1000);
-    b.textContent = "إعادة الإرسال بعد " + sec + " ث";
-  }
-  // ---- الموافقة على الخصوصية: السيرفر هو المرجع (terms = آخر نسخة وافق عليها الطالب) ----
-  function termsVersion() { return Number((window.SC_CONFIG || {}).TERMS_VERSION) || 0; }
-  function proceed() {
-    var s = SCAuth.getSession() || {};
-    if ((Number(s.terms) || 0) >= termsVersion()) return goWelcome();
-    showConsent(s);
-  }
-  function showConsent(s) {
-    var P = window.SC_POLICY, had = (Number(s.terms) || 0) > 0;
-    show("step-consent");
-    $("consent-title").textContent = had ? "حدّثنا الخصوصية وشروط الاستخدام" : "قبل ما نكمّل 👋";
-    var note = $("consent-note"), last = P && P.changes && P.changes[P.changes.length - 1];
-    note.hidden = !(had && last); if (had && last) note.textContent = "شو تغيّر: " + last.note;
-    var ul = $("consent-points"); ul.innerHTML = "";
-    ((P && P.summary) || []).forEach(function (t) { var li = document.createElement("li"); li.innerHTML = P.fmt(t); ul.appendChild(li); });
-    $("consent-check").checked = false; $("btn-consent").disabled = true; msg("msg-consent", "");
-    try { document.querySelector(".auth-card").scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
-  }
-  function acceptConsent() {
-    var s = SCAuth.getSession() || {}, v = termsVersion();
-    $("btn-consent").disabled = true; msg("msg-consent", "");
-    function done() {
-      SCAuth.saveSession({ token: s.token, email: s.email, name: s.name, terms: v, ok_at: s.ok_at });
-      goWelcome();
+  SCShell.init({
+    guest: function () {},
+    onReady: function (user) {
+      var first = (user.name || "").split(" ")[0];
+      var hello = document.getElementById("hello");
+      hello.textContent = first ? "أهلاً " : "أهلاً بك";
+      if (first) { var nm = document.createElement("span"); nm.className = "hello-name"; nm.textContent = first; hello.appendChild(nm); }
     }
-    function fail() { msg("msg-consent", "ما انحفظت موافقتك، جرّب مرة كمان."); $("btn-consent").disabled = false; }
-    SCAuth.api("acceptTerms", { token: s.token, version: v, device: device() }).then(function (res) {
-      if (res && res.ok) return done();
-      if (res && res.error === "UNKNOWN_ACTION") return done();   // السيرفر لسا ما انحدّث: منكمّل ومنسجّل محلياً
-      if (res && (res.error === "NO_SESSION" || res.error === "EXPIRED")) { SCAuth.clearSession(); location.reload(); return; }
-      fail();
-    }).catch(fail);
-  }
-  // ---- رابط الدعوة: index.html?ref=CODE — منحفظو لحد ما يكمّل التسجيل (حتى لو سكّر الصفحة ورجع) ----
-  (function () {
-    var m = /[?&]ref=([A-Za-z0-9]{4,12})/.exec(location.search);
-    if (m) { try { localStorage.setItem("sc_ref", m[1].toUpperCase()); } catch (e) {} }
-    if (savedRef()) $("ref-note").hidden = false;
-  })();
-  function savedRef() { try { return localStorage.getItem("sc_ref") || ""; } catch (e) { return ""; } }
+  });
 
-  function saveAndGo(res) {
-    try { localStorage.removeItem("sc_ref"); } catch (e) {}
-    SCAuth.saveSession({ token: res.token, email: res.user.email, name: res.user.name, terms: res.user.terms || 0 });
-    proceed();
+  // ---- قائمة المقررات (من تبويب courses) ----
+  var CACHE_KEY = "sc_courses";
+  var coursesById = {};
+  var grid = document.getElementById("courses-grid");
+  var cmsg = document.getElementById("courses-msg");
+
+  function esc(t) { return (t == null ? "" : String(t)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
+
+  function render(list) {
+    list.forEach(function (c) { coursesById[c.course_id] = c; });
+    if (!list.length) { grid.innerHTML = '<div class="soon-box" style="grid-column:1/-1">ما في مقررات متاحة حالياً.</div>'; return; }
+    grid.innerHTML = list.map(function (c) {
+      return '<a class="course-card" data-id="' + esc(c.course_id) + '" href="' + esc(c.url) + '">' +
+        '<span class="code-badge">' + esc(c.code) + '</span>' +
+        '<h3>' + esc(c.title) + '</h3>' +
+        (c.description ? '<p>' + esc(c.description) + '</p>' : '') +
+        '<span class="open-hint">افتح المقرر ←</span></a>';
+    }).join("");
   }
 
-  function sendCode(isResend) {
-    var email = $("email").value.trim().toLowerCase();
-    if (!isResend) { msg("msg-email", ""); }
-    if (!email) { msg("msg-email", ERR.INVALID_EMAIL); return; }
-    var btn = isResend ? $("btn-resend") : $("btn-send");
-    btn.disabled = true;
-    SCAuth.api("requestOtp", { email: email }).then(function (res) {
+  function loadCourses() {
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null"); } catch (e) {}
+    if (cached && cached.length) render(cached);   // عرض فوري من آخر نسخة
+
+    // المواد بتنعرض للكل (حتى بدون حساب)؛ فتح المادة هو اللي بدو تسجيل دخول
+    var s = SCAuth.getSession(), tok = s && s.token;
+    SCAuth.api("getCourses", tok ? { token: tok } : {}).then(function (res) {
       if (res && res.ok) {
-        state.email = email;
-        $("code-sub").textContent = "بعتنا الرمز إلى " + email + ". تأكد كمان من مجلد الرسائل غير المرغوبة.";
-        show("step-code"); $("code").value = ""; $("code").focus();
-        msg("msg-code", "");
-        startCooldown(60);
-      } else {
-        var t = errText(res);
-        if (res && res.error === "COOLDOWN" && res.wait) t = "استنى " + res.wait + " ثانية قبل ما تطلب رمز جديد.";
-        msg(isResend ? "msg-code" : "msg-email", t);
-        if (!isResend) btn.disabled = false;
-        if (isResend && res && res.error === "COOLDOWN") startCooldown(res.wait || 30);
+        try { localStorage.setItem(CACHE_KEY, JSON.stringify(res.courses)); } catch (e) {}
+        render(res.courses); cmsg.hidden = true;
+      } else if (tok && res && (res.error === "NO_SESSION" || res.error === "EXPIRED" || res.error === "BLOCKED")) {
+        SCAuth.clearSession(); location.reload();
+      } else if (!cached) {
+        cmsg.textContent = "تعذّر تحميل المقررات، حدّث الصفحة."; cmsg.hidden = false; grid.innerHTML = "";
       }
     }).catch(function () {
-      msg(isResend ? "msg-code" : "msg-email", ERR.NET);
-      if (!isResend) btn.disabled = false;
-    }).then(function () { if (!isResend) $("btn-send").disabled = false; });
+      if (!cached) { cmsg.textContent = "تعذّر تحميل المقررات، تأكد من الاتصال."; cmsg.hidden = false; grid.innerHTML = ""; }
+    });
   }
 
-  function verify() {
-    var code = $("code").value.replace(/\D/g, "");
-    if (code.length !== 6) { msg("msg-code", "الرمز مؤلف من 6 أرقام."); return; }
-    $("btn-verify").disabled = true;
-    SCAuth.api("verifyOtp", { email: state.email, code: code, name: $("name").value.trim(), device: device(), ref: savedRef() })
-      .then(function (res) {
-        if (res && res.ok) return saveAndGo(res);
-        if (res && res.error === "NAME_REQUIRED") { $("name-field").hidden = false; $("name").focus(); return msg("msg-code", ERR.NAME_REQUIRED, true); }
-        msg("msg-code", errText(res));
-      })
-      .catch(function () { msg("msg-code", ERR.NET); })
-      .then(function () { $("btn-verify").disabled = false; });
-  }
+  loadCourses();
 
-  // أزرار
-  $("btn-send").addEventListener("click", function () { sendCode(false); });
-  $("btn-resend").addEventListener("click", function () { sendCode(true); });
-  $("btn-verify").addEventListener("click", verify);
-  $("consent-check").addEventListener("change", function () { $("btn-consent").disabled = !this.checked; });
-  $("btn-consent").addEventListener("click", acceptConsent);
-  $("btn-decline").addEventListener("click", function () { SCAuth.logout(); });
-  $("btn-back").addEventListener("click", function () { clearInterval(state.cooldownTimer); show("step-email"); $("email").focus(); });
-  $("email").addEventListener("keydown", function (e) { if (e.key === "Enter") sendCode(false); });
-  $("code").addEventListener("keydown", function (e) { if (e.key === "Enter") verify(); });
-  $("name").addEventListener("keydown", function (e) { if (e.key === "Enter") verify(); });
-
-  // غوغل (يظهر فقط إذا تم ضبط GOOGLE_CLIENT_ID)
-  function initGoogle() {
-    if (!SC_CONFIG.GOOGLE_CLIENT_ID) return;
-    var s = document.createElement("script");
-    s.src = "https://accounts.google.com/gsi/client"; s.async = true;
-    s.onload = function () {
-      google.accounts.id.initialize({
-        client_id: SC_CONFIG.GOOGLE_CLIENT_ID,
-        callback: function (resp) {
-          msg("msg-email", "");
-          SCAuth.api("googleLogin", { idToken: resp.credential, device: device(), ref: savedRef() })
-            .then(function (res) { if (res && res.ok) saveAndGo(res); else msg("msg-email", errText(res)); })
-            .catch(function () { msg("msg-email", ERR.NET); });
-        }
-      });
-      google.accounts.id.renderButton($("g-btn"), { theme: "outline", size: "large", text: "continue_with", locale: "ar", width: 300 });
-      $("google-wrap").hidden = false;
-    };
-    document.head.appendChild(s);
+  // ---- زائر بدون حساب: الضغط على مادة بيفتح نافذة الدخول، وبعد الدخول بيرجع عالمادة نفسها ----
+  var gate = document.getElementById("gate"), lastFocus = null;
+  function openGate(card) {
+    var c = coursesById[card.getAttribute("data-id")] || {};
+    document.getElementById("gate-course").textContent = (c.code ? c.code + " — " : "") + (c.title || "");
+    var dest = new URL(card.getAttribute("href"), location.href).href;
+    document.getElementById("gate-go").href = "login.html?next=" + encodeURIComponent(dest);
+    lastFocus = card; gate.hidden = false;
+    document.getElementById("gate-go").focus();
   }
-
-  // عند الفتح: إذا في جلسة محفوظة وصالحة، مباشرة للترحيب
-  if (SC_CONFIG.API_URL.indexOf("PUT_YOUR") === 0) {
-    show("step-email"); msg("msg-email", "لم يتم ضبط رابط السيرفر بعد (assets/config.js).");
-    return;
-  }
-  SCAuth.check().then(function (r) {
-    if (r.state === "valid") return proceed();
-    show("step-email"); initGoogle();
-    if (r.state === "offline") msg("msg-email", ERR.NET);
-    if (/[?&]deleted=1/.test(location.search)) msg("msg-email", "انحذف حسابك وبياناتك. منتمنالك التوفيق 🤍", true);
+  function closeGate() { gate.hidden = true; if (lastFocus) lastFocus.focus(); }
+  grid.addEventListener("click", function (e) {
+    if (!document.body.classList.contains("is-guest")) return;
+    var card = e.target.closest("a.course-card"); if (!card) return;
+    e.preventDefault(); openGate(card);
   });
-})();
+  document.getElementById("gate-x").addEventListener("click", closeGate);
+  document.getElementById("gate-no").addEventListener("click", closeGate);
+  gate.addEventListener("click", function (e) { if (e.target === gate) closeGate(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !gate.hidden) closeGate(); });
 </script>
 </body>
 </html>

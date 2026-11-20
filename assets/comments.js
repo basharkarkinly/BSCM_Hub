@@ -68,6 +68,8 @@
     ".scc-q.solved{border-inline-start:4px solid #12B886}",
     ".scc-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:.78rem;color:#5B6478}",
     ".scc-name{font-weight:800;color:#0F1C2E;font-size:.86rem}",
+    ".scc-lvl{font-size:.68rem;font-weight:700;color:#5B6478;background:#F3F5F9;border:1px solid #E3E7F0;border-radius:999px;padding:0 7px;white-space:nowrap}",
+    ".scc-lvl.hi{color:#8A5300;background:#FFF4E2;border-color:#FFD79A}",
     ".scc-tag{font-size:.68rem;font-weight:700;border-radius:999px;padding:0 8px;border:1px solid}",
     ".scc-tag.you{color:#12897E;background:#EFFBF8;border-color:#BFEDE6}",
     ".scc-tag.open{color:#8A5300;background:#FFF4E2;border-color:#FFD79A}",
@@ -219,12 +221,18 @@
       '<p class="scc-msg' + (dis ? " err" : "") + '" data-msg>' + (dis ? esc(ERR.LIMIT_REACHED) : "") + '</p></div>';
   }
 
+  // مستوى صاحب المشاركة (من النجوم) — شارة صغيرة جنب الاسم
+  function lvlHTML(l) {
+    if (!l || !l.n) return "";
+    return '<span class="scc-lvl' + (l.n >= 4 ? " hi" : "") + '" title="المستوى ' + l.n + ': ' + esc(l.name) + '">' + esc(l.icon) + ' ' + esc(l.name) + '</span>';
+  }
+
   function answerHTML(a, q) {
     var best = q.accepted_id && q.accepted_id === a.id;
     var canAccept = q.mine && !q.accepted_id && !a.mine;
     var voteDis = a.mine || a.voted;
     return '<div class="scc-a' + (best ? " best" : "") + '">' +
-      '<div class="scc-meta"><span class="scc-name">' + esc(a.name) + '</span>' +
+      '<div class="scc-meta"><span class="scc-name">' + esc(a.name) + '</span>' + lvlHTML(a.level) +
       (a.mine ? '<span class="scc-tag you">أنت</span>' : "") +
       (best ? '<span class="scc-tag solved">✓ حلّ المشكلة</span>' : "") +
       '<span>' + esc(ago(a.created_at)) + '</span></div>' +
@@ -247,7 +255,7 @@
       return x.created_at < y.created_at ? -1 : 1;
     });
     return '<div class="scc-q' + (solved ? " solved" : open ? " open" : "") + '" data-thread="' + esc(q.id) + '">' +
-      '<div class="scc-meta"><span class="scc-name">' + esc(q.name) + '</span>' +
+      '<div class="scc-meta"><span class="scc-name">' + esc(q.name) + '</span>' + lvlHTML(q.level) +
       (q.mine ? '<span class="scc-tag you">أنت</span>' : "") +
       (solved ? '<span class="scc-tag solved">✓ انحلّ</span>' : open ? '<span class="scc-tag open">بلا جواب</span>' : "") +
       '<span>' + esc(ago(q.created_at)) + '</span></div>' +

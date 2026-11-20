@@ -110,7 +110,7 @@
 
     c.innerHTML =
       (opts.greet !== false ? '<a class="scs-hi" id="scs-hi" href="' + HUB + 'profile.html" title="حسابي"></a>' : "") +
-      '<a class="scs-star" id="scs-star" href="' + HUB + 'stars.html" title="نجومي" hidden>⭐ <b>0</b></a>' +
+      '<a class="scs-star" id="scs-star" href="' + HUB + 'stars.html" title="نجومي" hidden><i style="font-style:normal"></i>⭐ <b>0</b></a>' +
       (onHub ? "" : '<a class="scs-ico" id="scs-home" href="' + esc(homeHref) + '" aria-label="كل المقررات" title="كل المقررات">🏠</a>') +
       '<button class="scs-ico" id="scs-bell" type="button" aria-label="الإشعارات" title="الإشعارات">🔔<span class="scs-n" id="scs-n" hidden>0</span></button>' +
       '<button class="scs-ico" id="scs-out" type="button" aria-label="تسجيل خروج" title="تسجيل خروج">🚪</button>';
@@ -193,9 +193,10 @@
 
   /* ---------- الإشعارات ---------- */
   function setBadge(n) { els.n.textContent = n > 99 ? "99+" : n; els.n.hidden = !(n > 0); }
-  function setStars(n) {
+  function setStars(n, level) {
     if (!els.star || n == null || isNaN(n)) return;
     els.star.querySelector("b").textContent = n;
+    if (level && level.icon) { els.star.querySelector("i").textContent = level.icon; els.star.title = "نجومي · المستوى " + level.n + ": " + level.name; }
     els.star.hidden = false;
   }
 
@@ -227,17 +228,17 @@
   }
   function writeNC(d) { try { sessionStorage.setItem(NOTIF_KEY, JSON.stringify({ t: Date.now(), d: d })); } catch (e) {} }
   function seenCopy(n) {   // نسخة "مقروءة" للكاش: بدون عدّاد ولا تعليقات جديدة
-    return { ok: true, unread: 0, groups: [], star_events: [], stars: n.stars, announcements: (n.announcements || []).map(function (a) { return Object.assign({}, a, { is_new: false }); }) };
+    return { ok: true, unread: 0, groups: [], star_events: [], stars: n.stars, level: n.level, announcements: (n.announcements || []).map(function (a) { return Object.assign({}, a, { is_new: false }); }) };
   }
 
   function loadNotifs() {
     var c = readNC();
-    if (c) { notif = c; setBadge(c.unread || 0); setStars(c.stars); ensureCourses(); return; }
+    if (c) { notif = c; setBadge(c.unread || 0); setStars(c.stars, c.level); ensureCourses(); return; }
     var s = SCAuth.getSession(); if (!s || !s.token) return;
     ensureCourses();
     SCAuth.api("getNotifications", { token: s.token }).then(function (res) {
       if (kickIfInvalid(res)) return;
-      if (res && res.ok) { notif = res; writeNC(res); setBadge(res.unread); setStars(res.stars); }
+      if (res && res.ok) { notif = res; writeNC(res); setBadge(res.unread); setStars(res.stars, res.level); }
     }).catch(function () {});
   }
 
@@ -252,7 +253,9 @@
     });
     (n.star_events || []).forEach(function (x) {
       var up = x.delta > 0;
-      items.push({ at: x.at, isNew: true, html: '<a class="scs-item star" href="' + esc(HUB + "stars.html") + '"><div class="scs-t">⭐ ' + (up ? "+" : "−") + Math.abs(x.delta) + (Math.abs(x.delta) === 1 ? " نجمة" : " نجوم") + '</div>' +
+      var head = x.delta === 0 ? "🏅 إنجاز جديد"   // وسام أو مستوى جديد (بدون نجوم)
+        : "⭐ " + (up ? "+" : "−") + Math.abs(x.delta) + (Math.abs(x.delta) === 1 ? " نجمة" : " نجوم");
+      items.push({ at: x.at, isNew: true, html: '<a class="scs-item star" href="' + esc(HUB + "stars.html") + '"><div class="scs-t">' + head + '</div>' +
         (x.label ? '<div class="scs-d">' + esc(x.label) + '</div>' : "") + '<div class="scs-m">' + esc(ago(x.at)) + '</div></a>' });
     });
     n.groups.forEach(function (g) {

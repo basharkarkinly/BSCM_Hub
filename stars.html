@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نجومي — Support Channel</title>
+<title>نجومي ومستواي — Support Channel</title>
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/style.css?v=20261119b">
-<link rel="stylesheet" href="assets/hub.css?v=20261119b">
+<link rel="stylesheet" href="assets/style.css?v=20261120a">
+<link rel="stylesheet" href="assets/hub.css?v=20261120a">
 </head>
 <body class="guard">
 
@@ -17,13 +17,35 @@
 
 <main class="wrap pf st">
   <h1>نجومي ⭐</h1>
-  <p class="pf-note">النجوم بتعكس قديش ساعدت غيرك. مع الوقت رح تستفيد منها، لأن رح يكون في الها قيمة.</p>
+  <p class="pf-note">النجوم بتعكس قديش ساعدت غيرك، ومنها بيطلع مستواك. والأوسمة بتحكي شو أنجزت. مع الوقت رح تستفيد منها، لأن رح يكون في الها قيمة.</p>
 
   <section class="st-balance">
     <div class="st-num" id="st-num">—</div>
     <div class="st-lbl">نجمة</div>
   </section>
   <p id="st-err" class="msg err" role="alert"></p>
+
+  <section class="pf-card lv-card" id="lv-card" hidden>
+    <div class="lv-now">
+      <div class="lv-icon" id="lv-icon">🌱</div>
+      <div class="lv-txt">
+        <div class="lv-kicker">مستواك</div>
+        <div class="lv-name" id="lv-name">—</div>
+      </div>
+    </div>
+    <div class="lv-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="lv-bar"><span id="lv-fill"></span></div>
+    <p class="lv-next" id="lv-next"></p>
+    <details class="lv-all">
+      <summary>كل المستويات</summary>
+      <ol class="lv-ladder" id="lv-ladder"></ol>
+    </details>
+  </section>
+
+  <section class="pf-card">
+    <h2>أوسمتي 🏅 <small class="bd-count" id="bd-count"></small></h2>
+    <p class="pf-hint" style="margin:0 0 12px;">الأوسمة بتنكسب بالمشاركة والدراسة، وبتضل إلك. اضغط على أي وسام لتعرف كيف بتاخدو.</p>
+    <div class="bd-grid" id="bd-grid"><p class="st-skel">عم نحمّل...</p></div>
+  </section>
 
   <section class="pf-card st-invite">
     <h2>ادعِ أصحابك 🤝</h2>
@@ -70,9 +92,9 @@
   <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
 </footer>
 
-<script src="assets/config.js?v=20261119b"></script>
-<script src="assets/auth.js?v=20261119b"></script>
-<script src="assets/shell.js?v=20261119b"></script>
+<script src="assets/config.js?v=20261120a"></script>
+<script src="assets/auth.js?v=20261120a"></script>
+<script src="assets/shell.js?v=20261120a"></script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -85,7 +107,54 @@
     if (s < 2592000) return "قبل " + Math.floor(s / 86400) + " يوم";
     return new Date(t).toLocaleDateString("ar");
   }
-  function starsWord(n) { return n === 1 ? "نجمة" : (n === 2 ? "نجمتين" : "نجوم"); }
+  function starsWord(n) { return n === 1 ? "نجمة" : (n === 2 ? "نجمتين" : (n >= 3 && n <= 10 ? "نجوم" : "نجمة")); }
+
+  function level(d) {
+    var L = d.level; if (!L) return;
+    $("lv-card").hidden = false;
+    $("lv-icon").textContent = L.icon || "⭐";
+    $("lv-name").textContent = L.name + " · المستوى " + L.n;
+    $("lv-fill").style.width = (L.pct || 0) + "%";
+    $("lv-bar").setAttribute("aria-valuenow", L.pct || 0);
+    $("lv-next").innerHTML = L.next
+      ? "باقي لك <b>" + L.next.left + " " + starsWord(L.next.left) + "</b> لتوصل لـ <b>" + esc(L.next.icon + " " + L.next.name) + "</b>"
+      : "وصلت لأعلى مستوى 👑 — إنت قدوة لكل المنصة";
+    $("lv-ladder").innerHTML = (d.levels || []).map(function (x) {
+      var cls = x.n < L.n ? "done" : x.n === L.n ? "cur" : "";
+      return '<li class="' + cls + '"><span>' + esc(x.icon) + ' ' + esc(x.name) + '</span><small>' + (x.min ? "من " + x.min + " ⭐" : "البداية") + '</small></li>';
+    }).join("");
+  }
+
+  function badges(d) {
+    var list = d.badges || [];
+    var got = list.filter(function (b) { return b.earned_at; }).length;
+    $("bd-count").textContent = list.length ? got + " من " + list.length : "";
+    // المكسوبة أول، وبعدين الأقرب للفتح
+    list.sort(function (x, y) {
+      if (!!x.earned_at !== !!y.earned_at) return x.earned_at ? -1 : 1;
+      if (x.earned_at) return x.earned_at < y.earned_at ? 1 : -1;
+      return (y.progress / y.threshold) - (x.progress / x.threshold);
+    });
+    $("bd-grid").innerHTML = list.map(function (b) {
+      var on = !!b.earned_at;
+      var foot = on ? "انكسب " + when(b.earned_at)
+        : (b.threshold > 1 ? b.progress + " / " + b.threshold : "لسا");
+      return '<button type="button" class="bd' + (on ? " on" : "") + '" aria-label="' + esc(b.label) + '">' +
+        '<span class="bd-ico">' + esc(b.icon) + '</span>' +
+        '<span class="bd-lbl">' + esc(b.label) + '</span>' +
+        (!on && b.threshold > 1 ? '<span class="bd-prog"><span style="width:' + Math.round(b.progress * 100 / b.threshold) + '%"></span></span>' : '') +
+        '<small class="bd-foot">' + esc(foot) + '</small>' +
+        '<span class="bd-desc">' + esc(b.desc) + '</span>' +
+      '</button>';
+    }).join("") || '<p class="st-skel">الأوسمة رح تنفتح قريباً ✨</p>';
+    Array.prototype.forEach.call($("bd-grid").querySelectorAll(".bd"), function (el) {
+      el.addEventListener("click", function () {
+        var open = el.classList.contains("show");
+        Array.prototype.forEach.call($("bd-grid").querySelectorAll(".bd.show"), function (x) { x.classList.remove("show"); });
+        if (!open) el.classList.add("show");
+      });
+    });
+  }
 
   function invite(d) {
     if (!d.ref_code) { document.querySelector(".st-invite").hidden = true; return; }
@@ -113,15 +182,18 @@
   function render(d) {
     invite(d);
     $("st-num").textContent = d.stars;
-    if (window.SCShell && SCShell.setStars) SCShell.setStars(d.stars);
+    if (window.SCShell && SCShell.setStars) SCShell.setStars(d.stars, d.level);
+    level(d);
+    badges(d);
     $("st-rules").innerHTML = (d.rules || []).map(function (r) {
       return '<li><span>' + esc(r.label) + (r.daily_cap ? ' <small>(لحد ' + r.daily_cap + ' باليوم)</small>' : '') + '</span>' +
         '<b>+' + r.stars + ' ⭐</b></li>';
     }).join("") || '<li class="st-skel">ما في قواعد مفعّلة حالياً.</li>';
     $("st-hist").innerHTML = (d.history || []).map(function (h) {
       var up = h.delta > 0;
-      return '<li><span>' + esc(h.label) + '<small>' + esc(when(h.at)) + '</small></span>' +
-        '<b class="' + (up ? "up" : "down") + '">' + (up ? "+" : "−") + Math.abs(h.delta) + ' ⭐</b></li>';
+      var tag = h.delta === 0 ? '<b class="up">🏅</b>'   // وسام أو مستوى جديد
+        : '<b class="' + (up ? "up" : "down") + '">' + (up ? "+" : "−") + Math.abs(h.delta) + ' ⭐</b>';
+      return '<li><span>' + esc(h.label) + '<small>' + esc(when(h.at)) + '</small></span>' + tag + '</li>';
     }).join("") || '<li class="st-skel">لسا ما في حركات. أول جواب مفيد بيجيب أول ' + starsWord(1) + ' ✨</li>';
   }
 

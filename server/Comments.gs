@@ -76,6 +76,7 @@ function pubComment_(c, uid) {
   const voters = c[C_VOT] || [];
   return {
     id: c[C_ID], parent_id: c[C_PAR], name: c[C_NAME], text: c[C_TEXT], created_at: c[C_AT],
+    level: authorLevel_(c[C_UID]),   // مستوى صاحب المشاركة (Stars.gs) — null للحساب المحذوف
     mine: !!uid && c[C_UID] === uid,
     votes: voters.length, voted: !!uid && voters.indexOf(uid) >= 0,
     accepted_id: c[C_PAR] ? '' : (c[C_ACC] || '')
@@ -350,7 +351,7 @@ function getQaFeed_(req) {
       const last = (byQ[q[C_ID]] || []).reduce(function (m, c) { return c[C_AT] > m ? c[C_AT] : m; }, q[C_AT]);
       counts.all++; if (!ans.length) counts.open++;
       items.push({
-        id: q[C_ID], course_id: parts[0], chapter_id: parts[1], name: q[C_NAME],
+        id: q[C_ID], course_id: parts[0], chapter_id: parts[1], name: q[C_NAME], level: authorLevel_(q[C_UID]),
         text: q[C_TEXT].length > 280 ? q[C_TEXT].slice(0, 280) + '…' : q[C_TEXT],
         created_at: q[C_AT], last_at: last, answers: ans.length, votes: votes, solved: solved,
         mine: q[C_UID] === uid, answered_by_me: ans.some(function (c) { return c[C_UID] === uid; })
@@ -397,7 +398,7 @@ function addComment_(req) {
   if (last && wait > 0) return { ok: false, error: 'COOLDOWN', wait: wait };
 
   const list = (loadPlaces_([p.key])[p.key] || []).slice();
-  let parent = '';
+  let parent = '', askerUid = '';
   let mine = 0;
   list.forEach(function (c) { if (!c[C_PAR] && c[C_UID] === uid) mine++; });
 
@@ -406,6 +407,8 @@ function addComment_(req) {
     const par = list.filter(function (c) { return c[C_ID] === String(req.parent_id); })[0];
     if (!par) return { ok: false, error: 'BAD_PARENT' };
     parent = par[C_PAR] || par[C_ID];
+    const q0 = list.filter(function (c) { return c[C_ID] === parent; })[0];
+    askerUid = q0 ? q0[C_UID] : '';
     const myAnswers = list.filter(function (c) { return c[C_PAR] === parent && c[C_UID] === uid; }).length;
     if (myAnswers >= LIM.A_PER_QUESTION) return { ok: false, error: 'ALREADY_ANSWERED' };
   } else if (mine >= LIM.Q_PER_PLACE) {
@@ -435,6 +438,9 @@ function addComment_(req) {
   const places = placesOf_(a.user.obj);
   if (!places[p.key]) { places[p.key] = row[C_AT]; savePlaces_(a.user.idx, places); }
   activateReferral_(a.user);   // أول سؤال أو جواب = بلّش يتفاعل
+  // عدّادات الأوسمة (Stars.gs): سؤال، أو جواب على سؤال حدا تاني (توضيح صاحب السؤال ما بينحسب جواب)
+  if (!parent) bumpStat_(uid, 'questions', 1);
+  else if (askerUid !== uid) bumpStat_(uid, 'answers', 1);
 
   return { ok: true, comment: pubComment_(row, uid), mine_count: parent ? mine : mine + 1, limit: LIM.Q_PER_PLACE };
 }
@@ -474,6 +480,12 @@ function deleteComment_(req) {
       q[C_ACC] = '';
       setCommentCell_(commentRowNum_(q[C_ID]), 'accepted_id', '');
     }
+  }
+  // عدّادات الأوسمة: منرجّع العدّاد (الوسام اللي انكسب بيضل)
+  if (!o.parent_id) bumpStat_(uid, 'questions', -1);
+  else {
+    const q1 = list.filter(function (c) { return c[C_ID] === String(o.parent_id); })[0];
+    if (!q1 || q1[C_UID] !== uid) bumpStat_(uid, 'answers', -1);
   }
   list = list.filter(function (c) { return c[C_ID] !== id && c[C_PAR] !== id; });
   ccSetPlace_(key, list);
@@ -617,7 +629,8 @@ function getNotifications_(req) {
   glist.forEach(function (g) { unread += g.count; });
 
   return { ok: true, unread: unread, groups: glist, announcements: anns,
-           star_events: starEv, stars: Number(a.user.obj.stars) || 0 };
+           star_events: starEv, stars: Number(a.user.obj.stars) || 0,
+           level: levelTag_(levelOf_(Number(a.user.obj.stars) || 0)) };
 }
 
 function markSeen_(req) {

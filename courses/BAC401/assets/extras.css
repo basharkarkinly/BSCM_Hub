@@ -298,3 +298,14 @@
 .og-done li.og-next{ background:#F5F7FB; color:#9AA6BA; animation:none; }
 .og-done li.og-next::before{ background:#9AA6BA; }
 .og-chip{ cursor:pointer; }
+
+/* ---------- 🧮 سلسلة مجمل الربح ---------- */
+.cc-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:8px; margin:8px 0 12px; }
+.cc-grid label{ display:flex; flex-direction:column; gap:3px; font-size:.8rem; font-weight:700; color:#1D3557; }
+.cc-grid input{ font:inherit; font-size:.95rem; padding:7px 10px; border:1.5px solid #E3E7F0; border-radius:10px; direction:ltr; text-align:right; }
+.cc-grid input:focus{ outline:none; border-color:#FF9F1C; }
+.cc-out{ background:#F5F7FB; border-radius:12px; padding:8px 12px; }
+.cc-row{ display:flex; justify-content:space-between; gap:10px; padding:6px 2px; border-bottom:1px dashed #E3E7F0; font-size:.88rem; }
+.cc-row:last-child{ border-bottom:none; }
+.cc-row b{ direction:ltr; font-variant-numeric:tabular-nums; }
+.cc-row.k b{ color:#1D3557; } .cc-row.hi{ background:#FFF4E2; border-radius:8px; padding:6px 8px; } .cc-row.hi b{ color:#8A5300; }

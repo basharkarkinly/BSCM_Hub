@@ -6,7 +6,8 @@ const COURSE_CHAPTERS = [
   {num:1, key:"ch1", title:"المحاسبة وبيئة الأعمال", href:"chapters/chapter-1-lesson.html"},
   {num:2, key:"ch2", title:"التسجيل المحاسبي ونظرية القيد المزدوج", href:"chapters/chapter-2-lesson.html"},
   {num:3, key:"ch3", title:"التسويات الجردية للإيرادات والمصروفات", href:"chapters/chapter-3-lesson.html"},
-  {num:4, key:"ch4", title:"إكمال الدورة المحاسبية والأخطاء المحاسبية", href:"chapters/chapter-4-lesson.html"}
+  {num:4, key:"ch4", title:"إكمال الدورة المحاسبية والأخطاء المحاسبية", href:"chapters/chapter-4-lesson.html"},
+  {num:5, key:"ch5", title:"المحاسبة عن بيع وشراء البضاعة", href:"chapters/chapter-5-lesson.html"}
 ];
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */

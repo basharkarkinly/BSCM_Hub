@@ -903,3 +903,44 @@ function renderOrderGame(containerId, cfg){
   }
   reset();
 }
+
+/* ============================================================
+   🧮 سلسلة مجمل الربح — حاسبة حيّة (جرد دوري)
+   cfg = { title, values:{begin,purch,fin,pr,pd,end,sales,sr,sd,opex} }
+   ============================================================ */
+function renderCogsChain(containerId, cfg){
+  const root = document.getElementById(containerId);
+  const F = [
+    ["sales","المبيعات"],["sr","مردودات ومسموحات المبيعات"],["sd","الخصم على المبيعات (الممنوح)"],
+    ["begin","بضاعة أول المدة"],["purch","المشتريات"],["fin","مصاريف نقل المشتريات"],["pr","مردودات ومسموحات المشتريات"],["pd","الخصم على المشتريات (المكتسب)"],["end","بضاعة آخر المدة"],
+    ["opex","المصاريف التشغيلية (ومنها نقل المبيعات)"]
+  ];
+  const v = Object.assign({ begin:0,purch:0,fin:0,pr:0,pd:0,end:0,sales:0,sr:0,sd:0,opex:0 }, cfg.values || {});
+  root.innerHTML = `
+    <div class="eqs cc">
+      <div class="eqs-head"><span class="gp-tag">🧮 حاسبة</span><h4>${cfg.title}</h4></div>
+      <p class="eqs-hint">غيّر أي رقم (حط أرقام سؤال الامتحان) وشوف السلسلة كلها كيف بتتحسب.</p>
+      <div class="cc-grid">${F.map(([k, l]) => `<label><span>${l}</span><input type="number" min="0" step="any" inputmode="decimal" data-k="${k}" value="${v[k]}"></label>`).join("")}</div>
+      <div class="cc-out" id="${containerId}-o"></div>
+    </div>`;
+  const out = document.getElementById(`${containerId}-o`);
+  const row = (l, val, cls) => `<div class="cc-row ${cls || ""}"><span>${l}</span><b>${(val < 0 ? "−" : "") + xFmt(Math.abs(Math.round(val * 100) / 100))}</b></div>`;
+  function calc(){
+    root.querySelectorAll("input[data-k]").forEach(i => { v[i.dataset.k] = parseFloat(i.value) || 0; });
+    const netSales = v.sales - v.sr - v.sd;
+    const netPurch = v.purch + v.fin - v.pr - v.pd;
+    const avail = v.begin + netPurch;
+    const cogs = avail - v.end;
+    const gp = netSales - cogs;
+    const np = gp - v.opex;
+    out.innerHTML =
+      row("صافي المبيعات = المبيعات − المردودات − الخصم", netSales, "k") +
+      row("صافي المشتريات = المشتريات + نقل المشتريات − المردودات − الخصم", netPurch) +
+      row("البضاعة المتاحة للبيع = أول المدة + صافي المشتريات", avail) +
+      row("تكلفة البضاعة المباعة = المتاحة − آخر المدة", cogs, "k") +
+      row("مجمل (إجمالي) الربح = صافي المبيعات − التكلفة", gp, "hi") +
+      row("صافي الربح = مجمل الربح − المصاريف التشغيلية", np, "hi");
+  }
+  root.querySelectorAll("input[data-k]").forEach(i => i.addEventListener("input", calc));
+  calc();
+}

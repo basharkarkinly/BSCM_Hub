@@ -2,7 +2,7 @@
 (function () {
   var KEY = "sc_session";
 
-  // جذر الهب (المجلد اللي فيو index.html) محسوب من مسار auth.js نفسو، فيشتغل من أي عمق (مثل /courses/BMN401/)
+  // جذر الهب (المجلد اللي فيو index.html = صفحة المواد، و login.html = الدخول) محسوب من مسار auth.js نفسو، فيشتغل من أي عمق (مثل /courses/BMN401/)
   var HUB = "";
   try { HUB = new URL("../", document.currentScript.src).href; } catch (e) { HUB = ""; }
   function hubUrl(page) { return (HUB || "") + page; }
@@ -60,11 +60,12 @@
   var RECHECK_MS = 10 * 60 * 1000;   // وإذا مرّ أكتر من هالمدة بنتحقق بالخلفية (بدون ما نأخّر الصفحة)
 
   function toLogin() {
-    location.replace(hubUrl("index.html") + "?next=" + encodeURIComponent(location.href));
+    location.replace(hubUrl("login.html") + "?next=" + encodeURIComponent(location.href));
   }
 
-  // للصفحات المحمية
-  function requireLogin(onReady) {
+  // للصفحات المحمية. onInvalid (اختياري): بدل التحويل لصفحة الدخول (للصفحات المفتوحة للزوار متل صفحة المواد)
+  function requireLogin(onReady, onInvalid) {
+    var leave = onInvalid || toLogin;
     var s = getSession();
     var age = (s && s.token && s.ok_at) ? Date.now() - s.ok_at : Infinity;
 
@@ -72,7 +73,7 @@
     if (s && s.token && s.email && age < FRESH_MS) {
       document.body.classList.remove("guard");
       if (onReady) onReady({ email: s.email, name: s.name, terms: s.terms });
-      if (age > RECHECK_MS) check().then(function (r) { if (r.state === "invalid") toLogin(); });
+      if (age > RECHECK_MS) check().then(function (r) { if (r.state === "invalid") leave(); });
       return;
     }
 
@@ -82,7 +83,7 @@
         document.body.classList.remove("guard");
         if (onReady) onReady(r.user);
       } else if (r.state === "invalid") {
-        toLogin();
+        leave();
       } else {
         document.body.classList.remove("guard");
         var m = document.getElementById("offline-msg");

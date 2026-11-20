@@ -26,7 +26,7 @@ const CFG = {
 /* ============ نقاط الدخول ============ */
 
 function doGet() {
-  return json_({ ok: true, service: 'support-channel-auth', version: 'v10-badges' });
+  return json_({ ok: true, service: 'support-channel-auth', version: 'v11-public-courses' });
 }
 
 function doPost(e) {
@@ -280,9 +280,8 @@ function logout_(req) {
   return { ok: true };
 }
 
+/** قائمة المقررات: عامة (بتنعرض حتى للزوار بدون حساب). فتح المادة نفسها هو اللي بدو تسجيل دخول */
 function getCourses_(req) {
-  const s = checkSession_(req);
-  if (!s.ok) return s;
   const t = table_('courses');
   const list = t.rows
     .map(function (r) { return rowObj_(t, r); })

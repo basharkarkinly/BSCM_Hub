@@ -26,7 +26,7 @@ const CFG = {
 /* ============ نقاط الدخول ============ */
 
 function doGet() {
-  return json_({ ok: true, service: 'support-channel-auth', version: 'v9-top5' });
+  return json_({ ok: true, service: 'support-channel-auth', version: 'v10-badges' });
 }
 
 function doPost(e) {
@@ -507,7 +507,7 @@ function archiveOldComments_(cutoff) {
 /**
  * لما تعدّل الشيت بإيدك:
  *  - تبويب comments (تخفي جواب مثلاً): الكاش بيتفرّغ، ونجوم الأجوبة اللي انخفت بتنسحب.
- *  - star_rules / banned_words / courses: الكاش تبعهم بيتفرّغ فوراً.
+ *  - star_rules / banned_words / courses / users / levels / badges: الكاش تبعهم بيتفرّغ فوراً.
  */
 function onSheetEdit(e) {
   try {
@@ -525,7 +525,7 @@ function onSheetEdit(e) {
         if (ids.length) withLock_(function () { onCommentsHidden_(ids); }, 30000);
       }
       bumpCommentsCache_();
-    } else if (name === 'star_rules' || name === 'banned_words' || name === 'courses' || name === 'users') {
+    } else if (['star_rules', 'banned_words', 'courses', 'users', 'levels', 'badges'].indexOf(name) >= 0) {
       clearStarsCaches_();
     }
   } catch (err) { console.error(err); }

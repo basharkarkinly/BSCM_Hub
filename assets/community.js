@@ -24,7 +24,7 @@
   function render(el, d) {
     var top = (d.top || []).map(function (u, i) {
       return '<li class="cm-row' + (i < 3 ? " cm-podium" : "") + '"><span class="cm-rank" aria-hidden="true">' + MEDALS[i] + '</span>' +
-        '<span class="cm-name">' + esc(u.name) + '</span><span class="cm-stars">' + num(u.stars) + ' <small>' + starsWord(u.stars) + '</small> ⭐</span></li>';
+        '<span class="cm-name">' + esc(u.name) + (u.level && u.level.icon ? ' <span class="cm-lvl" title="المستوى ' + u.level.n + ': ' + esc(u.level.name) + '">' + esc(u.level.icon) + '</span>' : '') + '</span><span class="cm-stars">' + num(u.stars) + ' <small>' + starsWord(u.stars) + '</small> ⭐</span></li>';
     }).join("");
     el.innerHTML =
       '<div class="cm-members">' +
@@ -34,7 +34,7 @@
       '<div class="cm-top">' +
         '<h3>⭐ الأوائل بالنجوم</h3>' +
         (top ? '<ol class="cm-list">' + top + '</ol>' : '<p class="cm-empty">لسا ما في حدا عندو نجوم — كون أول اسم هون!</p>') +
-        '<p class="cm-how">النجوم بتجي من مساعدة غيرك: جواب بيحل مشكلة، صوت 👍، نجاح بالامتحانات، ودعوة أصحابك.</p>' +
+        '<p class="cm-how">النجوم بتجي من مساعدة غيرك: جواب بيحل مشكلة، صوت 👍، نجاح بالامتحانات، ودعوة أصحابك. ومع النجوم بيطلع مستواك 🌱→👑</p>' +
       '</div>';
     el.hidden = false;
   }

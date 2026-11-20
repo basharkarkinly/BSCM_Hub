@@ -944,3 +944,63 @@ function renderCogsChain(containerId, cfg){
   root.querySelectorAll("input[data-k]").forEach(i => i.addEventListener("input", calc));
   calc();
 }
+
+/* ============================================================
+   🧾 حاسبة الكمبيالة — تاريخ الاستحقاق، الفائدة، القيمة المستحقة، الخصم
+   cfg = { title, v:{ amount, rate, term, unit:"d"|"m", issue:"YYYY-MM-DD", disc:"YYYY-MM-DD"|"", drate } }
+   الفائدة = المبلغ × المعدل × المدة (أيام ÷ 360 أو أشهر ÷ 12)
+   ============================================================ */
+function renderNoteCalc(containerId, cfg){
+  const root = document.getElementById(containerId);
+  const v = Object.assign({ amount:10000, rate:12, term:90, unit:"d", issue:"2011-01-21", disc:"", drate:12 }, cfg.v || {});
+  const MONTHS = ["كانون الثاني","شباط","آذار","نيسان","أيار","حزيران","تموز","آب","أيلول","تشرين الأول","تشرين الثاني","كانون الأول"];
+  const dFmt = d => `${d.getUTCDate()}/${d.getUTCMonth() + 1} (${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]})`;
+  const parse = s => { const [y, m, d] = (s || "").split("-").map(Number); return y ? new Date(Date.UTC(y, m - 1, d)) : null; };
+  const n2 = x => xFmt(Math.round(x * 100) / 100);
+  root.innerHTML = `
+    <div class="eqs cc">
+      <div class="eqs-head"><span class="gp-tag">🧾 حاسبة</span><h4>${cfg.title}</h4></div>
+      <div class="cc-grid">
+        <label><span>قيمة الورقة (المبلغ الأساسي)</span><input type="number" data-k="amount" value="${v.amount}" min="0"></label>
+        <label><span>معدل الفائدة السنوي %</span><input type="number" data-k="rate" value="${v.rate}" min="0" step="any"></label>
+        <label><span>المدة</span><input type="number" data-k="term" value="${v.term}" min="1"></label>
+        <label><span>وحدة المدة</span><select data-k="unit"><option value="d"${v.unit === "d" ? " selected" : ""}>يوم</option><option value="m"${v.unit === "m" ? " selected" : ""}>شهر</option></select></label>
+        <label><span>تاريخ التحرير</span><input type="date" data-k="issue" value="${v.issue}"></label>
+        <label><span>تاريخ الخصم بالمصرف (اختياري)</span><input type="date" data-k="disc" value="${v.disc}"></label>
+        <label><span>معدل الخصم السنوي %</span><input type="number" data-k="drate" value="${v.drate}" min="0" step="any"></label>
+      </div>
+      <div class="cc-out" id="${containerId}-o"></div>
+    </div>`;
+  const out = document.getElementById(`${containerId}-o`);
+  const row = (l, val, cls) => `<div class="cc-row ${cls || ""}"><span>${l}</span><b>${val}</b></div>`;
+  function calc(){
+    root.querySelectorAll("[data-k]").forEach(i => { v[i.dataset.k] = i.type === "number" ? (parseFloat(i.value) || 0) : i.value; });
+    const iss = parse(v.issue);
+    let mat = null, days = null;
+    if(iss){
+      mat = new Date(iss);
+      if(v.unit === "d"){ mat.setUTCDate(mat.getUTCDate() + v.term); days = v.term; }
+      else { mat.setUTCMonth(mat.getUTCMonth() + v.term); days = Math.round((mat - iss) / 864e5); }
+    }
+    const frac = v.unit === "d" ? v.term / 360 : v.term / 12;
+    const interest = v.amount * v.rate / 100 * frac;
+    let html =
+      row("تاريخ الاستحقاق", mat ? dFmt(mat) : "—", "k") +
+      row(`الفائدة = ${n2(v.amount)} × ${v.rate}% × ${v.unit === "d" ? v.term + "/360" : v.term + "/12"}`, n2(interest), "hi") +
+      row("القيمة المستحقة = المبلغ + الفائدة", n2(v.amount + interest), "k") +
+      row("القيمة الاسمية (اللي منسجّل فيها الورقة)", n2(v.amount));
+    const dd = parse(v.disc);
+    if(dd && mat && dd < mat){
+      const left = Math.round((mat - dd) / 864e5);
+      const sameDay = dd.getUTCDate() === mat.getUTCDate();
+      const mths = (mat.getUTCFullYear() - dd.getUTCFullYear()) * 12 + mat.getUTCMonth() - dd.getUTCMonth();
+      const dsc = sameDay ? v.amount * v.drate / 100 * mths / 12 : v.amount * v.drate / 100 * left / 360;
+      html += row(`مدة الخصم (من ${dd.getUTCDate()}/${dd.getUTCMonth() + 1} للاستحقاق)`, sameDay ? mths + " شهر" : left + " يوم") +
+              row(`مصاريف الخصم = ${n2(v.amount)} × ${v.drate}% × ${sameDay ? mths + "/12" : left + "/360"}`, n2(dsc), "hi") +
+              row("صافي المبلغ من المصرف", n2(v.amount - dsc), "hi");
+    }
+    out.innerHTML = html + `<p class="eqs-hint" style="margin:8px 0 0">طريقة عدّ الأيام: الأيام الباقية من شهر التحرير، وبعدين أيام كل شهر كامل، ولحد ما يخلص العدد. (بالكتاب بيحسبوا الخصم على قيمة الورقة الاسمية.)</p>`;
+  }
+  root.querySelectorAll("[data-k]").forEach(i => i.addEventListener("input", calc));
+  calc();
+}

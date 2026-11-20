@@ -139,7 +139,7 @@ function renderQuiz(containerId, pool, opts){
   metaBar.className = "quiz-meta";
   let metaNote;
   if(mode === "exam") metaNote = `<span>النجاح يتطلب <b>90%</b> فأكثر</span>`;
-  else if(mode === "final") metaNote = `<span><b>فحص نهائي شامل</b> — كل سؤال علامتين، وبتقدر تعيد الفحص بأسئلة جديدة</span>`;
+  else if(mode === "final") metaNote = `<span><b>فحص نهائي شامل</b> — كل سؤال ${opts.marksPerQuestion === 2 ? "علامتين" : (opts.marksPerQuestion || 1) + " علامات"}، وبتقدر تعيد الفحص بأسئلة جديدة</span>`;
   else metaNote = `<span>تدريب حر — بلا قفل، جاوب وشوف التصحيح فوراً</span>`;
   metaBar.innerHTML = `
     <span>السؤال <b id="qz-answered">0</b> من <b>${questions.length}</b></span>

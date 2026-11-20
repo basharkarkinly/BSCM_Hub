@@ -76,77 +76,7 @@ function renderSortGame(containerId, cfg){
   start();
 }
 
-/* ---------- مقياس المسؤولية: شو بيتعرّض من أموالك الخاصة إذا الشركة انهارت؟ ---------- */
-function renderLiabilityMeter(containerId){
-  const root = document.getElementById(containerId);
-  const CONTRIB = 1000000;
-  const types = [
-    {k:"tad",  label:"شريك بالتضامن",         unlimited:true,
-     note:"مسؤول عن ديون الشركة بكل أمواله الخاصة، مش بس بقدر حصته."},
-    {k:"muta", label:"توصية بسيطة: متضامن",   unlimited:true,
-     note:"نفس الشريك المتضامن تماماً: مسؤوليته غير محدودة وله صفة التاجر."},
-    {k:"muso", label:"توصية بسيطة: موصي",     unlimited:false,
-     note:"مسؤوليته محدودة بمقدار حصته بالرأسمال."},
-    {k:"llc",  label:"ذات مسؤولية محدودة",    unlimited:false,
-     note:"مسؤولية كل شريك محدودة بمقدار ما يساهم بالرأسمال."},
-    {k:"jsc",  label:"مساهمة مغفلة",           unlimited:false,
-     note:"مسؤولية المساهم محدودة بمقدار ما يملكه من أسهم."},
-  ];
-  let cur = types[0];
-  let debt = 5000000;
 
-  root.innerHTML = `
-    <div class="x-meter">
-      <div class="x-meter-story">🏚️ الشركة خسرت وانهارت. أصولها ما بتكفي، وباقي عليها ديون للدائنين. حصتك بالرأسمال <b>${xFmt(CONTRIB)} ل.س</b> ومسدّدة بالكامل. <b>شو ممكن يطالبوك فيه من جيبك الخاص؟</b></div>
-      <div class="x-seg" id="${containerId}-seg">
-        ${types.map(t => `<button data-k="${t.k}" class="${t.k === cur.k ? "on" : ""}">${t.label}</button>`).join("")}
-      </div>
-      <div class="x-slider-row">
-        <span>الديون المتبقية:</span>
-        <input type="range" id="${containerId}-rng" min="0" max="8000000" step="250000" value="${debt}">
-        <span class="val" id="${containerId}-val"></span>
-      </div>
-      <div class="x-bars">
-        <div class="x-bar-line" id="${containerId}-bar"></div>
-        <div class="x-legend"><span><i style="background:var(--lock)"></i>حصتك بالشركة (ضايعة)</span><span><i style="background:var(--danger)"></i>أموالك الخاصة المعرّضة للمطالبة</span></div>
-      </div>
-      <div class="x-verdict" id="${containerId}-verdict"></div>
-    </div>`;
-
-  const seg = document.getElementById(`${containerId}-seg`);
-  const rng = document.getElementById(`${containerId}-rng`);
-  const val = document.getElementById(`${containerId}-val`);
-  const bar = document.getElementById(`${containerId}-bar`);
-  const verdict = document.getElementById(`${containerId}-verdict`);
-
-  function update(){
-    val.textContent = xFmt(debt) + " ل.س";
-    const risk = cur.unlimited ? debt : 0;
-    const total = CONTRIB + risk;
-    const sharePct = (CONTRIB / total) * 100;
-    const riskPct = 100 - sharePct;
-    bar.innerHTML = `
-      <div class="seg share" style="width:${sharePct}%">${sharePct > 14 ? xFmt(CONTRIB) : ""}</div>
-      ${risk > 0 ? `<div class="seg risk" style="width:${riskPct}%">${riskPct > 14 ? xFmt(risk) : ""}</div>` : ""}`;
-    if(cur.unlimited){
-      verdict.className = "x-verdict danger";
-      verdict.innerHTML = debt === 0
-        ? `ما في ديون هلق، بس <b>${cur.note}</b>`
-        : `⚠️ ممكن يطالبوك بـ <b>${xFmt(risk)} ل.س</b> من أموالك الخاصة (سيارتك، بيتك...). ${cur.note}`;
-    } else {
-      verdict.className = "x-verdict safe";
-      verdict.innerHTML = `✅ <b>خسرت حصتك بس (${xFmt(CONTRIB)} ل.س)</b> — أموالك الخاصة بأمان مهما كبرت الديون. ${cur.note}`;
-    }
-  }
-
-  seg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
-    cur = types.find(t => t.k === b.dataset.k);
-    seg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
-    update();
-  }));
-  rng.addEventListener("input", () => { debt = Number(rng.value); update(); });
-  update();
-}
 
 /* ============================================================
    المسألة الموجّهة (Guided Problem): تُحَلّ خطوة خطوة، وكل خطوة تنضاف للوح الحل.
@@ -337,101 +267,9 @@ function renderGuidedProblem(containerId, cfg){
   start();
 }
 
-/* ============================================================
-   مبدّل الاتفاق: كيف تنتقل أصول الشريك حسب نص العقد؟ (دفترية أو إعادة تقدير)
-   ============================================================ */
-function renderTransferToggle(containerId){
-  const root = document.getElementById(containerId);
-  const A = [
-    {n:"آلات",        kind:"fixed", cost:2000000, acc:900000, est:1300000},
-    {n:"أراضي",       kind:"fixed", cost:800000,  acc:0,      est:950000},
-    {n:"مدينون",      kind:"debt",  cost:500000,  prov:30000,  est:420000, pn:"مخصص د.م.ف"},
-    {n:"أوراق قبض",   kind:"debt",  cost:350000,  prov:0,      est:320000, pn:"مخصص آجيو"}
-  ];
-  let mode = "book";
 
-  function calc(a){
-    if(a.kind === "fixed"){
-      if(mode === "book") return {debit:a.cost - a.acc, prov:0, rule:a.acc ? `تكلفة ${xFmt(a.cost)} − مجمع اهتلاك ${xFmt(a.acc)}. صافي الدفترية، ويُهمل المجمع` : "قيمتها الدفترية كما هي"};
-      return {debit:a.est, prov:0, rule:"القيمة المقدّرة الجديدة، وتُهمل الدفترية ومجمع الاهتلاك"};
-    }
-    if(mode === "book") return {debit:a.cost, prov:a.prov, rule: a.prov ? `بقيمتها الدفترية مع المخصص القديم (${xFmt(a.prov)})` : "بقيمتها الدفترية (لا مخصص عليها)"};
-    return {debit:a.cost, prov:a.cost - a.est, rule:`تنتقل بالدفترية ${xFmt(a.cost)}، ويُنشأ مخصص جديد = دفترية − مقدّرة = ${xFmt(a.cost - a.est)}`};
-  }
 
-  function draw(){
-    let tot = 0;
-    const rows = A.map(a => {
-      const r = calc(a);
-      const net = r.debit - r.prov; tot += net;
-      return `<tr><td><b>${a.n}</b></td><td class="rule">${r.rule}</td><td class="n">${xFmt(r.debit)}</td><td class="n">${r.prov ? xFmt(r.prov) : "—"}</td><td class="n"><b>${xFmt(net)}</b></td></tr>`;
-    }).join("");
-    root.innerHTML = `
-      <div class="x-meter">
-        <div class="x-meter-story">📦 الشريك قدّم أربع أصول. غيّر نص الاتفاق وشوف كيف بتتغيّر <b>القيمة اللي بتنقيّد لحساب حصته</b>.</div>
-        <div class="x-seg" id="${containerId}-seg">
-          <button data-k="book" class="${mode === "book" ? "on" : ""}">📘 الاتفاق: بالقيم الدفترية</button>
-          <button data-k="est" class="${mode === "est" ? "on" : ""}">🔍 الاتفاق: بإعادة التقدير</button>
-        </div>
-        <div style="overflow-x:auto;"><table class="cmp gp-tt">
-          <thead><tr><th>الأصل</th><th>القاعدة</th><th>مدين (الأصل)</th><th>دائن (مخصص)</th><th>الصافي لحصة الشريك</th></tr></thead>
-          <tbody>${rows}<tr class="tot"><td colspan="4"><b>المجموع = ما يُقيَّد لحساب حصة الشريك</b></td><td class="n"><b>${xFmt(tot)}</b></td></tr></tbody>
-        </table></div>
-        <div class="x-verdict safe" style="margin-top:12px;">لاحظ: <b>المدينون وأوراق القبض</b> بتنتقل دايماً بقيمتها الدفترية، والفرق بالوضعين هو <b>المخصص</b> (قديم أو جديد). أما الأصول الثابتة فبتتغيّر قيمتها نفسها.</div>
-      </div>`;
-    root.querySelectorAll(`#${containerId}-seg button`).forEach(b => b.addEventListener("click", () => { mode = b.dataset.k; draw(); }));
-  }
-  draw();
-}
 
-/* ============================================================
-   بوصلة المقارنة: صافي الأصول مقابل حصة الشريك → شو الخيارات المتاحة؟
-   ============================================================ */
-function renderCompareWidget(containerId){
-  const root = document.getElementById(containerId);
-  let share = 3000000, net = 2370000;
-  const MAX = 6000000;
-  root.innerHTML = `
-    <div class="x-meter">
-      <div class="x-meter-story">⚖️ الشريك قدّم ميزانية محله التجاري. قارن <b>صافي الأصول</b> (الأصول − الالتزامات) مع <b>حصته بالرأسمال</b>، وشوف شو بيصير.</div>
-      <div class="x-slider-row"><span>حصة الشريك:</span><input type="range" id="${containerId}-s" min="1000000" max="${MAX}" step="100000" value="${share}"><span class="val" id="${containerId}-sv"></span></div>
-      <div class="x-slider-row"><span>صافي الأصول:</span><input type="range" id="${containerId}-n" min="500000" max="${MAX}" step="100000" value="${net}"><span class="val" id="${containerId}-nv"></span></div>
-      <div class="x-bars">
-        <div class="cw-line"><span class="cw-l">الحصة</span><div class="cw-track"><div class="cw-fill share" id="${containerId}-bs"></div></div></div>
-        <div class="cw-line"><span class="cw-l">صافي الأصول</span><div class="cw-track"><div class="cw-fill net" id="${containerId}-bn"></div></div></div>
-      </div>
-      <div id="${containerId}-out"></div>
-    </div>`;
-  const $ = s => document.getElementById(`${containerId}-${s}`);
-
-  function upd(){
-    $("sv").textContent = xFmt(share) + " ل.س"; $("nv").textContent = xFmt(net) + " ل.س";
-    $("bs").style.width = (share / MAX * 100) + "%"; $("bn").style.width = (net / MAX * 100) + "%";
-    $("bn").className = "cw-fill net " + (net === share ? "eq" : net < share ? "less" : "more");
-    const d = Math.abs(share - net), out = $("out");
-    if(net === share){
-      out.innerHTML = `<div class="x-verdict safe"><b>الحالة 1 — متساويان ✅</b><br>ما في مشكلة: الأصول المنقولة تغطي الحصة بالضبط.</div>`;
-    } else if(net < share){
-      out.innerHTML = `
-        <div class="x-verdict danger"><b>الحالة 2 — صافي الأصول أقل من الحصة بـ ${xFmt(d)} ل.س</b><br>الشركة استلمت أقل مما تعهّد به الشريك. الخيارات:</div>
-        <div class="cw-opts">
-          <div><h5>أ) الشريك يسدد الفرق نقداً</h5>${xEntryTable([{side:"d",acct:"الصندوق (أو المصرف)",amt:d},{side:"c",acct:"حصة الشريك",amt:d}])}</div>
-          <div><h5>ب) يُعتبر الفرق شهرة محل موجبة</h5><p class="cw-p">أصل معنوي تملكه الشركة، وتُقيَّد ضمن قيد استلام الأصول:</p>${xEntryTable([{side:"d",acct:"صافي الأصول المنقولة",amt:net},{side:"d",acct:"شهرة محل (موجبة)",amt:d},{side:"c",acct:"حصة الشريك",amt:share}])}</div>
-        </div>`;
-    } else {
-      out.innerHTML = `
-        <div class="x-verdict safe"><b>الحالة 3 — صافي الأصول أكبر من الحصة بـ ${xFmt(d)} ل.س</b><br>الشركة استلمت أكثر من حصة الشريك. الخيارات:</div>
-        <div class="cw-opts">
-          <div><h5>أ) الشركة تسدد الزيادة نقداً للشريك</h5>${xEntryTable([{side:"d",acct:"حصة الشريك",amt:d},{side:"c",acct:"الصندوق (أو المصرف)",amt:d}])}</div>
-          <div><h5>ب) تُسجَّل الزيادة قرضاً من الشريك</h5>${xEntryTable([{side:"d",acct:"حصة الشريك",amt:d},{side:"c",acct:"قرض الشريك",amt:d}])}</div>
-          <div><h5>ج) احتياطي رأسمالي (شهرة سالبة)</h5>${xEntryTable([{side:"d",acct:"صافي الأصول المنقولة",amt:net},{side:"c",acct:"حصة الشريك",amt:share},{side:"c",acct:"احتياطي رأسمالي (شهرة سالبة)",amt:d}])}</div>
-        </div>`;
-    }
-  }
-  $("s").addEventListener("input", e => { share = Number(e.target.value); upd(); });
-  $("n").addEventListener("input", e => { net = Number(e.target.value); upd(); });
-  upd();
-}
 
 /* ---------- حالة عملية (من موقع BAC401 القديم) ---------- */
 function renderCaseStudy(containerId, caseObj){

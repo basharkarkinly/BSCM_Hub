@@ -13,6 +13,8 @@ const COURSE_CHAPTERS = [
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */
 const COURSE_EXTRA_LINKS = [
+  {title:"📝 الفحص النهائي الشامل (25 سؤال)", href:"pages/final-exam.html"},
+  {title:"🧮 المرجع السريع والقوانين", href:"pages/quick-reference.html"}
 ];
 
 /* يحسب حالة الفتح لكل فصل بالترتيب (فتح متسلسل حسب اجتياز امتحان الفصل السابق بـ90%+) */

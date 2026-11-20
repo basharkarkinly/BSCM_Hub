@@ -761,7 +761,7 @@ function renderJournalBuilder(containerId, cfg){
           </div>
           <p class="eqs-hint">قاعدة: <b>أمم</b> (أصول، مصاريف، مسحوبات) بتزيد بالمدين · والتزامات، رأس مال، إيرادات بتزيد بالدائن.</p>
           <div class="eqs-msg" id="${containerId}-msg"></div>
-        </div>` : `<div class="eqs-done" style="text-align:right"><h4 style="margin:6px 0">⚖️ ميزان المراجعة</h4>${tbHTML()}${cfg.finish || ""}<button type="button" class="btn btn-teal eqs-again">🔁 عيد من الأول</button></div>`}
+        </div>` : `<div class="eqs-done" style="text-align:right">${cfg.noTB ? "" : `<h4 style="margin:6px 0">⚖️ ميزان المراجعة</h4>${tbHTML()}`}${cfg.finish || ""}<button type="button" class="btn btn-teal eqs-again">🔁 عيد من الأول</button></div>`}
         <details class="jb-ledger" ${op ? "" : "open"}><summary>📚 دفتر الأستاذ (حسابات T) — بيتحدّث مع كل قيد</summary>${tHTML()}</details>
       </div>`;
     wire();
@@ -779,7 +779,7 @@ function renderJournalBuilder(containerId, cfg){
     const rest = cfg.ops.length - step - 1;
     draw();
     const ledgerBox = root.querySelector(".jb-ledger"); if(ledgerBox && !op.noEntry) ledgerBox.open = true;
-    msg(`✅ <b>${op.noEntry ? "مزبوط، ما بتتسجّل!" : "قيد صحيح، وانرحّل للأستاذ!"}</b> ${op.explain || ""}<div style="margin-top:10px"><button type="button" class="btn btn-primary eqs-next">${rest ? "العملية الجاية ←" : "طلّع ميزان المراجعة ⚖️"}</button></div>`, "ok");
+    msg(`✅ <b>${op.noEntry ? "مزبوط، ما بتتسجّل!" : "قيد صحيح، وانرحّل للأستاذ!"}</b> ${op.explain || ""}<div style="margin-top:10px"><button type="button" class="btn btn-primary eqs-next">${rest ? "العملية الجاية ←" : (cfg.noTB ? "خلّصت 🎉" : "طلّع ميزان المراجعة ⚖️")}</button></div>`, "ok");
     root.querySelectorAll(".x-chip, .jb-none").forEach(b => { b.disabled = true; });
     root.querySelector(".eqs-next").addEventListener("click", () => {
       step++;
@@ -827,4 +827,51 @@ function renderJournalBuilder(containerId, cfg){
   }
 
   reset();
+}
+
+/* ============================================================
+   ⏳ سلايدر المقدّمات — حرّك الأشهر وشوف شو صار مصروف/إيراد وشو ضل
+   cfg = { title, cases:[{ name, text, total, months, unit:"شهر", kind:"prepaid"|"unearned",
+            usedLabel, leftLabel, dr, cr, ask }] }
+   ask = عدد الأشهر الصحيح للسؤال (اختياري) — بيطلع زر «تحقق»
+   ============================================================ */
+function renderAdjustSlider(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let ci = 0;
+  function draw(){
+    const c = cfg.cases[ci];
+    root.innerHTML = `
+      <div class="eqs adj">
+        <div class="eqs-head"><span class="gp-tag">⏳ حرّك وشوف</span><h4>${cfg.title}</h4></div>
+        <div class="adj-tabs">${cfg.cases.map((x, i) => `<button type="button" class="adj-tab${i === ci ? " on" : ""}" data-i="${i}">${x.name}</button>`).join("")}</div>
+        <p class="eqs-op-t">${c.text}</p>
+        <label class="adj-lbl">عدد الأشهر اللي مرقت لحد تاريخ التسوية: <b id="${containerId}-m">0</b> من ${c.months}</label>
+        <input type="range" min="0" max="${c.months}" value="0" step="1" class="adj-range" id="${containerId}-r" aria-label="الأشهر">
+        <div class="adj-bar"><div class="adj-used" id="${containerId}-u"></div><div class="adj-left" id="${containerId}-l"></div></div>
+        <div class="adj-legend"><span><i class="u"></i>${c.usedLabel}: <b id="${containerId}-uv">0</b></span><span><i class="l"></i>${c.leftLabel}: <b id="${containerId}-lv">0</b></span></div>
+        <div class="adj-entry" id="${containerId}-e"></div>
+        ${c.ask != null ? `<p class="eqs-hint">🎯 ${c.askText || "حط السلايدر على عدد الأشهر الصح لتاريخ 31/12 واضغط تحقق."}</p><button type="button" class="btn btn-primary" id="${containerId}-chk">تحقق ✓</button><div class="eqs-msg" id="${containerId}-msg"></div>` : ""}
+      </div>`;
+    const r = document.getElementById(`${containerId}-r`);
+    const upd = () => {
+      const m = +r.value, per = c.total / c.months, used = Math.round(per * m), left = c.total - used;
+      document.getElementById(`${containerId}-m`).textContent = m;
+      document.getElementById(`${containerId}-u`).style.width = (m / c.months * 100) + "%";
+      document.getElementById(`${containerId}-l`).style.width = (100 - m / c.months * 100) + "%";
+      document.getElementById(`${containerId}-uv`).textContent = xFmt(used);
+      document.getElementById(`${containerId}-lv`).textContent = xFmt(left);
+      document.getElementById(`${containerId}-e`).innerHTML = used
+        ? `<b>قيد التسوية:</b><div class="jb-line D"><span>من ح/ ${c.dr}</span><b>${xFmt(used)}</b></div><div class="jb-line C"><span>&nbsp;&nbsp;إلى ح/ ${c.cr}</span><b>${xFmt(used)}</b></div><small>القسط = ${xFmt(c.total)} ÷ ${c.months} = ${xFmt(per)} بالشهر × ${m} = ${xFmt(used)}</small>`
+        : `<small>لسا ما مرق ولا شهر ← ما في قيد تسوية، والمبلغ كلو ${c.kind === "prepaid" ? "أصل" : "التزام"}.</small>`;
+    };
+    r.addEventListener("input", upd); upd();
+    root.querySelectorAll(".adj-tab").forEach(b => b.addEventListener("click", () => { ci = +b.dataset.i; draw(); }));
+    const chk = document.getElementById(`${containerId}-chk`);
+    if(chk) chk.addEventListener("click", () => {
+      const m = document.getElementById(`${containerId}-msg`);
+      if(+r.value === c.ask){ m.className = "eqs-msg ok"; m.innerHTML = `✅ <b>مزبوط!</b> ${c.why || ""}`; if(typeof launchConfetti === "function") launchConfetti(); }
+      else { m.className = "eqs-msg bad"; m.innerHTML = `❌ لأ، عدّ الأشهر من ${c.from || "تاريخ الدفع"} لـ 31/12 مرة تانية.`; }
+    });
+  }
+  draw();
 }

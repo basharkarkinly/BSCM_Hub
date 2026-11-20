@@ -275,3 +275,18 @@
 .jb-ok{ font-weight:800; color:#0B7A57; }
 .jb-none{ border-color:#B4402B; box-shadow:0 3px 0 #B4402B; }
 @media (max-width:640px){ .jb-entry{ grid-template-columns:1fr; } }
+
+/* ---------- ⏳ سلايدر المقدّمات ---------- */
+.adj-tabs{ display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 4px; }
+.adj-tab{ font:inherit; font-size:.82rem; font-weight:700; padding:5px 12px; border-radius:999px; border:1.5px solid #E3E7F0; background:#F5F7FB; cursor:pointer; color:#1D3557; }
+.adj-tab.on{ background:#0F1C2E; color:#fff; border-color:#0F1C2E; }
+.adj-lbl{ display:block; font-size:.9rem; margin:6px 0; }
+.adj-range{ width:100%; accent-color:#FF9F1C; height:28px; }
+.adj-bar{ display:flex; height:30px; border-radius:10px; overflow:hidden; margin:8px 0 6px; background:#E3E7F0; direction:rtl; }
+.adj-used{ background:linear-gradient(90deg,#FF9F1C,#FFB547); transition:width .25s; }
+.adj-left{ background:linear-gradient(90deg,#2EC4B6,#7FDDD3); transition:width .25s; }
+.adj-legend{ display:flex; flex-wrap:wrap; gap:14px; font-size:.88rem; }
+.adj-legend i{ display:inline-block; width:12px; height:12px; border-radius:3px; margin-inline-end:5px; vertical-align:-1px; }
+.adj-legend i.u{ background:#FF9F1C; } .adj-legend i.l{ background:#2EC4B6; }
+.adj-entry{ margin-top:10px; background:#F5F7FB; border-radius:12px; padding:10px 12px; font-size:.9rem; }
+.adj-entry small{ color:#5B6478; display:block; margin-top:4px; }

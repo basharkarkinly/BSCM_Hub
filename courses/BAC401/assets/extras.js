@@ -32,7 +32,7 @@ function renderSortGame(containerId, cfg){
         <div class="x-sort-btns">
           ${buckets.map(b => `<button data-k="${b.key}">${b.label}</button>`).join("")}
         </div>
-        <div class="x-sort-hint" id="${containerId}-hint">هاي الخاصية لأي نوع شركة؟</div>
+        <div class="x-sort-hint" id="${containerId}-hint">${cfg.hint || "لوين بتنتمي هالبطاقة؟"}</div>
       </div>`;
     const card = document.getElementById(`${containerId}-card`);
     const hint = document.getElementById(`${containerId}-hint`);
@@ -548,7 +548,7 @@ function renderEquationScale(containerId, cfg){
           <div class="eqs-tray">${chips.map(c => `<button type="button" class="eqs-chip" data-id="${c.id}">${c.acct} <b dir="ltr">${sgn(c.amt)}</b></button>`).join("")}</div>
           <p class="eqs-hint">اسحب كل أثر صحيح لمكانو بالميزان (أو اضغط عليه وبعدين اضغط على المكان). في شريحة غلط مخبّاية بينهم 😉</p>
           <div class="eqs-msg" id="${containerId}-msg"></div>
-        </div>` : `<div class="eqs-done">${cfg.finish || ""}<button type="button" class="btn btn-ghost eqs-again">🔁 عيد من الأول</button></div>`}
+        </div>` : `<div class="eqs-done">${cfg.finish || ""}<button type="button" class="btn btn-teal eqs-again">🔁 عيد من الأول</button></div>`}
       </div>`;
     bal.A.concat(bal.L, bal.E).forEach(r => { r.hl = false; });
     wire();
@@ -644,6 +644,185 @@ function renderEquationScale(containerId, cfg){
       };
       ch.addEventListener("pointerup", end);
       ch.addEventListener("pointercancel", end);
+    });
+  }
+
+  reset();
+}
+
+/* ---------- مساعد سحب وفلت عام (إصبع + ماوس) ----------
+   chips: عناصر .x-chip[data-id] · zones: عناصر [data-zone]
+   onDrop(id, zone) · onTap(id) للنقر بدل السحب */
+function xDragWire(root, onDrop, onTap){
+  let drag = null;
+  root.querySelectorAll(".x-chip").forEach(ch => {
+    ch.addEventListener("pointerdown", e => {
+      if(ch.disabled) return;
+      e.preventDefault();
+      const r = ch.getBoundingClientRect();
+      drag = { id:ch.dataset.id, el:ch, sx:e.clientX, sy:e.clientY, moved:false, ghost:null, dx:e.clientX - r.left, dy:e.clientY - r.top };
+      ch.setPointerCapture(e.pointerId);
+    });
+    ch.addEventListener("pointermove", e => {
+      if(!drag || drag.el !== ch) return;
+      if(!drag.moved && Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) < 6) return;
+      if(!drag.moved){
+        drag.moved = true;
+        const g = ch.cloneNode(true); g.classList.add("eqs-ghost"); document.body.appendChild(g); drag.ghost = g;
+        ch.classList.add("lifting");
+      }
+      drag.ghost.style.left = (e.clientX - drag.dx) + "px";
+      drag.ghost.style.top = (e.clientY - drag.dy) + "px";
+      root.querySelectorAll("[data-zone].over").forEach(x => x.classList.remove("over"));
+      const t = document.elementFromPoint(e.clientX, e.clientY);
+      const z = t && t.closest("[data-zone]"); if(z && root.contains(z)) z.classList.add("over");
+    });
+    const end = e => {
+      if(!drag || drag.el !== ch) return;
+      const d = drag; drag = null;
+      if(d.ghost) d.ghost.remove();
+      ch.classList.remove("lifting");
+      root.querySelectorAll("[data-zone].over").forEach(x => x.classList.remove("over"));
+      if(!d.moved){ onTap(d.id, ch); return; }
+      if(e.type === "pointercancel") return;
+      const t = document.elementFromPoint(e.clientX, e.clientY);
+      const z = t && t.closest("[data-zone]");
+      if(z && root.contains(z)) onDrop(d.id, z.dataset.zone);
+    };
+    ch.addEventListener("pointerup", end);
+    ch.addEventListener("pointercancel", end);
+  });
+}
+
+/* ============================================================
+   📒 اعمل القيد — يومية ← أستاذ ← ميزان مراجعة
+   cfg = { title, ops:[{date, text, chips:[{id, acct, zone:"D"|"C", amt, decoy?, msg?}], noEntry?, explain}], finish }
+   noEntry: العملية ما بتتسجّل (الطالب لازم يضغط «ما بتتسجّل»)
+   ============================================================ */
+function renderJournalBuilder(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let step, placed, sel, ledger, journal, done;
+
+  function reset(){ step = 0; ledger = {}; journal = []; begin(); }
+  function begin(){ placed = {}; sel = null; done = false; draw(); }
+
+  function post(op){
+    const lines = op.chips.filter(c => !c.decoy);
+    journal.push({ date:op.date, lines });
+    lines.forEach(c => {
+      ledger[c.acct] = ledger[c.acct] || { D:[], C:[] };
+      ledger[c.acct][c.zone].push({ date:op.date, amt:c.amt });
+    });
+  }
+
+  function tHTML(){
+    const names = Object.keys(ledger);
+    if(!names.length) return `<p class="jb-empty">لسا ما في حسابات بالأستاذ. أول قيد بتعملو بيترحّل لهون 👇</p>`;
+    return `<div class="jb-tgrid">` + names.map(n => {
+      const a = ledger[n];
+      const sd = a.D.reduce((x, r) => x + r.amt, 0), sc = a.C.reduce((x, r) => x + r.amt, 0);
+      const bal = sd - sc;
+      const col = arr => arr.map(r => `<div><small>${r.date}</small> ${xFmt(r.amt)}</div>`).join("") || "&nbsp;";
+      return `<div class="jb-t"><div class="jb-t-h">ح/ ${n}</div>
+        <div class="jb-t-b"><div class="jb-t-d">${col(a.D)}</div><div class="jb-t-c">${col(a.C)}</div></div>
+        <div class="jb-t-f">${bal === 0 ? "رصيد صفر" : (bal > 0 ? "رصيد مدين " + xFmt(bal) : "رصيد دائن " + xFmt(-bal))}</div></div>`;
+    }).join("") + `</div>`;
+  }
+
+  function tbHTML(){
+    let td = 0, tc = 0;
+    const rows = Object.keys(ledger).map(n => {
+      const a = ledger[n];
+      const b = a.D.reduce((x, r) => x + r.amt, 0) - a.C.reduce((x, r) => x + r.amt, 0);
+      if(b > 0) td += b; else tc -= b;
+      return `<tr><td>${n}</td><td class="n">${b > 0 ? xFmt(b) : ""}</td><td class="n">${b < 0 ? xFmt(-b) : ""}</td></tr>`;
+    }).join("");
+    return `<table class="cmp jb-tb"><tr><th>الحساب</th><th>أرصدة مدينة</th><th>أرصدة دائنة</th></tr>${rows}
+      <tr class="tot"><td>المجموع</td><td class="n">${xFmt(td)}</td><td class="n">${xFmt(tc)}</td></tr></table>
+      <p class="jb-ok">${td === tc ? "✅ المجموعين متساويين — ميزان المراجعة متوازن!" : "⚠️ مو متوازن"}</p>`;
+  }
+
+  function draw(){
+    const op = cfg.ops[step];
+    const lines = op ? op.chips.filter(c => placed[c.id]) : [];
+    const zoneBox = z => lines.filter(c => c.zone === z).map(c => `<div class="jb-line ${z}"><span>${z === "D" ? "من ح/" : "إلى ح/"} ${c.acct}</span><b>${xFmt(c.amt)}</b></div>`).join("");
+    root.innerHTML = `
+      <div class="eqs jb">
+        <div class="eqs-head"><span class="gp-tag">📒 اسحب وفلت</span><h4>${cfg.title}</h4></div>
+        ${op ? `
+        <div class="eqs-op">
+          <div class="eqs-op-n">العملية ${step + 1} من ${cfg.ops.length} · ${op.date}</div>
+          <div class="eqs-op-t">${op.text}</div>
+          <div class="eqs-tray">${op.chips.filter(c => !placed[c.id]).map(c => `<button type="button" class="eqs-chip x-chip" data-id="${c.id}">${c.acct}</button>`).join("")}
+            ${op.noEntry ? `<button type="button" class="eqs-chip jb-none">🚫 ما بتتسجّل</button>` : ""}</div>
+          <div class="jb-entry">
+            <div class="jb-zone" data-zone="D"><div class="jb-zone-h">مدين (من ح/)</div>${zoneBox("D") || `<div class="eqs-empty">اسحب الحساب المدين لهون</div>`}</div>
+            <div class="jb-zone" data-zone="C"><div class="jb-zone-h">دائن (إلى ح/)</div>${zoneBox("C") || `<div class="eqs-empty">اسحب الحساب الدائن لهون</div>`}</div>
+          </div>
+          <p class="eqs-hint">قاعدة: <b>أمم</b> (أصول، مصاريف، مسحوبات) بتزيد بالمدين · والتزامات، رأس مال، إيرادات بتزيد بالدائن.</p>
+          <div class="eqs-msg" id="${containerId}-msg"></div>
+        </div>` : `<div class="eqs-done" style="text-align:right"><h4 style="margin:6px 0">⚖️ ميزان المراجعة</h4>${tbHTML()}${cfg.finish || ""}<button type="button" class="btn btn-teal eqs-again">🔁 عيد من الأول</button></div>`}
+        <details class="jb-ledger" ${op ? "" : "open"}><summary>📚 دفتر الأستاذ (حسابات T) — بيتحدّث مع كل قيد</summary>${tHTML()}</details>
+      </div>`;
+    wire();
+  }
+
+  function msg(html, cls){
+    const m = document.getElementById(`${containerId}-msg`);
+    if(m){ m.className = "eqs-msg " + (cls || ""); m.innerHTML = html; }
+  }
+  function shake(el){ if(!el) return; el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake"); }
+
+  function complete(op){
+    done = true;
+    if(!op.noEntry) post(op);
+    const rest = cfg.ops.length - step - 1;
+    draw();
+    const ledgerBox = root.querySelector(".jb-ledger"); if(ledgerBox && !op.noEntry) ledgerBox.open = true;
+    msg(`✅ <b>${op.noEntry ? "مزبوط، ما بتتسجّل!" : "قيد صحيح، وانرحّل للأستاذ!"}</b> ${op.explain || ""}<div style="margin-top:10px"><button type="button" class="btn btn-primary eqs-next">${rest ? "العملية الجاية ←" : "طلّع ميزان المراجعة ⚖️"}</button></div>`, "ok");
+    root.querySelectorAll(".x-chip, .jb-none").forEach(b => { b.disabled = true; });
+    root.querySelector(".eqs-next").addEventListener("click", () => {
+      step++;
+      if(step >= cfg.ops.length && typeof launchConfetti === "function") launchConfetti();
+      begin();
+    });
+  }
+
+  function tryDrop(id, zone){
+    if(done) return;
+    const op = cfg.ops[step];
+    const c = op.chips.find(x => x.id === id);
+    if(!c || placed[id]) return;
+    const el = root.querySelector(`.x-chip[data-id="${id}"]`);
+    if(c.decoy || op.noEntry){ shake(el); return msg(`❌ ${c.msg || "هالحساب ما إلو علاقة بهالعملية."}`, "bad"); }
+    if(zone !== c.zone){
+      shake(el);
+      return msg(`🤔 <b>${c.acct}</b> هون ${c.zone === "D" ? "<b>مدين</b>" : "<b>دائن</b>"}. ${c.why || ""}`, "bad");
+    }
+    placed[id] = true;
+    const left = op.chips.filter(x => !x.decoy && !placed[x.id]).length;
+    if(!left) return complete(op);
+    draw();
+    msg(`✔️ مزبوط! ${left === 1 ? "باقي طرف واحد" : "باقي " + left + " أطراف"} من القيد.`, "ok");
+  }
+
+  function wire(){
+    const again = root.querySelector(".eqs-again");
+    if(again) again.addEventListener("click", reset);
+    const none = root.querySelector(".jb-none");
+    if(none) none.addEventListener("click", () => {
+      const op = cfg.ops[step];
+      if(op.noEntry) complete(op);
+      else { shake(none); msg("❌ لأ، هالعملية <b>بتغيّر</b> حسابات المشروع، فلازم تتسجّل.", "bad"); }
+    });
+    root.querySelectorAll(".jb-zone").forEach(z => z.addEventListener("click", () => {
+      if(sel){ const id = sel; sel = null; tryDrop(id, z.dataset.zone); }
+    }));
+    xDragWire(root, tryDrop, (id, ch) => {
+      root.querySelectorAll(".x-chip.sel").forEach(x => x.classList.remove("sel"));
+      if(sel === id){ sel = null; return; }
+      sel = id; ch.classList.add("sel");
+      msg("👆 هلأ اضغط على «مدين» أو «دائن».", "");
     });
   }
 

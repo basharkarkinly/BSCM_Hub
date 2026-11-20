@@ -248,3 +248,30 @@
 }
 .eqs-line b{ font-weight:800; color:#0F1C2E; unicode-bidi:isolate; }
 @media (max-width:640px){ .eqs-beam{ left:10%; right:10%; } }
+
+/* ---------- 📒 اعمل القيد ---------- */
+.jb-entry{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+.jb-zone{ border:2px dashed rgba(15,28,46,.2); border-radius:12px; padding:8px; min-height:74px; background:#fff; cursor:pointer; transition:background .2s,border-color .2s; }
+.jb-zone[data-zone="D"]{ border-color:#FFD79A; background:#FFFBF3; }
+.jb-zone[data-zone="C"]{ border-color:#BFEDE6; background:#F4FCFA; }
+.jb-zone.over{ border-style:solid; box-shadow:0 0 0 3px rgba(255,159,28,.25) inset; }
+.jb-zone-h{ font-weight:800; font-size:.85rem; margin-bottom:6px; }
+.jb-line{ display:flex; justify-content:space-between; gap:8px; font-weight:700; font-size:.9rem; padding:4px 6px; border-radius:8px; background:#FFE7BF; margin-bottom:4px; animation:eqsHl 1.2s ease; }
+.jb-line.C{ background:#D6F5EF; }
+.jb-line b{ direction:ltr; }
+.jb-ledger{ margin-top:14px; }
+.jb-ledger summary{ cursor:pointer; font-weight:800; color:#1D3557; }
+.jb-empty{ color:#5B6478; font-size:.85rem; }
+.jb-tgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:10px; margin-top:10px; }
+.jb-t{ border:1px solid #E3E7F0; border-radius:10px; overflow:hidden; font-size:.8rem; background:#fff; }
+.jb-t-h{ background:#0F1C2E; color:#fff; font-weight:800; text-align:center; padding:4px; }
+.jb-t-b{ display:grid; grid-template-columns:1fr 1fr; min-height:30px; }
+.jb-t-d{ border-left:2px solid #0F1C2E; padding:4px 6px; }
+.jb-t-c{ padding:4px 6px; }
+.jb-t-b div div{ direction:ltr; text-align:right; } .jb-t-b small{ color:#9AA6BA; }
+.jb-t-f{ border-top:2px solid #0F1C2E; text-align:center; font-weight:800; padding:3px; color:#1D3557; }
+.jb-tb td.n{ direction:ltr; text-align:right; font-variant-numeric:tabular-nums; }
+.jb-tb tr.tot td{ font-weight:800; border-top:2px solid #0F1C2E; }
+.jb-ok{ font-weight:800; color:#0B7A57; }
+.jb-none{ border-color:#B4402B; box-shadow:0 3px 0 #B4402B; }
+@media (max-width:640px){ .jb-entry{ grid-template-columns:1fr; } }

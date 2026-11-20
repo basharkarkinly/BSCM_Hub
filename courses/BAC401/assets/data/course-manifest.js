@@ -3,7 +3,8 @@
 const COURSE_TITLE = "BAC401 — مبادئ المحاسبة 1";
 
 const COURSE_CHAPTERS = [
-  {num:1, key:"ch1", title:"المحاسبة وبيئة الأعمال", href:"chapters/chapter-1-lesson.html"}
+  {num:1, key:"ch1", title:"المحاسبة وبيئة الأعمال", href:"chapters/chapter-1-lesson.html"},
+  {num:2, key:"ch2", title:"التسجيل المحاسبي ونظرية القيد المزدوج", href:"chapters/chapter-2-lesson.html"}
 ];
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */

@@ -320,7 +320,7 @@ function xDragWire(root, onDrop, onTap){
       e.preventDefault();
       const r = ch.getBoundingClientRect();
       drag = { id:ch.dataset.id, el:ch, sx:e.clientX, sy:e.clientY, moved:false, ghost:null, dx:e.clientX - r.left, dy:e.clientY - r.top };
-      ch.setPointerCapture(e.pointerId);
+      try{ ch.setPointerCapture(e.pointerId); }catch(_){}
     });
     ch.addEventListener("pointermove", e => {
       if(!drag || drag.el !== ch) return;
@@ -482,4 +482,209 @@ function renderTriangle(containerId, cfg){
     }));
   }
   reset();
+}
+
+/* ============================================================
+   📈 منحنى دورة حياة المشروع (الفصل 2): حرّك الزمن وشوف:
+   الجهد والتكلفة (بيطلع لذروة وبينزل)، احتمال النجاح (بيزيد)، قدرة أصحاب المصلحة عالتأثير (بتقل)، كلفة التغيير (بتزيد).
+   cfg = { title, phases:[{from,to,name}], events:[{t, text}] }
+   ============================================================ */
+function renderLifeCurve(containerId, cfg){
+  const root = document.getElementById(containerId);
+  const W = 560, H = 230, PL = 14, PR = 14, PT = 16, PB = 40;
+  const X = t => PL + (W - PL - PR) * t / 100, Y = v => PT + (H - PT - PB) * (1 - v / 100);
+  const f = {
+    effort:  t => 8 + 84 * Math.exp(-Math.pow((t - 58) / 24, 2)),
+    success: t => 15 + 80 * (1 / (1 + Math.exp(-(t - 45) / 12))),
+    infl:    t => 95 - 85 * (1 / (1 + Math.exp(-(t - 35) / 12))),
+    change:  t => 5 + 90 * (1 / (1 + Math.exp(-(t - 55) / 13)))
+  };
+  const L = [
+    {k:"effort", name:"الجهد والتكلفة وعدد العاملين", col:"#1D3557", w:4},
+    {k:"success", name:"احتمال نجاح المشروع", col:"#0B7A57", w:2.5},
+    {k:"infl", name:"قدرة أصحاب المصلحة عالتأثير", col:"#FF9F1C", w:2.5},
+    {k:"change", name:"كلفة إدخال أي تغيير", col:"#B4402B", w:2.5}
+  ];
+  const path = fn => { let d = ""; for(let t = 0; t <= 100; t += 2) d += (t ? "L" : "M") + X(t).toFixed(1) + "," + Y(fn(t)).toFixed(1); return d; };
+  const phaseAt = t => cfg.phases.find(p => t >= p.from && t <= p.to) || cfg.phases[cfg.phases.length - 1];
+  const eventAt = t => { let e = null; cfg.events.forEach(x => { if(x.t <= t) e = x; }); return e; };
+  root.innerHTML = `
+    <div class="eqs lc">
+      <div class="eqs-head"><span class="gp-tag">📈 حرّك الزمن</span><h4>${cfg.title}</h4></div>
+      <svg viewBox="0 0 ${W} ${H}" class="lc-svg" role="img" aria-label="منحنى دورة حياة المشروع">
+        ${cfg.phases.map((p, i) => `<rect x="${X(p.from)}" y="${PT}" width="${X(p.to) - X(p.from)}" height="${H - PT - PB}" fill="${i % 2 ? "#F5F7FB" : "#fff"}"/>
+          <text x="${(X(p.from) + X(p.to)) / 2}" y="${H - 20}" text-anchor="middle" class="lc-ph">${p.name}</text>`).join("")}
+        ${L.map(l => `<path d="${path(f[l.k])}" fill="none" stroke="${l.col}" stroke-width="${l.w}" stroke-linecap="round" ${l.k === "effort" ? "" : 'stroke-dasharray="6 5"'}/>`).join("")}
+        <line class="lc-cur" x1="0" x2="0" y1="${PT}" y2="${H - PB}" stroke="#0F1C2E" stroke-width="2"/>
+        <text x="${X(0) + 62}" y="${H - 4}" class="lc-ax" text-anchor="middle">← البداية (الضوء الأخضر)</text>
+        <text x="${X(100) - 44}" y="${H - 4}" class="lc-ax" text-anchor="middle">التسليم للزبون →</text>
+      </svg>
+      <input type="range" min="0" max="100" value="5" class="lc-range" aria-label="الزمن على عمر المشروع" style="direction:ltr">
+      <div class="lc-phase"></div>
+      <div class="lc-meters">${L.map(l => `<div class="lc-m"><span class="lc-dot" style="background:${l.col}"></span><span>${l.name}</span><b data-k="${l.k}"></b><i><u data-k="${l.k}" style="background:${l.col}"></u></i></div>`).join("")}</div>
+      <div class="eqs-msg ok lc-ev" aria-live="polite"></div>
+    </div>`;
+  const rng = root.querySelector(".lc-range"), cur = root.querySelector(".lc-cur");
+  const lvl = v => v < 30 ? "منخفض" : v < 65 ? "متوسط" : "عالي";
+  function upd(){
+    const t = +rng.value; const x = X(t);
+    cur.setAttribute("x1", x); cur.setAttribute("x2", x);
+    const p = phaseAt(t);
+    root.querySelector(".lc-phase").innerHTML = `📍 إنت هلأ بمرحلة <b>${p.name}</b>`;
+    L.forEach(l => { const v = f[l.k](t); root.querySelector(`b[data-k=${l.k}]`).textContent = lvl(v); root.querySelector(`u[data-k=${l.k}]`).style.width = v.toFixed(0) + "%"; });
+    const e = eventAt(t); root.querySelector(".lc-ev").innerHTML = e ? `☕ «أوفلاين»: ${e.text}` : "";
+  }
+  rng.addEventListener("input", upd); upd();
+}
+
+/* ============================================================
+   ⚖️ مصفوفة القرار المرجح (الفصل 3): الأوزان بسلايدرات (بتتطبّع لـ 100%)،
+   والنتيجة = Σ (تقييم البديل × وزن المعيار). بتشوف الترتيب عم يتغيّر (تحليل الحساسية).
+   cfg = { title, alts:["أ","ب","ج"], criteria:[{name, w, scores:[..]}] }
+   ============================================================ */
+function renderDecisionMatrix(containerId, cfg){
+  const root = document.getElementById(containerId);
+  const init = cfg.criteria.map(c => c.w);
+  let w = init.slice(), lastWinner = null;
+  const COLS = ["#1D3557", "#FF9F1C", "#2EC4B6", "#B4402B"];
+  function totals(){ const sum = w.reduce((a, b) => a + b, 0) || 1; return cfg.alts.map((_, j) => cfg.criteria.reduce((s, c, i) => s + c.scores[j] * w[i] / sum, 0)); }
+  function draw(){
+    const sum = w.reduce((a, b) => a + b, 0) || 1, T = totals(), max = Math.max(...T), win = T.indexOf(max);
+    const changed = lastWinner !== null && win !== lastWinner;
+    root.innerHTML = `
+      <div class="eqs dm">
+        <div class="eqs-head"><span class="gp-tag">⚖️ جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <div class="dm-scroll"><table class="cmp dm-t">
+          <tr><th>المعيار</th><th>الوزن</th>${cfg.alts.map((a, j) => `<th style="color:${COLS[j]}">${a}</th>`).join("")}</tr>
+          ${cfg.criteria.map((c, i) => `<tr><td>${c.name}</td>
+            <td class="dm-w"><input type="range" min="0" max="50" value="${w[i]}" data-i="${i}" aria-label="وزن ${c.name}"><b>${Math.round(100 * w[i] / sum)}%</b></td>
+            ${c.scores.map(s => `<td>${s}</td>`).join("")}</tr>`).join("")}
+          <tr class="dm-tot"><td>النتيجة المرجّحة</td><td>100%</td>${T.map((t, j) => `<td style="color:${COLS[j]}">${xFmt(Math.round(t * 10) / 10)}${j === win ? " 🏆" : ""}</td>`).join("")}</tr>
+        </table></div>
+        <div class="dm-bars">${T.map((t, j) => `<div class="dm-bar"><span>${cfg.alts[j]}</span><i><u style="width:${t}%;background:${COLS[j]}"></u></i><b>${xFmt(Math.round(t * 10) / 10)}</b></div>`).join("")}</div>
+        <div class="eqs-msg ${changed ? "bad" : "ok"}" aria-live="polite">${changed ? `🔄 تغيّر الترتيب! صار الأول <b>${cfg.alts[win]}</b>. هاد هو <b>تحليل الحساسية</b>: لأي حد لازم يتغيّر الوزن ليتغيّر القرار.` : `الأفضل حالياً: <b>${cfg.alts[win]}</b>. حرّك أوزان المعايير وشوف إيمتى بيتغيّر القرار.`}</div>
+        <details class="accordion"><summary>🧮 كيف انحسبت نتيجة «${cfg.alts[win]}»؟</summary>
+          <p style="direction:rtl">${cfg.criteria.map((c, i) => `(${c.scores[win]} × ${Math.round(100 * w[i] / sum)}%)`).join(" + ")} = <b>${xFmt(Math.round(max * 10) / 10)}</b></p></details>
+        <button type="button" class="btn btn-teal dm-reset">🔁 رجّع الأوزان الأصلية</button>
+      </div>`;
+    lastWinner = win;
+    root.querySelectorAll(".dm-w input").forEach(r => r.addEventListener("change", () => { w[+r.dataset.i] = +r.value; draw(); }));
+    root.querySelectorAll(".dm-w input").forEach(r => r.addEventListener("input", () => { const t = w.slice(); t[+r.dataset.i] = +r.value; const s = t.reduce((a, b) => a + b, 0) || 1; root.querySelectorAll(".dm-w b").forEach((b, i) => b.textContent = Math.round(100 * t[i] / s) + "%"); }));
+    root.querySelector(".dm-reset").addEventListener("click", () => { w = init.slice(); lastWinner = null; draw(); });
+  }
+  draw();
+}
+
+/* ============================================================
+   💰 الحاسبة المالية (الفصل 3): NPV = I0 + Σ Ft/(1+k)^t ، ROI = (العوائد − التكاليف) ÷ التكاليف ،
+   فترة الاسترداد = لحظة ما يصير التدفق التراكمي صفر (بالاستيفاء الخطي داخل السنة).
+   cfg = { title, k, flows:[-I0, F1, F2, …], unit, presets:[{label, k, flows}] }
+   ============================================================ */
+function renderFinCalc(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let k = cfg.k, flows = cfg.flows.slice(), unit = cfg.unit;
+  const r2 = x => Math.round(x * 100) / 100;
+  function calc(){
+    const rows = []; let npv = 0, cum = 0, pay = null;
+    flows.forEach((f, t) => {
+      const fac = 1 / Math.pow(1 + k / 100, t), pv = f * fac; const prev = cum; cum += f; npv += pv;
+      if(pay === null && t > 0 && prev < 0 && cum >= 0) pay = (t - 1) + (-prev) / f;
+      rows.push({ t, f, fac, pv, cum });
+    });
+    const cost = -flows.filter(f => f < 0).reduce((a, b) => a + b, 0), ben = flows.filter(f => f > 0).reduce((a, b) => a + b, 0);
+    return { rows, npv, pay, roi: cost ? (ben - cost) / cost : 0 };
+  }
+  function draw(){
+    const c = calc(), u = unit;
+    root.innerHTML = `
+      <div class="eqs fc">
+        <div class="eqs-head"><span class="gp-tag">💰 احسب بإيدك</span><h4>${cfg.title}</h4></div>
+        <div class="fc-k"><label>معدل الخصم k: <b>${k}%</b></label><input type="range" min="0" max="30" value="${k}" class="fc-kr" aria-label="معدل الخصم"></div>
+        <div class="dm-scroll"><table class="cmp fc-t">
+          <tr><th>السنة t</th><th>صافي التدفق Ft (${u})</th><th>معامل الخصم 1÷(1+k)<sup>t</sup></th><th>القيمة الحالية</th><th>التراكمي (بدون خصم)</th></tr>
+          ${c.rows.map(r => `<tr><td>${r.t}</td><td><input type="number" step="any" value="${r.f}" data-t="${r.t}" class="fc-in" aria-label="تدفق السنة ${r.t}"></td>
+            <td>${r.fac.toFixed(3)}</td><td class="${r.pv < 0 ? "neg" : ""}">${xFmt(r2(r.pv))}</td><td class="${r.cum < 0 ? "neg" : ""}">${xFmt(r2(r.cum))}</td></tr>`).join("")}
+        </table></div>
+        <div class="fc-res">
+          <div class="${c.npv >= 0 ? "ok" : "bad"}"><span>NPV القيمة الحالية الصافية</span><b>${xFmt(r2(c.npv))} ${u}</b><small>${c.npv > 0 ? "موجبة ← مجدي مالياً ✅" : c.npv < 0 ? "سالبة ← مو مجدي ❌" : "صفر ← متل الاستثمار البديل"}</small></div>
+          <div><span>ROI العائد على الاستثمار</span><b>${Math.round(c.roi * 1000) / 10}%</b><small>(العوائد − التكاليف) ÷ التكاليف</small></div>
+          <div><span>فترة الاسترداد</span><b>${c.pay === null ? "ما بيسترد" : xFmt(r2(c.pay)) + " سنة"}</b><small>لحظة ما التراكمي بيوصل للصفر</small></div>
+        </div>
+        ${cfg.presets ? `<div class="tri-sc"><b>📂 أمثلة:</b>${cfg.presets.map((p, i) => `<button type="button" class="tri-sc-b" data-i="${i}">${p.label}</button>`).join("")}</div>` : ""}
+      </div>`;
+    root.querySelector(".fc-kr").addEventListener("input", e => { k = +e.target.value; draw(); });
+    root.querySelectorAll(".fc-in").forEach(inp => inp.addEventListener("change", () => { const v = parseFloat(inp.value); flows[+inp.dataset.t] = isNaN(v) ? 0 : v; draw(); }));
+    root.querySelectorAll(".tri-sc-b").forEach(b => b.addEventListener("click", () => { const p = cfg.presets[+b.dataset.i]; k = p.k; flows = p.flows.slice(); unit = p.unit || cfg.unit; draw(); }));
+  }
+  draw();
+}
+
+/* ============================================================
+   🌳 ابني هيكل تقسيم العمل WBS (الفصل 4): اسحب كل حزمة عمل لناتجها (أو «برّا النطاق»).
+   كل حزمة بتاخد رمز WBS تلقائي (1.1، 1.2…)، ومؤشر «قاعدة 100%» بيوصل لـ100% لما كل العمل يكون موجود.
+   cfg = { title, root, nodes:[{key, name}], items:[{id, text, node|"out", why}] }
+   ============================================================ */
+function renderWbsBuilder(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let placed, sel, msg, wrong;
+  const inScope = cfg.items.filter(i => i.node !== "out").length;
+  function reset(){ placed = {}; sel = null; msg = null; wrong = 0; draw(); }
+  function place(id, zone){
+    const it = cfg.items.find(x => x.id === id); if(!it || placed[id]) return;
+    if(it.node === zone){ placed[id] = zone; sel = null; msg = { ok:true, text:`✅ «${it.text}» ${zone === "out" ? "برّا النطاق" : "تحت " + cfg.nodes.find(n => n.key === zone).name}. ${it.why}` }; }
+    else { wrong++; msg = { ok:false, text:`❌ «${it.text}» مو هون. ${zone === "out" ? "هاد من شغل المشروع، مو برّا النطاق." : it.node === "out" ? "هاد مو من نطاق «أوفلاين» أصلاً." : "فكّر: لأي ناتج بيساهم؟"}` }; }
+    draw(); if(!msg.ok){ const c = root.querySelector(`.x-chip[data-id="${id}"]`); if(c){ c.classList.add("shake"); setTimeout(() => c.classList.remove("shake"), 450); } }
+  }
+  function draw(){
+    const done = cfg.items.filter(i => i.node !== "out" && placed[i.id]).length, pct = Math.round(100 * done / inScope);
+    const left = cfg.items.filter(i => !placed[i.id]);
+    root.innerHTML = `
+      <div class="eqs wbs">
+        <div class="eqs-head"><span class="gp-tag">🌳 اسحب وفلت</span><h4>${cfg.title}</h4></div>
+        <div class="wbs-root">0 ${cfg.root}</div>
+        <div class="wbs-nodes">
+          ${cfg.nodes.map((n, ni) => `<div class="wbs-node eqs-drop" data-zone="${n.key}" role="button" tabindex="0">
+            <div class="wbs-nh">${ni + 1}.0 ${n.name}</div>
+            <ul>${cfg.items.filter(i => placed[i.id] === n.key).map((i, k) => `<li><code>${ni + 1}.${k + 1}</code> ${i.text}</li>`).join("") || `<li class="wbs-empty">اسحب حزم العمل لهون</li>`}</ul>
+          </div>`).join("")}
+        </div>
+        <div class="wbs-out eqs-drop" data-zone="out" role="button" tabindex="0">✋ برّا النطاق: ${cfg.items.filter(i => placed[i.id] === "out").map(i => `<span class="wbs-x">${i.text}</span>`).join("") || "<span class='wbs-empty'>اللي مو من شغل المشروع</span>"}</div>
+        <div class="wbs-rule"><span>📏 قاعدة 100%: العمل المغطّى</span><i><u style="width:${pct}%"></u></i><b>${pct}%</b></div>
+        <div class="eqs-tray">${left.map(i => `<button type="button" class="eqs-chip x-chip${sel === i.id ? " sel" : ""}" data-id="${i.id}">${i.text}</button>`).join("") || ""}</div>
+        <div class="eqs-msg ${msg ? (msg.ok ? "ok" : "bad") : ""}" aria-live="polite">${!left.length ? `🎉 خلص الـ WBS! كل العمل (100%) موجود تحت النواتج، واللي برّا النطاق برّا. أخطاء: ${wrong}.` : msg ? msg.text : "اسحب كل حزمة عمل للناتج اللي بتنتمي إلو (أو اضغط عليها وبعدين عالناتج)."}</div>
+        ${!left.length ? `<button type="button" class="btn btn-teal wbs-reset">🔁 عيد من الأول</button>` : ""}
+      </div>`;
+    xDragWire(root, place, (id) => { sel = sel === id ? null : id; draw(); });
+    root.querySelectorAll("[data-zone]").forEach(z => z.addEventListener("click", () => { if(sel) place(sel, z.dataset.zone); }));
+    const r = root.querySelector(".wbs-reset"); if(r) r.addEventListener("click", reset);
+  }
+  reset();
+}
+
+/* ============================================================
+   👥 مصفوفة المسؤوليات (الفصل 4): اضغط عالخانة لتبدّل: — ← R (مسؤول) ← S (منفّذ/مساعد) ← —
+   القاعدة: كل حزمة عمل إلها مسؤول (R) واحد بس، والشخص الواحد ممكن يكون مسؤول عن أكتر من حزمة.
+   cfg = { title, people:[..], tasks:[..] }
+   ============================================================ */
+function renderRespMatrix(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let m = cfg.tasks.map(() => cfg.people.map(() => ""));
+  const next = { "":"R", "R":"S", "S":"" };
+  function draw(){
+    const issues = [];
+    cfg.tasks.forEach((t, i) => { const r = m[i].filter(x => x === "R").length; if(r === 0) issues.push(`«${t}»: ما إلها مسؤول (R)`); if(r > 1) issues.push(`«${t}»: إلها ${r} مسؤولين، لازم واحد بس`); });
+    const ok = !issues.length;
+    root.innerHTML = `
+      <div class="eqs rm">
+        <div class="eqs-head"><span class="gp-tag">👥 وزّع المسؤوليات</span><h4>${cfg.title}</h4></div>
+        <div class="dm-scroll"><table class="cmp rm-t">
+          <tr><th>حزمة العمل</th>${cfg.people.map(p => `<th>${p}</th>`).join("")}</tr>
+          ${cfg.tasks.map((t, i) => `<tr><td>${t}</td>${cfg.people.map((p, j) => `<td><button type="button" class="rm-c ${m[i][j] ? "v" + m[i][j] : ""}" data-i="${i}" data-j="${j}" aria-label="${t} — ${p}">${m[i][j] || "—"}</button></td>`).join("")}</tr>`).join("")}
+        </table></div>
+        <p class="eqs-hint"><b>R</b> = المسؤول اللي بينسّق الجهود وبيتأكد من الإنجاز · <b>S</b> = بينفّذ أو بيساعد المسؤول</p>
+        <div class="eqs-msg ${ok ? "ok" : "bad"}" aria-live="polite">${ok ? "✅ ممتاز! كل حزمة إلها مسؤول واحد بالزبط. (ولاحظ: عادي الشخص الواحد يكون مسؤول عن أكتر من حزمة.)" : "⚠️ " + issues.slice(0, 3).join(" · ") + (issues.length > 3 ? ` · و${issues.length - 3} كمان` : "")}</div>
+      </div>`;
+    root.querySelectorAll(".rm-c").forEach(b => b.addEventListener("click", () => { const i = +b.dataset.i, j = +b.dataset.j; m[i][j] = next[m[i][j]]; draw(); }));
+  }
+  draw();
 }

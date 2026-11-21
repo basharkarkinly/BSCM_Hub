@@ -221,3 +221,63 @@
 .tri-note.on{ display:block; }
 .tri .tri-reset{ margin-top:12px; }
 @media (max-width:640px){ .tri-grid{ grid-template-columns:1fr; } .tri-fig{ max-width:280px; margin:0 auto; } }
+
+/* ---------- 📈 منحنى دورة الحياة ---------- */
+.lc-svg{ width:100%; height:auto; display:block; background:#fff; border-radius:12px; }
+.lc-ph{ font-size:12px; font-weight:800; fill:#0F1C2E; }
+.lc-ax{ font-size:10px; fill:#5B6478; }
+.lc-range{ width:100%; accent-color:#0F1C2E; margin:8px 0 4px; }
+.lc-phase{ font-size:.95rem; margin:4px 0 10px; }
+.lc-meters{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.lc-m{ display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:6px; background:#F5F7FB; border-radius:10px; padding:8px 10px; font-size:.85rem; }
+.lc-m b{ font-size:.85rem; }
+.lc-m i{ grid-column:1 / -1; height:6px; border-radius:6px; background:#E3E7F0; overflow:hidden; display:block; }
+.lc-m u{ display:block; height:100%; border-radius:6px; transition:width .2s; }
+.lc-dot{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+.lc-ev{ margin-top:10px; min-height:1.6em; }
+@media (max-width:640px){ .lc-meters{ grid-template-columns:1fr; } .lc-ph{ font-size:15px; } }
+
+/* ---------- ⚖️ مصفوفة القرار + 💰 الحاسبة المالية ---------- */
+.dm-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.dm-t td, .dm-t th, .fc-t td, .fc-t th{ text-align:center; white-space:nowrap; }
+.dm-t td:first-child{ text-align:start; white-space:normal; min-width:120px; }
+.dm-w{ min-width:150px; }
+.dm-w input{ width:90px; vertical-align:middle; accent-color:#FF9F1C; }
+.dm-w b{ display:inline-block; min-width:40px; }
+.dm-tot td{ font-weight:800; background:#FFF8EB; }
+.dm-bars{ margin:12px 0; display:grid; gap:6px; }
+.dm-bar{ display:grid; grid-template-columns:minmax(90px,auto) 1fr 50px; gap:8px; align-items:center; font-size:.88rem; font-weight:700; }
+.dm-bar i{ height:14px; background:#EEF1F7; border-radius:8px; overflow:hidden; display:block; }
+.dm-bar u{ display:block; height:100%; border-radius:8px; transition:width .35s; }
+.dm .dm-reset{ margin-top:10px; }
+.fc-k{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px; }
+.fc-k input{ flex:1; min-width:160px; accent-color:#FF9F1C; }
+.fc-in{ width:110px; font:inherit; padding:5px 8px; border:1px solid #E3E7F0; border-radius:8px; text-align:center; }
+.fc-t td.neg{ color:#B4402B; }
+.fc-res{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:12px 0 4px; }
+.fc-res > div{ background:#F5F7FB; border-radius:12px; padding:10px 12px; display:flex; flex-direction:column; gap:2px; }
+.fc-res > div.ok{ background:#EAF8F1; } .fc-res > div.bad{ background:#FDECEA; }
+.fc-res span{ font-size:.82rem; color:#5B6478; font-weight:700; } .fc-res b{ font-size:1.1rem; } .fc-res small{ font-size:.78rem; color:#5B6478; }
+@media (max-width:640px){ .fc-res{ grid-template-columns:1fr; } }
+
+/* ---------- 🌳 WBS + 👥 مصفوفة المسؤوليات ---------- */
+.wbs-root{ margin:0 auto 10px; width:max-content; max-width:100%; background:#0F1C2E; color:#fff; font-weight:800; padding:8px 18px; border-radius:12px; }
+.wbs-nodes{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+.wbs-node{ background:#F5F7FB; border:2px dashed #C9D1E0; border-radius:12px; padding:10px; min-height:110px; cursor:pointer; }
+.wbs-nh{ font-weight:800; font-size:.9rem; margin-bottom:6px; color:#1D3557; }
+.wbs-node ul{ list-style:none; margin:0; padding:0; display:grid; gap:4px; }
+.wbs-node li{ background:#fff; border-radius:8px; padding:5px 8px; font-size:.84rem; }
+.wbs-node li code{ font-weight:800; color:#FF9F1C; margin-inline-end:4px; }
+.wbs-empty{ color:#8A93A6; font-size:.8rem; background:none !important; }
+.wbs-out{ margin-top:10px; border:2px dashed #E7B4AA; background:#FDF3F1; border-radius:12px; padding:10px; font-size:.88rem; font-weight:700; cursor:pointer; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+.wbs-x{ background:#fff; border-radius:8px; padding:3px 8px; font-weight:600; text-decoration:line-through; color:#B4402B; }
+.wbs-rule{ display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:center; margin:12px 0 6px; font-size:.86rem; font-weight:700; }
+.wbs-rule i{ height:10px; background:#EEF1F7; border-radius:8px; overflow:hidden; display:block; }
+.wbs-rule u{ display:block; height:100%; background:#0B7A57; transition:width .35s; }
+.wbs .wbs-reset{ margin-top:10px; }
+@media (max-width:760px){ .wbs-nodes{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.rm-t td, .rm-t th{ text-align:center; }
+.rm-t td:first-child{ text-align:start; min-width:140px; }
+.rm-c{ width:40px; height:36px; border-radius:10px; border:1.5px solid #C9D1E0; background:#fff; font:inherit; font-weight:800; cursor:pointer; color:#8A93A6; }
+.rm-c.vR{ background:#1D3557; border-color:#1D3557; color:#fff; }
+.rm-c.vS{ background:#E6F7F5; border-color:#2EC4B6; color:#0F6E66; }

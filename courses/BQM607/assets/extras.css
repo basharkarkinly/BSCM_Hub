@@ -319,3 +319,11 @@
 .btn-mini:disabled{ opacity:.35; cursor:default; }
 .crash .crash-reset{ margin-top:10px; }
 .svg-scroll{ direction:ltr; } .svg-scroll .eqs-hint{ direction:rtl; }
+
+/* ---------- 📊 تسوية الموارد ---------- */
+.lv-svg{ min-width:600px; }
+.lv-r{ font-size:10px; font-weight:800; fill:#fff; }
+.lv-ctrl{ display:grid; gap:6px; margin:8px 0; }
+.lv-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:#F5F7FB; border-radius:10px; padding:6px 10px; font-size:.88rem; }
+.lv-row small{ color:#5B6478; } .lv-row span{ font-weight:700; min-width:64px; text-align:center; }
+.lv .lv-reset{ margin-top:10px; }

@@ -3,7 +3,7 @@
 const COURSE_TITLE = "BQM607 — إدارة المشروعات";
 
 const COURSE_CHAPTERS = [
-  {num:6, key:"ch6", title:"تخطيط الزمن (2): المدد وغانت والمسار الحرج", href:"chapters/chapter-6-lesson.html"}
+  {num:7, key:"ch7", title:"تخطيط الموارد في المشروع", href:"chapters/chapter-7-lesson.html"}
 ];
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */

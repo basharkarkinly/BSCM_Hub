@@ -925,3 +925,109 @@ function renderCrash(containerId, cfg){
   }
   reset();
 }
+
+/* --- مساعد: CPM بسيط (ES/EF/LS/LF/عوم) --- */
+function xCpm(acts){
+  const by = {}, succ = {}; acts.forEach(a => { by[a.id] = a; succ[a.id] = []; }); acts.forEach(a => a.pred.forEach(p => succ[p].push(a.id)));
+  const order = [], done = new Set(); let g = 0;
+  while(done.size < acts.length && g++ < 80) acts.filter(a => !done.has(a.id) && a.pred.every(p => done.has(p))).forEach(a => { done.add(a.id); order.push(a.id); });
+  const ES = {}, EF = {}, LS = {}, LF = {};
+  order.forEach(id => { ES[id] = by[id].pred.length ? Math.max(...by[id].pred.map(p => EF[p])) : 0; EF[id] = ES[id] + by[id].d; });
+  const T = Math.max(...order.map(id => EF[id]));
+  order.slice().reverse().forEach(id => { LF[id] = succ[id].length ? Math.min(...succ[id].map(s => LS[s])) : T; LS[id] = LF[id] - by[id].d; });
+  return { by, succ, order, ES, EF, LS, LF, T };
+}
+/* --- مساعد: غانت + مخطط الموارد (هيستوغرام) --- */
+function xResChart(acts, start, T, opt){
+  const W = 620, L = 30, rowH = 24, gh = acts.length * rowH, hh = 110, sc = (W - L - 8) / T;
+  const use = Array(T).fill(0); acts.forEach(a => { for(let t = start[a.id]; t < start[a.id] + a.d; t++) if(t < T) use[t] += a.r; });
+  const peak = Math.max(...use), cap = opt.cap || 0, maxY = Math.max(peak, cap, 1), yS = (hh - 20) / maxY;
+  const bars = acts.map((a, i) => { const y = 4 + i * rowH, c = opt.crit && opt.crit.has(a.id);
+    return `<text x="4" y="${y + 15}" class="cpm-id" style="font-size:12px">${a.id}</text>
+      ${opt.float && opt.float[a.id] ? `<rect x="${L + opt.es[a.id] * sc}" y="${y + 3}" width="${(a.d + opt.float[a.id]) * sc}" height="12" rx="4" fill="#2EC4B6" opacity=".18"/>` : ""}
+      <rect x="${L + start[a.id] * sc}" y="${y}" width="${a.d * sc}" height="18" rx="5" fill="${c ? "#B4402B" : "#1D3557"}"/>
+      <text x="${L + start[a.id] * sc + a.d * sc / 2}" y="${y + 13}" class="lv-r" text-anchor="middle">${a.r}w</text>`; }).join("");
+  const hist = use.map((u, t) => `<rect x="${L + t * sc + 1}" y="${gh + 14 + (hh - 20) - u * yS}" width="${sc - 2}" height="${u * yS}" fill="${cap && u > cap ? "#B4402B" : u === peak ? "#FF9F1C" : "#8FA3C0"}"/>`).join("");
+  const capLine = cap ? `<line x1="${L}" x2="${W - 8}" y1="${gh + 14 + (hh - 20) - cap * yS}" y2="${gh + 14 + (hh - 20) - cap * yS}" stroke="#B4402B" stroke-dasharray="5 4" stroke-width="2"/><text x="${W - 10}" y="${gh + 10 + (hh - 20) - cap * yS}" class="lv-r" text-anchor="end" style="fill:#B4402B">المتاح ${cap}</text>` : "";
+  const ticks = Array.from({ length: T + 1 }, (_, t) => t % 2 === 0 ? `<text x="${L + t * sc}" y="${gh + hh + 8}" class="cpm-n" text-anchor="middle">${t}</text>` : "").join("");
+  const yt = Array.from({ length: maxY + 1 }, (_, k) => `<text x="${L - 4}" y="${gh + 18 + (hh - 20) - k * yS}" class="cpm-n" text-anchor="end">${k}</text>`).join("");
+  return { peak, use, svg: `<svg viewBox="0 0 ${W} ${gh + hh + 12}" class="cpm-svg lv-svg" role="img" aria-label="مخطط غانت ومخطط الموارد">${bars}<line x1="${L}" x2="${W - 8}" y1="${gh + 8}" y2="${gh + 8}" stroke="#C9D1E0"/>${hist}${capLine}${yt}${ticks}</svg>` };
+}
+
+/* ============================================================
+   📊 تسوية الموارد بقيد زمني (الفصل 7): زيح الأنشطة غير الحرجة ضمن عومها وشوف ذروة العمال عم تنزل.
+   cfg = { title, acts:[{id, name, d, pred, r}], target }
+   ============================================================ */
+function renderLeveling(containerId, cfg){
+  const root = document.getElementById(containerId);
+  const c = xCpm(cfg.acts), crit = new Set(c.order.filter(id => c.LS[id] === c.ES[id]));
+  const float = {}; cfg.acts.forEach(a => float[a.id] = c.LS[a.id] - c.ES[a.id]);
+  let shift; const peak0 = xResChart(cfg.acts, c.ES, c.T, {}).peak;
+  function starts(){ const s = {}; c.order.forEach(id => { const a = c.by[id]; const minS = a.pred.length ? Math.max(...a.pred.map(p => s[p] + c.by[p].d)) : 0; s[id] = Math.max(minS, c.ES[id] + (shift[id] || 0)); }); return s; }
+  function reset(){ shift = {}; draw(); }
+  function draw(){
+    const s = starts(), T = Math.max(...cfg.acts.map(a => s[a.id] + a.d)), ch = xResChart(cfg.acts, s, Math.max(T, c.T), { crit, float, es:c.ES });
+    const ok = T === c.T, red = Math.round(100 * (peak0 - ch.peak) / peak0);
+    root.innerHTML = `
+      <div class="eqs lv">
+        <div class="eqs-head"><span class="gp-tag">📊 زيح الأنشطة</span><h4>${cfg.title}</h4></div>
+        <div class="crash-top"><div><span>ذروة العمال</span><b>${ch.peak} عمال</b><small>قبل التسوية: ${peak0}</small></div><div><span>مدة المشروع</span><b>${T} يوم</b><small>${ok ? "ما تغيّرت ✅ (قيد الزمن محترم)" : "⚠️ تأخر المشروع!"}</small></div></div>
+        <div class="dm-scroll svg-scroll">${ch.svg}</div>
+        <div class="lv-ctrl">${cfg.acts.filter(a => !crit.has(a.id)).map(a => `<div class="lv-row"><b>${a.id}</b> ${a.name} <small>(عوم ${float[a.id]})</small>
+          <button type="button" class="btn-mini" data-id="${a.id}" data-v="-1" ${!(shift[a.id] > 0) ? "disabled" : ""}>◀ يوم</button>
+          <span>إزاحة ${shift[a.id] || 0}</span>
+          <button type="button" class="btn-mini" data-id="${a.id}" data-v="1" ${(shift[a.id] || 0) >= float[a.id] ? "disabled" : ""}>يوم ▶</button></div>`).join("")}</div>
+        <p class="eqs-hint">🟥 حرج (ما بينزاح) · 🟦 غير حرج · الظل الفيروزي = المجال المسموح ضمن العوم · 🟧 عمود الذروة</p>
+        <div class="eqs-msg ${ch.peak <= cfg.target && ok ? "ok" : ""}" aria-live="polite">${ch.peak <= cfg.target && ok ? `🎉 نزلت الذروة من ${peak0} لـ ${ch.peak} عمال (تخفيض ${red}%) بدون ما يتأخر المشروع. هيك بتشتغل التسوية بقيد زمني: منأخّر الأنشطة غير الحرجة <b>ضمن عومها</b>.` : `الذروة هلأ ${ch.peak}. الأنشطة الحرجة ثابتة؛ زيح غير الحرجة (ضمن عومها) لحد ما تنزل الذروة لـ ${cfg.target}.`}</div>
+        <button type="button" class="btn btn-teal lv-reset">🔁 من الأول</button>
+      </div>`;
+    root.querySelectorAll(".lv-row .btn-mini").forEach(b => b.addEventListener("click", () => { const id = b.dataset.id; shift[id] = Math.min(float[id], Math.max(0, (shift[id] || 0) + +b.dataset.v)); draw(); }));
+    root.querySelector(".lv-reset").addEventListener("click", reset);
+  }
+  reset();
+}
+
+/* ============================================================
+   👷 تسوية الموارد بقيد موارد (الفصل 7): يوم بيوم، ولما ما بتكفّي الموارد منطبّق قواعد الأولوية:
+   أصغر عوم ← الأقل مدة ← الأكبر موارد ← أصغر رمز. (النشاط ما بينقسم، ومستوى موارده ثابت.)
+   cfg = { title, cap, acts:[{id, d, pred, r}] }
+   ============================================================ */
+function renderResSched(containerId, cfg){
+  const root = document.getElementById(containerId);
+  const c = xCpm(cfg.acts), by = c.by;
+  // محاكاة كاملة مع سجل لكل يوم فيه قرار
+  const start = {}, log = []; let t = 0, guard = 0;
+  while(Object.keys(start).length < cfg.acts.length && guard++ < 200){
+    const running = cfg.acts.filter(a => start[a.id] !== undefined && start[a.id] <= t && t < start[a.id] + a.d);
+    let free = cfg.cap - running.reduce((s, a) => s + a.r, 0);
+    const elig = cfg.acts.filter(a => start[a.id] === undefined && a.pred.every(p => start[p] !== undefined && start[p] + by[p].d <= t));
+    if(elig.length){
+      elig.sort((x, y) => (c.LS[x.id] - c.LS[y.id]) || (x.d - y.d) || (y.r - x.r) || (x.id < y.id ? -1 : 1));
+      const took = [], waited = [];
+      elig.forEach(a => { if(a.r <= free){ start[a.id] = t; free -= a.r; took.push(a.id); } else waited.push(a.id); });
+      log.push({ t, elig:elig.map(a => { const f = c.LS[a.id] - t; return `${a.id} (${f >= 0 ? "عوم " + f : "متأخر ⚠️ أولوية قصوى"}، ${a.r}w)`; }), took, waited, free });
+    }
+    t++;
+  }
+  const T = Math.max(...cfg.acts.map(a => start[a.id] + a.d));
+  let k = 0;
+  function draw(){
+    const shownStart = {}; cfg.acts.forEach(a => { if(log.slice(0, k).some(l => l.took.includes(a.id))) shownStart[a.id] = start[a.id]; });
+    const actsShown = cfg.acts.filter(a => shownStart[a.id] !== undefined);
+    const ch = actsShown.length ? xResChart(actsShown, shownStart, T, { cap:cfg.cap }) : null;
+    const cur = k ? log[k - 1] : null, end = k === log.length;
+    root.innerHTML = `
+      <div class="eqs lv">
+        <div class="eqs-head"><span class="gp-tag">👷 يوم بيوم</span><h4>${cfg.title}</h4></div>
+        <div class="crash-top"><div><span>المتاح</span><b>${cfg.cap} عمال</b></div><div><span>المدة بدون قيد ← مع القيد</span><b>${c.T} ← ${end ? T : "؟"} يوم</b></div></div>
+        ${ch ? `<div class="dm-scroll svg-scroll">${ch.svg}</div>` : ""}
+        <div class="eqs-msg ${end ? "ok" : ""}" aria-live="polite">${!cur ? "اضغط «اليوم الجاي» لنبلّش التخصيص من أول يوم." : `📅 <b>اليوم ${cur.t + 1}</b>: المرشّحين ${cur.elig.join("، ")}. ← بدأ: <b>${cur.took.join("، ") || "ولا شي"}</b>${cur.waited.length ? ` · انزاح: <b>${cur.waited.join("، ")}</b> (ما ضل موارد كفاية)` : ""}.${end ? `<br>🎉 خلص التخصيص: المشروع صار <b>${T} يوم</b> بدل ${c.T}، وما تجاوزنا ${cfg.cap} عمال أبداً.` : ""}`}</div>
+        <div class="nl-btns">${!end ? `<button type="button" class="btn btn-primary rs-next">➡️ اليوم الجاي</button><button type="button" class="btn btn-teal rs-all">⏭️ للآخر</button>` : ""}<button type="button" class="btn btn-teal rs-reset">🔁 من الأول</button></div>
+      </div>`;
+    const q = s => root.querySelector(s);
+    if(q(".rs-next")) q(".rs-next").addEventListener("click", () => { k++; draw(); });
+    if(q(".rs-all")) q(".rs-all").addEventListener("click", () => { k = log.length; draw(); });
+    q(".rs-reset").addEventListener("click", () => { k = 0; draw(); });
+  }
+  draw();
+}

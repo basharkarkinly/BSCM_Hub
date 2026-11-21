@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 6 — تخطيط الزمن (2): المدد وغانت والمسار الحرج | BQM607</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+<div class="topbar">
+  <div class="brand"><a href="../../../index.html" title="الصفحة الرئيسية" style="display:flex;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"></a><a href="../index.html" style="text-decoration:none;">BQM607 — إدارة المشروعات</a></div>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل السادس</div>
+    <h1>تخطيط الزمن (2): المدد وغانت والمسار الحرج</h1>
+    <p>رسمنا الشبكة، بس قديش بياخد كل نشاط؟ وإيمتى بيفتح «أوفلاين»؟ هالفصل عن <b>طرق تقدير المدد</b> (ومنها التقدير بتلات نقاط)، <b>مخطط غانت</b>، و<b>طريقة المسار الحرج CPM</b> خطوة بخطوة: الذهاب للأمام، العودة من الخلف، فترات العوم، وآخر شي <b>ضغط الجدول الزمني</b> لما بدنا نخلص أبكر.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+
+  <div class="chapter-intro-box">
+    <h4>🔑 كلمات مفتاحية</h4>
+    <div><span class="keyword-chip">تقدير المدد</span><span class="keyword-chip">التقدير بالتماثل</span><span class="keyword-chip">من الأسفل للأعلى</span><span class="keyword-chip">المحاكاة (مونتي كارلو)</span><span class="keyword-chip">التقدير بتلات نقاط</span><span class="keyword-chip">تحليل الاحتياطي</span><span class="keyword-chip">دقة التقديرات</span><span class="keyword-chip">مخطط غانت</span><span class="keyword-chip">CPM</span><span class="keyword-chip">PERT</span><span class="keyword-chip">ES / EF</span><span class="keyword-chip">LS / LF</span><span class="keyword-chip">فترة العوم</span><span class="keyword-chip">المسار الحرج</span><span class="keyword-chip">ضغط الجدول الزمني</span><span class="keyword-chip">منحني الزمن-التكلفة</span></div>
+    <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+    <ul><li>تعرف خطوات تقدير مدة النشاط وتميّز بين تقنيات التقدير</li><li>تحسب التقدير المكوّن من تلات نقاط وتعرف مجالات دقة التقديرات</li><li>تعرف مكوّنات مخطط غانت ومحدوديته</li><li>تطبّق طريقة المسار الحرج: الذهاب للأمام، العودة من الخلف، العوم والمسار الحرج</li><li>تفرّق بين CPM وPERT</li><li>تعرف طرق ضغط الجدول الزمني وكيف منختار الأنشطة اللي منضغطها</li></ul>
+  </div>
+
+
+  <div class="block" id="estimating">
+    <h2><span class="idx">1</span> تقدير مدد الأنشطة</h2>
+    <p>منحسب الوقت اللازم لكل نشاط ومنضيفو لمخطط الأسبقيات، وعادة <b>بالاعتماد على الخبرة</b> (وبعض المنظمات بتستخدم معايير وطنية أو خاصة). والخطوات التلاتة:</p>
+    <ol class="timeline">
+      <li><span class="marker">1</span><h4>نموذج تقدير لكل حزمة عمل + بيان عمل</h4><p>فيه المواصفات التقنية (الأداء، الجودة، الوثوقية، التشغيل، الصيانة)، الامتثال للمعايير، والفرضيات والقيود والاستثناءات (شو مو مدرج بالحزمة).</p></li>
+      <li><span class="marker">2</span><h4>توثيق كيف تمّ التقدير</h4><p>مع الفرضيات والعوامل اللي ممكن تأثّر (مثلاً: هل حسبنا زيادة أسعار الموردين السنوية؟).</p></li>
+      <li><span class="marker">3</span><h4>مراجعة التقديرات</h4><p>لنشيل التناقضات.</p></li>
+    </ol>
+    <p>ومنبلّش غالباً <b>بتقدير تقريبي</b> ومنصقلو ليصير أدق.</p>
+  </div>
+
+  <div class="block" id="techniques">
+    <h2><span class="idx">2</span> تقنيات التقدير</h2>
+    <table class="cmp">
+      <tr><th>التقنية</th><th>الفكرة</th></tr>
+      <tr><td><b>بالتماثل</b> (من القمة للقاعدة Top-down)</td><td>منستخدم مدد وتكاليف <b>مشاريع سابقة مماثلة</b> ومعلومات تاريخية. للمشاريع اللي <b>معلوماتها التفصيلية قليلة</b>. <b>أرخص وأسرع، بس أقل دقة</b>.</td></tr>
+      <tr><td><b>التقسيم</b> Modular</td><td>منقسّم الأعمال الكبيرة لوحدات صغيرة سهل نقدّرها. <b>WBS أشهر طريقة</b> فيها.</td></tr>
+      <tr><td><b>المقارنة</b> Benchmark</td><td>معلومات مسجّلة لأعمال مماثلة من مرات سابقة، للأعمال <b>المتكررة</b>.</td></tr>
+      <tr><td><b>النمذجة</b> Modelling</td><td>بيانات أنشطة معروفة لنولّد قيمة لنشاط مجهول بيناتها، بنموذج متغيرات بأوزان (مثال: <b>استبدال الكابلات بين أبراج الكهربا</b>: الطقس، الوصول للأرض…).</td></tr>
+      <tr><td><b>قاعدة بيانات التقدير</b></td><td>برمجيات متخصصة بقواعد بيانات قياسية للمدد.</td></tr>
+      <tr><td><b>حكم الخبراء</b></td><td>أعضاء الفريق اللي بيعرفوا الشغل، وإذا تجاهلناهن في مخاطرة كبيرة.</td></tr>
+      <tr><td><b>المعاملات</b> Parametric</td><td>علاقة وظيفية بين <b>متغير مستقل ومتغير تابع</b> (مثال: <b>طول نفق الصرف الصحي</b> مستقل، و<b>زمن الحفر</b> تابع). للأنشطة اللي ما بتتقسّم وما في مقاييس ولا خبرة.</td></tr>
+      <tr><td><b>من الأسفل للأعلى</b> Bottom-Up</td><td>منقدّر حزم العمل بأسفل WBS ومنجمّع لفوق. <b>أدق، بس أغلى وأطول</b>.</td></tr>
+      <tr><td><b>المحاكاة</b> Simulation</td><td>الكمبيوتر بيحسب عدة مدد كسيناريوهات بفرضيات مختلفة، وأشهرها <b>تحليل مونتي كارلو</b>. <b>أدق من غيرها</b>، للمشاريع الكبيرة والمعقدة.</td></tr>
+      <tr><td><b>تحليل الاحتياطي</b></td><td>إضافة وقت زيادة (احتياطي طوارئ أو مخزن مؤقت) لحساب المخاطر.</td></tr>
+    </table>
+  </div>
+
+  <div class="block" id="three-point">
+    <h2><span class="idx">3</span> التقدير المكوّن من تلات نقاط</h2>
+    <p>منحط <b>تلات تقديرات</b>: <b>واقعي</b> (الأرجح)، <b>متفائل</b> (أفضل سيناريو)، و<b>متشائم</b> (أسوأ سيناريو). والتقدير النهائي = المتوسط المرجّح:</p>
+    <div class="callout"><span class="tag">🧮 الصيغة</span>
+      <b>(المتفائل + 4 × الواقعي + المتشائم) ÷ 6</b><br>
+      ☕ مثال: تركيب مطبخ «أوفلاين»: متفائل 4 أيام، واقعي 6، متشائم 14 ← (4 + 24 + 14) ÷ 6 = <b>7 أيام</b>.</div>
+    <div id="pert-mount"></div>
+  </div>
+
+  <div class="block" id="accuracy">
+    <h2><span class="idx">4</span> دقة التقديرات</h2>
+    <table class="cmp">
+      <tr><th>المرحلة</th><th>نوع التقدير</th><th>الدقة</th></tr>
+      <tr><td>التخطيط المبكر وطرح المشروع</td><td>تقديرات أولية <b>Order-of-Magnitude</b></td><td><b>−25% لـ +75%</b></td></tr>
+      <tr><td>التعريف والموافقة (الموازنة)</td><td>تقديرات الموازنة</td><td><b>−10% لـ +25%</b></td></tr>
+      <tr><td>التخطيط (استدراج العروض)</td><td>التقديرات النهائية (من الأسفل للأعلى)</td><td><b>−5% لـ +10%</b></td></tr>
+    </table>
+    <div class="callout"><span class="tag">🧮 مثال الكتاب</span>
+      إذا المدة الفعلية <b>10 أشهر</b>، فبمرحلة التقدير الأولي (−25% لـ +75%) المجال المقبول بين <b>7.5 و17.5 شهر</b>.</div>
+    <p>كل ما زادت التفاصيل، التقدير أدق وفرصة تحقيق الأهداف أكبر، <b>بس</b> كلفة ووقت التقدير بيزيدوا، فبيضل مصاري ووقت أقل للمشروع نفسو.</p>
+  </div>
+
+  <div class="block" id="gantt">
+    <h2><span class="idx">5</span> مخطط غانت (Gantt Chart)</h2>
+    <p>مخطط غانت (أو <b>مخطط الأشرطة Bar Chart</b>) هو <b>أقدم وأبسط شكل</b> لخطة المشروع، نسبة لـ<b>Henry Gantt</b>، مهندس أمريكي بعشرينيات القرن الماضي. سهل الإعداد والفهم، فبينستخدم كتير للتواصل مع أصحاب المصلحة، وغالباً <b>أول أداة</b> بيستخدمها المدير لتقدير تقريبي.</p>
+    <div class="quick-grid">
+      <div class="quick-card"><b>🧱 مكوّناتو</b><strong>محور أفقي للزمن</strong>، <strong>محور عمودي للأنشطة</strong>، و<strong>شريط أفقي لكل نشاط</strong> مساقطو بتبيّن بدايتو ونهايتو.</div>
+      <div class="quick-card"><b>🔣 رموز إضافية</b>نقاط العلّام <strong>بمعيّن أو مثلث</strong>، الاجتماعات بدائرة، مراجعات التقدم بمربع.</div>
+      <div class="quick-card"><b>📈 متابعة التقدم</b>الأشرطة المظلّلة = منجز، والخط العمودي الغامق = الزمن الحالي.</div>
+    </div>
+    <p>والمخططات الأعقد ممكن تبيّن الأنشطة الحرجة وفترات العوم والتبعيات (متل غانت <b>بناء الجسر</b> بالكتاب، وافتتاحو نقطة علّام).</p>
+  </div>
+
+  <div class="block" id="gantt-limits">
+    <h2><span class="idx">6</span> محدودية مخطط غانت</h2>
+    <p>للمشاريع الصغيرة ممتاز، بس للمشاريع الكبيرة بتبيّن محدوديتو:</p>
+    <ul>
+      <li><b>ما بيبيّن الروابط وعلاقات التبعية</b> بين الأنشطة.</li>
+      <li>بيبيّن <b>بالمقام الأول علاقات Finish-to-Start</b>.</li>
+      <li>بشكلو الورقي <b>ما بيبيّن الاحتياجات المعقدة من الموارد</b>.</li>
+      <li><b>إعادة التخطيط صعبة</b>، وأسهل بكتير من خلال شبكة المشروع.</li>
+    </ul>
+    <p>والبرمجيات بتعطي الشكلين (غانت والشبكة) وبتسهّل التحديث وسيناريوهات <b>«ماذا لو»</b>.</p>
+  </div>
+
+  <div class="block" id="critical-path">
+    <h2><span class="idx">7</span> المسار الحرج</h2>
+    <p>الجدول الزمني لازم <b>يوافق عليه ويوقّعو</b> أصحاب المصلحة والمديرين الوظيفيين، ومنتأكد إنو الموارد متاحة. وبعد الموافقة بيصير <b>خط الأساس</b> لبقية المشروع.</p>
+    <div class="callout"><span class="tag">💡 المسار الحرج</span>
+      <b>سلسلة الأنشطة اللي بتشكّل أطول مسار عبر الشبكة</b>. مجموع مددها = <b>أقل مدة ممكنة لإنهاء المشروع</b>. وأي تأخير بنشاط عليه بيأخّر <b>المشروع كلّو</b>.</div>
+    <ul>
+      <li>النشاط <b>مو عالمسار الحرج</b> ← تأخيرو ما بيأخّر المشروع بالضرورة (حرية بالتعامل مع الطوارئ).</li>
+      <li>لنسرّع المشروع ← <b>إضافة الموارد للأنشطة الحرجة أفعل</b> من أي مكان تاني.</li>
+      <li>بالمشاريع الكبيرة منستخدم برمجيات متل <b>Microsoft Project</b>.</li>
+    </ul>
+  </div>
+
+  <div class="block" id="cpm">
+    <h2><span class="idx">8</span> طريقة المسار الحرج CPM مقابل PERT</h2>
+    <p><b>CPM</b> الطريقة <b>الأكتر شيوعاً</b> لإنتاج الجدول الزمني من الشبكة. طوّرتها شركة <b>DuPont عام 1960</b> لبرمجة أعمال الصيانة خلال إغلاق المصانع الكيميائية.</p>
+    <table class="cmp">
+      <tr><th>CPM</th><th>PERT</th></tr>
+      <tr><td>نهج <b>حتمي (تأكيدي أو قطعي)</b>: مدة وحدة لكل نشاط بدقة معقولة</td><td>نهج <b>احتمالي</b>: <b>تلات مدد</b> لكل نشاط (القصوى، الدنيا، المتوسطة)</td></tr>
+      <tr><td colspan="2">التنتين متشابهين كتير، و<b>CPM موجّهة بالأنشطة</b>: بتحدد بداية ونهاية كل نشاط، ومنها مدة المشروع وفترات العوم.</td></tr>
+    </table>
+    <p>خطوات CPM: <b>(1)</b> تحديد بداية ونهاية كل نشاط ← <b>(2)</b> تحديد الأنشطة اللي <b>ما إلها عوم</b> (المسار الحرج) ← <b>(3)</b> إعادة التخطيط كل ما لزم.</p>
+  </div>
+
+  <div class="block" id="forward">
+    <h2><span class="idx">9</span> الذهاب للأمام والعودة من الخلف</h2>
+    <div class="quick-grid">
+      <div class="quick-card"><b>➡️ الذهاب للأمام (الأزمنة المبكرة)</b>ES لأول نشاط = <strong>0</strong> · EF = ES + المدة · ES للنشاط التالي = EF للسابق · إذا في <strong>عدة سابقين ← أكبر EF</strong> · EF لآخر نشاط = مدة المشروع.</div>
+      <div class="quick-card"><b>⬅️ العودة من الخلف (الأزمنة المتأخرة)</b>LF لآخر نشاط = EF تبعو · LS = LF − المدة · LF = LS للاحق · إذا في <strong>عدة لاحقين ← أصغر LS</strong>.</div>
+    </div>
+    <p>بمربع كل نشاط: <b>السطر الفوقاني ES وEF</b>، و<b>التحتاني LS وLF</b>. جرّب على مشروع <b>سؤال الدورة</b> (جاوب بالأسئلة بعدين: مدة المشروع، المسار الحرج، ES للنشاط E، LS للنشاط C، عوم H، EF للنشاط G):</p>
+    <div id="cpm-mount"></div>
+  </div>
+
+  <div class="block" id="float">
+    <h2><span class="idx">10</span> فترات العوم والمسار الحرج</h2>
+    <div class="callout"><span class="tag">🧮 العوم (Float / Slack)</span>
+      وقت الفراغ أو المرونة المتاح للنشاط = <b>LS − ES</b> = <b>LF − EF</b>.<br>
+      <b>النشاط الحرج</b> = عومو <b>صفر</b>. و<b>المسار الحرج</b> = الخط اللي بيوصل الأنشطة الحرجة.</div>
+    <p>بمثال <b>الجسر</b> بالكتاب: مدة المشروع <b>38 يوم</b>، والمسار الحرج <b>A – E – F – G – L – N</b>.</p>
+    <ul>
+      <li>السبب الرئيسي لتأخر المشاريع عادة: <b>تأخر أنشطة المسار الحرج</b>.</li>
+      <li><b>المسار الحرج ممكن يتغيّر</b> أثناء المشروع: إذا استهلكنا عوم نشاط غير حرج ممكن يصير حرج. فلازم ننتبه خصوصاً للأنشطة <b>بعوم صغير</b>.</li>
+    </ul>
+  </div>
+
+  <div class="block" id="compression">
+    <h2><span class="idx">11</span> ضغط الجدول الزمني</h2>
+    <p>إذا الجدول ما بيخلّص المشروع بالمدة المطلوبة ← <b>نضغطو</b>: نحلّل كل الخيارات ونختار اللي بيعطي <b>أكبر ضغط بأقل كلفة</b>، و<b>نركّز على المسار الحرج</b> (تقصير الأنشطة غير الحرجة ما بيقصّر المشروع بالضرورة).</p>
+    <table class="cmp">
+      <tr><th>الطريقة</th><th>خياراتها</th></tr>
+      <tr><td><b>1. تغيير موارد الأنشطة</b></td><td>تخفيف مسؤوليات العاملين التانية · إعادة تخصيص الموارد من غير الحرجة للحرجة (وبعدين نعيد حساب المسار الحرج) · موارد إضافية (عاملين، عمل إضافي، معدات، تحفيز البائعين، مصادر خارجية) · <b>العمل الإضافي بالتدريج كخطة طوارئ</b> (مو بالخطة الأصلية)</td></tr>
+      <tr><td><b>2. تغيير التسلسل أو إعادة التقدير</b></td><td>تنفيذ أنشطة <b>بالتوازي أو بالتداخل</b> (بيزيد المخاطر) · مراجعة دقة تقديرات الحرجة (بس <b>مو تخفيض تعسفي</b>)</td></tr>
+      <tr><td><b>3. تعديل أهداف المشروع</b></td><td>إعادة التفكير بالاستراتيجية · إعادة التفاوض (تقليص النطاق، زيادة الموازنة أو الوقت) · وإذا لسا مو مناسب: هل المشروع بيستاهل؟</td></tr>
+    </table>
+    <div class="example"><span class="tag">⚠️ فخ امتحان</span>
+      «شو اللي <b>ما</b> بيندرج ضمن تغيير الموارد؟» ← <b>تخطيط العمل الإضافي وتحديد مواعيده ضمن الخطة الأصلية</b> (الصح: نخلّيه خطة طوارئ). والدراسات: <b>12 ساعة عمل إضافي ≈ ساعتين عمل عادي</b> بس! وإضافة موارد كتير بتعمل مشاكل تواصل.</div>
+    <div id="crash-mount"></div>
+  </div>
+
+  <div class="block" id="time-cost">
+    <h2><span class="idx">12</span> منحني الزمن-التكلفة (تحطيم الجدول)</h2>
+    <p>تحليل الضغط بيفترض <b>الأداء أو الجودة ثابتين</b>، فمنعتبر التكلفة تابع للزمن. تقليل المدة بيزيد الكلفة (موارد إضافية). ومنبلّش <b>بالنشاط اللي كلفة تخفيض وحدة الزمن فيه الأقل</b>، وبعدين اللي بعدو… فبيطلع منحني <b>بميل سلبي متناقص</b>.</p>
+    <table class="cmp">
+      <tr><th>النقطة</th><th>المدة</th><th>الكلفة</th></tr>
+      <tr><td>A (البداية)</td><td>20 أسبوع</td><td>50,000</td></tr>
+      <tr><td>B</td><td>15 أسبوع</td><td>60,000</td></tr>
+      <tr><td>C (أقصر مدة ممكنة)</td><td>10 أسابيع</td><td>100,000</td></tr>
+    </table>
+    <p>ومثال الكتاب الثاني: مشروع <b>43 أسبوع بـ2.6 مليون</b>، والزبون بدو <b>38 أسبوع</b>، فبيقبل زيادة الموارد. والمنحني من <b>منحنيات المفاضلة (Trade-off)</b>: منرسم أي متحولين من (الزمن، التكلفة، الجودة) والتالت ثابت.</p>
+    <p><b>خطوات توليد المنحني:</b> منطق المشروع ← المدة لكل نشاط ← المسار الحرج ← كلفة ضغط كل نشاط ← كلفتو بوحدة الزمن ← التسلسل الأقل كلفة ← مراجعة المسار الحرج ← ضغط الشبكة لأقصى حد.</p>
+  </div>
+
+
+  <div id="case-study-mount"></div>
+
+  <div class="block" id="flash">
+    <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+    <div id="activity-flash"></div>
+  </div>
+
+  <div class="next-actions">
+    <a href="chapter-6-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-6-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل السابع)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"BQM607",chapter_id:"6",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch6-flashcards.js"></script>
+<script>
+
+renderPert("pert-mount", { title: "قديش بياخد تركيب مطبخ «أوفلاين»؟", o: 4, m: 6, p: 14, unit: "يوم" });
+
+renderCpm("cpm-mount", {
+  title: "مشروع سؤال الدورة S24 (بالأيام)", unit: "يوم",
+  acts: [
+    {id:"A", d:3, pred:[]}, {id:"B", d:4, pred:["A"]}, {id:"C", d:2, pred:["A"]}, {id:"D", d:5, pred:["B","C"]},
+    {id:"E", d:4, pred:["C"]}, {id:"F", d:3, pred:["C"]}, {id:"G", d:6, pred:["D","E"]}, {id:"H", d:8, pred:["F"]},
+    {id:"I", d:7, pred:["G","H"]}, {id:"J", d:3, pred:["H"]}
+  ]
+});
+
+renderCrash("crash-mount", {
+  title: "أبو كرم: «بدنا نفتح بعد 8 أسابيع، مو 11!»", unit: "أسبوع", units: ["أسابيع","أسبوع"], money: "مليون", target: 8, best: 7,
+  acts: [
+    {id:"A", name:"التمديدات", d:4, min:2, cost:3},
+    {id:"B", name:"الدهان", d:3, min:2, cost:1},
+    {id:"C", name:"تركيب المطبخ", d:5, min:3, cost:2},
+    {id:"D", name:"الفرش والتجهيز النهائي", d:2, min:1, cost:4},
+    {id:"E", name:"الترخيص", d:6, min:5, cost:1}
+  ],
+  paths: [["A","B","D"], ["A","C","D"], ["E","D"]]
+});
+
+renderCaseStudy("case-study-mount", {"title": "جود والراوتر المتأخر", "scenario": "بشبكة «أوفلاين»، نشاط «تركيب الراوتر» عومو 3 أيام، ونشاط «تركيب المطبخ» عالمسار الحرج. المورد قال إنو الراوتر رح يتأخر يومين، والمطبخ رح يتأخر يوم.", "question": "شو أثرهن على موعد الافتتاح؟", "options": ["الافتتاح رح يتأخر 3 أيام (2 + 1)", "الافتتاح رح يتأخر يوم واحد بسبب المطبخ؛ تأخير الراوتر يومين أقل من عومو (3) فما بيأثّر", "ما في تأخير أبداً", "الافتتاح رح يتأخر يومين بسبب الراوتر"], "answerIndex": 1, "explanation": "أي تأخير بنشاط <b>حرج</b> (عوم صفر) بيأخّر المشروع كلّو بنفس المقدار ← يوم. أما النشاط غير الحرج فبيقدر يتأخر لحد <b>فترة عومو</b> بدون ما يأخّر المشروع (2 < 3). بس انتبه: صار عومو يوم واحد، يعني قرّب يصير حرج!"});
+renderFlashcards("activity-flash", CH6_FLASHCARDS);
+</script>
+</body>
+</html>

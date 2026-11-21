@@ -688,3 +688,240 @@ function renderRespMatrix(containerId, cfg){
   }
   draw();
 }
+
+/* ============================================================
+   🔗 علاقات التبعية (الفصل 5): اختار النوع (FS/SS/FF/SF) والتخلف/القيادة، وشوف الشريطين على محور الزمن.
+   cfg = { title, a:{name, d}, b:{name, d}, examples:{FS:"…", SS:"…", FF:"…", SF:"…"} }
+   ============================================================ */
+function renderDepTypes(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let type = "FS", lag = 0;
+  const NAMES = { FS:"نهاية ← بداية", SS:"بداية ← بداية", FF:"نهاية ← نهاية", SF:"بداية ← نهاية" };
+  function times(){
+    const A = { s:0, f:cfg.a.d }, d = cfg.b.d; let s;
+    if(type === "FS") s = A.f + lag; else if(type === "SS") s = A.s + lag; else if(type === "FF") s = A.f + lag - d; else s = A.s + lag - d;
+    const off = Math.min(0, s); return { A:{ s:A.s - off, f:A.f - off }, B:{ s:s - off, f:s + d - off } };
+  }
+  function draw(){
+    const t = times(), end = Math.max(t.A.f, t.B.f), start = Math.min(t.A.s, t.B.s), span = Math.max(end - start, 1);
+    const W = 560, L = 20, Rr = 20, sc = (W - L - Rr) / span, X = v => L + (v - start) * sc;
+    const link = type === "FS" ? [X(t.A.f), X(t.B.s)] : type === "SS" ? [X(t.A.s), X(t.B.s)] : type === "FF" ? [X(t.A.f), X(t.B.f)] : [X(t.A.s), X(t.B.f)];
+    const lagTxt = lag > 0 ? `تخلّف (Lag) ${lag}` : lag < 0 ? `قيادة (Lead) ${-lag}` : "بدون تأخير";
+    root.innerHTML = `
+      <div class="eqs dep">
+        <div class="eqs-head"><span class="gp-tag">🔗 جرّب العلاقة</span><h4>${cfg.title}</h4></div>
+        <div class="dep-types">${Object.keys(NAMES).map(k => `<button type="button" class="dep-b${k === type ? " on" : ""}" data-k="${k}"><b>${k}</b><small>${NAMES[k]}</small></button>`).join("")}</div>
+        <div class="fc-k"><label>${lagTxt} (أيام)</label><input type="range" min="-5" max="5" value="${lag}" class="dep-lag" aria-label="التخلف أو القيادة"></div>
+        <svg viewBox="0 0 ${W} 120" class="dep-svg" style="direction:ltr" role="img" aria-label="النشاطين على محور الزمن">
+          <rect x="${X(t.A.s)}" y="14" width="${(t.A.f - t.A.s) * sc}" height="30" rx="8" fill="#1D3557"/>
+          <text x="${X(t.A.s) + 8}" y="34" class="dep-tx">A: ${cfg.a.name} (${cfg.a.d})</text>
+          <rect x="${X(t.B.s)}" y="74" width="${(t.B.f - t.B.s) * sc}" height="30" rx="8" fill="#FF9F1C"/>
+          <text x="${X(t.B.s) + 8}" y="94" class="dep-tx" fill="#1A1200">B: ${cfg.b.name} (${cfg.b.d})</text>
+          <path d="M${link[0]},44 C${link[0]},60 ${link[1]},58 ${link[1]},74" fill="none" stroke="#B4402B" stroke-width="2.5" marker-end="url(#dep-ar)"/>
+          <defs><marker id="dep-ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#B4402B"/></marker></defs>
+        </svg>
+        <div class="eqs-msg ok" aria-live="polite"><b>${type} (${NAMES[type]})</b>: ${cfg.examples[type]}<br>⏱️ المدة الإجمالية للنشاطين: <b>${end - start} يوم</b>${type === "FS" ? ` = ${cfg.a.d} + ${cfg.b.d}${lag ? (lag > 0 ? " + " + lag : " − " + (-lag)) : ""}` : ""}</div>
+      </div>`;
+    root.querySelectorAll(".dep-b").forEach(b => b.addEventListener("click", () => { type = b.dataset.k; draw(); }));
+    root.querySelector(".dep-lag").addEventListener("input", e => { lag = +e.target.value; draw(); });
+  }
+  draw();
+}
+
+/* ============================================================
+   🪜 جدول المستويات + المخطط الشبكي AON (الفصل 5): خطوة بخطوة متل طريقة الكتاب:
+   الأنشطة بلا سابق ← المستوى 1، منشطبها من عمود «السابق»، ومنعيد… وبالآخر منرسم الشبكة على المستويات.
+   cfg = { title, acts:[{id, name, pred:[..]}] }
+   ============================================================ */
+function renderNetLevels(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let levels, step;
+  function computeAll(){
+    const lv = [], done = new Set(); let guard = 0;
+    while(done.size < cfg.acts.length && guard++ < 50){
+      const cur = cfg.acts.filter(a => !done.has(a.id) && a.pred.every(p => done.has(p))).map(a => a.id);
+      if(!cur.length) break; lv.push(cur); cur.forEach(id => done.add(id));
+    }
+    return lv;
+  }
+  const ALL = computeAll();
+  function reset(){ levels = []; step = 0; draw(); }
+  function svg(){
+    const W = 600, TOP = 40, H = Math.max(...ALL.map(l => l.length)) * 64 + 30 + TOP, colW = W / ALL.length, pos = {};
+    ALL.forEach((l, i) => l.forEach((id, j) => { pos[id] = [colW * i + colW / 2, TOP + ((H - TOP) / (l.length + 1)) * (j + 1)]; }));
+    const lvOf = {}; ALL.forEach((l, i) => l.forEach(id => lvOf[id] = i));
+    const edges = []; cfg.acts.forEach(a => a.pred.forEach(p => { const [x1, y1] = pos[p], [x2, y2] = pos[a.id];
+      const skip = lvOf[a.id] - lvOf[p] > 1;   // السهم اللي بيجتاز أكتر من مستوى بيلفّ من فوق حتى ما يمرق من ورا العقد
+      const d = skip ? `M${x1 + 16},${y1 - 15} C${x1 + 60},${Math.min(y1, y2) - 70} ${x2 - 60},${Math.min(y1, y2) - 70} ${x2 - 16},${y2 - 15}`
+                     : `M${x1 + 22},${y1} C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2 - 24},${y2}`;
+      edges.push(`<path d="${d}" fill="none" stroke="#5B6478" stroke-width="1.8" marker-end="url(#nl-ar-${containerId})"/>`); }));
+    return `<svg viewBox="0 0 ${W} ${H}" class="nl-svg" style="direction:ltr" role="img" aria-label="المخطط الشبكي">
+      <defs><marker id="nl-ar-${containerId}" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5B6478"/></marker></defs>
+      ${ALL.map((l, i) => `<text x="${colW * i + colW / 2}" y="14" text-anchor="middle" class="nl-lv">المستوى ${i + 1}</text>`).join("")}
+      ${edges.join("")}
+      ${cfg.acts.map(a => `<g><circle cx="${pos[a.id][0]}" cy="${pos[a.id][1]}" r="21" fill="#fff" stroke="#1D3557" stroke-width="2.5"/><text x="${pos[a.id][0]}" y="${pos[a.id][1] + 6}" text-anchor="middle" class="nl-id">${a.id}</text></g>`).join("")}
+    </svg>`;
+  }
+  function draw(){
+    const placed = new Set(levels.flat()), finished = levels.length === ALL.length;
+    root.innerHTML = `
+      <div class="eqs nl">
+        <div class="eqs-head"><span class="gp-tag">🪜 خطوة بخطوة</span><h4>${cfg.title}</h4></div>
+        <div class="dm-scroll"><table class="cmp nl-t">
+          <tr><th>النشاط</th><th>السابق المتبقي</th>${ALL.map((_, i) => `<th>م${i + 1}</th>`).join("")}</tr>
+          ${cfg.acts.map(a => `<tr class="${placed.has(a.id) ? "nl-done" : ""}"><td><b>${a.id}</b>${a.name ? " " + a.name : ""}</td>
+            <td>${a.pred.length ? a.pred.map(p => `<span class="${placed.has(p) ? "nl-strike" : ""}">${p}</span>`).join("، ") : "—"}</td>
+            ${ALL.map((_, i) => `<td>${levels[i] && levels[i].includes(a.id) ? "✅" : ""}</td>`).join("")}</tr>`).join("")}
+        </table></div>
+        <div class="eqs-msg ${finished ? "ok" : ""}" aria-live="polite">${!step ? "اضغط «الخطوة الجاية»: منلاقي الأنشطة اللي <b>ما إلها سابق</b> (أو كل سوابقها انشطبت)." : finished ? "🎉 خلصت المستويات! هلأ منرسم الشبكة: كل مستوى عمود، والأسهم من اليسار لليمين." : `المستوى ${levels.length}: <b>${levels[levels.length - 1].join("، ")}</b>. شطبناهن من عمود «السابق».`}</div>
+        ${finished ? svg() : ""}
+        <div class="nl-btns">${!finished ? `<button type="button" class="btn btn-primary nl-next">➡️ الخطوة الجاية</button>` : ""}<button type="button" class="btn btn-teal nl-reset">🔁 من الأول</button></div>
+      </div>`;
+    const n = root.querySelector(".nl-next"); if(n) n.addEventListener("click", () => { levels.push(ALL[levels.length]); step++; draw(); });
+    root.querySelector(".nl-reset").addEventListener("click", reset);
+  }
+  reset();
+}
+
+/* ============================================================
+   🎯 التقدير المكوّن من تلات نقاط (الفصل 6): (المتفائل + 4 × الواقعي + المتشائم) ÷ 6
+   cfg = { title, o, m, p, unit }
+   ============================================================ */
+function renderPert(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let o = cfg.o, m = cfg.m, p = cfg.p;
+  function draw(){
+    if(m < o) m = o; if(p < m) p = m;
+    const e = (o + 4 * m + p) / 6, r = Math.round(e * 100) / 100;
+    root.innerHTML = `
+      <div class="eqs pert">
+        <div class="eqs-head"><span class="gp-tag">🎯 قدّر بإيدك</span><h4>${cfg.title}</h4></div>
+        ${[["o","😀 المتفائل (أفضل سيناريو)",o],["m","🙂 الواقعي (الأرجح)",m],["p","😟 المتشائم (أسوأ سيناريو)",p]].map(([k, l, v]) => `
+          <div class="tri-row"><div class="tri-rh"><span>${l}</span><b>${v} ${cfg.unit}</b></div>
+          <input type="range" min="1" max="40" value="${v}" data-k="${k}" aria-label="${l}"></div>`).join("")}
+        <div class="pert-f">(${o} + 4 × ${m} + ${p}) ÷ 6 = <b>${xFmt(r)} ${cfg.unit}</b></div>
+        <div class="eqs-msg ok">الواقعي إلو <b>وزن 4</b>، فالتقدير النهائي بيقرب منو، بس المتشائم بيشدّو لفوق شوي${p - m > m - o ? " (هون المتشائم بعيد، فالتقدير طلع أكبر من الواقعي)" : ""}.</div>
+      </div>`;
+    root.querySelectorAll("input").forEach(i => i.addEventListener("input", () => { const v = +i.value; if(i.dataset.k === "o") o = v; else if(i.dataset.k === "m") m = v; else p = v; draw(); }));
+  }
+  draw();
+}
+
+/* ============================================================
+   🧭 طريقة المسار الحرج CPM خطوة بخطوة (الفصل 6): الذهاب للأمام (ES/EF) ← العودة من الخلف (LS/LF) ← العوم والمسار الحرج،
+   وبالآخر عرضها كمخطط غانت.
+   cfg = { title, unit, acts:[{id, d, pred:[..], name}] }
+   ============================================================ */
+function renderCpm(containerId, cfg){
+  const root = document.getElementById(containerId);
+  const A = cfg.acts, by = {}; A.forEach(a => by[a.id] = a);
+  const succ = {}; A.forEach(a => succ[a.id] = []); A.forEach(a => a.pred.forEach(p => succ[p].push(a.id)));
+  // ترتيب طوبولوجي + مستويات
+  const lv = {}; let order = [], done = new Set(), g = 0;
+  while(done.size < A.length && g++ < 60){ const cur = A.filter(a => !done.has(a.id) && a.pred.every(p => done.has(p))); cur.forEach(a => { lv[a.id] = Math.max(0, ...a.pred.map(p => lv[p] + 1)); }); cur.forEach(a => { done.add(a.id); order.push(a.id); }); }
+  const ES = {}, EF = {}, LS = {}, LF = {};
+  order.forEach(id => { const a = by[id]; ES[id] = a.pred.length ? Math.max(...a.pred.map(p => EF[p])) : 0; EF[id] = ES[id] + a.d; });
+  const T = Math.max(...A.map(a => EF[a.id]));
+  order.slice().reverse().forEach(id => { LF[id] = succ[id].length ? Math.min(...succ[id].map(s => LS[s])) : T; LS[id] = LF[id] - by[id].d; });
+  const SL = {}; A.forEach(a => SL[a.id] = LS[a.id] - ES[a.id]);
+  const crit = order.filter(id => SL[id] === 0);
+  // خطوات العرض
+  const steps = [];
+  order.forEach(id => { const a = by[id]; steps.push({ ph:"f", id, txt: a.pred.length ? (a.pred.length > 1 ? `ES(${id}) = أكبر قيمة من EF للسابقين (${a.pred.map(p => `${p}=${EF[p]}`).join("، ")}) = <b>${ES[id]}</b>` : `ES(${id}) = EF(${a.pred[0]}) = <b>${ES[id]}</b>`) + ` ← EF = ${ES[id]} + ${a.d} = <b>${EF[id]}</b>` : `أول نشاط: ES(${id}) = <b>0</b> ← EF = 0 + ${a.d} = <b>${EF[id]}</b>` }); });
+  order.slice().reverse().forEach(id => { steps.push({ ph:"b", id, txt: succ[id].length ? (succ[id].length > 1 ? `LF(${id}) = أصغر قيمة من LS للاحقين (${succ[id].map(s => `${s}=${LS[s]}`).join("، ")}) = <b>${LF[id]}</b>` : `LF(${id}) = LS(${succ[id][0]}) = <b>${LF[id]}</b>`) + ` ← LS = ${LF[id]} − ${by[id].d} = <b>${LS[id]}</b>` : `آخر نشاط: LF(${id}) = EF = <b>${LF[id]}</b> ← LS = ${LF[id]} − ${by[id].d} = <b>${LS[id]}</b>` }); });
+  steps.push({ ph:"s", txt:`العوم = LS − ES. الأنشطة اللي عومها <b>صفر</b> حرجة، والمسار الحرج: <b>${crit.join(" – ")}</b> ومدة المشروع <b>${T} ${cfg.unit}</b>.` });
+  let k = 0, view = "net";
+  function shown(ph, id){ for(let i = 0; i < k; i++){ const s = steps[i]; if(s.ph === ph && (ph === "s" || s.id === id)) return true; } return false; }
+  function net(){
+    const nLv = Math.max(...Object.values(lv)) + 1, cols = {}; A.forEach(a => (cols[lv[a.id]] = cols[lv[a.id]] || []).push(a.id));
+    const rows = Math.max(...Object.values(cols).map(c => c.length)), BW = 92, BH = 66, W = nLv * 128 + 20, H = rows * 92 + 20, pos = {};
+    Object.keys(cols).forEach(c => cols[c].forEach((id, j) => { pos[id] = [20 + c * 128, 10 + (H - 20) * (j + 0.5) / cols[c].length - BH / 2]; }));
+    const done = shown("s");
+    const edges = A.flatMap(a => a.pred.map(p => { const [x1, y1] = pos[p], [x2, y2] = pos[a.id]; const c = done && SL[a.id] === 0 && SL[p] === 0 && EF[p] === ES[a.id];
+      return `<path d="M${x1 + BW},${y1 + BH / 2} C${x1 + BW + 22},${y1 + BH / 2} ${x2 - 22},${y2 + BH / 2} ${x2},${y2 + BH / 2}" fill="none" stroke="${c ? "#B4402B" : "#8A93A6"}" stroke-width="${c ? 3 : 1.6}" marker-end="url(#cpm-ar-${containerId})"/>`; }));
+    const box = id => { const [x, y] = pos[id], f = shown("f", id), b = shown("b", id), c = done && SL[id] === 0;
+      return `<g><rect x="${x}" y="${y}" width="${BW}" height="${BH}" rx="9" fill="${c ? "#FDECEA" : "#fff"}" stroke="${c ? "#B4402B" : "#1D3557"}" stroke-width="${c ? 3 : 2}"/>
+        <line x1="${x}" y1="${y + 20}" x2="${x + BW}" y2="${y + 20}" stroke="#E3E7F0"/><line x1="${x}" y1="${y + BH - 20}" x2="${x + BW}" y2="${y + BH - 20}" stroke="#E3E7F0"/>
+        <text x="${x + 8}" y="${y + 15}" class="cpm-n">${f ? ES[id] : "ES"}</text><text x="${x + BW - 8}" y="${y + 15}" class="cpm-n" text-anchor="end">${f ? EF[id] : "EF"}</text>
+        <text x="${x + BW / 2}" y="${y + 39}" class="cpm-id" text-anchor="middle">${id} <tspan class="cpm-d">(${by[id].d})</tspan></text>
+        <text x="${x + 8}" y="${y + BH - 6}" class="cpm-n">${b ? LS[id] : "LS"}</text><text x="${x + BW - 8}" y="${y + BH - 6}" class="cpm-n" text-anchor="end">${b ? LF[id] : "LF"}</text>
+        ${done ? `<text x="${x + BW / 2}" y="${y + BH + 13}" class="cpm-sl" text-anchor="middle" fill="${c ? "#B4402B" : "#0B7A57"}">عوم ${SL[id]}</text>` : ""}</g>`; };
+    return `<svg viewBox="0 0 ${W} ${H + 8}" class="cpm-svg" style="direction:ltr" role="img" aria-label="شبكة المشروع">
+      <defs><marker id="cpm-ar-${containerId}" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4.5 L0,9 z" fill="#5B6478"/></marker></defs>
+      ${edges.join("")}${A.map(a => box(a.id)).join("")}</svg>`;
+  }
+  function gantt(){
+    const W = 600, L = 34, rowH = 26, H = A.length * rowH + 30, sc = (W - L - 10) / T;
+    return `<svg viewBox="0 0 ${W} ${H}" class="cpm-svg" style="direction:ltr" role="img" aria-label="مخطط غانت">
+      ${Array.from({ length: T + 1 }, (_, t) => t % Math.ceil(T / 10) === 0 ? `<line x1="${L + t * sc}" y1="0" x2="${L + t * sc}" y2="${H - 18}" stroke="#EEF1F7"/><text x="${L + t * sc}" y="${H - 4}" class="cpm-n" text-anchor="middle">${t}</text>` : "").join("")}
+      ${order.map((id, i) => { const y = 6 + i * rowH, c = SL[id] === 0;
+        return `<text x="4" y="${y + 15}" class="cpm-id" style="font-size:13px">${id}</text>
+          <rect x="${L + ES[id] * sc}" y="${y}" width="${by[id].d * sc}" height="18" rx="5" fill="${c ? "#B4402B" : "#1D3557"}"/>
+          ${SL[id] ? `<rect x="${L + EF[id] * sc}" y="${y + 6}" width="${SL[id] * sc}" height="6" rx="3" fill="#2EC4B6" opacity=".6"/>` : ""}`; }).join("")}
+    </svg></div>
+    <div><p class="eqs-hint">🟥 حرج · 🟦 غير حرج · ▬ الخط الفيروزي = فترة العوم (قديش بيقدر يتأخر بدون ما يأخّر المشروع)</p>`;
+  }
+  function draw(){
+    const cur = k ? steps[k - 1] : null, ph = !cur ? "—" : cur.ph === "f" ? "① الذهاب للأمام (الأزمنة المبكرة)" : cur.ph === "b" ? "② العودة من الخلف (الأزمنة المتأخرة)" : "③ العوم والمسار الحرج";
+    const end = k === steps.length;
+    root.innerHTML = `
+      <div class="eqs cpm">
+        <div class="eqs-head"><span class="gp-tag">🧭 خطوة بخطوة</span><h4>${cfg.title}</h4></div>
+        <div class="dm-scroll"><table class="cmp cpm-t"><tr><th>النشاط</th>${A.map(a => `<th>${a.id}</th>`).join("")}</tr>
+          <tr><td>المدة</td>${A.map(a => `<td>${a.d}</td>`).join("")}</tr>
+          <tr><td>السابق</td>${A.map(a => `<td>${a.pred.join("،") || "—"}</td>`).join("")}</tr></table></div>
+        <div class="dm-scroll svg-scroll">${view === "net" ? net() : gantt()}</div>
+        <div class="cpm-ph">${ph}</div>
+        <div class="eqs-msg ${end ? "ok" : ""}" aria-live="polite">${cur ? cur.txt : "اضغط «الخطوة الجاية» لنبلّش بطريق الذهاب: ES لأول نشاط = 0."}</div>
+        <div class="nl-btns">
+          ${!end ? `<button type="button" class="btn btn-primary cpm-next">➡️ الخطوة الجاية</button><button type="button" class="btn btn-teal cpm-all">⏭️ كمّل للآخر</button>` : `<button type="button" class="btn btn-primary cpm-view">${view === "net" ? "📊 اعرضها كمخطط غانت" : "🕸️ رجّع الشبكة"}</button>`}
+          <button type="button" class="btn btn-teal cpm-reset">🔁 من الأول</button></div>
+      </div>`;
+    const q = s => root.querySelector(s);
+    if(q(".cpm-next")) q(".cpm-next").addEventListener("click", () => { k++; draw(); });
+    if(q(".cpm-all")) q(".cpm-all").addEventListener("click", () => { k = steps.length; draw(); });
+    if(q(".cpm-view")) q(".cpm-view").addEventListener("click", () => { view = view === "net" ? "gantt" : "net"; draw(); });
+    q(".cpm-reset").addEventListener("click", () => { k = 0; view = "net"; draw(); });
+  }
+  draw();
+}
+
+/* ============================================================
+   ⏩ محاكي ضغط الجدول الزمني (الفصل 6): كل ضغطة بتقصّر نشاط وحدة زمن وبتكلّف كلفة الضغط بالوحدة.
+   مدة المشروع = أطول مسار. ضغط نشاط مو حرج = مصاري عالفاضي. والمسار الحرج ممكن يتغيّر!
+   cfg = { title, unit, money, target, acts:[{id, name, d, min, cost}], paths:[[ids…]] }
+   ============================================================ */
+function renderCrash(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let d, spent, log;
+  // units: [جمع لـ 3–10, مفرد] متل ["أسابيع","أسبوع"]
+  const U = n => { const u = cfg.units || [cfg.unit, cfg.unit]; return `${n} ${(n >= 3 && n <= 10) ? u[0] : u[1]}`; };
+  const len = p => p.reduce((s, id) => s + d[id], 0);
+  function state(){ const L = cfg.paths.map(len), T = Math.max(...L); const crit = new Set(); cfg.paths.forEach((p, i) => { if(L[i] === T) p.forEach(id => crit.add(id)); }); return { L, T, crit }; }
+  function reset(){ d = {}; cfg.acts.forEach(a => d[a.id] = a.d); spent = 0; log = null; draw(); }
+  function crash(id){
+    const a = cfg.acts.find(x => x.id === id); if(d[id] <= a.min) return;
+    const before = state(); d[id]--; spent += a.cost; const after = state();
+    log = after.T < before.T ? { ok:true, t:`✅ ضغطنا «${a.name}» ${cfg.unit} ← المشروع صار <b>${after.T}</b> (+${xFmt(a.cost)} ${cfg.money}).` }
+                            : { ok:false, t:`❌ ضغطنا «${a.name}» ودفعنا ${xFmt(a.cost)} ${cfg.money}، بس المشروع بعدو <b>${after.T}</b>! ${before.crit.has(id) ? "في مسار حرج تاني لازم ينضغط معو." : "هاد النشاط <b>مو حرج</b>، وتقصير الأنشطة غير الحرجة ما بيقصّر المشروع."}` };
+    draw();
+  }
+  function draw(){
+    const s = state(), hit = s.T <= cfg.target;
+    root.innerHTML = `
+      <div class="eqs crash">
+        <div class="eqs-head"><span class="gp-tag">⏩ اضغط الجدول</span><h4>${cfg.title}</h4></div>
+        <div class="crash-top"><div><span>مدة المشروع</span><b>${U(s.T)}</b><small>الهدف: ${cfg.target}</small></div><div><span>كلفة الضغط</span><b>${xFmt(spent)} ${cfg.money}</b></div></div>
+        <div class="crash-paths">${cfg.paths.map((p, i) => `<div class="${s.L[i] === s.T ? "crit" : ""}">${s.L[i] === s.T ? "🔴" : "⚪"} المسار <bdi dir="ltr">${p.join("–")}</bdi>: <b>${s.L[i]}</b></div>`).join("")}</div>
+        <div class="dm-scroll"><table class="cmp crash-t"><tr><th>النشاط</th><th>المدة</th><th>أقل مدة</th><th>كلفة ضغط ${cfg.unit} واحد</th><th></th></tr>
+          ${cfg.acts.map(a => `<tr class="${s.crit.has(a.id) ? "crit" : ""}"><td><b>${a.id}</b> ${a.name}${s.crit.has(a.id) ? " 🔴" : ""}</td><td>${d[a.id]}</td><td>${a.min}</td><td>${xFmt(a.cost)}</td>
+            <td><button type="button" class="btn-mini" data-id="${a.id}" ${d[a.id] <= a.min || hit ? "disabled" : ""}>اضغط −1</button></td></tr>`).join("")}
+        </table></div>
+        <div class="eqs-msg ${hit ? "ok" : log ? (log.ok ? "ok" : "bad") : ""}" aria-live="polite">${hit ? `🎉 وصلنا للهدف (${cfg.target}) بكلفة <b>${xFmt(spent)} ${cfg.money}</b>. ${spent <= cfg.best ? "وهاي أقل كلفة ممكنة 👏: كل مرة اخترت الأرخص من الأنشطة الحرجة." : `بس كان فيك توصل بـ <b>${xFmt(cfg.best)}</b> بس: اختار كل مرة <b>الأرخص بالوحدة من الأنشطة الحرجة</b>.`}` : log ? log.t : "القاعدة: منضغط <b>الأنشطة الحرجة</b> بس، وكل مرة <b>الأرخص كلفة بالوحدة</b>."}</div>
+        <button type="button" class="btn btn-teal crash-reset">🔁 من الأول</button>
+      </div>`;
+    root.querySelectorAll(".btn-mini").forEach(b => b.addEventListener("click", () => crash(b.dataset.id)));
+    root.querySelector(".crash-reset").addEventListener("click", reset);
+  }
+  reset();
+}

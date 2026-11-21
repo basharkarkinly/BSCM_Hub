@@ -281,3 +281,41 @@
 .rm-c{ width:40px; height:36px; border-radius:10px; border:1.5px solid #C9D1E0; background:#fff; font:inherit; font-weight:800; cursor:pointer; color:#8A93A6; }
 .rm-c.vR{ background:#1D3557; border-color:#1D3557; color:#fff; }
 .rm-c.vS{ background:#E6F7F5; border-color:#2EC4B6; color:#0F6E66; }
+
+/* ---------- 🔗 علاقات التبعية + 🪜 جدول المستويات ---------- */
+.dep-types{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-bottom:10px; }
+.dep-b{ font:inherit; border:2px solid #E3E7F0; background:#fff; border-radius:12px; padding:8px 6px; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.dep-b b{ font-size:1rem; } .dep-b small{ font-size:.74rem; color:#5B6478; }
+.dep-b.on{ border-color:#FF9F1C; background:#FFF4E2; }
+.dep-svg{ width:100%; height:auto; background:#F5F7FB; border-radius:12px; display:block; }
+.dep-tx{ font-size:12px; font-weight:700; fill:#fff; }
+.nl-t td, .nl-t th{ text-align:center; }
+.nl-t td:first-child{ text-align:start; }
+.nl-t tr.nl-done td{ background:#EAF8F1; }
+.nl-strike{ text-decoration:line-through; color:#B4402B; }
+.nl-svg{ width:100%; height:auto; margin-top:10px; background:#F5F7FB; border-radius:12px; display:block; }
+.nl-lv{ font-size:11px; font-weight:800; fill:#5B6478; }
+.nl-id{ font-size:16px; font-weight:800; fill:#1D3557; }
+.nl-btns{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+@media (max-width:640px){ .dep-types{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+
+/* ---------- 🎯 PERT + 🧭 CPM + ⏩ الضغط ---------- */
+.pert-f{ text-align:center; font-size:1.05rem; margin:10px 0; padding:10px; background:#FFF8EB; border-radius:12px; direction:ltr; }
+.cpm-t td, .cpm-t th{ text-align:center; padding:6px 8px; }
+.cpm-svg{ width:100%; min-width:560px; height:auto; display:block; background:#F5F7FB; border-radius:12px; margin:10px 0; }
+.cpm-n{ font-size:11px; font-weight:700; fill:#5B6478; }
+.cpm-id{ font-size:16px; font-weight:800; fill:#0F1C2E; }
+.cpm-d{ font-size:11px; fill:#5B6478; font-weight:600; }
+.cpm-sl{ font-size:10.5px; font-weight:800; }
+.cpm-ph{ font-weight:800; color:#1D3557; margin:4px 0; }
+.crash-top{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+.crash-top > div{ background:#F5F7FB; border-radius:12px; padding:10px 12px; display:flex; flex-direction:column; }
+.crash-top span{ font-size:.82rem; color:#5B6478; font-weight:700; } .crash-top b{ font-size:1.15rem; } .crash-top small{ color:#5B6478; }
+.crash-paths{ display:grid; gap:4px; margin-bottom:8px; font-size:.88rem; }
+.crash-paths .crit{ color:#B4402B; font-weight:700; }
+.crash-t td, .crash-t th{ text-align:center; } .crash-t td:first-child{ text-align:start; }
+.crash-t tr.crit td{ background:#FDF3F1; }
+.btn-mini{ font:inherit; font-size:.8rem; font-weight:800; padding:5px 10px; border-radius:8px; border:1.5px solid #1D3557; background:#fff; cursor:pointer; }
+.btn-mini:disabled{ opacity:.35; cursor:default; }
+.crash .crash-reset{ margin-top:10px; }
+.svg-scroll{ direction:ltr; } .svg-scroll .eqs-hint{ direction:rtl; }

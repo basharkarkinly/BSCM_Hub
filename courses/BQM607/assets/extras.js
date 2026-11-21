@@ -1211,3 +1211,53 @@ function renderConflictGrid(containerId, cfg){
   }
   draw();
 }
+
+/* ===== الفصل 11: مِزلاج البنى التنظيمية (سلطة مدير المشروع) ===== */
+function renderOrgSlider(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const S = [
+    {n:"الوظيفية", pm:10, t:"المشروع جوّا قسم وظيفي، لكل موظف <b>رئيس مباشر واحد</b> (رئيس القسم). مدير المشروع تابع للقسم وسلطتو قليلة جداً.", rep:"رئيس القسم بس", team:"من نفس القسم، دوام جزئي"},
+    {n:"مصفوفية ضعيفة", pm:30, t:"قريبة من الوظيفية: مدير المشروع أقرب <b>للمنسّق</b>، وميزان القوى <b>للمدير الوظيفي</b>.", rep:"تقارير مزدوجة (الثقل للوظيفي)", team:"من عدة أقسام، دوام جزئي"},
+    {n:"مصفوفية متوسطة", pm:50, t:"بالنص بين التنتين: سلطة متقاربة بين مدير المشروع والمدير الوظيفي.", rep:"تقارير مزدوجة (متوازنة)", team:"من عدة أقسام"},
+    {n:"مصفوفية قوية", pm:75, t:"قريبة من البنية بالمشاريع: مدير المشروع <b>مفرّغ كلياً</b> وسلطتو <b>أكبر</b> من المدير الوظيفي.", rep:"تقارير مزدوجة (الثقل لمدير المشروع)", team:"من عدة أقسام، أغلبهم متفرّغين"},
+    {n:"بالمشاريع", pm:95, t:"المشروع <b>وحدة مستقلة</b> إلها مدير مستقل بسلطة كبيرة وفريق <b>متفرّغ</b>، وغالباً في <b>PMO</b> مركزي.", rep:"مدير المشروع", team:"متفرّغ للمشروع"}
+  ];
+  let k = cfg.start || 0;
+  function chart(){
+    const s = S[k], W = 300, H = 150, depts = ["تسويق", "مطبخ", "مالية"];
+    const dx = i => 40 + i * 100;
+    let g = `<rect x="110" y="6" width="80" height="26" rx="8" class="os-top"/><text x="150" y="24" text-anchor="middle" class="os-t">الإدارة</text>`;
+    depts.forEach((d, i) => { g += `<line x1="150" y1="32" x2="${dx(i) + 10}" y2="58" class="os-ln"/><rect x="${dx(i) - 25}" y="58" width="70" height="24" rx="7" class="os-dep"/><text x="${dx(i) + 10}" y="74" text-anchor="middle" class="os-t">${d}</text>`; });
+    if (k === 0){
+      g += `<rect x="${dx(1) - 25}" y="100" width="70" height="26" rx="7" class="os-pm"/><text x="${dx(1) + 10}" y="117" text-anchor="middle" class="os-t w">مشروع</text><line x1="${dx(1) + 10}" y1="82" x2="${dx(1) + 10}" y2="100" class="os-ln"/>`;
+    } else if (k === 4){
+      g += `<path d="M190 19 H294 V100" class="os-ln b" style="stroke-width:3px"/><rect x="190" y="100" width="108" height="26" rx="7" class="os-pm"/><text x="244" y="117" text-anchor="middle" class="os-t w">مشروع مستقل</text>`;
+    } else {
+      const w = 1 + k * 1.2;
+      g += `<rect x="6" y="100" width="292" height="26" rx="7" class="os-pm" fill-opacity="${.35 + k * .18}"/><text x="150" y="117" text-anchor="middle" class="os-t w">فريق المشروع (من كل الأقسام)</text>`;
+      depts.forEach((d, i) => { g += `<line x1="${dx(i) + 10}" y1="82" x2="${dx(i) + 10}" y2="100" class="os-ln" stroke-dasharray="3 3"/>`; });
+      g += `<path d="M190 19 H294 V100" class="os-ln b" style="stroke-width:${w}px"/><text x="244" y="13" text-anchor="middle" class="os-s">مدير المشروع</text>`;
+    }
+    return `<svg viewBox="0 0 ${W} ${H}" class="os-svg">${g}</svg>`;
+  }
+  function body(){
+    const s = S[k];
+    return `<div class="os-grid"><div class="svg-scroll">${chart()}</div>
+      <div><h5 class="os-n">${s.n}</h5><p class="os-p">${s.t}</p>
+        <div class="os-bar"><span>سلطة مدير المشروع</span><div><i style="width:${s.pm}%"></i></div></div>
+        <div class="os-bar f"><span>سلطة المدير الوظيفي</span><div><i style="width:${100 - s.pm}%"></i></div></div>
+        <table class="cmp os-t"><tr><td>الفريق بيرفع تقاريرو لـ</td><td>${s.rep}</td></tr><tr><td>الفريق</td><td>${s.team}</td></tr></table>
+      </div></div>`;
+  }
+  root.innerHTML = `
+    <div class="eqs os">
+      <div class="eqs-head"><span class="gp-tag">🎚️ حرّك المزلاج</span><h4>${cfg.title}</h4></div>
+      <div class="os-steps">${S.map((s, i) => `<button type="button" class="tri-sc-b${i === k ? " on" : ""}" data-k="${i}">${s.n}</button>`).join("")}</div>
+      <input type="range" min="0" max="4" value="${k}" class="os-r" aria-label="البنية التنظيمية">
+      <div class="os-body">${body()}</div>
+      <p class="eqs-hint">كل ما رحنا من الوظيفية للبنية بالمشاريع، زادت سلطة مدير المشروع وقلّت سلطة المدير الوظيفي (الشكل 11.4).</p>
+    </div>`;
+  const set = v => { k = v; root.querySelector(".os-r").value = v; root.querySelectorAll(".os-steps .tri-sc-b").forEach((b, i) => b.classList.toggle("on", i === v)); root.querySelector(".os-body").innerHTML = body(); };
+  root.querySelector(".os-r").addEventListener("input", e => set(+e.target.value));
+  root.querySelectorAll(".os-steps .tri-sc-b").forEach(b => b.addEventListener("click", () => set(+b.dataset.k)));
+}

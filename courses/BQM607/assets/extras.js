@@ -1261,3 +1261,34 @@ function renderOrgSlider(containerId, cfg){
   root.querySelector(".os-r").addEventListener("input", e => set(+e.target.value));
   root.querySelectorAll(".os-steps .tri-sc-b").forEach(b => b.addEventListener("click", () => set(+b.dataset.k)));
 }
+
+/* ===== الفصل 12: قائمة تحقق الإغلاق (مع أنشطة دخيلة) ===== */
+function renderClosureChecklist(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const G = cfg.groups || [];
+  const all = []; G.forEach((g, gi) => g.items.forEach((it, ii) => all.push({ gi, ii, ...it })));
+  const good = all.filter(x => !x.bad).length;
+  const done = new Set(); let msg = "";
+  function draw(){
+    const n = all.filter(x => !x.bad && done.has(x.gi + "-" + x.ii)).length, pct = Math.round(n / good * 100);
+    root.innerHTML = `
+      <div class="eqs cl">
+        <div class="eqs-head"><span class="gp-tag">✅ سكّر بإيدك</span><h4>${cfg.title}</h4></div>
+        <p class="eqs-hint" style="margin:0 0 8px">${cfg.hint || "علّم على كل نشاط خلص. وانتبه: في أنشطة <b>دخيلة</b> مو من الإغلاق!"}</p>
+        <div class="cl-bar"><i style="width:${pct}%"></i><span>${n} من ${good}</span></div>
+        <div class="cl-grid">${G.map((g, gi) => `<div class="cl-g"><h5>${g.title}</h5>${g.items.map((it, ii) => {
+          const k = gi + "-" + ii, on = done.has(k);
+          return `<button type="button" class="cl-i${on ? " on" : ""}${on && it.bad ? " bad" : ""}" data-k="${k}"><span class="cl-b">${on ? (it.bad ? "✗" : "✓") : ""}</span><span>${it.text}</span></button>`;
+        }).join("")}</div>`).join("")}</div>
+        <div class="cl-msg${msg ? " show" : ""}">${msg}</div>
+        ${n === good && !all.some(x => x.bad && done.has(x.gi + "-" + x.ii)) ? `<div class="cl-done">🎉 ${cfg.doneText || "المشروع انغلق رسمياً!"}</div>` : ""}
+      </div>`;
+    root.querySelectorAll(".cl-i").forEach(b => b.addEventListener("click", () => {
+      const k = b.dataset.k, [gi, ii] = k.split("-").map(Number), it = G[gi].items[ii];
+      if (done.has(k)) { done.delete(k); msg = ""; }
+      else { done.add(k); msg = it.bad ? `⚠️ <b>دخيل!</b> ${it.why}` : (it.why ? `✅ ${it.why}` : ""); }
+      draw();
+    }));
+  }
+  draw();
+}

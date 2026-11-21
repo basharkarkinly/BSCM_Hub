@@ -3,7 +3,7 @@
 const COURSE_TITLE = "BQM607 — إدارة المشروعات";
 
 const COURSE_CHAPTERS = [
-  {num:11, key:"ch11", title:"البنية التنظيمية للمشاريع", href:"chapters/chapter-11-lesson.html"}
+  {num:12, key:"ch12", title:"إغلاق المشروع", href:"chapters/chapter-12-lesson.html"}
 ];
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */

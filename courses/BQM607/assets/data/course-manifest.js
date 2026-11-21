@@ -3,7 +3,7 @@
 const COURSE_TITLE = "BQM607 — إدارة المشروعات";
 
 const COURSE_CHAPTERS = [
-  {num:8, key:"ch8", title:"مراقبة وضبط المشروع", href:"chapters/chapter-8-lesson.html"}
+  {num:9, key:"ch9", title:"إدارة المخاطر في المشروع", href:"chapters/chapter-9-lesson.html"}
 ];
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */

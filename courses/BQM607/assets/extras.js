@@ -1088,3 +1088,68 @@ function renderEva(containerId, cfg){
   }
   draw();
 }
+
+/* ============================================================
+   🔥 مختبر المخاطر (الفصل 9): لكل خطر قيّم التأثير والاحتمال والكشف (1–5)،
+   وشوف موقعو على مصفوفة الشدة (أحمر/أصفر/أخضر) وقيمة FMEA = التأثير × الاحتمال × الكشف، وسجل المخاطر مرتّب.
+   cfg = { title, risks:[{id, name, i, p, d}] }
+   ============================================================ */
+function renderRiskLab(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let R = cfg.risks.map(r => Object.assign({}, r)), sel = 0;
+  const zone = (i, p) => (i * p >= 12 || (i === 5 && p >= 2)) ? "r" : (i * p >= 5 ? "y" : "g");
+  const ZN = { r:"🟥 أحمر: أولوية أولى", y:"🟨 أصفر: متوسطة", g:"🟩 أخضر: صغيرة (غالباً منتجاهلها)" };
+  function grid(){
+    const C = 40, L = 34, T = 8, S = C * 5;
+    let cells = "";
+    for(let p = 5; p >= 1; p--) for(let i = 1; i <= 5; i++){ const z = zone(i, p); cells += `<rect x="${L + (i - 1) * C}" y="${T + (5 - p) * C}" width="${C}" height="${C}" fill="${z === "r" ? "#F6C9C1" : z === "y" ? "#FCE9B8" : "#CDEFDD"}" stroke="#fff" stroke-width="2"/>`; }
+    const dots = R.map((r, k) => { const same = R.filter((q, j) => j < k && q.i === r.i && q.p === r.p).length;
+      return `<g class="rl-dot" data-k="${k}" style="cursor:pointer"><circle cx="${L + (r.i - 0.5) * C + same * 9 - 6}" cy="${T + (5 - r.p + 0.5) * C}" r="11" fill="${k === sel ? "#FF9F1C" : "#1D3557"}" stroke="#fff" stroke-width="2"/><text x="${L + (r.i - 0.5) * C + same * 9 - 6}" y="${T + (5 - r.p + 0.5) * C + 4}" text-anchor="middle" class="ev-dot">${r.id}</text></g>`; }).join("");
+    return `<svg viewBox="0 0 ${L + S + 6} ${T + S + 34}" class="rl-svg" style="direction:ltr" role="img" aria-label="مصفوفة تقييم المخاطر">${cells}${dots}
+      ${[1,2,3,4,5].map(v => `<text x="${L + (v - 0.5) * C}" y="${T + S + 14}" text-anchor="middle" class="cpm-n">${v}</text><text x="${L - 8}" y="${T + (5 - v + 0.5) * C + 4}" text-anchor="end" class="cpm-n">${v}</text>`).join("")}
+      <text x="${L + S / 2}" y="${T + S + 30}" text-anchor="middle" class="ev-ax">التأثير →</text>
+      <text x="10" y="${T + S / 2}" text-anchor="middle" class="ev-ax" transform="rotate(-90 10 ${T + S / 2})">الاحتمال →</text></svg>`;
+  }
+  function reg(){
+    const L = R.map((q, k) => ({ q, k, rv:q.i * q.p * q.d })).sort((a, b) => b.rv - a.rv);
+    return `<table class="cmp rl-t"><tr><th>#</th><th>الخطر</th><th>التأثير</th><th>الاحتمال</th><th>الكشف</th><th>القيمة</th><th>المنطقة</th></tr>
+      ${L.map((x, n) => `<tr${x.k === sel ? ' class="on"' : ""}><td>${n + 1}</td><td><b>${x.q.id}</b> ${x.q.name}</td><td>${x.q.i}</td><td>${x.q.p}</td><td>${x.q.d}</td><td><b>${x.rv}</b></td><td>${zone(x.q.i, x.q.p) === "r" ? "🟥" : zone(x.q.i, x.q.p) === "y" ? "🟨" : "🟩"}</td></tr>`).join("")}</table>`;
+  }
+  function out(){
+    const r = R[sel], z = zone(r.i, r.p);
+    return `<div class="rl-out rl-${z}"><span>${ZN[z]}</span><b>FMEA = ${r.i} × ${r.p} × ${r.d} = ${r.i * r.p * r.d}</b><small>من 125</small></div>`;
+  }
+  function bindDots(){
+    root.querySelectorAll(".rl-dot").forEach(b => b.addEventListener("click", () => { sel = +b.dataset.k; draw(); }));
+  }
+  function upd(){
+    root.querySelector(".rl-gw").innerHTML = grid();
+    root.querySelector(".rl-ow").innerHTML = out();
+    root.querySelector(".rl-tw").innerHTML = reg();
+    root.querySelectorAll(".rl .tri-row").forEach(row => { const k = row.querySelector("input").dataset.f; row.querySelector(".tri-rh b").textContent = R[sel][k]; });
+    bindDots();
+  }
+  function draw(){
+    const r = R[sel];
+    root.innerHTML = `
+      <div class="eqs rl">
+        <div class="eqs-head"><span class="gp-tag">🔥 قيّم بإيدك</span><h4>${cfg.title}</h4></div>
+        <div class="rl-grid">
+          <div><div class="rl-gw">${grid()}</div><p class="eqs-hint">اضغط على أي نقطة لتختار الخطر.</p></div>
+          <div>
+            <div class="rl-pick">${R.map((q, k) => `<button type="button" class="tri-sc-b${k === sel ? " on" : ""}" data-k="${k}">${q.id}. ${q.name}</button>`).join("")}</div>
+            ${[["i","💥 التأثير"],["p","🎲 الاحتمال"],["d","🔍 صعوبة الكشف (1 = بيبيّن بسهولة، 5 = ما منكتشفو إلا بعد فوات الأوان)"]].map(([k, l]) => `
+              <div class="tri-row"><div class="tri-rh"><span>${l}</span><b>${r[k]}</b></div>
+              <input type="range" min="1" max="5" value="${r[k]}" data-f="${k}" aria-label="${l}"></div>`).join("")}
+            <div class="rl-ow">${out()}</div>
+          </div>
+        </div>
+        <h4 class="rl-h">📒 سجل المخاطر (مرتّب حسب قيمة FMEA)</h4>
+        <div class="dm-scroll rl-tw">${reg()}</div>
+      </div>`;
+    root.querySelectorAll(".rl-pick .tri-sc-b").forEach(b => b.addEventListener("click", () => { sel = +b.dataset.k; draw(); }));
+    root.querySelectorAll(".rl input").forEach(inp => inp.addEventListener("input", () => { R[sel][inp.dataset.f] = +inp.value; upd(); }));
+    bindDots();
+  }
+  draw();
+}

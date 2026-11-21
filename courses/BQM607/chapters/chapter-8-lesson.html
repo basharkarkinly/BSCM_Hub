@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 8 — مراقبة وضبط المشروع | BQM607</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+<div class="topbar">
+  <div class="brand"><a href="../../../index.html" title="الصفحة الرئيسية" style="display:flex;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"></a><a href="../index.html" style="text-decoration:none;">BQM607 — إدارة المشروعات</a></div>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الثامن</div>
+    <h1>مراقبة وضبط المشروع</h1>
+    <p>«أوفلاين» صار بالتنفيذ. كيف بتعرف إذا ماشي منيح؟ هالفصل عن <b>تقدير التكاليف والموازنة</b> (ومنحني S)، <b>عملية المراقبة والضبط</b> (المعلومات، الانحرافات، التقارير، الإجراءات التصحيحية)، ونجمة الفصل: <b>تحليل القيمة المكتسبة EVA</b> بمتحولاتها التلاتة (BCWS وBCWP وACWP) ومؤشراتها (SV وCV وSPI وCPI وCSI).</p>
+  </div>
+</div>
+
+<div class="wrap content">
+
+  <div class="chapter-intro-box">
+    <h4>🔑 كلمات مفتاحية</h4>
+    <div><span class="keyword-chip">تقدير التكاليف</span><span class="keyword-chip">تحليل الاحتياطي</span><span class="keyword-chip">تكلفة الجودة</span><span class="keyword-chip">التقدير المماثل / المعلمي / التصاعدي</span><span class="keyword-chip">الموازنة Budget</span><span class="keyword-chip">التدفق النقدي</span><span class="keyword-chip">احتياطيات الطوارئ</span><span class="keyword-chip">احتياطيات الإدارة</span><span class="keyword-chip">منحني S</span><span class="keyword-chip">المراقبة والتحكم</span><span class="keyword-chip">الانحرافات</span><span class="keyword-chip">الإجراءات التصحيحية والوقائية</span><span class="keyword-chip">القيمة المكتسبة EVA</span><span class="keyword-chip">BCWS / BCWP / ACWP</span><span class="keyword-chip">SV / CV</span><span class="keyword-chip">SPI / CPI / CSI</span></div>
+    <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+    <ul><li>تعرف أدوات تقدير التكاليف وطرق التقدير (المماثل، المعلمي، التصاعدي، القائم على الأنشطة)</li><li>تعدّد خطوات إعداد الموازنة وتفرّق بين احتياطيات الطوارئ والإدارة</li><li>تشرح عملية المراقبة والضبط: المعلومات، الانحرافات، التقارير، الإجراءات التصحيحية</li><li>تعرّف متحولات القيمة المكتسبة BCWS وBCWP وACWP</li><li>تحسب SV وCV وSPI وCPI وCSI وتفسّرها</li><li>تتوقع مدة المشروع إذا ضلّينا بنفس الوتيرة</li></ul>
+  </div>
+
+
+  <div class="block" id="cost-estimating">
+    <h2><span class="idx">1</span> تقدير التكاليف</h2>
+    <p><b>المصاري أهم عنصر</b> بكل مشروع، و<b>خطة المشروع ما بتكتمل لحد ما نحط الموازنة</b>. والتقدير بأول المشروع تقريبي، وبيصير أدق مع الوقت.</p>
+    <div class="quick-grid">
+      <div class="quick-card"><b>💵 معدلات تكلفة الموارد</b>أجور العمالة وأسعار المواد بالسوق (الخشب، الأسمنت…).</div>
+      <div class="quick-card"><b>📑 تحليل عروض البائعين</b>تقييم عروض المقاولين واختيار الأنسب.</div>
+      <div class="quick-card"><b>🛟 تحليل الاحتياطي</b>مصاري جانبية لمعالجة <strong>تجاوز التكاليف</strong> لما نعرف إنو في مخاطر مكلفة.</div>
+      <div class="quick-card"><b>⭐ تكلفة الجودة</b>تكلفة كل الأنشطة المتعلقة بالجودة، يعني <strong>المصاري اللازمة لنعمل المشروع صح</strong> (لأنو اكتشاف الأخطاء بكير أرخص).</div>
+    </div>
+    <p>ومهم <b>نحتفظ بكل معلومات التقدير الداعمة</b> لنعرف الافتراضات اللي انبنت عليها الأرقام. وبمرحلة <b>اختيار المشروع</b> التقديرات أسرع وأقل موارد، وبتعتمد أكتر على <b>حكم الخبراء</b> ومشاريع سابقة.</p>
+  </div>
+
+  <div class="block" id="estimating-methods">
+    <h2><span class="idx">2</span> طرق تقدير التكاليف</h2>
+    <table class="cmp">
+      <tr><th>الطريقة</th><th>الفكرة</th></tr>
+      <tr><td><b>المماثل</b> Analogous</td><td>على أساس <b>مشاريع مماثلة</b>، مع تعديل لفوق أو لتحت حسب الاختلافات، وبيعتمد على <b>حكم وخبرة</b> اللي عم يقدّر.</td></tr>
+      <tr><td><b>المعلمي</b> Parametric</td><td><b>معلمات قابلة للقياس × تكلفة الوحدة</b>. مثال: مبنى مكاتب ← <b>المساحة بالمتر المربع والمدينة</b>، ومعلمات تانية متل جودة التشطيبات.</td></tr>
+      <tr><td><b>التصاعدي</b> Bottom-Up</td><td>سعر كل عنصر بأدنى مستوى ومنجمّع لفوق. <b>أكتر الطرق دقة واستهلاكاً للوقت</b>.</td></tr>
+      <tr><td><b>القائم على الأنشطة</b></td><td>منجمّع التكاليف من كل المصادر (بائعين وعمالة ومواد داخلية) لكل نشاط <b>بإضافة رمز النشاط</b> للتقدير التفصيلي.</td></tr>
+    </table>
+  </div>
+
+  <div class="block" id="budget">
+    <h2><span class="idx">3</span> إعداد الموازنة</h2>
+    <div class="callout"><span class="tag">💡 التعريف</span>
+      <b>إعداد الموازنة</b> = تحديد التكاليف التقديرية لبنود العمل <b>بهدف وضع خطة مالية لقياس أداء المشروع</b>. والمشاريع الصغيرة (بموارد داخلية) ممكن ما تحتاج موازنة تفصيلية، أما الكبيرة فبدها جداول ومنحنيات.</div>
+    <ol class="timeline">
+      <li><span class="marker">1</span><h4>تكاليف العاملين لكل نشاط</h4><p>من ورقة تقديرات النشاط.</p></li>
+      <li><span class="marker">2</span><h4>التكاليف المباشرة لكل نشاط</h4><p>وما ننسى تكاليف إدارة المشروع والتشغيل.</p></li>
+      <li><span class="marker">3</span><h4>التكاليف غير المباشرة (النفقات العامة)</h4><p>إذا المنظمة بتطلبها.</p></li>
+      <li><span class="marker">4</span><h4>التكاليف التراكمية</h4><p></p></li>
+      <li><span class="marker">5</span><h4>أزمنة الإنفاق (التدفقات النقدية)</h4><p>يومي أو أسبوعي أو شهري حسب حجم ومدة المشروع.</p></li>
+      <li><span class="marker">6</span><h4>الجداول والرسوم البيانية</h4><p>لكل نشاط ومرحلة وللمشروع ككل.</p></li>
+    </ol>
+    <p><b>الإظهار البياني:</b> خطة تكاليف بمراحل زمنية، منجمع التكاليف <b>تراكمياً</b> لكل فترة، وبتطلع على شكل حرف S فاسمها <b>منحني S (S-Curve)</b>.</p>
+  </div>
+
+  <div class="block" id="reserves">
+    <h2><span class="idx">4</span> التدفق النقدي والاحتياطيات</h2>
+    <p>حتى لو صرفنا أقل من الموازنة، ممكن يكون المشروع بمشكلة إذا <b>التمويل مو متاح وقت الحاجة</b>. وفي توتر طبيعي: الماليين بدهن المصاري تضل مستثمرة لآخر لحظة، والمقاولين بدهن يقبضوا بسرعة، والمدير بدو أكبر قدر من النقد متاح.</p>
+    <table class="cmp">
+      <tr><th></th><th>🛟 احتياطيات الطوارئ</th><th>🎩 احتياطيات الإدارة</th></tr>
+      <tr><td>لشو؟</td><td>زيادات تكلفة <b>غير مخطط إلها بس منتنبأ فيها إحصائياً</b> (جزء من تحليل المخاطر)</td><td>أشياء بتتطلب <b>تغيير بالنطاق</b> قبل التفاوض عليه (فرصة أو تحدي، متل تقنية جديدة)</td></tr>
+      <tr><td>جزء من خط الأساس؟</td><td><b>نعم</b>، جزء من الموازنة الإجمالية</td><td><b>لا</b>، مو جزء من خط الأساس (بس ممكن تدخل بإجمالي الموازنة)</td></tr>
+      <tr><td>احتمال صرفها</td><td>غالباً بتنصرف</td><td><b>من غير المحتمل</b> تنصرف، وبتقدير المدير</td></tr>
+    </table>
+    <p>وإذا كان <b>من النادر</b> نتجاوز التقديرات ← لازم نراجع طريقة التقدير، لأنها ممكن تكون <b>مرتفعة كتير</b>. وبدل ما نبالغ بكل تكلفة، منحط احتياطي طوارئ.</p>
+  </div>
+
+  <div class="block" id="monitoring">
+    <h2><span class="idx">5</span> عملية المراقبة والضبط</h2>
+    <div class="callout"><span class="tag">💡 التعريف</span>
+      <b>المراقبة والتحكم</b> = المقارنة بين <b>الأداء الفعلي والخطة</b> لتحديد الانحرافات وتقييم البدائل واتخاذ الإجراءات التصحيحية. والقدرة على السيطرة <b>بتعتمد مباشرة على فعالية الخطة</b>: بدنا خطة تقول <b>وين لازم نكون</b>، ومعلومات تقول <b>وين نحنا هلأ</b>.</div>
+    <p>المشاريع الصغيرة بتكفيها <b>الجولات والمتابعة الشخصية</b>، أما الكبيرة فبدها <b>رقابة رسمية</b> ونظام معلومات وحيد بيحذّر من المشاكل قبل فوات الأوان، وبيحمّل الناس المسؤولية، وبيمنع المشاكل الصغيرة تكبر.</p>
+    <h3>خطة المراقبة (قبل البدء، بالتشاور مع الفريق والزبون)</h3>
+    <div class="quick-grid">
+      <div class="quick-card"><b>📋 الاحتياجات من المعلومات</b>بدون المعلومات اللازمة ما في سيطرة، وجمع معلومات ما إلها حاجة <strong>مضيعة جهد</strong>.</div>
+      <div class="quick-card"><b>🗂️ أساليب جمع البيانات</b><strong>إلكتروني، يدوي، تفتيش بالموقع، مقابلات مباشرة، اجتماعات الفريق</strong>.</div>
+      <div class="quick-card"><b>⏰ تواتر الجمع</b>فوري، يومي، أسبوعي، شهري، فصلي… حسب: <strong>متطلبات الزبون</strong>، <strong>المدة الوسطية للأنشطة</strong> (أنشطة يوم أو يومين؟ الأسبوعي ما بيكفّي)، و<strong>الخبرة</strong> (عمال جدد ← تواتر أكبر).</div>
+    </div>
+    <div class="example"><span class="tag">⚠️ فخ امتحان</span>
+      «شو اللي <b>مو</b> من طرق جمع المعلومات حول الوضع الراهن؟» ← <b>الاستبيانات مع ممثلي الزبون</b>.</div>
+  </div>
+
+  <div class="block" id="variances">
+    <h2><span class="idx">6</span> الانحرافات والتقارير والإجراءات التصحيحية</h2>
+    <p>منقارن الوضع الراهن مع <b>الجدول الزمني والموازنة والنطاق</b>. و<b>في انحراف</b> لما معلومة الوضع الراهن ما بتساوي المقابلة بالخطة. بس <b>مو كل الانحرافات سلبية ولا كلها بدها تصحيح</b>. المدير بيحلّل:</p>
+    <ul>
+      <li>أثر الانحراف على المشروع، وهل هالأثر مشكلة.</li>
+      <li>سبب الانحراف والأشخاص اللي شاركوا فيه.</li>
+      <li>هل بيأدي لانحرافات تانية بأماكن تانية.</li>
+    </ul>
+    <div class="example"><span class="tag">⚠️ فخ امتحان</span>
+      «<b>العقوبات الملائمة لمتسبب الانحراف</b>» <b>مو</b> من أهداف تحليل الانحرافات.</div>
+    <div class="quick-grid">
+      <div class="quick-card"><b>📊 التقارير بتبيّن</b>شو لازم يصير حسب الخطة، شو صار فعلاً، الفرق بيناتهن، وشو الإجراءات الواجبة.</div>
+      <div class="quick-card"><b>🛠️ الإجراءات التصحيحية</b>تنفيذ القرار، متابعتو، إجراءات إضافية إذا لزم، <strong>توثيق</strong> القرارات الكبيرة، و<strong>إجراءات وقائية</strong> لتمنع تكرار المشكلة (متل إعادة الاختبار مرتين).</div>
+      <div class="quick-card"><b>🔑 السلطة</b>إذا المدير عندو سلطة كافية بياخد الإجراء، وإلا بياخد <strong>توصيات</strong> من الإدارة صاحبة القرار.</div>
+    </div>
+  </div>
+
+  <div class="block" id="eva">
+    <h2><span class="idx">7</span> تحليل القيمة المكتسبة (EVA)</h2>
+    <p>طريقة <b>واسعة الاستخدام</b> بالمشاريع المتوسطة والعالية التعقيد: <b>مقارنة دورية بين التكاليف المدرجة بالموازنة والتكاليف الفعلية</b>، وبتربط <b>الإنجاز الفعلي</b> بالزمن اللي مضى والكلفة اللي انصرفت. وبتسمح <b>بإكمال جزئي</b> للنشاط.</p>
+    <div class="quick-grid">
+      <div class="quick-card"><b>❓ بتجاوب على</b>وين نحنا من الجدول والموازنة؟ قديش بدنا لنخلص؟ <strong>إيمتى رح نخلص إذا ضلّينا بنفس الوتيرة؟</strong> في مشاكل محتملة؟ شو أسباب التأخر؟ شو حصّلنا مقابل اللي صرفناه؟</div>
+      <div class="quick-card"><b>🔁 خطواتها الأربعة</b>وضع الخطة الزمنية والمالية ← قياس أداء وتقدم العمل ← المقارنة بين الفعلي والمخطط ← الإجراءات التصحيحية.</div>
+      <div class="quick-card"><b>🎯 هدفها الأساسي</b>نكتشف <strong>أي انحراف سلبي بأبكر وقت</strong> ونصحّح. والجدول الزمني هو أساس المقارنة، وغانت مناسب لعرض النتائج عالإدارة العليا.</div>
+    </div>
+    <p>EVA شكل من أشكال المراقبة المعتمدة على <b>نقاط العلّام</b>. و<b>انحراف الكلفة</b> = الفرق بين الكلفة التقديرية والفعلية للعمل المنجز، وفي <b>6 اعتبارات</b> بتحليلو: تحديدو، تقديرو كمياً، مصدرو، أثرو عالمشروع ككل، أثرو على العناصر، ومجال الأعمال التصحيحية.</p>
+  </div>
+
+  <div class="block" id="eva-variables">
+    <h2><span class="idx">8</span> المتحولات التلاتة</h2>
+    <table class="cmp">
+      <tr><th>المتحول</th><th>المعنى</th><th>☕ «أوفلاين» بنهاية الأسبوع 4</th></tr>
+      <tr><td><b>BCWS</b><br>Budget Cost of Work Scheduled</td><td><b>الكلفة التقديرية للعمل المخطط</b> = <b>الموازنة (Baseline)</b>، تراكمية وبتنحط <b>قبل بداية</b> المشروع.</td><td>كان المفروض ننجز شغل قيمتو <b>16 مليون</b></td></tr>
+      <tr><td><b>BCWP</b><br>Budget Cost of Work Performed</td><td><b>الكلفة التقديرية للعمل المنجز</b> = <b>القيمة المكتسبة (Earned Value)</b> = <b>نسبة الإنجاز × إجمالي الموازنة</b> بنقطة العلّام.</td><td>أنجزنا 35% من 40 مليون = <b>14 مليون</b></td></tr>
+      <tr><td><b>ACWP</b><br>Actual Cost of Work Performed</td><td><b>الكلفة الفعلية للعمل المنجز (Actual Cost)</b>.</td><td>صرفنا فعلياً <b>17 مليون</b></td></tr>
+    </table>
+    <p>منحني <b>BCWS</b> مستمر من البداية للنهاية، وآخر نقطة فيه إحداثياتها <b>TAC</b> (زمن نهاية المشروع) و<b>BAC</b> (موازنة نهاية المشروع). أما BCWP وACWP فبينحسبوا بنقاط العلّام.</p>
+  </div>
+
+  <div class="block" id="indices">
+    <h2><span class="idx">9</span> الانحرافات ومؤشرات الأداء</h2>
+    <table class="cmp">
+      <tr><th></th><th>⏱️ الزمن</th><th>💰 الكلفة</th></tr>
+      <tr><td><b>الانحراف</b></td><td><b>SV = BCWP − BCWS</b><br>(بوحدة <b>مالية</b> مو زمنية!)</td><td><b>CV = BCWP − ACWP</b></td></tr>
+      <tr><td><b>المؤشر</b></td><td><b>SPI = BCWP ÷ BCWS</b></td><td><b>CPI = BCWP ÷ ACWP</b></td></tr>
+      <tr><td><b>= 1</b></td><td>حسب الخطة الزمنية</td><td>عم نصرف متل المخطط</td></tr>
+      <tr><td><b>&gt; 1</b> (أو انحراف موجب)</td><td>أسرع من الخطة ⏩</td><td>عم نصرف <b>أقل</b> من المخطط 💚</td></tr>
+      <tr><td><b>&lt; 1</b> (أو انحراف سالب)</td><td>أبطأ من الخطة ⏳</td><td>عم نصرف <b>أكتر</b> من المخطط 🔥</td></tr>
+    </table>
+    <div class="callout"><span class="tag">🧮 المؤشر الإجمالي CSI</span>
+      <b>CSI = CPI × SPI</b>: صورة عن تقيّد المشروع بخطتو <b>الزمنية والمالية معاً</b>. = 1 بالأداء المطلوب، &gt; 1 أداء جيد، &lt; 1 أداء منخفض. وبيسمح للإدارة العليا تقارن مشاريع مختلفة بغض النظر عن الجانب التقني.</div>
+    <div class="callout"><span class="tag">🧮 مثال الكتاب</span>
+      BCWS = 10، ACWP = 14، BCWP = 12 ← SV = 12 − 10 = <b>+2 (مسبّق على الجدول)</b> · CV = 12 − 14 = <b>−2 (فوق الموازنة)</b> · SPI = 1.2. وإذا المدة المخططة <b>100 يوم</b> وبنفس الوتيرة ← 100 ÷ 1.2 ≈ <b>83 يوم</b>.</div>
+    <p>جرّب بنفسك، والحالة التانية هي سؤال الدورة S24:</p>
+    <div id="ev-mount"></div>
+  </div>
+
+
+  <div id="case-study-mount"></div>
+
+  <div class="block" id="flash">
+    <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+    <div id="activity-flash"></div>
+  </div>
+
+  <div class="next-actions">
+    <a href="chapter-8-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-8-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل التاسع)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"BQM607",chapter_id:"8",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch8-flashcards.js"></script>
+<script>
+
+renderEva("ev-mount", {
+  title: "لوحة القيمة المكتسبة",
+  presets: [
+    {label:"☕ «أوفلاين» أسبوع 4", rows:[{id:"أوفلاين", bcws:16, acwp:17, bcwp:14}]},
+    {label:"📘 مثال الكتاب (100 يوم)", tac:100, rows:[{id:"المشروع", bcws:10, acwp:14, bcwp:12}]},
+    {label:"📝 سؤال S24 (4 أنشطة)", rows:[{id:"A", bcws:700, acwp:600, bcwp:800},{id:"B", bcws:900, acwp:700, bcwp:600},{id:"C", bcws:800, acwp:1200, bcwp:1000},{id:"D", bcws:1400, acwp:900, bcwp:1300}]}
+  ]
+});
+
+renderCaseStudy("case-study-mount", {"title": "تقرير الأسبوع الرابع", "scenario": "بنهاية الأسبوع 4 من «أوفلاين»: الموازنة المخططة لهالأسبوع (BCWS) = 16 مليون، والقيمة المكتسبة (BCWP) = 14 مليون، والكلفة الفعلية (ACWP) = 17 مليون.", "question": "شو وضع المشروع؟", "options": ["متقدّم عالجدول وعم يصرف أقل من الموازنة", "متأخر عن الجدول (SV = −2) وعم يصرف أكتر من الموازنة (CV = −3)", "متأخر عن الجدول بس عم يصرف أقل من الموازنة", "ماشي حسب الخطة تماماً"], "answerIndex": 1, "explanation": "SV = BCWP − BCWS = 14 − 16 = <b>−2</b> ← متأخر (SPI = 0.875 &lt; 1). CV = BCWP − ACWP = 14 − 17 = <b>−3</b> ← فوق الموازنة (CPI ≈ 0.82 &lt; 1). والـ CSI ≈ 0.72 ← أداء منخفض، فبدنا إجراءات تصحيحية."});
+renderFlashcards("activity-flash", CH8_FLASHCARDS);
+</script>
+</body>
+</html>

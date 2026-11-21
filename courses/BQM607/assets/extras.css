@@ -327,3 +327,17 @@
 .lv-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:#F5F7FB; border-radius:10px; padding:6px 10px; font-size:.88rem; }
 .lv-row small{ color:#5B6478; } .lv-row span{ font-weight:700; min-width:64px; text-align:center; }
 .lv .lv-reset{ margin-top:10px; }
+
+/* ---------- 🚦 القيمة المكتسبة ---------- */
+.ev-t td, .ev-t th{ text-align:center; white-space:nowrap; padding:6px; }
+.ev-t th small{ font-weight:600; color:#5B6478; }
+.ev-in{ width:84px; }
+.ev-g, .ev-b, .ev-n{ display:inline-block; padding:2px 8px; border-radius:999px; font-size:.78rem; font-weight:800; }
+.ev-g{ background:#EAF8F1; color:#0B7A57; } .ev-b{ background:#FDECEA; color:#B4402B; } .ev-n{ background:#EEF1F7; color:#1D3557; }
+.ev-grid{ display:grid; grid-template-columns:240px 1fr; gap:14px; align-items:center; margin-top:12px; }
+.ev-q{ width:100%; height:auto; border-radius:12px; border:1px solid #E3E7F0; }
+.ev-ql{ font-size:9px; font-weight:700; fill:#5B6478; } .ev-ax{ font-size:9px; font-weight:800; fill:#0F1C2E; }
+.ev-dot{ font-size:10px; font-weight:800; fill:#fff; }
+.ev-res{ grid-template-columns:repeat(2,minmax(0,1fr)); margin:0; }
+.tri-sc-b.on{ background:#FFF4E2; border-color:#FF9F1C; }
+@media (max-width:640px){ .ev-grid{ grid-template-columns:1fr; } .ev-q{ max-width:260px; margin:0 auto; display:block; } }

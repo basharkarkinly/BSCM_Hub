@@ -1031,3 +1031,60 @@ function renderResSched(containerId, cfg){
   }
   draw();
 }
+
+/* ============================================================
+   🚦 لوحة القيمة المكتسبة EVA (الفصل 8): BCWS (المخطط) · BCWP (القيمة المكتسبة) · ACWP (الفعلي)
+   SV = BCWP − BCWS · CV = BCWP − ACWP · SPI = BCWP ÷ BCWS · CPI = BCWP ÷ ACWP · CSI = CPI × SPI
+   cfg = { title, presets:[{label, rows:[{id, bcws, acwp, bcwp}], tac?}] }
+   ============================================================ */
+function renderEva(containerId, cfg){
+  const root = document.getElementById(containerId);
+  let pi = 0, rows = cfg.presets[0].rows.map(r => Object.assign({}, r)), tac = cfg.presets[0].tac;
+  const r2 = x => Math.round(x * 100) / 100;
+  const tag = (v, pos, neg, eq) => v > 0 ? `<span class="ev-g">${pos}</span>` : v < 0 ? `<span class="ev-b">${neg}</span>` : `<span class="ev-n">${eq}</span>`;
+  function quad(list){
+    const S = 220, c = S / 2, m = Math.max(1, ...list.map(r => Math.max(Math.abs(r.sv), Math.abs(r.cv)))), k = (c - 22) / m;
+    return `<svg viewBox="0 0 ${S} ${S}" class="ev-q" style="direction:ltr" role="img" aria-label="مربعات الأداء">
+      <rect x="${c}" y="0" width="${c}" height="${c}" fill="#EAF8F1"/><rect x="0" y="${c}" width="${c}" height="${c}" fill="#FDECEA"/>
+      <rect x="0" y="0" width="${c}" height="${c}" fill="#FFF8EB"/><rect x="${c}" y="${c}" width="${c}" height="${c}" fill="#FFF8EB"/>
+      <line x1="${c}" y1="0" x2="${c}" y2="${S}" stroke="#8A93A6"/><line x1="0" y1="${c}" x2="${S}" y2="${c}" stroke="#8A93A6"/>
+      <text x="${S - 4}" y="12" text-anchor="end" class="ev-ql">متقدّم + توفير</text><text x="4" y="${S - 5}" class="ev-ql">متأخر + فوق الموازنة</text>
+      <text x="4" y="12" class="ev-ql">متأخر + توفير</text><text x="${S - 4}" y="${S - 5}" text-anchor="end" class="ev-ql">متقدّم + فوق الموازنة</text>
+      <text x="${S - 4}" y="${c - 4}" text-anchor="end" class="ev-ax">SV →</text><text x="${c + 4}" y="22" class="ev-ax">CV ↑</text>
+      ${list.map(r => `<circle cx="${c + r.sv * k}" cy="${c - r.cv * k}" r="9" fill="${r.id === "Σ" ? "#0F1C2E" : "#1D3557"}" stroke="#fff" stroke-width="2"/><text x="${c + r.sv * k}" y="${c - r.cv * k + 4}" text-anchor="middle" class="ev-dot">${r.id}</text>`).join("")}
+    </svg>`;
+  }
+  function draw(){
+    const calc = rows.map(r => ({ id:r.id, sv:r.bcwp - r.bcws, cv:r.bcwp - r.acwp, spi:r.bcws ? r.bcwp / r.bcws : 0, cpi:r.acwp ? r.bcwp / r.acwp : 0 }));
+    const T = rows.reduce((s, r) => ({ bcws:s.bcws + r.bcws, acwp:s.acwp + r.acwp, bcwp:s.bcwp + r.bcwp }), { bcws:0, acwp:0, bcwp:0 });
+    const tot = { id:"Σ", sv:T.bcwp - T.bcws, cv:T.bcwp - T.acwp, spi:T.bcws ? T.bcwp / T.bcws : 0, cpi:T.acwp ? T.bcwp / T.acwp : 0 };
+    const csi = tot.cpi * tot.spi, multi = rows.length > 1;
+    const verdict = `${tot.sv > 0 ? "متقدّم عالجدول ⏩" : tot.sv < 0 ? "متأخر عن الجدول ⏳" : "ماشي عالجدول ✅"} و${tot.cv > 0 ? "عم يصرف أقل من الموازنة 💚" : tot.cv < 0 ? "عم يصرف أكتر من الموازنة 🔥" : "عم يصرف حسب الموازنة ✅"}`;
+    root.innerHTML = `
+      <div class="eqs ev">
+        <div class="eqs-head"><span class="gp-tag">🚦 راقب بإيدك</span><h4>${cfg.title}</h4></div>
+        <div class="tri-sc" style="margin-top:0"><b>📂 الحالات:</b>${cfg.presets.map((p, i) => `<button type="button" class="tri-sc-b${i === pi ? " on" : ""}" data-i="${i}">${p.label}</button>`).join("")}</div>
+        <div class="dm-scroll"><table class="cmp ev-t">
+          <tr><th>${multi ? "النشاط" : ""}</th><th>BCWS<br><small>المخطط</small></th><th>BCWP<br><small>المكتسبة</small></th><th>ACWP<br><small>الفعلي</small></th><th>SV</th><th>CV</th><th>SPI</th><th>CPI</th><th>الزمن</th><th>الكلفة</th></tr>
+          ${rows.map((r, i) => { const c = calc[i]; return `<tr><td><b>${r.id}</b></td>
+            ${["bcws","bcwp","acwp"].map(f => `<td><input type="number" class="fc-in ev-in" value="${r[f]}" data-i="${i}" data-f="${f}" aria-label="${f} ${r.id}"></td>`).join("")}
+            <td>${xFmt(c.sv)}</td><td>${xFmt(c.cv)}</td><td>${r2(c.spi)}</td><td>${r2(c.cpi)}</td>
+            <td>${tag(c.sv, "متقدّم", "متأخر", "حسب الخطة")}</td><td>${tag(c.cv, "توفير", "فوق الموازنة", "حسب الموازنة")}</td></tr>`; }).join("")}
+          ${multi ? `<tr class="dm-tot"><td>المجموع</td><td>${xFmt(T.bcws)}</td><td>${xFmt(T.bcwp)}</td><td>${xFmt(T.acwp)}</td><td>${xFmt(tot.sv)}</td><td>${xFmt(tot.cv)}</td><td>${r2(tot.spi)}</td><td>${r2(tot.cpi)}</td><td>${tag(tot.sv, "متقدّم", "متأخر", "حسب الخطة")}</td><td>${tag(tot.cv, "توفير", "فوق", "حسب الموازنة")}</td></tr>` : ""}
+        </table></div>
+        <div class="ev-grid">
+          ${quad(multi ? calc : [tot])}
+          <div class="fc-res ev-res">
+            <div class="${tot.spi >= 1 ? "ok" : "bad"}"><span>SPI = BCWP ÷ BCWS</span><b>${r2(tot.spi)}</b><small>${tot.spi > 1 ? "أسرع من الخطة" : tot.spi < 1 ? "أبطأ من الخطة" : "حسب الخطة"}</small></div>
+            <div class="${tot.cpi >= 1 ? "ok" : "bad"}"><span>CPI = BCWP ÷ ACWP</span><b>${r2(tot.cpi)}</b><small>${tot.cpi > 1 ? "عم نصرف أقل من المخطط" : tot.cpi < 1 ? "عم نصرف أكتر من المخطط" : "حسب المخطط"}</small></div>
+            <div class="${csi >= 1 ? "ok" : "bad"}"><span>CSI = CPI × SPI</span><b>${r2(csi)}</b><small>${csi > 1 ? "أداء جيد" : csi < 1 ? "أداء منخفض" : "بالأداء المطلوب"}</small></div>
+            ${tac ? `<div><span>المدة المتوقعة بنفس الوتيرة</span><b>${Math.round(tac / tot.spi)} يوم</b><small>${tac} ÷ SPI ${r2(tot.spi)}</small></div>` : ""}
+          </div>
+        </div>
+        <div class="eqs-msg ${tot.sv >= 0 && tot.cv >= 0 ? "ok" : "bad"}" aria-live="polite">📋 الخلاصة: المشروع <b>${verdict}</b>.</div>
+      </div>`;
+    root.querySelectorAll(".ev-in").forEach(inp => inp.addEventListener("change", () => { const v = parseFloat(inp.value); rows[+inp.dataset.i][inp.dataset.f] = isNaN(v) ? 0 : v; draw(); }));
+    root.querySelectorAll(".tri-sc-b").forEach(b => b.addEventListener("click", () => { pi = +b.dataset.i; const p = cfg.presets[pi]; rows = p.rows.map(r => Object.assign({}, r)); tac = p.tac; draw(); }));
+  }
+  draw();
+}

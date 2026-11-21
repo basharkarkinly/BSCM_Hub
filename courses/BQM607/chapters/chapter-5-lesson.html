@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الفصل 5 — تخطيط الزمن (1): الأنشطة والمخطط الشبكي | BQM607</title>
+<link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
+<link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
+<style>.guard{visibility:hidden}</style>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/extras.css">
+</head>
+<body class="guard">
+<div class="topbar">
+  <div class="brand"><a href="../../../index.html" title="الصفحة الرئيسية" style="display:flex;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"></a><a href="../index.html" style="text-decoration:none;">BQM607 — إدارة المشروعات</a></div>
+  <nav><a href="../index.html">خارطة المقرر</a></nav>
+</div>
+<div class="lesson-header">
+  <div class="wrap">
+    <div class="eyebrow">الفصل الخامس</div>
+    <h1>تخطيط الزمن (1): الأنشطة والمخطط الشبكي</h1>
+    <p>دخلنا <b>مرحلة التخطيط</b>. الـ WBS قلّنا <b>شو</b> لازم ينعمل، وهلأ بدنا نعرف <b>بأي ترتيب</b>. هالفصل عن أهداف التخطيط، تعريف الأنشطة، <b>علاقات التبعية الأربعة</b> (FS وSS وFF وSF) مع <b>التخلّف والقيادة</b>، و<b>المخطط الشبكي</b> بطريقتيه: الأنشطة على الأسهم AOA والأنشطة في العقد AON، وطريقة <b>جدول المستويات</b> لنرسمو بسهولة.</p>
+  </div>
+</div>
+
+<div class="wrap content">
+
+  <div class="chapter-intro-box">
+    <h4>🔑 كلمات مفتاحية</h4>
+    <div><span class="keyword-chip">أهداف التخطيط</span><span class="keyword-chip">عملية التخطيط</span><span class="keyword-chip">تعريف الأنشطة</span><span class="keyword-chip">تخطيط الموجات</span><span class="keyword-chip">قائمة الأنشطة</span><span class="keyword-chip">Finish-to-Start</span><span class="keyword-chip">Start-to-Start</span><span class="keyword-chip">Finish-to-Finish</span><span class="keyword-chip">Start-to-Finish</span><span class="keyword-chip">التخلف Lag</span><span class="keyword-chip">القيادة Lead</span><span class="keyword-chip">تبعية إلزامية / تفضيلية / خارجية</span><span class="keyword-chip">المخطط الشبكي</span><span class="keyword-chip">AOA</span><span class="keyword-chip">AON</span><span class="keyword-chip">النشاط الوهمي</span><span class="keyword-chip">جدول المستويات</span></div>
+    <h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4>
+    <ul><li>تعرف أهداف عملية التخطيط وعلاقة التخطيط بالرقابة</li><li>تعدّد خطوات عملية التخطيط والعمليات الأساسية لتخطيط المشروع</li><li>تعرّف الأنشطة من حزم العمل وتعرف تخطيط الموجات</li><li>تميّز بين علاقات التبعية الأربعة وتحسب أثر التخلف والقيادة</li><li>تفرّق بين التبعية الإلزامية والتفضيلية والخارجية</li><li>ترسم المخطط الشبكي بطريقة AOA وAON وتستخدم جدول المستويات</li></ul>
+  </div>
+
+
+  <div class="block" id="time-planning">
+    <h2><span class="idx">1</span> تخطيط الزمن: من «شو» لـ«إيمتى»</h2>
+    <p>بعد التعريف وتعيين الفريق، منفوت على <b>التخطيط التفصيلي</b>. وتخطيط الزمن يعني: <b>نجزّئ</b> المشروع لمكونات، <b>نعطي كل مكوّن مدة</b>، <b>نربطهن بتسلسل منطقي</b>، ونعمل نماذج لمواعيد الانتهاء المحتملة (وأحياناً نماذج لإعادة التخطيط).</p>
+    <div class="callout"><span class="tag">💡 احفظ</span>
+      <b>ما منقدر نفصل تخطيط الزمن عن رقابة الزمن</b>. تخطيط ومراقبة <b>الزمن والتكلفة والجودة</b> مترابطين ولازم ينشافوا سوا. والتخطيط بيقول للكل: <b>لوين رايحين وكيف رح نوصل</b>.</div>
+    <p>وغالباً <b>مرحلة التخطيط هي الأكتر تحدياً وصعوبة</b> للمدير، لأنو لازم يخمّن بواقعية الموظفين والموارد والمعدات، ويخطط للاتصالات والمشتريات والتعاقد مع الموردين.</p>
+  </div>
+
+  <div class="block" id="planning-goals">
+    <h2><span class="idx">2</span> أهداف عملية التخطيط</h2>
+    <ol class="timeline">
+      <li><span class="marker">1</span><h4>🎯 تحديد الغاية المرجوّة</h4><p>من حيث نتائج المشروع.</p></li>
+      <li><span class="marker">2</span><h4>📍 تحديد الوضع الحالي</h4><p>وين نحنا هلأ.</p></li>
+      <li><span class="marker">3</span><h4>🛣️ رسم مسار</h4><p>من الوضع الحالي للغاية المرجوّة.</p></li>
+      <li><span class="marker">4</span><h4>🚧 وضع حدود للانحرافات</h4><p>لنكشف أي اختلاف كبير عن المسار.</p></li>
+      <li><span class="marker">5</span><h4>🧰 تخصيص الموارد لتصحيح الانحرافات</h4><p>والتأكد إنو كل الانحرافات انعالجت ورجعنا للمسار.</p></li>
+      <li><span class="marker">6</span><h4>🛟 احتياطيات للطوارئ</h4><p>لتغطية الانحرافات الكبيرة، خصوصاً اللي ما كانت متوقعة.</p></li>
+    </ol>
+    <p>والقاعدة: <b>كل ما كانت التغيرات المطلوبة أكبر، الإجراءات التصحيحية أكبر وأعقد</b>.</p>
+  </div>
+
+  <div class="block" id="planning-process">
+    <h2><span class="idx">3</span> عملية التخطيط والعمليات الأساسية</h2>
+    <p>سواء خطة زمن أو تكلفة أو جودة، الإجراء الأساسي نفسو: <b>نجزّئ المشروع لحزم عمل</b> ونحط أهداف أداء لكل حزمة. والعملية بتهدف لـ:</p>
+    <ol class="timeline">
+      <li><span class="marker">1</span><h4>بيان العمل SOW</h4><p>وصف المحتوى الكلي وحدود المشروع.</p></li>
+      <li><span class="marker">2</span><h4>هيكل تقسيم العمل WBS</h4><p>تجزيء المشروع لحزم.</p></li>
+      <li><span class="marker">3</span><h4>شبكة المشروع بطريقة CPM</h4><p>Critical Path Method.</p></li>
+      <li><span class="marker">4</span><h4>الجدول الزمني للمشروع</h4><p>Project Schedule.</p></li>
+    </ol>
+    <div class="quick-grid">
+      <div class="quick-card"><b>🎯 غرض مرحلة التخطيط</b>تحديد متطلبات العمل، التكاليف والجدول وقائمة التسليمات ومواعيدها، خطط الموارد، و<strong>موافقة الإدارة</strong> للانتقال للمرحلة الجاية.</div>
+      <div class="quick-card"><b>🧩 العمليات الأساسية</b>تخطيط النطاق، إعداد WBS، تطوير الجدول الزمني، تخطيط الموارد، تخطيط الموازنة، تخطيط المشتريات، إدارة المخاطر، تخطيط الجودة، تخطيط الاتصالات.</div>
+    </div>
+    <p>وخطوات <b>تخطيط الزمن</b> بالترتيب: <b>تعريف الأنشطة ← تسلسلها ← تقدير مددها ← تقدير مواردها ← إنتاج الجدول الزمني</b>.</p>
+  </div>
+
+  <div class="block" id="activities">
+    <h2><span class="idx">4</span> تعريف الأنشطة</h2>
+    <p>تعريف النشاط = <b>تفصيل إضافي لحزمة العمل</b>. النشاط بيحدد الشغل اللازم لننجز الحزمة، والأنشطة <b>مو هي المخرجات</b>، هي وحدات العمل اللي بتوصلنا للنواتج. ومنستعين بـ<b>الدروس المستفادة</b> من مشاريع مشابهة و<b>حكم الخبراء</b>.</p>
+    <div class="callout"><span class="tag">🌊 تخطيط الموجات (Rolling Wave Planning)</span>
+      إذا بلّشنا المشروع وما منعرف كتير عن الشغل الجاي: <b>منخطط ومنجدول بس الجزء الأول اللي منعرفو منيح</b>، ومنتريّث بالباقي لحد ما تجينا المعلومات (والأجزاء المجهولة منحطها بمستويات عالية بالـ WBS).</div>
+    <p><b>قائمة الأنشطة</b> = كل شي لازم ينعمل لإنجاز المشروع. وبعدين منحدد <b>سمات كل نشاط</b>: وصفو الكامل، الأنشطة <b>السابقة واللاحقة</b>، القيود، الموارد والوقت.</p>
+    <details class="accordion"><summary>💍 دراسة حالة الكتاب: عرس سميرة ومهند</summary>
+      <p>بدهن عرس بحزيران وهلأ كانون التاني! استعانوا بمنظّم الحفلات <b>هاني</b>، اللي بلّش بقائمة المهام (الدعوات، الزهور، الكعكة، العشاء، الفرقة) ورتّبها بـ WBS حسب المراحل. وانتبهوا: «ما منقدر نطبع الدعوات قبل ما نحط قائمة المدعوين»، و«ما منقدر نرتّب الجلوس قبل ما توصلنا الردود»: هاي هي <b>علاقات التبعية</b>.</p>
+      <p>ولما هاني اكتشف إنو بدهن <b>ليموزين تانية</b> للوصيفات، عمل <b>طلب تغيير</b> عن طريق نظام التحكم بالتغيير وانوافق عليه.</p></details>
+  </div>
+
+  <div class="block" id="dependencies">
+    <h2><span class="idx">5</span> علاقات التبعية الأربعة</h2>
+    <p>علاقات التبعية بتحدد الصلة بين <b>بدايات ونهايات</b> الأنشطة:</p>
+    <table class="cmp">
+      <tr><th>العلاقة</th><th>المعنى</th><th>مثال</th></tr>
+      <tr><td><b>FS</b> نهاية ← بداية</td><td>B <b>ما بيبدأ</b> إلا لما <b>ينتهي</b> A. <b>الأبسط والأكتر شيوعاً</b>.</td><td>نصب السقف بعد الأساسات. بـ«أوفلاين»: الدهان بعد التمديدات.</td></tr>
+      <tr><td><b>SS</b> بداية ← بداية</td><td>B بيبدأ <b>حالما يبدأ</b> A.</td><td>تنين بيلصقوا ورق جدران: اللي بيعلّق بيبلّش لما يبلّش اللي بيحط اللاصق.</td></tr>
+      <tr><td><b>FF</b> نهاية ← نهاية</td><td>B <b>ما بينتهي</b> إلا لما <b>ينتهي</b> A.</td><td>التوزيع ما بيخلص قبل ما يخلص إنتاج كل المكونات. (الكتاب كمان بيحط هون مثال «الموسيقيين ما بيخلصوا قبل ما يبلّشوا الضيوف يطلعوا»، مع إنو منطقياً أقرب لـ SF.)</td></tr>
+      <tr><td><b>SF</b> بداية ← نهاية</td><td>B <b>ما بينتهي</b> إلا لما <b>يبدأ</b> A.</td><td>تسليم أو قبول إجراء بيعتمد على بداية النشاط السابق (متل المناوبة: الحارس ما بيخلّص لحد ما يبلّش اللي بعدو).</td></tr>
+    </table>
+    <div id="dep-mount"></div>
+    <p><b>جرّب:</b> هالعلاقات من «أوفلاين» والعرس، من أي نوع؟</p>
+    <div id="sort-dep"></div>
+  </div>
+
+  <div class="block" id="lag-lead">
+    <h2><span class="idx">6</span> التخلّف (Lag) والقيادة (Lead)</h2>
+    <div class="quick-grid">
+      <div class="quick-card"><b>⏸️ التخلّف Lag</b><strong>تأخير زمني</strong> بين نشاطين. مثال: Lag = 5 بعلاقة FS يعني B ما بيبدأ إلا بعد <strong>5 أيام من نهاية A</strong> (متل تنشيف الخرسانة). وبينكتب فوق السهم.</div>
+      <div class="quick-card"><b>⏩ القيادة Lead</b>عكس التخلّف: <strong>تسبيق زمني</strong>، بينعبّر عنو <strong>بعدد سالب</strong>، ويعني <strong>تداخل</strong>. مثال: −5 يعني B بيبدأ قبل نهاية A بـ5 أيام.</div>
+    </div>
+    <div class="callout"><span class="tag">🧮 سؤال دورة</span>
+      علاقة <b>FS</b>، النشاط a = <b>10</b> أيام، والنشاط b = <b>12</b> يوم، وتخلّف <b>5</b> أيام. المدة الإجمالية؟ ← <b>10 + 5 + 12 = 27 يوم</b>. (جرّبها بالأداة فوق: FS وحرّك التخلّف لـ5.)</div>
+  </div>
+
+  <div class="block" id="dep-kinds">
+    <h2><span class="idx">7</span> التبعية الخارجية والتفضيلية والإلزامية</h2>
+    <table class="cmp">
+      <tr><th>النوع</th><th>المعنى</th><th>مثال العرس</th><th>☕ «أوفلاين»</th></tr>
+      <tr><td><b>خارجية</b></td><td>بتعتمد على شي <b>من خارج</b> شغل المشروع</td><td>تزيين الصالة بيستنى <b>وصول شحنة الزينة</b></td><td>تركيب المطبخ بيستنى وصول المعدات من المورد</td></tr>
+      <tr><td><b>تفضيلية</b></td><td>مدفوعة بالإجراءات أو <b>أفضل الممارسات</b>، <b>مو إلزامية</b>، مسألة تفضيل</td><td>الوصيفات يوصلوا قبل العرسان</td><td>نفضّل نجرّب المنيو قبل ما نطبعو</td></tr>
+      <tr><td><b>إلزامية</b></td><td>موجودة <b>بسبب طبيعة العمل</b> نفسو (قيود مادية)</td><td>ما منقدر نبعت دعوة <b>ما انطبعت</b></td><td>ما منقدر ندهن قبل ما نسكّر التمديدات</td></tr>
+    </table>
+    <p>و<b>نقاط العلّام</b> بتتتبّع كل النقاط المهمة، وبعضها بيدخل بالعقد. ولما نكتشف إنو النطاق بدو يتغيّر ← <b>طلب تغيير</b> عبر <b>نظام التحكم بالتغيير</b>.</p>
+  </div>
+
+  <div class="block" id="network">
+    <h2><span class="idx">8</span> المخطط الشبكي للمشروع</h2>
+    <div class="callout"><span class="tag">💡 التعريف</span>
+      المخطط الشبكي = <b>مخطط الأسبقية بعد إضافة المدد الزمنية</b> للأنشطة. بيعبّر <b>بشكل مرئي</b> عن منطق الخطة وعلاقات التبعية، ومنو منحسب <b>المسار الحرج وفترات العوم</b>.</div>
+    <ul>
+      <li>الأنشطة بالشبكة = <b>حزم العمل من WBS</b>، ولازم <b>كلها</b> تدخل، لأنو ترك نشاط واحد بيغيّر المدة والتكاليف.</li>
+      <li><b>WBS مو جدول زمني</b>، بس هو أساسو. والشبكة بتطلّع معلومات بتنتقل لاحقاً لأشكال أسهل متل <b>غانت</b> ومخططات نقاط العلّام.</li>
+      <li>الخطوات: نحدد العلاقات المنطقية لكل نشاط (إلزامية أو تقديرية، والنشاط ممكن يعتمد على <b>أكتر من سابق</b>) ← نرتّبهن بمسارات ← نراجع كل مسار. <b>كل المسارات بتتصل بالنهاية، وما في نشاط بيؤدي لمسار مسدود</b>.</li>
+      <li>بالنوعين <b>الأسهم من اليسار لليمين</b> (من البداية للنهاية)، بس <b>بدون محور زمن</b> محدد.</li>
+    </ul>
+  </div>
+
+  <div class="block" id="aoa">
+    <h2><span class="idx">9</span> الأنشطة على الأسهم AOA</h2>
+    <p><b>الأسهم = الأنشطة</b> (بتستهلك وقت، وبتنسمّى بأحرف A وB…)، و<b>العقد = الأحداث</b> أو نواتج الأنشطة (نقطة بالزمن، بأرقام 10، 20، 30…). مثال الكتاب: A حفر خندق، وبعدو B مد أنابيب وC مد كابلات <b>بالتوازي</b>.</p>
+    <div class="callout"><span class="tag">👻 النشاط الوهمي (Dummy)</span>
+      بالـ AOA بس: سهم <b>منقّط موجّه</b> بيعبّر عن تبعية ما منقدر نرسمها بالأسهم والعقد. <b>مو نشاط فعلي وما بيستهلك وقت</b>. (مثال: D بيستنى B وC، بس E بيستنى C بس.) ومن ملف العملي: <b>النشاط ما بيولد مرتين</b> بالشبكة، فمنستخدم السهم المنقط.</div>
+    <h3>عيوب AOA</h3>
+    <ul>
+      <li>بس بتظهر علاقات <b>Finish-to-Start</b>، والتخلّف والقيادة بس بالإضافة والطرح (التتبع بيصعب).</li>
+      <li>أحياناً بدها <b>أنشطة وهمية</b> لتصير منطقية.</li>
+      <li>مو منتشرة متل AON، لأنو AON أبسط، و<b>كل برمجيات إدارة المشاريع بتستوعب AON</b> بس مو كلها بتستوعب AOA.</li>
+    </ul>
+  </div>
+
+  <div class="block" id="aon">
+    <h2><span class="idx">10</span> الأنشطة في العقد AON</h2>
+    <p><b>العقد = الأنشطة</b>، و<b>الأسهم = علاقات التبعية</b>. اسم النشاط أو رمزو جوّا العقدة، و<b>ما بيجوز عقدتين يحملوا نفس الرمز</b>. و<b>ما في حاجة لأنشطة وهمية</b>، وبتقبل <b>كل أنواع علاقات التبعية</b>.</p>
+    <p>AON <b>تطوّرت من AOA</b> خصوصاً مع الكمبيوتر، وبتزيد القدرة على التعامل مع <b>المشاريع الكبيرة بقيود معقدة</b>. وكل الشبكات بتبيّن الترابطات وأوقات البدء والانتهاء و<b>المسار الحرج (أطول مسار عبر الشبكة)</b>.</p>
+    <div class="example"><span class="tag">⚠️ فخ امتحان</span>
+      «الفرق بين AON وAOA؟» ← <b>مكان تموضع الأنشطة: على الأسهم أم في العقد</b>. و«وين بينستخدم النشاط الوهمي؟» ← <b>بالأنشطة على الأسهم بس</b>.</div>
+  </div>
+
+  <div class="block" id="levels">
+    <h2><span class="idx">11</span> جدول المستويات: أسهل طريقة لترسم الشبكة</h2>
+    <ol class="timeline">
+      <li><span class="marker">1</span><h4>الأنشطة بلا سابق ← المستوى الأول</h4><p>اللي قدّامها «−» بعمود السابق.</p></li>
+      <li><span class="marker">2</span><h4>منشطبهن من عمود «السابق»</h4><p>بكل الأسطر.</p></li>
+      <li><span class="marker">3</span><h4>منرحّل ومنكرّر</h4><p>اللي صار ما إلو سابق ← المستوى الجاي… لحد ما كل الأنشطة تاخد مستوى.</p></li>
+    </ol>
+    <p>وبالآخر منرسم كل مستوى عمود، والأسهم <b>من اليسار لليمين فقط</b>، وممكن السهم <b>يجتاز أكتر من مستوى</b>. هي مثال الكتاب (<b>مركز أعمال جديد</b>):</p>
+    <div id="nl-mount"></div>
+  </div>
+
+
+  <div id="case-study-mount"></div>
+
+  <div class="block" id="flash">
+    <h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2>
+    <div id="activity-flash"></div>
+  </div>
+
+  <div class="next-actions">
+    <a href="chapter-5-practice.html" class="btn btn-teal">🧠 تدريب حر (بلا قفل)</a>
+    <a href="chapter-5-exam.html" class="btn btn-primary">📝 امتحان الفصل (يفتح الفصل السادس)</a>
+    <a href="../index.html" class="btn btn-ghost">رجوع لخارطة المقرر</a>
+  </div>
+</div>
+
+<div class="wrap" style="margin-bottom:28px"><div id="comments"></div></div>
+
+<footer class="site-footer">
+  <img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="footer-logo">
+  <div class="footer-brand">Support Channel</div>
+  <div class="footer-links">
+    <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
+    <a href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 غروب النقاش</a>
+    <a href="https://t.me/SVU_BSCM_BOT" target="_blank" rel="noopener">🎥 بوت المحاضرات المسجلة</a>
+  </div>
+  <div class="prepared-by">Prepared by: Bashar Karkinly</div>
+  <div class="copyright">كلن ع تلغرام 🔵 · جميع الحقوق محفوظة لقناة Support Channel</div>
+</footer>
+
+<script src="../../../assets/config.js"></script>
+<script src="../../../assets/auth.js"></script>
+<script src="../../../assets/shell.js"></script>
+<script>SCShell.init();</script>
+<script src="../../../assets/comments.js"></script>
+<script>SCComments.mount(document.getElementById("comments"),{course_id:"BQM607",chapter_id:"5",lazy:true});</script>
+<script>window.SITE_PREFIX = "../";</script>
+<script src="../assets/app.js"></script>
+<script src="../assets/data/course-manifest.js"></script>
+<script src="../assets/extras.js"></script>
+<script src="../assets/data/ch5-flashcards.js"></script>
+<script>
+
+renderDepTypes("dep-mount", {
+  title: "نشاطين من «أوفلاين»: التمديدات والدهان",
+  a: {name:"التمديدات", d:10}, b: {name:"الدهان", d:12},
+  examples: {
+    FS: "الدهان (B) ما بيبدأ إلا لما تخلص التمديدات (A). وإذا بدنا نستنى الجبصين ينشف، منحط تخلّف (Lag).",
+    SS: "لينا بتبلّش تدهن حالما تبلّش التمديدات بأول غرفة (متل ورق الجدران). مع Lag: بتستنى كم يوم.",
+    FF: "الدهان ما بيخلص إلا لما تخلص التمديدات (ممكن نكمّل الدهان بس آخر لمسة بعد آخر تمديد).",
+    SF: "الدهان (B) ما بيقدر يخلص إلا لما تبلّش التمديدات (A). علاقة نادرة، متل تسليم المناوبة."
+  }
+});
+
+renderSortGame("sort-dep", {
+  hint: "شو نوع علاقة التبعية؟",
+  buckets: [ {key:"FS", label:"FS نهاية ← بداية"}, {key:"SS", label:"SS بداية ← بداية"}, {key:"FF", label:"FF نهاية ← نهاية"}, {key:"SF", label:"SF بداية ← نهاية"} ],
+  items: [
+    {text:"ما منطبع الدعوات قبل ما تخلص قائمة المدعوين", bucket:"FS", why:"لازم يخلص الأول ليبدأ التاني."},
+    {text:"نصب السقف بعد الانتهاء من الأساسات", bucket:"FS", why:"مثال الكتاب الكلاسيكي لـ FS."},
+    {text:"تعليق ورق الجدران بيبدأ حالما يبدأ وضع اللاصق", bucket:"SS", why:"بدايتين مع بعض (مثال الكتاب)."},
+    {text:"لينا بتبلّش تفرش الطاولات حالما يبلّش مازن يركّب المطبخ", bucket:"SS", why:"بداية التاني مرتبطة ببداية الأول."},
+    {text:"التوزيع ما بيكتمل إلا لما يكتمل إنتاج كل المكونات", bucket:"FF", why:"النهاية مرتبطة بالنهاية (مثال الكتاب)."},
+    {text:"حارس الليل ما بيخلّص مناوبتو لحد ما يبلّش حارس الصبح", bucket:"SF", why:"نهاية B مربوطة ببداية A."}
+  ]
+});
+
+renderNetLevels("nl-mount", {
+  title: "جدول المستويات لمشروع «مركز أعمال جديد» (الجدول 5.5)",
+  acts: [
+    {id:"A", pred:[]}, {id:"B", pred:["A"]}, {id:"C", pred:["A"]}, {id:"D", pred:["A"]},
+    {id:"E", pred:["B","C"]}, {id:"F", pred:["B","C","D"]}, {id:"G", pred:["F"]}, {id:"H", pred:["E","G"]}
+  ]
+});
+
+renderCaseStudy("case-study-mount", {"title": "المعدات اللي ما وصلت", "scenario": "مازن جاهز يركّب المطبخ، بس معدات المطبخ لسا عند المورد بالجمارك. وجود بدها تمدّ كابلات النت بالمطبخ، بس قالت إنو بتفضّل تستنى لحد ما ينركّب المطبخ «لأنو هيك أرتب».", "question": "شو نوع التبعيتين؟", "options": ["تركيب المطبخ بيستنى المورد: تبعية خارجية · كابلات جود بعد المطبخ: تبعية تفضيلية", "التنتين إلزاميات", "تركيب المطبخ: تفضيلية · كابلات جود: خارجية", "التنتين خارجيات"], "answerIndex": 0, "explanation": "وصول المعدات شي <b>من خارج</b> شغل المشروع ← <b>تبعية خارجية</b> (متل شحنة الزينة بالعرس). وتفضيل جود «لأنو أرتب» مو مفروض بطبيعة العمل ← <b>تبعية تفضيلية</b> (متل وصول الوصيفات قبل العرسان). الإلزامية بتكون بسبب طبيعة العمل نفسو."});
+renderFlashcards("activity-flash", CH5_FLASHCARDS);
+</script>
+</body>
+</html>

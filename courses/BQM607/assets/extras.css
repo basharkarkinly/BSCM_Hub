@@ -1,0 +1,296 @@
+/* ============================================================
+   BQM607 — مكوّنات تفاعلية إضافية (لعبة التصنيف، مقياس المسؤولية، ...)
+   منفصلة عن style.css المشترك حتى ما نلمس المحرك الأساسي.
+   ============================================================ */
+
+/* ---------- لعبة التصنيف (Tap-to-sort) ---------- */
+.x-sort{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow-sm); }
+.x-sort-top{ display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:.85rem; color:var(--muted); margin-bottom:10px; flex-wrap:wrap; }
+.x-sort-bar{ flex:1; min-width:120px; height:8px; border-radius:99px; background:#EEF1F7; overflow:hidden; }
+.x-sort-bar > div{ height:100%; width:0; background:linear-gradient(90deg,var(--teal),var(--amber)); transition:width .3s ease; }
+.x-sort-card{ background:var(--ink); color:#fff; border-radius:14px; padding:22px 18px; text-align:center; font-weight:700; font-size:1.02rem; line-height:1.8; min-height:92px; display:flex; align-items:center; justify-content:center; transition:background .25s ease, transform .25s ease; }
+.x-sort-card.ok{ background:var(--success); transform:scale(1.02); }
+.x-sort-card.no{ background:var(--danger); animation:shake .35s ease; }
+.x-sort-btns{ display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-top:14px; }
+.x-sort-btns button{ font-family:inherit; font-weight:700; font-size:.92rem; padding:12px 10px; border-radius:12px; border:2px solid var(--border); background:#fff; color:var(--ink); cursor:pointer; transition:all .15s ease; }
+.x-sort-btns button:hover{ border-color:var(--teal); background:#F1FBFA; }
+.x-sort-btns button:disabled{ opacity:.5; cursor:default; }
+.x-sort-hint{ min-height:1.6em; margin-top:12px; font-size:.9rem; color:var(--muted); text-align:center; }
+.x-sort-hint b{ color:var(--ink); }
+.x-sort-done{ text-align:center; padding:8px 4px; }
+.x-sort-done .big{ font-size:2rem; font-weight:900; color:var(--teal-dark); }
+.x-sort-buckets{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:16px; text-align:right; }
+.x-sort-buckets > div{ background:#F7F9FC; border:1px dashed var(--border); border-radius:12px; padding:10px 12px; font-size:.82rem; }
+.x-sort-buckets h5{ margin:0 0 6px; font-size:.86rem; color:var(--ink); }
+.x-sort-buckets ul{ margin:0; padding:0 16px 0 0; color:var(--muted); }
+
+/* ---------- قصة الفصل (بطل الحكاية) ---------- */
+.story{ background:linear-gradient(135deg,#FFF9EE,#F1FBFA); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; margin:16px 0; }
+.story .tag{ display:inline-block; font-size:.75rem; font-weight:800; color:var(--amber-dark); margin-bottom:4px; }
+.story p{ margin:0; font-size:.95rem; }
+
+@media (max-width:640px){
+  .x-sort-card{ font-size:.95rem; padding:18px 12px; }
+  .x-slider-row .val{ min-width:0; }
+}
+
+/* ---------- توقيع الإعداد بالفوتر ---------- */
+.prepared-by{ margin:8px 0 4px; font-weight:800; font-size:.95rem; letter-spacing:.02em; direction:ltr; color:#FF9F1C; opacity:.95; }
+/* اسم المقرر بالهيدر أطول → نسمح له يلتف على الموبايل بدل ما يكسر الشريط */
+.topbar .brand{ line-height:1.35; }
+@media (max-width:640px){ .topbar .brand{ font-size:.86rem; } }
+
+/* ---------- شارة أدوات «جرّب بإيدك» ---------- */
+.gp-tag{ background:var(--teal); color:#fff; font-size:.72rem; font-weight:800; padding:3px 10px; border-radius:99px; }
+
+/* ---------- مكوّنات عامة: مقدمة الفصل، بانر التنبيه، الحالة العملية ---------- */
+/* ---------- بانر تنبيه (هاي منصة مراجعة فقط) ---------- */
+.disclaimer-banner{
+  background:#FFF3E0; border:1px solid #FFD794; color:var(--amber-dark);
+  border-radius:var(--radius); padding:16px 20px; margin:0 0 26px;
+  font-size:.92rem; line-height:1.8; display:flex; gap:12px; align-items:flex-start;
+}
+.disclaimer-banner .ico{ font-size:1.3rem; flex-shrink:0; }
+.disclaimer-banner b{ color:#8A5300; }
+/* ---------- بطاقة الحالة العملية ---------- */
+.case-card{
+  background:linear-gradient(135deg, #F4FBFA, #FFFFFF);
+  border:1px solid var(--border); border-radius:var(--radius);
+  padding:22px 24px; margin:18px 0;
+}
+.case-tag{
+  display:inline-block; background:var(--teal); color:#fff;
+  font-size:.72rem; font-weight:800; padding:4px 12px; border-radius:999px; margin-bottom:10px;
+}
+.case-card h4{ margin:0 0 10px; font-size:1.05rem; }
+.case-scenario{ color:var(--text); margin:0 0 14px; }
+.case-question{ margin:0 0 12px; }
+/* ---------- بطاقة كلمة مفتاحية (تظهر بمقدمة كل فصل) ---------- */
+.keyword-chip{
+  display:inline-block; background:#EAF1FF; color:#2C5CC5;
+  font-size:.8rem; padding:5px 12px; border-radius:999px; margin:3px 4px 3px 0;
+}
+.chapter-intro-box{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:20px 22px; margin-bottom:24px;
+}
+.chapter-intro-box h4{ margin:0 0 10px; font-size:.95rem; color:var(--teal-dark); }
+.chapter-intro-box ul{ margin:0; padding-inline-start:20px; }
+.chapter-intro-box li{ margin-bottom:5px; font-size:.92rem; }
+
+/* ---------- أساس البطاقات التفاعلية (اسحب وفلت) ---------- */
+.eqs{ background:#fff; border:1px solid var(--border,#E3E7F0); border-radius:18px; padding:18px; margin:18px 0; box-shadow:0 10px 30px -18px rgba(15,28,46,.35); }
+.eqs-head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.eqs-head h4{ margin:0; font-size:1.05rem; }
+.eqs-drop{ min-height:48px; border:2px dashed rgba(15,28,46,.18); border-radius:10px; padding:6px; background:rgba(255,255,255,.7); transition:background .2s,border-color .2s; cursor:pointer; }
+.eqs-drop.over{ background:#fff; border-color:#FF9F1C; box-shadow:0 0 0 3px rgba(255,159,28,.25) inset; }
+.eqs-tray{ display:flex; flex-wrap:wrap; gap:8px; min-height:40px; }
+.eqs-chip{ font:inherit; font-size:.88rem; font-weight:700; padding:8px 12px; border-radius:12px; border:2px solid #1D3557; background:#fff; color:#0F1C2E; cursor:grab; touch-action:none; user-select:none; box-shadow:0 3px 0 #1D3557; }
+.eqs-chip b{ margin-inline-start:4px; }
+.eqs-chip.sel{ background:#FFF4E2; border-color:#FF9F1C; box-shadow:0 3px 0 #FF9F1C; }
+.eqs-chip.lifting{ opacity:.35; }
+.eqs-chip:disabled{ opacity:.4; cursor:default; }
+.eqs-chip.shake{ animation:eqsShake .45s; border-color:#B4402B; }
+@keyframes eqsShake{ 20%,60%{ transform:translateX(-6px); } 40%,80%{ transform:translateX(6px); } }
+.eqs-ghost{ position:fixed; z-index:9999; pointer-events:none; transform:rotate(-4deg) scale(1.06); box-shadow:0 14px 26px -10px rgba(0,0,0,.45); cursor:grabbing; }
+.eqs-hint{ font-size:.78rem; color:#5B6478; margin:8px 0 0; }
+.eqs-msg{ margin-top:8px; font-size:.9rem; line-height:1.8; }
+.eqs-msg.bad{ color:#B4402B; } .eqs-msg.ok{ color:#0B7A57; }
+.eqs-msg.ok b{ color:#0B7A57; }
+@media (max-width:640px){ .eqs{ padding:12px; } }
+
+/* ---------- 🔺 مثلث القيود ---------- */
+.tri-grid{ display:grid; grid-template-columns:minmax(220px,300px) 1fr; gap:16px; align-items:center; }
+.tri-svg{ width:100%; height:auto; display:block; }
+.tri-max{ fill:#F5F7FB; stroke:#E3E7F0; stroke-width:2; stroke-dasharray:5 5; }
+.tri-now{ fill:rgba(46,196,182,.18); stroke-width:3; transition:all .5s ease; }
+.tri-svg circle{ transition:all .5s ease; }
+.tri-lab{ font-size:12.5px; font-weight:800; fill:#0F1C2E; }
+.tri-q{ font-size:17px; font-weight:800; }
+.tri-ql{ font-size:10px; font-weight:700; fill:#5B6478; }
+.tri-row{ background:#F5F7FB; border-radius:12px; padding:8px 12px; margin-bottom:8px; }
+.tri-row.locked{ background:#FFF8EB; }
+.tri-rh{ display:flex; align-items:center; gap:8px; font-weight:700; font-size:.9rem; }
+.tri-rh b{ margin-inline-start:auto; font-variant-numeric:tabular-nums; }
+.tri-lock{ width:34px; height:34px; border-radius:50%; border:1px solid var(--border,#E3E7F0); background:#fff; cursor:pointer; font-size:1rem; }
+.tri-row input[type=range]{ width:100%; accent-color:#FF9F1C; }
+.tri-row input[type=range]:disabled{ opacity:.4; }
+.tri-sc{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:12px; font-size:.9rem; }
+.tri-sc-b{ font:inherit; font-size:.84rem; font-weight:700; padding:7px 12px; border-radius:999px; border:1.5px solid #1D3557; background:#fff; cursor:pointer; color:#0F1C2E; }
+.tri-sc-b:hover{ background:#FFF4E2; border-color:#FF9F1C; }
+.tri-note{ display:none; margin-top:10px; background:#EFFBF8; border:1px solid #BFEDE6; border-radius:12px; padding:10px 12px; font-size:.9rem; line-height:1.8; }
+.tri-note.on{ display:block; }
+.tri .tri-reset{ margin-top:12px; }
+@media (max-width:640px){ .tri-grid{ grid-template-columns:1fr; } .tri-fig{ max-width:280px; margin:0 auto; } }
+
+/* ---------- 📈 منحنى دورة الحياة ---------- */
+.lc-svg{ width:100%; height:auto; display:block; background:#fff; border-radius:12px; }
+.lc-ph{ font-size:12px; font-weight:800; fill:#0F1C2E; }
+.lc-ax{ font-size:10px; fill:#5B6478; }
+.lc-range{ width:100%; accent-color:#0F1C2E; margin:8px 0 4px; }
+.lc-phase{ font-size:.95rem; margin:4px 0 10px; }
+.lc-meters{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.lc-m{ display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:6px; background:#F5F7FB; border-radius:10px; padding:8px 10px; font-size:.85rem; }
+.lc-m b{ font-size:.85rem; }
+.lc-m i{ grid-column:1 / -1; height:6px; border-radius:6px; background:#E3E7F0; overflow:hidden; display:block; }
+.lc-m u{ display:block; height:100%; border-radius:6px; transition:width .2s; }
+.lc-dot{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+.lc-ev{ margin-top:10px; min-height:1.6em; }
+@media (max-width:640px){ .lc-meters{ grid-template-columns:1fr; } .lc-ph{ font-size:15px; } }
+
+/* ---------- ⚖️ مصفوفة القرار + 💰 الحاسبة المالية ---------- */
+.dm-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.dm-t td, .dm-t th, .fc-t td, .fc-t th{ text-align:center; white-space:nowrap; }
+.dm-t td:first-child{ text-align:start; white-space:normal; min-width:120px; }
+.dm-w{ min-width:150px; }
+.dm-w input{ width:90px; vertical-align:middle; accent-color:#FF9F1C; }
+.dm-w b{ display:inline-block; min-width:40px; }
+.dm-tot td{ font-weight:800; background:#FFF8EB; }
+.dm-bars{ margin:12px 0; display:grid; gap:6px; }
+.dm-bar{ display:grid; grid-template-columns:minmax(90px,auto) 1fr 50px; gap:8px; align-items:center; font-size:.88rem; font-weight:700; }
+.dm-bar i{ height:14px; background:#EEF1F7; border-radius:8px; overflow:hidden; display:block; }
+.dm-bar u{ display:block; height:100%; border-radius:8px; transition:width .35s; }
+.dm .dm-reset{ margin-top:10px; }
+.fc-k{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px; }
+.fc-k input{ flex:1; min-width:160px; accent-color:#FF9F1C; }
+.fc-in{ width:110px; font:inherit; padding:5px 8px; border:1px solid #E3E7F0; border-radius:8px; text-align:center; }
+.fc-t td.neg{ color:#B4402B; }
+.fc-res{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:12px 0 4px; }
+.fc-res > div{ background:#F5F7FB; border-radius:12px; padding:10px 12px; display:flex; flex-direction:column; gap:2px; }
+.fc-res > div.ok{ background:#EAF8F1; } .fc-res > div.bad{ background:#FDECEA; }
+.fc-res span{ font-size:.82rem; color:#5B6478; font-weight:700; } .fc-res b{ font-size:1.1rem; } .fc-res small{ font-size:.78rem; color:#5B6478; }
+@media (max-width:640px){ .fc-res{ grid-template-columns:1fr; } }
+
+/* ---------- 🌳 WBS + 👥 مصفوفة المسؤوليات ---------- */
+.wbs-root{ margin:0 auto 10px; width:max-content; max-width:100%; background:#0F1C2E; color:#fff; font-weight:800; padding:8px 18px; border-radius:12px; }
+.wbs-nodes{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+.wbs-node{ background:#F5F7FB; border:2px dashed #C9D1E0; border-radius:12px; padding:10px; min-height:110px; cursor:pointer; }
+.wbs-nh{ font-weight:800; font-size:.9rem; margin-bottom:6px; color:#1D3557; }
+.wbs-node ul{ list-style:none; margin:0; padding:0; display:grid; gap:4px; }
+.wbs-node li{ background:#fff; border-radius:8px; padding:5px 8px; font-size:.84rem; }
+.wbs-node li code{ font-weight:800; color:#FF9F1C; margin-inline-end:4px; }
+.wbs-empty{ color:#8A93A6; font-size:.8rem; background:none !important; }
+.wbs-out{ margin-top:10px; border:2px dashed #E7B4AA; background:#FDF3F1; border-radius:12px; padding:10px; font-size:.88rem; font-weight:700; cursor:pointer; display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+.wbs-x{ background:#fff; border-radius:8px; padding:3px 8px; font-weight:600; text-decoration:line-through; color:#B4402B; }
+.wbs-rule{ display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:center; margin:12px 0 6px; font-size:.86rem; font-weight:700; }
+.wbs-rule i{ height:10px; background:#EEF1F7; border-radius:8px; overflow:hidden; display:block; }
+.wbs-rule u{ display:block; height:100%; background:#0B7A57; transition:width .35s; }
+.wbs .wbs-reset{ margin-top:10px; }
+@media (max-width:760px){ .wbs-nodes{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.rm-t td, .rm-t th{ text-align:center; }
+.rm-t td:first-child{ text-align:start; min-width:140px; }
+.rm-c{ width:40px; height:36px; border-radius:10px; border:1.5px solid #C9D1E0; background:#fff; font:inherit; font-weight:800; cursor:pointer; color:#8A93A6; }
+.rm-c.vR{ background:#1D3557; border-color:#1D3557; color:#fff; }
+.rm-c.vS{ background:#E6F7F5; border-color:#2EC4B6; color:#0F6E66; }
+
+/* ---------- 🔗 علاقات التبعية + 🪜 جدول المستويات ---------- */
+.dep-types{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-bottom:10px; }
+.dep-b{ font:inherit; border:2px solid #E3E7F0; background:#fff; border-radius:12px; padding:8px 6px; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.dep-b b{ font-size:1rem; } .dep-b small{ font-size:.74rem; color:#5B6478; }
+.dep-b.on{ border-color:#FF9F1C; background:#FFF4E2; }
+.dep-svg{ width:100%; height:auto; background:#F5F7FB; border-radius:12px; display:block; }
+.dep-tx{ font-size:12px; font-weight:700; fill:#fff; }
+.nl-t td, .nl-t th{ text-align:center; }
+.nl-t td:first-child{ text-align:start; }
+.nl-t tr.nl-done td{ background:#EAF8F1; }
+.nl-strike{ text-decoration:line-through; color:#B4402B; }
+.nl-svg{ width:100%; height:auto; margin-top:10px; background:#F5F7FB; border-radius:12px; display:block; }
+.nl-lv{ font-size:11px; font-weight:800; fill:#5B6478; }
+.nl-id{ font-size:16px; font-weight:800; fill:#1D3557; }
+.nl-btns{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+@media (max-width:640px){ .dep-types{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+
+/* ---------- 🎯 PERT + 🧭 CPM + ⏩ الضغط ---------- */
+.pert-f{ text-align:center; font-size:1.05rem; margin:10px 0; padding:10px; background:#FFF8EB; border-radius:12px; direction:ltr; }
+.cpm-t td, .cpm-t th{ text-align:center; padding:6px 8px; }
+.cpm-svg{ width:100%; min-width:560px; height:auto; display:block; background:#F5F7FB; border-radius:12px; margin:10px 0; }
+.cpm-n{ font-size:11px; font-weight:700; fill:#5B6478; }
+.cpm-id{ font-size:16px; font-weight:800; fill:#0F1C2E; }
+.cpm-d{ font-size:11px; fill:#5B6478; font-weight:600; }
+.cpm-sl{ font-size:10.5px; font-weight:800; }
+.cpm-ph{ font-weight:800; color:#1D3557; margin:4px 0; }
+.crash-top{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+.crash-top > div{ background:#F5F7FB; border-radius:12px; padding:10px 12px; display:flex; flex-direction:column; }
+.crash-top span{ font-size:.82rem; color:#5B6478; font-weight:700; } .crash-top b{ font-size:1.15rem; } .crash-top small{ color:#5B6478; }
+.crash-paths{ display:grid; gap:4px; margin-bottom:8px; font-size:.88rem; }
+.crash-paths .crit{ color:#B4402B; font-weight:700; }
+.crash-t td, .crash-t th{ text-align:center; } .crash-t td:first-child{ text-align:start; }
+.crash-t tr.crit td{ background:#FDF3F1; }
+.btn-mini{ font:inherit; font-size:.8rem; font-weight:800; padding:5px 10px; border-radius:8px; border:1.5px solid #1D3557; background:#fff; cursor:pointer; }
+.btn-mini:disabled{ opacity:.35; cursor:default; }
+.crash .crash-reset{ margin-top:10px; }
+.svg-scroll{ direction:ltr; } .svg-scroll .eqs-hint{ direction:rtl; }
+
+/* ---------- 📊 تسوية الموارد ---------- */
+.lv-svg{ min-width:600px; }
+.lv-r{ font-size:10px; font-weight:800; fill:#fff; }
+.lv-ctrl{ display:grid; gap:6px; margin:8px 0; }
+.lv-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:#F5F7FB; border-radius:10px; padding:6px 10px; font-size:.88rem; }
+.lv-row small{ color:#5B6478; } .lv-row span{ font-weight:700; min-width:64px; text-align:center; }
+.lv .lv-reset{ margin-top:10px; }
+
+/* ---------- 🚦 القيمة المكتسبة ---------- */
+.ev-t td, .ev-t th{ text-align:center; white-space:nowrap; padding:6px; }
+.ev-t th small{ font-weight:600; color:#5B6478; }
+.ev-in{ width:84px; }
+.ev-g, .ev-b, .ev-n{ display:inline-block; padding:2px 8px; border-radius:999px; font-size:.78rem; font-weight:800; }
+.ev-g{ background:#EAF8F1; color:#0B7A57; } .ev-b{ background:#FDECEA; color:#B4402B; } .ev-n{ background:#EEF1F7; color:#1D3557; }
+.ev-grid{ display:grid; grid-template-columns:240px 1fr; gap:14px; align-items:center; margin-top:12px; }
+.ev-q{ width:100%; height:auto; border-radius:12px; border:1px solid #E3E7F0; }
+.ev-ql{ font-size:9px; font-weight:700; fill:#5B6478; } .ev-ax{ font-size:9px; font-weight:800; fill:#0F1C2E; }
+.ev-dot{ font-size:10px; font-weight:800; fill:#fff; }
+.ev-res{ grid-template-columns:repeat(2,minmax(0,1fr)); margin:0; }
+.tri-sc-b.on{ background:#FFF4E2; border-color:#FF9F1C; }
+@media (max-width:640px){ .ev-grid{ grid-template-columns:1fr; } .ev-q{ max-width:260px; margin:0 auto; display:block; } }
+
+/* ---------- 🔥 مختبر المخاطر ---------- */
+.rl-grid{ display:grid; grid-template-columns:260px 1fr; gap:16px; align-items:start; }
+.rl-svg{ width:100%; height:auto; display:block; }
+.rl-pick{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+.rl-out{ border-radius:12px; padding:10px 12px; display:flex; flex-direction:column; gap:2px; margin-top:6px; }
+.rl-out b{ font-size:1.05rem; direction:ltr; text-align:end; } .rl-out small{ color:#5B6478; }
+.rl-r{ background:#FDECEA; } .rl-y{ background:#FFF8E1; } .rl-g{ background:#EAF8F1; }
+.rl-h{ margin:14px 0 6px; }
+.rl-t td, .rl-t th{ text-align:center; } .rl-t td:nth-child(2){ text-align:start; }
+.rl-t tr.on td{ background:#FFF4E2; }
+.rl-t td:nth-child(2){ min-width:150px; }
+@media (max-width:560px){ table.cmp.rl-t{ font-size:.8rem; } table.cmp.rl-t td, table.cmp.rl-t th{ padding:6px 5px; } table.cmp.rl-t td:nth-child(2){ min-width:120px; } }
+@media (max-width:700px){ .rl-grid{ grid-template-columns:1fr; } .rl-svg{ max-width:280px; margin:0 auto; } }
+
+/* ===== ch10 conflict grid ===== */
+.cg-l{ font-size:12px; font-weight:800; fill:#0F1C2E; paint-order:stroke; stroke:#fff; stroke-width:3px; font-family:'Alexandria',sans-serif; }
+.cg-out{ border:2px solid; border-radius:12px; padding:10px 12px; display:flex; flex-direction:column; gap:4px; margin-top:6px; background:#fff; }
+.cg-out b{ font-size:1.05rem; } .cg-out span{ font-size:.9rem; color:#33405A; }
+.cg-case{ background:#F3F6FB; border-radius:10px; padding:8px 12px; margin:0 0 10px; font-size:.92rem; }
+
+/* ===== ch11 org slider ===== */
+.os-steps{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px; }
+.os-r{ width:100%; accent-color:#FF9F1C; margin:4px 0 12px; }
+.os-grid{ display:grid; grid-template-columns:300px 1fr; gap:16px; align-items:start; }
+.os-svg{ width:100%; height:auto; display:block; }
+.os-top{ fill:#0F1C2E; } .os-dep{ fill:#E8EDF6; stroke:#C9D2E3; } .os-pm{ fill:#FF9F1C; }
+.os-top + .os-t{ fill:#fff; }
+.os-t{ font-size:11px; font-weight:800; fill:#0F1C2E; font-family:'Alexandria',sans-serif; } .os-t.w{ fill:#0F1C2E; }
+.os-ln{ stroke:#9AA3B2; stroke-width:1.5px; fill:none; } .os-ln.b{ stroke:#FF9F1C; }
+.os-n{ margin:0 0 4px; font-size:1.05rem; } .os-p{ margin:0 0 10px; font-size:.92rem; }
+.os-bar{ display:grid; grid-template-columns:130px 1fr; align-items:center; gap:8px; font-size:.82rem; font-weight:700; margin:4px 0; }
+.os-bar div{ background:#EEF1F6; border-radius:99px; height:12px; overflow:hidden; }
+.os-bar i{ display:block; height:100%; background:#FF9F1C; border-radius:99px; transition:width .3s; }
+.os-bar.f i{ background:#1D3557; }
+table.cmp.os-t{ font-size:.85rem; margin:10px 0 0; } table.cmp.os-t td{ padding:6px 8px; } table.cmp.os-t td:first-child{ font-weight:700; width:42%; }
+@media (max-width:700px){ .os-grid{ grid-template-columns:1fr; } .os-svg{ max-width:320px; margin:0 auto; } }
+.os-s{ font-size:9px; font-weight:700; fill:#C46A00; font-family:'Alexandria',sans-serif; }
+
+/* ===== ch12 closure checklist ===== */
+.cl-bar{ position:relative; background:#EEF1F6; border-radius:99px; height:22px; overflow:hidden; margin-bottom:12px; }
+.cl-bar i{ position:absolute; inset-block:0; inset-inline-start:0; background:linear-gradient(90deg,#2A9D8F,#5CC8B5); border-radius:99px; transition:width .3s; }
+.cl-bar span{ position:relative; display:block; text-align:center; font-size:.8rem; font-weight:800; line-height:22px; }
+.cl-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; }
+.cl-g{ background:#F7F9FC; border-radius:12px; padding:10px; }
+.cl-g h5{ margin:0 0 6px; font-size:.92rem; }
+.cl-i{ display:flex; align-items:flex-start; gap:8px; width:100%; text-align:start; background:#fff; border:1px solid #E3E7F0; border-radius:10px; padding:7px 9px; margin:4px 0; font:inherit; font-size:.86rem; cursor:pointer; }
+.cl-b{ flex:none; width:18px; height:18px; border:2px solid #9AA3B2; border-radius:5px; display:grid; place-items:center; font-size:.75rem; font-weight:900; color:#fff; margin-top:1px; }
+.cl-i.on{ border-color:#2A9D8F; background:#EAF8F1; } .cl-i.on .cl-b{ background:#2A9D8F; border-color:#2A9D8F; }
+.cl-i.bad{ border-color:#E63946; background:#FDECEA; } .cl-i.bad .cl-b{ background:#E63946; border-color:#E63946; }
+.cl-msg{ display:none; margin-top:10px; padding:8px 12px; border-radius:10px; background:#FFF8E1; font-size:.9rem; } .cl-msg.show{ display:block; }
+.cl-done{ margin-top:10px; padding:12px; border-radius:12px; background:#0F1C2E; color:#fff; font-weight:800; text-align:center; }

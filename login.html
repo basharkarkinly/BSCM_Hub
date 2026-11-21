@@ -114,6 +114,7 @@
     INVALID_EMAIL: "الإيميل غير صحيح، تأكد منه.",
     BLOCKED: "هالحساب غير مفعّل. تواصل معنا على تلغرام.",
     COOLDOWN: "استنى شوي قبل ما تطلب رمز جديد.",
+    OTP_LOCKED: "طلبت رمز التحقق كتير لهالإيميل. حفاظاً على حسابك، جرّب بعد شوي.",
     MAIL_QUOTA: "في ضغط على الإرسال حالياً، جرّب بعد ساعة أو تواصل معنا.",
     INVALID_CODE: "الرمز غير صحيح.",
     EXPIRED: "انتهت صلاحية الرمز، اطلب رمز جديد.",
@@ -200,6 +201,13 @@
     proceed();
   }
 
+  // مدة الانتظار بكلام مفهوم: "15 دقيقة"، "ساعة"، "ساعتين"، "4 ساعات"
+  function waitText(sec) {
+    var m = Math.max(1, Math.ceil(sec / 60));
+    if (m < 60) return m === 1 ? "دقيقة" : (m === 2 ? "دقيقتين" : m + (m <= 10 ? " دقايق" : " دقيقة"));
+    var h = Math.round(m / 60);
+    return h === 1 ? "ساعة" : (h === 2 ? "ساعتين" : h + (h <= 10 ? " ساعات" : " ساعة"));
+  }
   function sendCode(isResend) {
     var email = $("email").value.trim().toLowerCase();
     if (!isResend) { msg("msg-email", ""); }
@@ -216,6 +224,7 @@
       } else {
         var t = errText(res);
         if (res && res.error === "COOLDOWN" && res.wait) t = "استنى " + res.wait + " ثانية قبل ما تطلب رمز جديد.";
+        if (res && res.error === "OTP_LOCKED" && res.wait) t = "طلبت رمز التحقق كتير لهالإيميل. حفاظاً على حسابك، جرّب بعد " + waitText(res.wait) + ".";
         msg(isResend ? "msg-code" : "msg-email", t);
         if (!isResend) btn.disabled = false;
         if (isResend && res && res.error === "COOLDOWN") startCooldown(res.wait || 30);

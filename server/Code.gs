@@ -16,6 +16,11 @@ const CFG = {
   OTP_MAX_FAILS_HOUR: 10,     // محاولات خاطئة لنفس الإيميل خلال ساعة (حتى لو طلب رموز جديدة)
   OTP_COOLDOWN_SEC: 60,
   OTP_MAX_PER_HOUR: 40,       // أقصى عدد إيميلات رمز تحقق بتنبعت بالساعة (لكل الموقع) — حماية لحصة الإرسال اليومية
+  OTP_FREE_SENDS: 3,          // كم رمز بيقدر نفس الإيميل يطلب خلال OTP_SENDS_WINDOW_MIN قبل ما يتقفل الطلب
+  OTP_SENDS_WINDOW_MIN: 60,
+  OTP_LOCK_MIN: 15,           // أول قفل 15 دقيقة، وكل قفل بعدو ضعف اللي قبلو (30، 60، 120…)
+  OTP_LOCK_MAX_MIN: 1440,     // سقف القفل: 24 ساعة
+  OTP_LOCK_RESET_HOURS: 24,   // إذا مرّ هالوقت بعد آخر قفل بدون قفل جديد، المدة بترجع تبلّش من 15 دقيقة
   SESSION_DAYS: 90,
   RENEW_AFTER_HOURS: 24,
   OTP_KEEP_HOURS: 24,         // التنظيف الليلي: صفوف otp أقدم من هيك بتنمسح
@@ -26,7 +31,7 @@ const CFG = {
 /* ============ نقاط الدخول ============ */
 
 function doGet() {
-  return json_({ ok: true, service: 'support-channel-auth', version: 'v11-public-courses' });
+  return json_({ ok: true, service: 'support-channel-auth', version: 'v12-otp-lock' });
 }
 
 function doPost(e) {
@@ -115,13 +120,43 @@ function requestOtp_(req) {
   const user = findUser_(email);
   if (user && user.obj.status === 'blocked') return { ok: false, error: 'BLOCKED' };
 
-  const otp = table_('otp');
+  let otp = table_('otp');
+  if (otp.col('lock_until') < 0) {   // أول مرة بس: أعمدة قفل الطلبات بتنضاف تلقائياً
+    ensureCols_('otp', ['sends', 'sends_since', 'lock_until', 'lock_level']);
+    otp = table_('otp');
+  }
   const idx = findRow_(otp, 'email', email);
+  const nowMs = Date.now();
+  let sends = 0, sendsSince = null, level = 0;
   if (idx >= 0) {
-    const created = toDate_(otp.rows[idx][otp.col('created_at')]);
+    const r = otp.rows[idx];
+    // مقفول؟ (طلب رموز كتير لنفس الإيميل)
+    const lockUntil = toDate_(r[otp.col('lock_until')]);
+    if (lockUntil && lockUntil.getTime() > nowMs) {
+      return { ok: false, error: 'OTP_LOCKED', wait: Math.ceil((lockUntil.getTime() - nowMs) / 1000) };
+    }
+    level = Number(r[otp.col('lock_level')]) || 0;
+    if (level && (!lockUntil || nowMs - lockUntil.getTime() > CFG.OTP_LOCK_RESET_HOURS * 3600000)) level = 0;
+
+    const created = toDate_(r[otp.col('created_at')]);
     if (created) {
-      const wait = CFG.OTP_COOLDOWN_SEC - Math.floor((Date.now() - created.getTime()) / 1000);
+      const wait = CFG.OTP_COOLDOWN_SEC - Math.floor((nowMs - created.getTime()) / 1000);
       if (wait > 0) return { ok: false, error: 'COOLDOWN', wait: wait };
+    }
+
+    // عدد الرموز اللي انطلبت لهالإيميل خلال النافذة الحالية
+    sendsSince = toDate_(r[otp.col('sends_since')]);
+    if (sendsSince && nowMs - sendsSince.getTime() < CFG.OTP_SENDS_WINDOW_MIN * 60000) sends = Number(r[otp.col('sends')]) || 0;
+    else sendsSince = null;
+
+    if (sends >= CFG.OTP_FREE_SENDS) {
+      const mins = Math.min(CFG.OTP_LOCK_MIN * Math.pow(2, level), CFG.OTP_LOCK_MAX_MIN);
+      updateRow_(otp, idx, {
+        lock_until: iso_(new Date(nowMs + mins * 60000)),
+        lock_level: level + 1,
+        sends: 0, sends_since: ''
+      });
+      return { ok: false, error: 'OTP_LOCKED', wait: mins * 60 };
     }
   }
 
@@ -138,7 +173,10 @@ function requestOtp_(req) {
     created_at: iso_(now),
     expires_at: iso_(new Date(now.getTime() + CFG.OTP_TTL_MIN * 60000)),
     attempts: 0,
-    used: 'FALSE'
+    used: 'FALSE',
+    sends: sends + 1,
+    sends_since: iso_(sendsSince || now),
+    lock_level: level
     // fails و fails_since ما منلمسهم هون: بيضلّوا محسوبين حتى لو طلب رمز جديد
   };
   if (idx >= 0) updateRow_(otp, idx, rec); else appendRow_(otp, rec);
@@ -194,7 +232,7 @@ function verifyOtp_(req) {
   if (needName && hasBanned_(name)) return { ok: false, error: 'INVALID_NAME' };
   if (user && user.obj.status === 'blocked') return { ok: false, error: 'BLOCKED' };
 
-  updateRow_(otp, idx, { used: 'TRUE', fails: 0 });
+  updateRow_(otp, idx, { used: 'TRUE', fails: 0, sends: 0, sends_since: '', lock_level: 0 });   // دخل بنجاح → عدّادات الطلب بتتصفّر
   const u = upsertLoggedInUser_(email, name, 'otp');
   if (u.isNew) onNewUser_(email, req.ref);
   return newSession_(u, req.device);
@@ -461,11 +499,14 @@ function dailyCleanup() {
 
     // 2) رموز التحقق القديمة (منخلي يلي إلها عدّاد محاولات خاطئة شغّال خلال الساعة الأخيرة)
     const otp = table_('otp');
-    const fsCol = otp.col('fails_since');
+    // (ومنخلي كمان يلي مقفولة أو انقفلت خلال آخر OTP_LOCK_RESET_HOURS حتى ما ترجع مدة القفل تبلّش من الأول)
+    const fsCol = otp.col('fails_since'), luCol = otp.col('lock_until');
     const oDel = keepRows_(otp, function (r) {
       const c = toDate_(r[otp.col('created_at')]);
       const f = fsCol >= 0 ? toDate_(r[fsCol]) : null;
-      return (c && now - c.getTime() < CFG.OTP_KEEP_HOURS * 3600000) || (f && now - f.getTime() < 3600000);
+      const lu = luCol >= 0 ? toDate_(r[luCol]) : null;
+      return (c && now - c.getTime() < CFG.OTP_KEEP_HOURS * 3600000) || (f && now - f.getTime() < 3600000) ||
+             (lu && now - lu.getTime() < CFG.OTP_LOCK_RESET_HOURS * 3600000);
     });
 
     // 3) أرشفة النقاشات القديمة

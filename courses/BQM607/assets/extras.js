@@ -1153,3 +1153,61 @@ function renderRiskLab(containerId, cfg){
   }
   draw();
 }
+
+/* ===== الفصل 10: خريطة حل النزاعات (أهمية القضية × أهمية العلاقة) ===== */
+function renderConflictGrid(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const C = cfg.cases || [], ST = {
+    av:{n:"🙈 التجنّب", c:"#9AA3B2", t:"لا القضية مهمة ولا العلاقة على المحك… منترك الموضوع يهدى أو منأجّلو."},
+    fo:{n:"✊ الإجبار", c:"#E63946", t:"القضية أهم من العلاقة: «اعمل هيك لأني قلتلك». بينجح لما بدنا حل سريع ومشاركة الأطراف بالقرار قليلة."},
+    ac:{n:"🤲 الاستيعاب", c:"#2A9D8F", t:"العلاقة أهم من القضية: منتنازل ومنساير الطرف التاني (متل التكيّف مع العميل)."},
+    co:{n:"🤝 التعاون", c:"#1D3557", t:"القضية والعلاقة مهمين التنين: منقعد سوا لنلاقي حل بيربّح الكل."},
+    cm:{n:"⚖️ المساومة", c:"#FF9F1C", t:"نص بنص: كل طرف بيتنازل عن شي لنوصل لحل وسط."}
+  };
+  let i = 3, r = 3, sel = -1;
+  const style = (i, r) => i >= 4 && r >= 4 ? "co" : i >= 4 && r <= 2 ? "fo" : i <= 2 && r >= 4 ? "ac" : i <= 2 && r <= 2 ? "av" : "cm";
+  function svg(){
+    const L = 40, T = 10, S = 220, c = S / 5;
+    let cells = "";
+    for (let x = 1; x <= 5; x++) for (let y = 1; y <= 5; y++){
+      const s = style(x, y);
+      cells += `<rect x="${L + (x - 1) * c}" y="${T + (5 - y) * c}" width="${c}" height="${c}" fill="${ST[s].c}" fill-opacity="${s === style(i, r) ? .35 : .12}" stroke="#fff"/>`;
+    }
+    const lab = [["av",1.5,1.5],["fo",4.5,1.5],["ac",1.5,4.5],["co",4.5,4.5],["cm",3,3]].map(([k, x, y]) =>
+      `<text x="${L + (x - .5) * c + c / 2}" y="${T + (5 - y) * c + c / 2 + 4}" text-anchor="middle" class="cg-l">${ST[k].n.split(" ")[1]}</text>`).join("");
+    return `<svg viewBox="0 0 ${L + S + 10} ${T + S + 40}" class="rl-svg">${cells}
+      <circle cx="${L + (i - .5) * c}" cy="${T + (5 - r + .5) * c}" r="10" fill="${ST[style(i, r)].c}" stroke="#fff" stroke-width="3"/>${lab}
+      <text x="${L + S / 2}" y="${T + S + 30}" text-anchor="middle" class="ev-ax">أهمية القضية →</text>
+      <text x="12" y="${T + S / 2}" text-anchor="middle" class="ev-ax" transform="rotate(-90 12 ${T + S / 2})">أهمية العلاقة →</text></svg>`;
+  }
+  function res(){
+    const s = ST[style(i, r)];
+    return `<div class="cg-out" style="border-color:${s.c}"><b>${s.n}</b><span>${s.t}</span></div>`;
+  }
+  function upd(){
+    root.querySelector(".cg-gw").innerHTML = svg();
+    root.querySelector(".cg-ow").innerHTML = res();
+    const v = root.querySelectorAll(".tri-rh b"); v[0].textContent = i; v[1].textContent = r;
+  }
+  function draw(){
+    root.innerHTML = `
+      <div class="eqs cg">
+        <div class="eqs-head"><span class="gp-tag">🧭 جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        ${C.length ? `<div class="rl-pick">${C.map((q, k) => `<button type="button" class="tri-sc-b${k === sel ? " on" : ""}" data-k="${k}">${q.name}</button>`).join("")}</div>
+        ${sel >= 0 ? `<p class="cg-case">${C[sel].text}</p>` : ""}` : ""}
+        <div class="rl-grid">
+          <div class="svg-scroll cg-gw">${svg()}</div>
+          <div>
+            ${[["i","📌 قديش القضية مهمة؟", i],["r","💞 قديش العلاقة مهمة؟", r]].map(([k, l, v]) => `
+              <div class="tri-row"><div class="tri-rh"><span>${l}</span><b>${v}</b></div>
+              <input type="range" min="1" max="5" value="${v}" data-f="${k}" aria-label="${l}"></div>`).join("")}
+            <div class="cg-ow">${res()}</div>
+            <p class="eqs-hint">ما في أسلوب «صح دايماً»: الفعالية بتعتمد على الموقف.</p>
+          </div>
+        </div>
+      </div>`;
+    root.querySelectorAll(".rl-pick .tri-sc-b").forEach(b => b.addEventListener("click", () => { sel = +b.dataset.k; i = C[sel].issue; r = C[sel].rel; draw(); }));
+    root.querySelectorAll(".cg input").forEach(inp => inp.addEventListener("input", () => { if (inp.dataset.f === "i") i = +inp.value; else r = +inp.value; upd(); }));
+  }
+  draw();
+}

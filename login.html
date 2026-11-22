@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
 <link rel="stylesheet" href="assets/style.css?v=20261121a">
-<link rel="stylesheet" href="assets/hub.css?v=20261121a">
+<link rel="stylesheet" href="assets/hub.css?v=20261122a">
 </head>
 <body>
 
@@ -39,7 +39,7 @@
       <!-- الخطوة 1: الإيميل -->
       <div id="step-email" class="step" hidden>
         <h2>تسجيل الدخول</h2>
-        <p class="sub">دخّل إيميلك الشخصي (غوغل، هوتميل،...) وبنبعتلك رمز تحقق عليه من 6 أرقام.</p>
+        <p class="sub">دخّل إيميلك الشخصي (غوغل، هوتميل،...) وبنبعتلك رمز تحقق عليه من 6 أرقام. ممكن يوصل على مجلد الرسائل غير المرغوب فيها، فشوف كل المجلدات.</p>
         <p class="notice" id="ref-note" hidden style="margin:0 0 14px;">👋 صديقك دعاك للمنصة! سجّل وبتاخد نجوم ترحيب ⭐</p>
         <label class="field"><span>الإيميل</span>
           <input id="email" type="email" dir="ltr" autocomplete="email" inputmode="email" placeholder="name@example.com">
@@ -55,7 +55,17 @@
       <!-- الخطوة 2: الرمز -->
       <div id="step-code" class="step" hidden>
         <h2>دخّل الرمز</h2>
-        <p class="sub" id="code-sub">بعتنا الرمز لإيميلك. تأكد كمان من مجلد الرسائل غير المرغوبة.</p>
+        <p class="sub" id="code-sub">بعتنا الرمز لإيميلك.</p>
+        <div class="spam-note">
+          <strong class="spam-title">📬 ما لقيت الرمز بالبريد الوارد؟</strong>
+          <ul>
+            <li>دوّر بمجلد <b>الرسائل غير المرغوب فيها</b> (<bdi>Junk / Spam</bdi>).</li>
+            <li>بـ <b><bdi>Gmail</bdi></b>: شوف تبويبات <b>العروض الترويجية</b> (<bdi>Promotions</bdi>) و<b>التحديثات</b> (<bdi>Updates</bdi>)، أو مجلد <b>كل البريد</b> (<bdi>All Mail</bdi>).</li>
+            <li>بـ <b><bdi>Hotmail / Outlook</bdi></b>: شوف تبويب <b>«غير ذلك»</b> (<bdi>Other</bdi>) جنب «مُركّز» (<bdi>Focused</bdi>).</li>
+            <li>إذا لقيتو هونيك، علّم عليه <b>«ليس رسالة غير مرغوب فيها»</b> (<bdi>Not spam</bdi>) لتوصلك الرسائل الجاية عالوارد.</li>
+            <li>الرمز ممكن ياخد دقيقة أو دقيقتين ليوصل.</li>
+          </ul>
+        </div>
         <label class="field"><span>رمز التحقق</span>
           <input id="code" class="code-input" type="text" dir="ltr" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="••••••">
         </label>
@@ -217,7 +227,7 @@
     SCAuth.api("requestOtp", { email: email }).then(function (res) {
       if (res && res.ok) {
         state.email = email;
-        $("code-sub").textContent = "بعتنا الرمز إلى " + email + ". تأكد كمان من مجلد الرسائل غير المرغوبة.";
+        $("code-sub").textContent = "بعتنا الرمز إلى \u2068" + email + "\u2069.";
         show("step-code"); $("code").value = ""; $("code").focus();
         msg("msg-code", "");
         startCooldown(60);

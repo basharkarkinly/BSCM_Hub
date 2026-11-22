@@ -438,3 +438,10 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .gate-x{ position:absolute; top:10px; left:10px; width:34px; height:34px; border-radius:50%; border:1px solid var(--border); background:#F5F7FB; font-size:1.1rem; cursor:pointer; color:inherit; }
 @keyframes gateIn{ from{ opacity:0; transform:translateY(8px) scale(.98); } to{ opacity:1; transform:none; } }
 @media (prefers-reduced-motion: reduce){ .gate-box{ animation:none; } }
+
+/* ملاحظة: رمز التحقق ممكن يوصل على Junk/Spam */
+.spam-note{ background:#FFF8E6; border:1px solid #FFD794; border-radius:12px; padding:10px 14px; margin:-6px 0 16px; font-size:.86rem; line-height:1.75; color:#5A4200; }
+.spam-note .spam-title{ display:block; margin-bottom:4px; color:#8A5300; }
+.spam-note ul{ margin:0; padding-inline-start:18px; }
+.spam-note li{ margin:2px 0; }
+.spam-note bdi{ white-space:nowrap; }

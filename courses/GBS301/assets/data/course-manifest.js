@@ -9,7 +9,12 @@ const COURSE_CHAPTERS = [
   {num:4, key:"ch4", title:"مهارات التعلم الافتراضي: العروض التقديمية", href:"chapters/chapter-4-lesson.html"},
   {num:5, key:"ch5", title:"مهارات التعلم الافتراضي: البريد الإلكتروني", href:"chapters/chapter-5-lesson.html"},
   {num:6, key:"ch6", title:"مهارات التعلم الافتراضي: أدوات التواصل الاجتماعي", href:"chapters/chapter-6-lesson.html"},
-  {num:7, key:"ch7", title:"مهارات التعلم الافتراضي: الاستبيان", href:"chapters/chapter-7-lesson.html"}
+  {num:7, key:"ch7", title:"مهارات التعلم الافتراضي: الاستبيان", href:"chapters/chapter-7-lesson.html"},
+  {num:8, key:"ch8", title:"نظام إدارة التعلم LMS", href:"chapters/chapter-8-lesson.html"},
+  {num:9, key:"ch9", title:"نظام إدارة الامتحانات", href:"chapters/chapter-9-lesson.html"},
+  {num:10, key:"ch10", title:"الواقع الافتراضي والتعلم بالألعاب", href:"chapters/chapter-10-lesson.html"},
+  {num:11, key:"ch11", title:"الواقع المعزز", href:"chapters/chapter-11-lesson.html"},
+  {num:12, key:"ch12", title:"معايير الجودة في التعلم الافتراضي", href:"chapters/chapter-12-lesson.html"}
 ];
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */

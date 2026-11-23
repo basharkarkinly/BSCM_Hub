@@ -10,6 +10,8 @@
  * - lazy:true → بيعرض شريط صغير (كم سؤال وكم بلا جواب) وزر "عرض الأسئلة" بدل تحميل كل شي (أخف عالإنترنت البطيء).
  *   إذا الرابط بينتهي بـ #comments (جاي من الإشعارات) بيفتح كل شي مباشرة.
  * - thread:'c_xxx' → بيعرض سؤال واحد مع أجوبتو بس (لساحة الأسئلة qa.html). onChange(data) بينادى بعد كل تحديث.
+ * - زائر بدون حساب بالفصل الأول: بيقرأ الأسئلة والأجوبة بس (بدون أسماء، وبلا سؤال ولا جواب ولا تصويت)،
+ *   ومكان مربع السؤال في دعوة لتسجيل الدخول. باقي الأماكن: «سجّل دخولك».
  */
 (function () {
   if (window.SCComments) return;
@@ -130,6 +132,10 @@
   function setLazyOpen() { try { sessionStorage.setItem("scc_open", "1"); } catch (e) {} }
 
   var cache = {};  // key -> {t, data}
+  var GUEST = false;   // الرسم الحالي لزائر (قراءة بس)
+  function token() { var s = window.SCAuth && SCAuth.getSession(); return (s && s.token) || ""; }
+  function withTok(o) { var t = token(); if (t) o.token = t; return o; }
+  function guestCanRead(opts) { return !opts.thread && String(opts.chapter_id) === "1"; }
   function key(o) { return o.course_id + "|" + o.chapter_id; }
   function drop(o) { delete cache[key(o)]; try { sessionStorage.removeItem("sc_notif_cache"); } catch (e) {} }
 
@@ -144,8 +150,8 @@
     el.classList.add("scc");
     el.onclick = null;
     if (!el.id) el.id = "comments";
-    var s = window.SCAuth && SCAuth.getSession();
-    if (!s || !s.token) return renderLogin(el);
+    opts.guest = !token();
+    if (opts.guest && !guestCanRead(opts)) return renderLogin(el);
     if (opts.lazy && !opts.thread && !lazyOpen() && location.hash !== "#" + el.id) return renderLazy(el, opts, tag);
     load(el, opts, tag, false);
   }
@@ -177,10 +183,11 @@
     var c = cache[key(opts)];
     if (c && Date.now() - c.t < CACHE_MS) return paint({ questions: c.data.questions, unanswered: c.data.unanswered });
     paint(null);
-    SCAuth.api("getQaStats", { token: SCAuth.getSession().token, course_id: opts.course_id, chapter_id: opts.chapter_id })
+    SCAuth.api("getQaStats", withTok({ course_id: opts.course_id, chapter_id: opts.chapter_id }))
       .then(function (res) {
         if (el.__scc !== tag) return;
         if (res && res.ok) paint(res);
+        else if (opts.guest) renderLogin(el);   // السيرفر لسا ما بيسمح للزوار
         else if (res && (res.error === "NO_SESSION" || res.error === "EXPIRED")) { SCAuth.clearSession(); renderLogin(el); }
       }).catch(function () {});
   }
@@ -189,8 +196,7 @@
     var k = key(opts), c = cache[k];
     if (!force && c && Date.now() - c.t < CACHE_MS) return render(el, opts, c.data);
     el.innerHTML = (opts.thread ? "" : head()) + '<div class="scc-load">عم نحمّل' + (opts.thread ? ' الأجوبة' : ' الأسئلة') + '...</div>';
-    var s = SCAuth.getSession();
-    SCAuth.api("getComments", { token: s.token, course_id: opts.course_id, chapter_id: opts.chapter_id })
+    SCAuth.api("getComments", withTok({ course_id: opts.course_id, chapter_id: opts.chapter_id }))
       .then(function (res) {
         if (el.__scc !== tag) return;   // انتقل المستخدم لمادة تانية
         if (res && res.ok) {
@@ -199,6 +205,7 @@
           if (location.hash === "#" + el.id) setTimeout(function () { el.scrollIntoView({ block: "start" }); }, 50);
           return;
         }
+        if (opts.guest) return renderLogin(el);
         if (res && (res.error === "NO_SESSION" || res.error === "EXPIRED")) { SCAuth.clearSession(); return renderLogin(el); }
         fail(el, opts, tag, errText(res));
       })
@@ -237,12 +244,12 @@
       (best ? '<span class="scc-tag solved">✓ حلّ المشكلة</span>' : "") +
       '<span>' + esc(ago(a.created_at)) + '</span></div>' +
       '<div class="scc-text">' + esc(a.text) + '</div>' +
-      '<div class="scc-acts">' +
+      (GUEST ? (a.votes ? '<div class="scc-acts"><span class="scc-vote on" style="cursor:default">👍 ' + a.votes + '</span></div>' : '') : '<div class="scc-acts">' +
         '<button type="button" class="scc-vote' + (a.voted ? " on" : "") + '" data-vote="' + esc(a.id) + '"' + (voteDis ? " disabled" : "") +
           ' title="' + (a.mine ? "جوابك" : a.voted ? "صوّتت" : "جواب مفيد") + '">👍 ' + (a.votes || 0) + '</button>' +
         (canAccept ? '<button type="button" class="scc-accept" data-accept="' + esc(a.id) + '">✓ حلّ مشكلتي</button>' : "") +
         (a.mine ? '<button type="button" class="scc-link del" data-del="' + esc(a.id) + '">حذف</button>' : "") +
-      '</div></div>';
+      '</div>') + '</div>';
   }
 
   function questionHTML(q, answers) {
@@ -260,15 +267,16 @@
       (solved ? '<span class="scc-tag solved">✓ انحلّ</span>' : open ? '<span class="scc-tag open">بلا جواب</span>' : "") +
       '<span>' + esc(ago(q.created_at)) + '</span></div>' +
       '<div class="scc-text">' + esc(q.text) + '</div>' +
-      '<div class="scc-acts">' +
+      (GUEST ? '' : '<div class="scc-acts">' +
         '<button type="button" class="scc-link" data-reply="' + esc(q.id) + '">✍️ جاوب</button>' +
         (q.mine ? '<button type="button" class="scc-link del" data-del="' + esc(q.id) + '">حذف</button>' : "") +
-      '</div>' +
+      '</div>') +
       (answers.length ? '<div class="scc-ans">' + answers.map(function (a) { return answerHTML(a, q); }).join("") + '</div>' : "") +
       '</div>';
   }
 
   function render(el, opts, data) {
+    GUEST = !!opts.guest;
     var list = data.comments || [];
     var limit = data.limit || LIMIT_DEFAULT;
     var left = limit - (data.mine_count || 0);
@@ -289,13 +297,15 @@
       if (opts.onChange) try { opts.onChange(data, one, kids[opts.thread] || []); } catch (e) {}
       return;
     }
-    var html = head(qs.length) + composerHTML(left, "");
+    var html = head(qs.length) + (GUEST
+      ? '<div class="scc-login">عندك سؤال؟ أو بتعرف الجواب؟ سجّل دخولك لتسأل وتجاوب وتكسب نجوم ⭐<br><a href="' + esc(HUB + "login.html?next=" + encodeURIComponent(location.href.split("#")[0] + "#" + el.id)) + '">تسجيل الدخول</a></div>'
+      : composerHTML(left, ""));
     if (qs.length) {
       html += '<div class="scc-tabs"><button type="button" class="scc-tab' + (filter === "all" ? " on" : "") + '" data-filter="all">الكل (' + qs.length + ')</button>' +
         '<button type="button" class="scc-tab' + (filter === "open" ? " on" : "") + '" data-filter="open">بلا جواب (' + openCount + ')</button></div>';
     }
     html += '<div class="scc-list">';
-    if (!qs.length) html += '<div class="scc-empty">ما في أسئلة لسا عن هالفصل. كون أول واحد بيسأل!</div>';
+    if (!qs.length) html += '<div class="scc-empty">ما في أسئلة لسا عن هالفصل.' + (GUEST ? '' : ' كون أول واحد بيسأل!') + '</div>';
     else if (!shown.length) html += '<div class="scc-empty">كل الأسئلة إلها أجوبة 👏</div>';
     shown.forEach(function (q) { html += questionHTML(q, (kids[q.id] || []).slice()); });
     html += "</div>";

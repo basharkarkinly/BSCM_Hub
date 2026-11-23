@@ -6,8 +6,8 @@
 <title>المقررات — Support Channel</title>
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/style.css?v=20261121a">
-<link rel="stylesheet" href="assets/hub.css?v=20261122a">
+<link rel="stylesheet" href="assets/style.css?v=20261123a">
+<link rel="stylesheet" href="assets/hub.css?v=20261123a">
 <script>
   // روابط قديمة لصفحة الدخول (كانت index.html): ?next= و ?ref= (رابط الدعوة) و ?deleted=1 → login.html
   if (/[?&](next|ref|deleted)=/.test(location.search)) location.replace("login.html" + location.search + location.hash);
@@ -60,18 +60,6 @@
   <div style="height:36px"></div>
 </main>
 
-<div class="gate-ov" id="gate" hidden>
-  <div class="gate-box" role="dialog" aria-modal="true" aria-labelledby="gate-title">
-    <button class="gate-x" id="gate-x" type="button" aria-label="إغلاق">×</button>
-    <div class="gate-ico" aria-hidden="true">🔒</div>
-    <h2 id="gate-title">سجّل دخولك لتفتح المادة</h2>
-    <p class="gate-course" id="gate-course"></p>
-    <p class="gate-sub">التسجيل مجاني وبياخد دقيقة: إيميلك وبس. وبعدها بتفوت عالمادة دغري، وتقدّمك بينحفظ.</p>
-    <a class="btn btn-primary btn-block" id="gate-go" href="login.html">🔑 تسجيل الدخول</a>
-    <button class="btn btn-block gate-no" id="gate-no" type="button">مو هلأ</button>
-  </div>
-</div>
-
 <footer class="site-footer">
   <div class="footer-links">
     <a href="https://t.me/karkinlysupportchannel" target="_blank" rel="noopener">📢 قناة التلغرام</a>
@@ -81,11 +69,11 @@
   <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
 </footer>
 
-<script src="assets/config.js?v=20261121a"></script>
-<script src="assets/auth.js?v=20261121a"></script>
-<script src="assets/shell.js?v=20261121a"></script>
-<script src="assets/community.js?v=20261121a" defer></script>
-<script src="assets/slogan.js?v=20261121a" defer></script>
+<script src="assets/config.js?v=20261123a"></script>
+<script src="assets/auth.js?v=20261123a"></script>
+<script src="assets/shell.js?v=20261123a"></script>
+<script src="assets/community.js?v=20261123a" defer></script>
+<script src="assets/slogan.js?v=20261123a" defer></script>
 <script>
   SCShell.init({
     guest: function () {},
@@ -113,6 +101,7 @@
         '<span class="code-badge">' + esc(c.code) + '</span>' +
         '<h3>' + esc(c.title) + '</h3>' +
         (c.description ? '<p>' + esc(c.description) + '</p>' : '') +
+        '<span class="guest-hint">🎁 الفصل الأول مفتوح بدون تسجيل</span>' +
         '<span class="open-hint">افتح المقرر ←</span></a>';
     }).join("");
   }
@@ -122,7 +111,7 @@
     try { cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null"); } catch (e) {}
     if (cached && cached.length) render(cached);   // عرض فوري من آخر نسخة
 
-    // المواد بتنعرض للكل (حتى بدون حساب)؛ فتح المادة هو اللي بدو تسجيل دخول
+    // المواد بتنعرض للكل (حتى بدون حساب)؛ والزائر بيقدر يجرّب الفصل الأول من كل مادة (shell.js)
     var s = SCAuth.getSession(), tok = s && s.token;
     SCAuth.api("getCourses", tok ? { token: tok } : {}).then(function (res) {
       if (res && res.ok) {
@@ -140,26 +129,6 @@
 
   loadCourses();
 
-  // ---- زائر بدون حساب: الضغط على مادة بيفتح نافذة الدخول، وبعد الدخول بيرجع عالمادة نفسها ----
-  var gate = document.getElementById("gate"), lastFocus = null;
-  function openGate(card) {
-    var c = coursesById[card.getAttribute("data-id")] || {};
-    document.getElementById("gate-course").textContent = (c.code ? c.code + " — " : "") + (c.title || "");
-    var dest = new URL(card.getAttribute("href"), location.href).href;
-    document.getElementById("gate-go").href = "login.html?next=" + encodeURIComponent(dest);
-    lastFocus = card; gate.hidden = false;
-    document.getElementById("gate-go").focus();
-  }
-  function closeGate() { gate.hidden = true; if (lastFocus) lastFocus.focus(); }
-  grid.addEventListener("click", function (e) {
-    if (!document.body.classList.contains("is-guest")) return;
-    var card = e.target.closest("a.course-card"); if (!card) return;
-    e.preventDefault(); openGate(card);
-  });
-  document.getElementById("gate-x").addEventListener("click", closeGate);
-  document.getElementById("gate-no").addEventListener("click", closeGate);
-  gate.addEventListener("click", function (e) { if (e.target === gate) closeGate(); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !gate.hidden) closeGate(); });
 </script>
 </body>
 </html>

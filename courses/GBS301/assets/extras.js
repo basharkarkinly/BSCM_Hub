@@ -2,7 +2,6 @@
    GBS301 — مكوّنات تفاعلية إضافية. تعتمد على app.js (shuffle, launchConfetti)
    ============================================================ */
 
-function xFmt(n){ return Number(n).toLocaleString("en-US"); }
 
 /* ---------- لعبة التصنيف: اضغط على الفئة الصحيحة لكل بطاقة ----------
    cfg = { buckets:[{key,label}], items:[{text, bucket, why}] } */

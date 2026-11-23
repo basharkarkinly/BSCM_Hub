@@ -52,13 +52,14 @@
           <div id="g-btn"></div>
         </div>
         <p id="msg-email" class="msg" role="alert"></p>
+        <p style="text-align:center;margin:10px 0 0;"><button id="btn-have-code" class="linkbtn" type="button">عندي رمز من الإدارة</button></p>
       </div>
 
       <!-- الخطوة 2: الرمز -->
       <div id="step-code" class="step" hidden>
         <h2>دخّل الرمز</h2>
         <p class="sub" id="code-sub">بعتنا الرمز لإيميلك.</p>
-        <div class="spam-note">
+        <div class="spam-note" id="spam-note">
           <strong class="spam-title">📬 ما لقيت الرمز بالبريد الوارد؟</strong>
           <ul>
             <li>دوّر بمجلد <b>الرسائل غير المرغوب فيها</b> (<bdi>Junk / Spam</bdi>).</li>
@@ -234,6 +235,7 @@
       if (res && res.ok) {
         state.email = email;
         $("code-sub").textContent = "بعتنا الرمز إلى \u2068" + email + "\u2069.";
+        $("spam-note").hidden = false;
         show("step-code"); $("code").value = ""; $("code").focus();
         msg("msg-code", "");
         startCooldown(60);
@@ -268,6 +270,17 @@
   // أزرار
   $("btn-send").addEventListener("click", function () { sendCode(false); });
   $("btn-resend").addEventListener("click", function () { sendCode(true); });
+  // رمز من الإدارة (adminLoginCode بالسيرفر): منروح لخطوة الرمز بدون ما نطلب رمز جديد (كان رح يبطّل رمز الإدارة)
+  $("btn-have-code").addEventListener("click", function () {
+    var email = $("email").value.trim().toLowerCase();
+    msg("msg-email", "");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg("msg-email", "اكتب إيميلك أول، نفس الإيميل اللي بعتّو للإدارة."); $("email").focus(); return; }
+    state.email = email;
+    $("code-sub").textContent = "اكتب الرمز اللي وصلك من الإدارة لـ \u2068" + email + "\u2069.";
+    $("spam-note").hidden = true;
+    show("step-code"); $("code").value = ""; $("code").focus();
+    msg("msg-code", "");
+  });
   $("btn-verify").addEventListener("click", verify);
   $("consent-check").addEventListener("change", function () { $("btn-consent").disabled = !this.checked; });
   $("btn-consent").addEventListener("click", acceptConsent);

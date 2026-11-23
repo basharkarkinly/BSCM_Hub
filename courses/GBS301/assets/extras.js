@@ -204,3 +204,98 @@ function renderTypeCompare(containerId, cfg){
   }
   draw();
 }
+
+/* ============================================================
+   🔎 مختبر رموز البحث (الفصل 2): ركّب عبارة البحث بإيدك من الكلمات والرموز
+   cfg = { title, tasks:[{goal, chips:[..], answer:"…", why}] }
+   ============================================================ */
+function renderSearchLab(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  let t = 0, q = [], solved = {};
+  const norm = s => s.replace(/\s+/g, " ").trim();
+  const compose = q => norm(q.join(" ").replace(/\s*\.\.\s*/g, "..").replace(/\s*\*\s*/g, "*").replace(/(^|\s)([+\-~$])\s+/g, "$1$2").replace(/"\s+/g, '"').replace(/\s+"/g, '"'));
+  function draw(msg){
+    const task = cfg.tasks[t];
+    const all = cfg.tasks.length, done = Object.keys(solved).length;
+    root.innerHTML = `
+      <div class="eqs sl">
+        <div class="eqs-head"><span class="gp-tag">🔎 جرّب بإيدك</span><h4>${cfg.title}</h4><span class="sl-count">${done} / ${all}</span></div>
+        <div class="sl-tabs">${cfg.tasks.map((x, i) => `<button type="button" class="tri-sc-b${i === t ? " on" : ""}${solved[i] ? " ok" : ""}" data-i="${i}">${solved[i] ? "✓ " : ""}${i + 1}</button>`).join("")}</div>
+        <p class="sl-goal">🎯 ${task.goal}</p>
+        <div class="sl-bar" dir="ltr"><span class="sl-g">G</span><span class="sl-q">${q.length ? `<span class="sl-txt" dir="auto">${compose(q).replace(/</g, "&lt;")}</span><span class="sl-caret"></span>` : '<em>اضغط عالكلمات والرموز…</em>'}</span></div>
+        <div class="eqs-tray sl-tray">${task.chips.map((c, i) => `<button type="button" class="eqs-chip sl-chip" data-c="${i}" dir="ltr">${c}</button>`).join("")}</div>
+        <div class="sl-acts"><button type="button" class="btn btn-teal sl-go">🔍 بحث</button><button type="button" class="tri-sc-b sl-undo">↩️ تراجع</button><button type="button" class="tri-sc-b sl-clr">🧹 مسح</button></div>
+        <div class="eqs-msg ${msg ? msg[0] : ""}">${msg ? msg[1] : ""}</div>
+      </div>`;
+    root.querySelectorAll(".sl-tabs .tri-sc-b").forEach(b => b.addEventListener("click", () => { t = +b.dataset.i; q = []; draw(); }));
+    root.querySelectorAll(".sl-chip").forEach(b => b.addEventListener("click", () => { q.push(task.chips[+b.dataset.c]); draw(); }));
+    root.querySelector(".sl-undo").addEventListener("click", () => { q.pop(); draw(); });
+    root.querySelector(".sl-clr").addEventListener("click", () => { q = []; draw(); });
+    root.querySelector(".sl-go").addEventListener("click", () => {
+      const got = compose(q);
+      const want = (Array.isArray(task.answer) ? task.answer : [task.answer]).map(norm);
+      if (want.includes(got)) { solved[t] = 1; if (Object.keys(solved).length === all && typeof launchConfetti === "function") launchConfetti(); draw(["ok", "✅ <b>تمام!</b> " + task.why]); }
+      else draw(["bad", "❌ لسا مو هيك. فكّر شو الرمز اللي بيعمل هالشي، ووين بينحط (قبل الكلمة؟ حولها؟ جوّاها؟)."]);
+    });
+  }
+  draw();
+}
+
+/* ============================================================
+   🔗 تشريح عنوان الويب URL (الفصل 2): اضغط على كل جزء
+   cfg = { title, parts:[{t, name, info, cls}] }
+   ============================================================ */
+function renderUrlParts(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  let sel = -1;
+  function draw(){
+    const p = cfg.parts[sel];
+    root.innerHTML = `
+      <div class="eqs up">
+        <div class="eqs-head"><span class="gp-tag">🔗 اضغط على كل جزء</span><h4>${cfg.title}</h4></div>
+        <div class="up-url" dir="ltr">${cfg.parts.map((x, i) => `<button type="button" class="up-p up-${x.cls || "x"}${i === sel ? " on" : ""}" data-i="${i}">${x.t}</button>`).join("")}</div>
+        <div class="up-info">${p ? `<b><bdi dir="ltr" class="up-tag">${p.t}</bdi> ${p.name.replace(/^[^:]*:\s*/, "")}</b><span>${p.info}</span>` : '<span class="eqs-hint" style="margin:0">اضغط على أي قطعة من العنوان لتعرف شو هي.</span>'}</div>
+      </div>`;
+    root.querySelectorAll(".up-p").forEach(b => b.addEventListener("click", () => { sel = +b.dataset.i; draw(); }));
+  }
+  draw();
+}
+
+/* ============================================================
+   🩺 طبيب الشرائح (الفصل 4): شريحة سيئة، صلّح عيوبها وحدة وحدة
+   cfg = { title, fixes:[{key, bad, good, why}] } — keys: bg, contrast, fonts, lines, anim
+   ============================================================ */
+function renderSlideDoctor(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const on = {};
+  const lines = ["التعلم الإلكتروني نظام تفاعلي للتعليم", "بيعتمد على التقانات الحديثة", "متزامن: صف افتراضي ومؤتمرات مرئية", "غير متزامن: إيميل ومنتديات", "ميزاته: وفرة المصادر وأقل كلفة", "سلبياته: العزلة والمشاكل الصحية", "بيراعي الفروق الفردية", "الأهل بيتابعوا أولادهم", "بيحل مشكلة التخصصات النادرة", "أي مكان وأي زمان", "التغذية الراجعة فورية"];
+  function slide(){
+    const bg = on.bg ? "background:#F7F9FC" : "background:repeating-linear-gradient(45deg,#ff6ec7 0 14px,#7b2ff7 14px 28px)";
+    const fg = on.contrast ? "#0F1C2E" : "#FFF59D";
+    const fonts = on.fonts ? ["'Alexandria',sans-serif"] : ["'Times New Roman',serif", "Impact,sans-serif", "'Comic Sans MS',cursive", "'Courier New',monospace"];
+    const ls = on.lines ? lines.slice(0, 5) : lines;
+    return `<div class="sd-slide${on.anim ? "" : " sd-wild"}" style="${bg}">
+      <div class="sd-title" style="color:${on.contrast ? "#1D3557" : "#FFEB3B"};font-family:${fonts[1 % fonts.length]}">التعلم الإلكتروني</div>
+      <ul style="color:${fg}">${ls.map((l, i) => `<li style="font-family:${fonts[i % fonts.length]}">${l}</li>`).join("")}</ul>
+      <div class="sd-foot">${on.lines ? "✓ " + ls.length + " أسطر" : "⚠️ " + ls.length + " سطر!"}</div>
+    </div>`;
+  }
+  function draw(){
+    const n = cfg.fixes.filter(f => on[f.key]).length, all = n === cfg.fixes.length;
+    root.innerHTML = `
+      <div class="eqs sd">
+        <div class="eqs-head"><span class="gp-tag">🩺 صلّح بإيدك</span><h4>${cfg.title}</h4><span class="sl-count">${n} / ${cfg.fixes.length}</span></div>
+        <div class="sd-grid">
+          <div>${slide()}</div>
+          <div class="sd-list">${cfg.fixes.map(f => `<button type="button" class="sd-fix${on[f.key] ? " on" : ""}" data-k="${f.key}"><span class="sd-b">${on[f.key] ? "✓" : "✗"}</span><span><b>${on[f.key] ? f.good : f.bad}</b>${on[f.key] ? `<small>${f.why}</small>` : ""}</span></button>`).join("")}</div>
+        </div>
+        ${all ? '<div class="eqs-msg ok">✅ <b>الشريحة صارت مرتّبة!</b> بسيطة، واضحة، مقروءة، وخالية من المشتّتات.</div>' : '<p class="eqs-hint">اضغط على كل عيب لتصلّحو وشوف الشريحة كيف بتتغيّر.</p>'}
+      </div>`;
+    root.querySelectorAll(".sd-fix").forEach(b => b.addEventListener("click", () => {
+      on[b.dataset.k] = !on[b.dataset.k];
+      if (cfg.fixes.every(f => on[f.key]) && typeof launchConfetti === "function") launchConfetti();
+      draw();
+    }));
+  }
+  draw();
+}

@@ -355,3 +355,34 @@ table.cmp.os-t{ font-size:.85rem; margin:10px 0 0; } table.cmp.os-t td{ padding:
 .sd-fix.on .sd-b{ background:#2A9D8F; }
 @media (max-width:760px){ .sd-grid{ grid-template-columns:1fr; } }
 @media (prefers-reduced-motion:reduce){ .sd-wild .sd-title{ animation:none; } }
+
+/* ---------- ✉️ مختبر الإيميل ---------- */
+.em-win{ border:1px solid #DDE3EE; border-radius:14px; overflow:hidden; background:#fff; }
+.em-top{ display:flex; align-items:center; gap:6px; background:#0F1C2E; color:#fff; padding:8px 12px; font-size:.85rem; }
+.em-top span{ width:10px; height:10px; border-radius:50%; background:#FF5F57; } .em-top span:nth-child(2){ background:#FEBC2E; } .em-top span:nth-child(3){ background:#28C840; }
+.em-top b{ margin-inline-start:8px; }
+.em-row{ display:grid; grid-template-columns:110px 1fr; gap:8px 10px; padding:10px 12px; border-bottom:1px solid #EEF1F6; align-items:start; }
+.em-row label{ font-weight:800; font-size:.86rem; color:#5B6478; padding-top:6px; }
+.em-row.bad{ background:#FDF1EF; } .em-row.good{ background:#F1FAF5; }
+.em-opts{ display:flex; flex-wrap:wrap; gap:6px; }
+.em-o{ font:inherit; font-size:.84rem; text-align:start; border:1.5px solid #DDE3EE; background:#F7F9FC; border-radius:10px; padding:6px 10px; cursor:pointer; color:#0F1C2E; }
+.em-o.on{ border-color:#FF9F1C; background:#FFF4E2; font-weight:700; }
+.em-why{ grid-column:2; font-size:.82rem; line-height:1.7; color:#33405A; }
+.em-send{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:10px 12px; }
+@media (max-width:560px){ .em-row{ grid-template-columns:1fr; } .em-why{ grid-column:1; } }
+
+/* ===== 📋 طبيب الاستبيان (sf-) ===== */
+.sf-step{font-size:13px;color:var(--muted,#5b6b7f);margin:4px 0 8px;font-weight:700}
+.sf-card{background:#fff;border:1.5px solid #dfe6ee;border-inline-start:5px solid #e76f51;border-radius:12px;padding:12px 14px}
+.sf-card.sf-fixed{border-inline-start-color:#2a9d8f;background:#f3fbf9}
+.sf-q{font-weight:800;color:#1d3557;margin-bottom:8px;line-height:1.7}
+.sf-opts{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.sf-opts li{display:flex;align-items:center;gap:8px;font-size:14.5px}
+.sf-box{width:14px;height:14px;border:2px solid #9aa9b9;border-radius:50%;flex:0 0 auto}
+.sf-errs{display:flex;flex-wrap:wrap;gap:8px}
+.sf-err{border:1.5px solid #cfd8e3;background:#fff;border-radius:999px;padding:7px 13px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;color:#1d3557}
+.sf-err:hover{border-color:#457b9d}
+.sf-err.ok{background:#2a9d8f;border-color:#2a9d8f;color:#fff}
+.sf-err.bad{background:#fdecea;border-color:#e63946;color:#b3261e}
+.sf-lbl{font-weight:800;color:#2a9d8f;margin:10px 0 6px}
+.sf-nav{display:flex;justify-content:space-between;gap:8px;margin-top:12px}

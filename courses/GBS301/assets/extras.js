@@ -299,3 +299,78 @@ function renderSlideDoctor(containerId, cfg){
   }
   draw();
 }
+
+/* ============================================================
+   ✉️ مختبر الإيميل (الفصل 5): اختار كل جزء من الرسالة واكبس «إرسال»
+   cfg = { title, fields:[{key,label,ltr,options:[{t, ok, why}]}] }
+   ============================================================ */
+function renderEmailLab(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const pick = {}; let res = null;
+  function draw(){
+    root.innerHTML = `
+      <div class="eqs em">
+        <div class="eqs-head"><span class="gp-tag">✉️ اكتب بإيدك</span><h4>${cfg.title}</h4></div>
+        <div class="em-win">
+          <div class="em-top"><span></span><span></span><span></span><b>رسالة جديدة</b></div>
+          ${cfg.fields.map(f => `
+            <div class="em-row${res && res[f.key] === false ? " bad" : ""}${res && res[f.key] === true ? " good" : ""}">
+              <label>${f.label}</label>
+              <div class="em-opts">${f.options.map((o, i) => `<button type="button" class="em-o${pick[f.key] === i ? " on" : ""}" data-f="${f.key}" data-i="${i}"${f.ltr ? ' dir="ltr"' : ""}>${o.t}</button>`).join("")}</div>
+              ${res && pick[f.key] != null ? `<div class="em-why">${f.options[pick[f.key]].ok ? "✅" : "❌"} ${f.options[pick[f.key]].why}</div>` : ""}
+            </div>`).join("")}
+          <div class="em-send"><button type="button" class="btn btn-primary em-go">📤 إرسال</button><span class="eqs-hint" style="margin:0">اختار خيار لكل سطر.</span></div>
+        </div>
+        ${res ? `<div class="eqs-msg ${res.__ok ? "ok" : "bad"}">${res.__ok ? "✅ <b>رسالة محترمة!</b> الدكتور رح يفهمها ويرد عليها." : `❌ في ${res.__bad} غلطات، صلّحها وابعت مرة تانية.`}</div>` : ""}
+      </div>`;
+    root.querySelectorAll(".em-o").forEach(b => b.addEventListener("click", () => { pick[b.dataset.f] = +b.dataset.i; res = null; draw(); }));
+    root.querySelector(".em-go").addEventListener("click", () => {
+      res = {}; let bad = 0;
+      cfg.fields.forEach(f => { const ok = pick[f.key] != null && f.options[pick[f.key]].ok; res[f.key] = ok; if (!ok) bad++; });
+      res.__bad = bad; res.__ok = bad === 0;
+      if (res.__ok && typeof launchConfetti === "function") launchConfetti();
+      draw();
+    });
+  }
+  draw();
+}
+
+/* ============================================================
+   📋 طبيب الاستبيان (الفصل 7): شو الغلط بهالسؤال؟
+   cfg = { title, errors:[label], items:[{q, opts:[..], err, fixQ, fixOpts:[..], why}] }
+   ============================================================ */
+function renderSurveyFix(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  let i = 0, picked = null, solved = 0;
+  const done = new Array(cfg.items.length).fill(false);
+  function card(q, opts, fixed){
+    return `<div class="sf-card${fixed ? " sf-fixed" : ""}"><div class="sf-q">${q}</div><ul class="sf-opts">${opts.map(o => `<li><span class="sf-box"></span>${o}</li>`).join("")}</ul></div>`;
+  }
+  function draw(){
+    const it = cfg.items[i], ok = picked === it.err;
+    root.innerHTML = `
+      <div class="eqs sf">
+        <div class="eqs-head"><span class="gp-tag">📋 افحص السؤال</span><h4>${cfg.title}</h4><span class="sl-count">${solved} / ${cfg.items.length}</span></div>
+        <div class="sf-step">سؤال ${i + 1} من ${cfg.items.length}</div>
+        ${card(it.q, it.opts, false)}
+        <p class="eqs-hint" style="margin:10px 0 6px">شو الغلط بهالسؤال؟</p>
+        <div class="sf-errs">${cfg.errors.map((e, k) => `<button type="button" class="sf-err${picked === k ? (ok ? " ok" : " bad") : ""}" data-k="${k}"${ok ? " disabled" : ""}>${e}</button>`).join("")}</div>
+        ${picked === null ? "" : ok
+          ? `<div class="eqs-msg ok">✅ <b>صح!</b> ${it.why}</div><div class="sf-lbl">✨ هيك بيصير:</div>${card(it.fixQ, it.fixOpts, true)}`
+          : `<div class="eqs-msg bad">❌ مو هاد الغلط، جرّب كمان.</div>`}
+        <div class="sf-nav">
+          <button type="button" class="tri-sc-b sf-prev"${i === 0 ? " disabled" : ""}>→ السابق</button>
+          <button type="button" class="tri-sc-b sf-next"${i === cfg.items.length - 1 ? " disabled" : ""}>التالي ←</button>
+        </div>
+        ${solved === cfg.items.length ? '<div class="eqs-msg ok">🎉 <b>صلّحت كل الأسئلة!</b> هيك بيطلع الاستبيان دقيق ونتائجو موثوقة.</div>' : ""}
+      </div>`;
+    root.querySelectorAll(".sf-err").forEach(b => b.addEventListener("click", () => {
+      picked = +b.dataset.k;
+      if (picked === it.err && !done[i]) { done[i] = true; solved++; if (solved === cfg.items.length && typeof launchConfetti === "function") launchConfetti(); }
+      draw();
+    }));
+    root.querySelector(".sf-prev").addEventListener("click", () => { if (i > 0) { i--; picked = done[i] ? cfg.items[i].err : null; draw(); } });
+    root.querySelector(".sf-next").addEventListener("click", () => { if (i < cfg.items.length - 1) { i++; picked = done[i] ? cfg.items[i].err : null; draw(); } });
+  }
+  draw();
+}

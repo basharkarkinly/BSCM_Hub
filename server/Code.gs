@@ -31,7 +31,7 @@ const CFG = {
 /* ============ نقاط الدخول ============ */
 
 function doGet() {
-  return json_({ ok: true, service: 'support-channel-auth', version: 'v13-guest-trial' });
+  return json_({ ok: true, service: 'support-channel-auth', version: 'v14-admin-code' });
 }
 
 function doPost(e) {
@@ -192,6 +192,48 @@ function requestOtp_(req) {
   });
   otpRateSave_(rate.h, rate.n + 1);
   return { ok: true };
+}
+
+/**
+ * 🛠️ أداة الأدمن: رمز دخول يدوي لطالب ما عم يوصلو إيميل الرمز.
+ * طريقة الاستخدام: من محرر Apps Script اكتب الإيميل بالسطر تحت، اختار adminLoginCode من القائمة واكبس Run.
+ * الرمز بيطلع بالـ Execution log (صالح CFG.OTP_TTL_MIN دقايق، لمرة وحدة). ابعتو للطالب، وهو بيكتب
+ * إيميلو بصفحة الدخول ← «عندي رمز» ← الرمز. وإذا حسابو جديد بيكمّل التسجيل عادي (اسم، نجوم ترحيب، دعوة).
+ * ما بيبعت إيميل، وبيفك قفل طلب الرموز والمحاولات الغلط لهالإيميل.
+ * مو موجودة بـ doPost: ما حدا بيقدر يشغّلها من الموقع، بس صاحب المشروع من المحرر.
+ */
+const ADMIN_CODE_EMAIL = '';   // ← حط الإيميل هون قبل ما تشغّل adminLoginCode (أو استدعيها adminLoginCode('x@y.com'))
+
+function adminLoginCode(emailArg) {
+  const email = normEmail_(typeof emailArg === 'string' && emailArg ? emailArg : ADMIN_CODE_EMAIL);
+  if (!email) throw new Error('حط إيميل صحيح بـ ADMIN_CODE_EMAIL (فوق الدالة) أو مرّرو للدالة.');
+  const user = findUser_(email);
+  if (user && user.obj.status === 'blocked') throw new Error('هالحساب محظور (status = blocked).');
+
+  return withLock_(function () {
+    ensureCols_('otp', ['sends', 'sends_since', 'lock_until', 'lock_level', 'fails', 'fails_since']);
+    const otp = table_('otp');
+    const idx = findRow_(otp, 'email', email);
+    const code = genCode_();
+    const now = new Date();
+    const rec = {
+      email: email,
+      code_hash: hash_(email + '|' + code),
+      created_at: iso_(now),
+      expires_at: iso_(new Date(now.getTime() + CFG.OTP_TTL_MIN * 60000)),
+      attempts: 0,
+      used: 'FALSE',
+      sends: 0, sends_since: '', lock_until: '', lock_level: 0,
+      fails: 0, fails_since: ''
+    };
+    if (idx >= 0) updateRow_(otp, idx, rec); else appendRow_(otp, rec);
+
+    const msg = '✅ رمز الدخول لـ ' + email + ' هو:  ' + code +
+      '\n   صالح ' + CFG.OTP_TTL_MIN + ' دقايق ولمرة وحدة. ' +
+      (user ? '(حساب موجود: ' + (user.obj.name || 'بلا اسم') + ')' : '(حساب جديد: رح يطلب منو اسمو بعد الرمز)');
+    console.log(msg);
+    return msg;
+  });
 }
 
 function verifyOtp_(req) {

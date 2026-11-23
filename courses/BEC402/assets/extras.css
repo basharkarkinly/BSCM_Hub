@@ -187,3 +187,10 @@
 .si-bar.neg{ right:50%; } .si-bar.pos{ left:50%; }
 .si-bar.s{ background:#2563EB; } .si-bar.i{ background:#EA7A1C; } .si-bar.t{ background:#0B7A57; }
 @media (max-width:520px){ .si-row{ grid-template-columns:92px 1fr 56px; font-size:.82rem; } }
+
+/* مختبر المرونة */
+.el-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:start; }
+@media (max-width:720px){ .el-grid{ grid-template-columns:1fr; } }
+.el-f{ display:block; direction:ltr; unicode-bidi:isolate; text-align:right; font-variant-numeric:tabular-nums; margin-top:3px; color:#1D3557; font-weight:600; }
+/* مختبرات الفصل 7 */
+.tri-sc{ display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 12px; }

@@ -7,7 +7,9 @@ const COURSE_CHAPTERS = [
   {num:2, key:"ch2", title:"العرض والطلب", href:"chapters/chapter-2-lesson.html"},
   {num:3, key:"ch3", title:"نظرية المستهلك", href:"chapters/chapter-3-lesson.html"},
   {num:4, key:"ch4", title:"النظرية المعاصرة في تفضيلات المستهلك", href:"chapters/chapter-4-lesson.html"},
-  {num:5, key:"ch5", title:"نظرية الطلب", href:"chapters/chapter-5-lesson.html"}
+  {num:5, key:"ch5", title:"نظرية الطلب", href:"chapters/chapter-5-lesson.html"},
+  {num:6, key:"ch6", title:"مرونة العرض والطلب", href:"chapters/chapter-6-lesson.html"},
+  {num:7, key:"ch7", title:"التدخل في السوق", href:"chapters/chapter-7-lesson.html"}
 ];
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */

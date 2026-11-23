@@ -425,3 +425,170 @@ function renderSubIncLab(containerId, cfg){
   }
   draw();
 }
+
+/* ---------- مختبر المرونة (الفصل 6): طلب خطي Q = a − b·P ---------- */
+function renderElastLab(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const a = cfg.a, b = cfg.b, pMax = a / b;
+  let P1 = cfg.P1, P2 = cfg.P2;
+  const r2 = v => Math.round(v * 100) / 100;
+  const Q = p => a - b * p;
+  const lvl = e => { const m = Math.abs(e);
+    if (m < 0.005) return "عديم المرونة"; if (Math.abs(m - 1) < 0.005) return "متكافئ المرونة";
+    return m > 1 ? "مرن" : "غير مرن (ضعيف المرونة)"; };
+  function draw(){
+    const q1 = Q(P1), q2 = Q(P2);
+    const ePt = -b * P1 / q1;
+    const arc = ((q2 - q1) / ((q1 + q2) / 2)) / ((P2 - P1) / ((P1 + P2) / 2));
+    const TR1 = P1 * q1, TR2 = P2 * q2;
+    const W = 360, H = 250, L = 46, Bt = 34, T = 12, R = 14;
+    const sx = q => L + q / a * (W - L - R), sy = p => H - Bt - p / pMax * (H - Bt - T);
+    let ticks = "";
+    for (let i = 0; i <= 4; i++){ const q = a * i / 4, p = pMax * i / 4;
+      ticks += `<text class="sd-tk" x="${sx(q)}" y="${H - Bt + 14}" text-anchor="middle">${r2(q)}</text><text class="sd-tk" x="${L - 6}" y="${sy(p) + 3}" text-anchor="end">${r2(p)}</text>`; }
+    const rect = (p, q, c) => `<rect x="${sx(0)}" y="${sy(p)}" width="${sx(q) - sx(0)}" height="${sy(0) - sy(p)}" fill="${c}" opacity=".16"/>`;
+    const mid = pMax / 2;
+    root.innerHTML = `
+      <div class="eqs el">
+        <div class="eqs-head"><span class="gp-tag">📏 جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <div class="el-grid">
+          <svg class="sd-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="منحنى طلب خطي">
+            ${rect(P1, q1, "#2563EB")}${rect(P2, q2, "#0B7A57")}
+            <line class="sd-ax" x1="${L}" y1="${sy(0)}" x2="${W - R}" y2="${sy(0)}"/><line class="sd-ax" x1="${L}" y1="${sy(0)}" x2="${L}" y2="${T}"/>
+            ${ticks}
+            <line class="sd-pl" x1="${L}" y1="${sy(mid)}" x2="${sx(Q(mid))}" y2="${sy(mid)}"/>
+            <line class="sd-d" x1="${sx(0)}" y1="${sy(pMax)}" x2="${sx(a)}" y2="${sy(0)}"/>
+            <text class="sd-lb" x="${sx(Q(mid)) + 6}" y="${sy(mid) - 6}">|e| = 1</text>
+            <circle class="sd-e" cx="${sx(q1)}" cy="${sy(P1)}" r="6"/><circle class="sd-e new" cx="${sx(q2)}" cy="${sy(P2)}" r="6"/>
+            <text class="sd-lb" x="${W - R}" y="${H - 6}" text-anchor="end">Q</text><text class="sd-lb" x="${L + 4}" y="${T + 8}">P</text>
+          </svg>
+          <div>
+            <label class="sdl-sl">🔵 السعر الأول: <span class="el-f" dir="ltr">P₁ = ${P1}  |  Q₁ = ${r2(q1)}</span><input data-k="1" type="range" min="${cfg.step}" max="${pMax - cfg.step}" step="${cfg.step}" value="${P1}" dir="ltr"></label>
+            <label class="sdl-sl">🟢 السعر التاني: <span class="el-f" dir="ltr">P₂ = ${P2}  |  Q₂ = ${r2(q2)}</span><input data-k="2" type="range" min="${cfg.step}" max="${pMax - cfg.step}" step="${cfg.step}" value="${P2}" dir="ltr"></label>
+            <div class="si-steps">
+              <div><b>📍 المرونة النقطية عند P₁:</b> ${lvl(ePt)}<span class="el-f" dir="ltr">ε = (ΔQ/ΔP)·(P/Q) = −${b} × ${P1} / ${r2(q1)} = ${r2(ePt)}</span></div>
+              <div><b>🌉 المرونة القوسية بين السعرين:</b> ${P1 === P2 ? "حرّك سعر لتنحسب" : lvl(arc) + `<span class="el-f" dir="ltr">ε = ${r2(arc)}</span>`}</div>
+              <div><b>💵 الإيراد الكلي:</b><span class="el-f" dir="ltr">TR₁ = ${r2(TR1)}  |  TR₂ = ${r2(TR2)}</span></div>
+            </div>
+          </div>
+        </div>
+        ${P1 === P2 ? '<p class="eqs-hint">حرّك السعر التاني لتشوف شو بيصير بالإيراد.</p>'
+          : `<div class="eqs-msg ok">${P2 < P1 ? "السعر <b>نزل</b>" : "السعر <b>طلع</b>"} والإيراد الكلي <b>${Math.abs(TR2 - TR1) < 0.5 ? "ما تغيّر تقريباً" : (TR2 > TR1 ? "زاد" : "نقص")}</b>. ${Math.abs(arc) > 1.005 ? "الطلب بهالمجال <b>مرن</b>: الإيراد بيمشي <b>عكس</b> السعر." : Math.abs(arc) < 0.995 ? "الطلب بهالمجال <b>غير مرن</b>: الإيراد بيمشي <b>مع</b> السعر." : "المجال حوالي نقطة المنتصف: المرونة ≈ 1."} أعلى إيراد عند المنتصف <bdi dir="ltr">P = ${r2(mid)}</bdi>.</div>`}
+        <div class="sd-leg"><span class="k d"></span> الطلب <span class="k e"></span> النقطة الأولى (المستطيل الأزرق = TR₁) <span class="k e2"></span> النقطة التانية (المستطيل الأخضر = TR₂)</div>
+      </div>`;
+    root.querySelectorAll("input").forEach(sl => sl.addEventListener("input", () => {
+      const k = sl.dataset.k; if (k === "1") P1 = +sl.value; else P2 = +sl.value; draw();
+      root.querySelector(`input[data-k="${k}"]`).focus(); }));
+  }
+  draw();
+}
+
+/* ---------- أدوات رسم مشتركة للفصل 7 ---------- */
+function _mkPlot(W, H, qMax, pMax, pMin){
+  const L = 44, Bt = 30, T = 12, R = 14; pMin = pMin || 0;
+  const sx = q => L + q / qMax * (W - L - R), sy = p => H - Bt - (p - pMin) / (pMax - pMin) * (H - Bt - T);
+  const axes = (qs, ps) => `<line class="sd-ax" x1="${L}" y1="${H - Bt}" x2="${W - R}" y2="${H - Bt}"/><line class="sd-ax" x1="${L}" y1="${H - Bt}" x2="${L}" y2="${T}"/>`
+    + qs.map(q => `<text class="sd-tk" x="${sx(q)}" y="${H - Bt + 14}" text-anchor="middle">${q}</text>`).join("")
+    + ps.map(p => `<text class="sd-tk" x="${L - 6}" y="${sy(p) + 3}" text-anchor="end">${p}</text>`).join("")
+    + `<text class="sd-lb" x="${W - R}" y="${H - 4}" text-anchor="end">Q</text><text class="sd-lb" x="${L + 4}" y="${T + 8}">P</text>`;
+  return { sx, sy, axes, L, R, T, Bt, W, H };
+}
+
+/* ---------- مختبر الضريبة: توزيع العبء الضريبي حسب مرونة الطلب ---------- */
+function renderTaxLab(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  let ci = 0, t = cfg.t;
+  const Pe = cfg.Pe, Qe = cfg.Qe, r2 = v => Math.round(v * 100) / 100;
+  function solve(c){
+    const sB = c.sB, sA = Pe - sB * Qe;
+    if (c.type === "vert") return { Q: Qe, Pc: Pe + t, Pp: Pe, sA, sB };
+    if (c.type === "horiz") return { Q: (Pe - t - sA) / sB, Pc: Pe, Pp: Pe - t, sA, sB };
+    const dA = Pe + c.dB * Qe, Q = (dA - sA - t) / (c.dB + sB), Pc = dA - c.dB * Q;
+    return { Q, Pc, Pp: Pc - t, sA, sB, dA };
+  }
+  function draw(){
+    const c = cfg.cases[ci], s = solve(c);
+    const pl = _mkPlot(360, 250, cfg.qMax, cfg.pMax, cfg.pMin);
+    const { sx, sy } = pl;
+    const sLine = (shift, cls) => { const q0 = Math.max(0, (cfg.pMin - s.sA - shift) / s.sB), q1 = Math.min(cfg.qMax, (cfg.pMax - s.sA - shift) / s.sB);
+      return `<line class="sd-s ${cls}" x1="${sx(q0)}" y1="${sy(s.sA + shift + s.sB * q0)}" x2="${sx(q1)}" y2="${sy(s.sA + shift + s.sB * q1)}"/>`; };
+    let dLine;
+    if (c.type === "vert") dLine = `<line class="sd-d" x1="${sx(Qe)}" y1="${sy(cfg.pMin)}" x2="${sx(Qe)}" y2="${sy(cfg.pMax)}"/>`;
+    else if (c.type === "horiz") dLine = `<line class="sd-d" x1="${sx(0)}" y1="${sy(Pe)}" x2="${sx(cfg.qMax)}" y2="${sy(Pe)}"/>`;
+    else { const q0 = Math.max(0, (s.dA - cfg.pMax) / c.dB), q1 = Math.min(cfg.qMax, (s.dA - cfg.pMin) / c.dB);
+      dLine = `<line class="sd-d" x1="${sx(q0)}" y1="${sy(s.dA - c.dB * q0)}" x2="${sx(q1)}" y2="${sy(s.dA - c.dB * q1)}"/>`; }
+    const cons = t ? (s.Pc - Pe) / t * 100 : 0, prod = t ? 100 - cons : 0;
+    const box = t ? `<rect x="${sx(0)}" y="${sy(s.Pc)}" width="${sx(s.Q) - sx(0)}" height="${sy(s.Pp) - sy(s.Pc)}" fill="#9B5DE5" opacity=".18"/>` : "";
+    root.innerHTML = `
+      <div class="eqs tx">
+        <div class="eqs-head"><span class="gp-tag">⛽ جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <div class="tri-sc">${cfg.cases.map((k, i) => `<button class="tri-sc-b${i === ci ? " on" : ""}" data-i="${i}">${k.name}</button>`).join("")}</div>
+        <div class="el-grid">
+          <svg class="sd-svg" viewBox="0 0 360 250" role="img" aria-label="أثر الضريبة على التوازن">
+            ${box}${pl.axes(cfg.qTicks, cfg.pTicks)}
+            ${sLine(0, "old")}${t ? sLine(t, "new") : ""}${dLine}
+            ${t ? `<line class="sd-pl" x1="${pl.L}" y1="${sy(s.Pc)}" x2="${sx(s.Q)}" y2="${sy(s.Pc)}"/><line class="sd-pl" x1="${pl.L}" y1="${sy(s.Pp)}" x2="${sx(s.Q)}" y2="${sy(s.Pp)}"/>` : ""}
+            <circle class="sd-e" cx="${sx(Qe)}" cy="${sy(Pe)}" r="5"/>${t ? `<circle class="sd-e new" cx="${sx(s.Q)}" cy="${sy(s.Pc)}" r="6"/>` : ""}
+          </svg>
+          <div>
+            <label class="sdl-sl">💸 الضريبة على كل وحدة:<span class="el-f" dir="ltr">t = ${t}</span><input type="range" min="0" max="${cfg.tMax}" step="${cfg.tStep}" value="${t}" dir="ltr"></label>
+            <div class="si-steps">
+              <div><b>🛒 سعر المستهلك:</b><span class="el-f" dir="ltr">Pc = ${r2(s.Pc)}  (${s.Pc - Pe >= 0 ? "+" : ""}${r2(s.Pc - Pe)})</span></div>
+              <div><b>🏭 صافي المنتج:</b><span class="el-f" dir="ltr">Pp = ${r2(s.Pp)}  (${r2(s.Pp - Pe)})</span></div>
+              <div><b>📦 الكمية:</b><span class="el-f" dir="ltr">${Qe} → ${r2(s.Q)}</span></div>
+              <div><b>🏛️ حصيلة الضريبة:</b><span class="el-f" dir="ltr">t × Q = ${r2(t * s.Q)}</span></div>
+            </div>
+          </div>
+        </div>
+        ${t ? `<div class="si-row"><span class="si-l">🛒 المستهلك</span><div class="si-track"><div class="si-bar s pos" style="left:0;width:${cons}%"></div></div><b dir="ltr">${Math.round(cons)}%</b></div>
+        <div class="si-row"><span class="si-l">🏭 المنتج</span><div class="si-track"><div class="si-bar i pos" style="left:0;width:${prod}%"></div></div><b dir="ltr">${Math.round(prod)}%</b></div>
+        <div class="eqs-msg ok">${c.msg}</div>` : '<p class="eqs-hint">حرّك الضريبة لتشوف مين بيدفعها فعلياً.</p>'}
+        <div class="sd-leg"><span class="k d"></span> الطلب <span class="k s"></span> العرض (المتقطع قبل الضريبة) <span class="k e"></span> التوازن، والمستطيل البنفسجي = حصيلة الضريبة</div>
+      </div>`;
+    root.querySelectorAll(".tri-sc-b").forEach(b => b.addEventListener("click", () => { ci = +b.dataset.i; draw(); }));
+    const sl = root.querySelector("input"); sl.addEventListener("input", () => { t = +sl.value; draw(); root.querySelector("input").focus(); });
+  }
+  draw();
+}
+
+/* ---------- مختبر السقف السعري ---------- */
+function renderCeilingLab(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  let Pc = cfg.start; const r2 = v => Math.round(v * 100) / 100;
+  const Qd = p => cfg.dA - cfg.dB * p, Qs = p => cfg.sA + cfg.sB * p;
+  const Pe = (cfg.dA - cfg.sA) / (cfg.dB + cfg.sB), Qe = Qd(Pe);
+  function draw(){
+    const pl = _mkPlot(360, 250, cfg.qMax, cfg.pMax, cfg.pMin), { sx, sy } = pl;
+    const bind = Pc < Pe, qd = bind ? Qd(Pc) : Qe, qs = bind ? Qs(Pc) : Qe;
+    const pts = (f) => { const a = [cfg.pMin, cfg.pMax].map(p => [f(p), p]); return a; };
+    const ln = (f, cls) => { const [[q0, p0], [q1, p1]] = pts(f); return `<line class="${cls}" x1="${sx(q0)}" y1="${sy(p0)}" x2="${sx(q1)}" y2="${sy(p1)}"/>`; };
+    root.innerHTML = `
+      <div class="eqs cl">
+        <div class="eqs-head"><span class="gp-tag">🧢 جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <div class="el-grid">
+          <svg class="sd-svg" viewBox="0 0 360 250" role="img" aria-label="أثر السقف السعري">
+            ${pl.axes(cfg.qTicks, cfg.pTicks)}
+            ${ln(Qd, "sd-d")}${ln(Qs, "sd-s")}
+            <line x1="${pl.L}" y1="${sy(Pc)}" x2="${360 - pl.R}" y2="${sy(Pc)}" stroke="#E63946" stroke-width="2.2" stroke-dasharray="7 4"/>
+            <text class="sd-lb" x="${360 - pl.R}" y="${sy(Pc) - 5}" text-anchor="end" fill="#E63946">السقف ${Pc}</text>
+            ${bind ? `<line class="sd-gap short" x1="${sx(qs)}" y1="${sy(Pc)}" x2="${sx(qd)}" y2="${sy(Pc)}"/>` : ""}
+            <circle class="sd-e" cx="${sx(Qe)}" cy="${sy(Pe)}" r="5"/>
+          </svg>
+          <div>
+            <label class="sdl-sl">🧢 السقف السعري:<span class="el-f" dir="ltr">Pmax = ${Pc}</span><input type="range" min="${cfg.cMin}" max="${cfg.cMax}" step="${cfg.cStep}" value="${Pc}" dir="ltr"></label>
+            <div class="si-steps">
+              <div><b>⚖️ التوازن الحر:</b><span class="el-f" dir="ltr">Pe = ${r2(Pe)} , Qe = ${r2(Qe)}</span></div>
+              <div><b>🛒 الكمية المطلوبة:</b><span class="el-f" dir="ltr">Qd = ${r2(qd)}</span></div>
+              <div><b>🏭 الكمية المعروضة:</b><span class="el-f" dir="ltr">Qs = ${r2(qs)}</span></div>
+              <div><b>📦 الكمية المشتراة فعلاً:</b><span class="el-f" dir="ltr">${r2(Math.min(qd, qs))}</span></div>
+            </div>
+          </div>
+        </div>
+        ${bind ? `<div class="eqs-msg bad">السقف <b>أدنى</b> من سعر التوازن ← <b>فائض طلب (عجز عرض)</b> مقدارو <bdi dir="ltr">${r2(qd - qs)}</bdi>. الكمية المتبادلة بيحددها <b>العرض</b> (<bdi dir="ltr">${r2(qs)}</bdi>) فنقصت عن التوازن، وفائض الطلب بيضغط عالسعر لفوق ← <b>صفقات غير قانونية</b> (سوق سوداء، تأجير من الباطن).</div>`
+          : `<div class="eqs-msg ok">السقف <b>أعلى من</b> (أو بيساوي) سعر التوازن ← <b>ما إلو أثر</b>: السوق بتضل عند <bdi dir="ltr">${r2(Pe)}</bdi>.</div>`}
+        <div class="sd-leg"><span class="k d"></span> الطلب <span class="k s"></span> العرض <span class="k e"></span> التوازن الحر، والخط الأحمر = فائض الطلب</div>
+      </div>`;
+    const sl = root.querySelector("input"); sl.addEventListener("input", () => { Pc = +sl.value; draw(); root.querySelector("input").focus(); });
+  }
+  draw();
+}

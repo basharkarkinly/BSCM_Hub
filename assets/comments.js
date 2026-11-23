@@ -298,7 +298,7 @@
       return;
     }
     var html = head(qs.length) + (GUEST
-      ? '<div class="scc-login">عندك سؤال؟ أو بتعرف الجواب؟ سجّل دخولك لتسأل وتجاوب وتكسب نجوم ⭐<br><a href="' + esc(HUB + "login.html?next=" + encodeURIComponent(location.href.split("#")[0] + "#" + el.id)) + '">تسجيل الدخول</a></div>'
+      ? '<div class="scc-login">عندك سؤال؟ أو بتعرف الجواب؟ سجّل دخولك <b>مجاناً</b> لتسأل وتجاوب وتكسب نجوم ⭐<br><a href="' + esc(HUB + "login.html?next=" + encodeURIComponent(location.href.split("#")[0] + "#" + el.id)) + '">🔑 سجّل مجاناً</a></div>'
       : composerHTML(left, ""));
     if (qs.length) {
       html += '<div class="scc-tabs"><button type="button" class="scc-tab' + (filter === "all" ? " on" : "") + '" data-filter="all">الكل (' + qs.length + ')</button>' +

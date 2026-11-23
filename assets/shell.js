@@ -17,6 +17,9 @@
  * - خيارات: { greet:false, onReady:function(user){}, guest:function(){} }
  *   guest: للصفحات المفتوحة للزوار (صفحة المواد). بدون جلسة ما منحوّل لصفحة الدخول: الصفحة بتظهر،
  *   والشريط فيو زر «تسجيل الدخول» بس، وبتنستدعى guest(). إذا في جلسة صالحة الصفحة بتشتغل عادي.
+ * - تجربة الزوار بالمقررات: صفحة المقرر الرئيسية والفصل الأول (درس، تدريب، امتحان) مفتوحين بدون حساب
+ *   بشكل تلقائي (من المسار، بلا أي تعديل على صفحات المقرر). أي رابط لباقي المقرر بيفتح نافذة «سجّل دخولك».
+ *   ونجوم امتحان الفصل الأول للزائر بتنحفظ عالجهاز وبتنحسبلو أول ما يسجّل.
  */
 (function () {
   if (window.SCShell) return;
@@ -69,7 +72,16 @@
     ".scs-item.star{background:#FFF8EC;border-color:#FFD79A}",
     ".scs-toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:calc(100% - 32px);z-index:90;background:#0F1C2E;color:#fff;border-radius:999px;padding:10px 20px;font-family:'Alexandria',system-ui,sans-serif;font-weight:700;font-size:.95rem;box-shadow:0 10px 30px -10px rgba(15,28,46,.5);direction:rtl;transition:opacity .4s,transform .4s}",
     ".scs-toast.out{opacity:0;transform:translateY(10px)}",
-    "@media (max-width:700px){.scs-star{order:3;height:24px;font-size:.74rem;padding:0 8px;margin:0 auto}}"
+    "@media (max-width:700px){.scs-star{order:3;height:24px;font-size:.74rem;padding:0 8px;margin:0 auto}}",
+    ".scs-gate{position:fixed;inset:0;z-index:85;background:rgba(15,28,46,.55);display:flex;align-items:center;justify-content:center;padding:18px}",
+    ".scs-gate[hidden]{display:none}",
+    ".scs-gbox{position:relative;background:#fff;color:#16232E;width:100%;max-width:400px;border-radius:18px;box-shadow:0 18px 50px rgba(15,28,46,.35);padding:26px 22px 20px;text-align:center;font-family:'Alexandria',system-ui,sans-serif;direction:rtl}",
+    ".scs-gico{font-size:2.4rem;line-height:1;margin-bottom:8px}",
+    ".scs-gbox h2{margin:0 0 8px;font-size:1.2rem}",
+    ".scs-gbox p{margin:0 0 16px;color:#5B6478;font-size:.92rem;line-height:1.8}",
+    ".scs-gbtn{display:block;width:100%;box-sizing:border-box;text-decoration:none;background:var(--amber,#FF9F1C);color:#1A1200;font:inherit;font-weight:800;border:0;border-radius:12px;padding:12px;cursor:pointer}",
+    ".scs-gno{display:block;width:100%;margin-top:8px;background:none;border:0;font:inherit;color:#5B6478;padding:8px;cursor:pointer}",
+    ".scs-gx{position:absolute;top:10px;left:10px;width:34px;height:34px;border-radius:50%;border:1px solid #E3E7F0;background:#F5F7FB;font-size:1.1rem;cursor:pointer;color:inherit}"
   ].join("\n");
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
@@ -291,30 +303,84 @@
   }
 
   /* ---------- الدخول للمكوّن ---------- */
+  /* تجربة الزوار بالمقررات: صفحة المقرر + الفصل الأول (درس/تدريب/امتحان) مفتوحين بدون حساب */
+  var COURSE_RE = /\/courses\/([A-Za-z0-9_\-]+)\/(.*)$/;
+  var OPEN_COURSE_PAGE = /^(index\.html)?$|^chapters\/chapter-1-(lesson|practice|exam)\.html$/;
+  var NO_TRIAL = { ENG_PT: 1 };   // مقررات خاصة بتضل بدها دخول
+  function coursePart(url) {
+    var m = COURSE_RE.exec(url.pathname);
+    return m && !NO_TRIAL[m[1]] ? { course: m[1], rest: decodeURIComponent(m[2]) } : null;
+  }
+  function isTrialPage() { var c = coursePart(location); return !!(c && OPEN_COURSE_PAGE.test(c.rest)); }
+  function loginUrl(next) { return HUB + "login.html?next=" + encodeURIComponent(next || location.href); }
+
+  /* نافذة «سجّل دخولك» لما الزائر يضغط على قسم مقفول من المقرر */
+  var gate = null, gateBack = null;
+  function openGate(href) {
+    var dest = new URL(href, location.href), c = coursePart(dest) || {};
+    var nCh = /^chapters\/chapter-(\d+)-/.exec(c.rest || ""), n = nCh ? +nCh[1] : 0;
+    var done = false;
+    try { done = typeof window.getChapterState === "function" && !!window.getChapterState("ch1").passed; } catch (e) {}
+    var title = (n === 2 && done) ? "🎉 خلصت الفصل الأول!" : n === 2 ? "جاهز للفصل التاني؟"
+              : n > 2 ? "سجّل دخولك لتكمل المادة" : "سجّل دخولك لتفتح هالقسم";
+    var text = "الفصل الأول مفتوح للكل. لتكمل باقي الفصول والفحص النهائي، سجّل دخولك. التسجيل مجاني وبياخد دقيقة: إيميلك وبس، بلا كلمة سر.";
+    if (!gate) {
+      gate = document.createElement("div"); gate.className = "scs-gate"; gate.hidden = true;
+      gate.innerHTML = '<div class="scs-gbox" role="dialog" aria-modal="true" aria-labelledby="scs-gt">' +
+        '<button class="scs-gx" type="button" aria-label="إغلاق">×</button><div class="scs-gico" aria-hidden="true">🔑</div>' +
+        '<h2 id="scs-gt"></h2><p></p><a class="scs-gbtn" href="#">تسجيل الدخول</a>' +
+        '<button class="scs-gno" type="button">مو هلأ</button></div>';
+      document.body.appendChild(gate);
+      var close = function () { gate.hidden = true; if (gateBack) try { gateBack.focus(); } catch (e) {} };
+      gate.querySelector(".scs-gx").onclick = close; gate.querySelector(".scs-gno").onclick = close;
+      gate.addEventListener("click", function (e) { if (e.target === gate) close(); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !gate.hidden) close(); });
+    }
+    gate.querySelector("h2").textContent = title;
+    gate.querySelector("p").textContent = text + (n > 1 ? " وتقدّمك بالفصل الأول بيضل محفوظ." : "");
+    gate.querySelector(".scs-gbtn").href = loginUrl(dest.href);
+    gateBack = document.activeElement; gate.hidden = false;
+    gate.querySelector(".scs-gbtn").focus();
+  }
+  function watchCourseLinks() {
+    document.addEventListener("click", function (e) {
+      if (!document.body.classList.contains("is-guest")) return;
+      var a = e.target.closest && e.target.closest("a[href]"); if (!a) return;
+      var href = a.getAttribute("href"); if (!href || href.charAt(0) === "#") return;
+      var u; try { u = new URL(href, location.href); } catch (er) { return; }
+      if (u.origin !== location.origin) return;
+      var c = coursePart(u); if (!c || OPEN_COURSE_PAGE.test(c.rest)) return;
+      e.preventDefault(); openGate(u.href);
+    }, true);
+  }
+
   /* زائر بدون حساب (بالصفحات المفتوحة بس): زر دخول بالشريط بدل الأيقونات */
   function showGuest(opts) {
     var bar = document.querySelector(".topbar");
     if (!bar) { bar = document.createElement("div"); bar.className = "topbar"; document.body.insertBefore(bar, document.body.firstChild); }
     if (!bar.querySelector(".scs-guest")) {
       var c = document.createElement("div"); c.className = "scs-cluster scs-guest";
-      c.innerHTML = '<a class="scs-login" href="' + esc(HUB + "login.html") + '">🔑 تسجيل الدخول</a>';
+      var trial = isTrialPage();
+      c.innerHTML = '<a class="scs-login" href="' + esc(trial ? loginUrl() : HUB + "login.html") + '">🔑 تسجيل الدخول</a>';
       bar.appendChild(c);
     }
     document.body.classList.add("is-guest");
     document.body.classList.remove("guard");
+    if (isTrialPage()) watchCourseLinks();
     if (opts.guest) opts.guest();
   }
 
   function init(opts) {
     opts = opts || {};
     onDom(function () {
-      if (opts.guest && window.SCAuth) {
+      var open = opts.guest || isTrialPage();
+      if (open && window.SCAuth) {
         var s0 = SCAuth.getSession();
         if (!s0 || !s0.token) return showGuest(opts);
       }
       build(opts);
       if (!window.SCAuth) { document.body.classList.remove("guard"); return; }
-      var onInvalid = opts.guest ? function () { location.reload(); } : null;   // الجلسة انتهت → منرجع نفتح الصفحة كزائر
+      var onInvalid = open ? function () { location.reload(); } : null;   // الجلسة انتهت → منرجع نفتح الصفحة كزائر
       SCAuth.requireLogin(function (user) {
         // ما وافق على آخر نسخة من الخصوصية → بنوديه لخطوة الموافقة بصفحة الدخول وبيرجع لهون بعدها
         var need = Number((window.SC_CONFIG || {}).TERMS_VERSION) || 0;
@@ -324,6 +390,7 @@
           return;
         }
         setUser(user);
+        flushPendingStars();
         loadNotifs();
         loadTicker();
         if (opts.onReady) opts.onReady(user);
@@ -339,11 +406,30 @@
     setTimeout(function () { t.classList.add("out"); setTimeout(function () { t.remove(); }, 500); }, 3200);
   }
   /** بتنستدعى من app.js لما يخلص امتحان: exam = "ch3" أو "final" */
+  var PENDING_KEY = "sc_pending_stars";
+  function readPending() { try { return JSON.parse(localStorage.getItem(PENDING_KEY) || "[]") || []; } catch (e) { return []; } }
+  function writePending(l) { try { if (l.length) localStorage.setItem(PENDING_KEY, JSON.stringify(l)); else localStorage.removeItem(PENDING_KEY); } catch (e) {} }
+  /* زائر نجح بامتحان الفصل الأول: منحفظ النتيجة عالجهاز، وبتنحسب نجومها أول ما يسجّل */
+  function flushPendingStars() {
+    var l = readPending(); if (!l.length) return;
+    writePending([]);
+    l.forEach(function (x) { sendExam(x.course_id, x.exam, x.score); });
+  }
   function examDone(exam, score) {
     if (!window.SCAuth || !(score >= 90)) return;
-    var s = SCAuth.getSession(); if (!s || !s.token) return;
     var m = /\/courses\/([A-Za-z0-9_\-]+)\//.exec(location.pathname); if (!m) return;
-    SCAuth.api("examPassed", { token: s.token, course_id: m[1], exam: String(exam || ""), score: score }).then(function (res) {
+    var s = SCAuth.getSession();
+    if (!s || !s.token) {
+      var l = readPending().filter(function (x) { return !(x.course_id === m[1] && x.exam === String(exam || "")); });
+      l.push({ course_id: m[1], exam: String(exam || ""), score: score }); writePending(l);
+      onDom(function () { toast("⭐ برافو! سجّل دخولك لتنحفظلك نجوم هالامتحان"); });
+      return;
+    }
+    sendExam(m[1], exam, score);
+  }
+  function sendExam(course, exam, score) {
+    var s = SCAuth.getSession(); if (!s || !s.token) return;
+    SCAuth.api("examPassed", { token: s.token, course_id: course, exam: String(exam || ""), score: score }).then(function (res) {
       if (!res || !res.ok || !res.granted) return;
       try { sessionStorage.removeItem(NOTIF_KEY); } catch (e) {}
       if (res.total != null) setStars(res.total);

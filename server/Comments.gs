@@ -2,6 +2,8 @@
  * Support Channel — أسئلة وأجوبة الفصول + الإشعارات + شريط الأخبار
  * ملف مستقل بجانب Code.gs و Stars.gs (Apps Script بيشاركهم نفس المحيط).
  *
+ * تجربة الزوار: getComments و getQaStats بيشتغلوا بدون token للفصل الأول بس (قراءة، والأسماء مخفية).
+ *
  * الفكرة (النسخة 4): النقاش تحت كل فصل صار "أسئلة هالفصل".
  *   - تعليق بدون parent_id = سؤال.  تعليق إلو parent_id = جواب على هالسؤال.
  *   - 👍 على الجواب (تبويب votes)، و"✓ حلّ مشكلتي" من صاحب السؤال (عمود accepted_id على صف السؤال).
@@ -282,10 +284,24 @@ function qaStats_(list) {
   return { questions: qs.length, unanswered: qs.filter(function (q) { return !answered[q[C_ID]]; }).length };
 }
 
+/**
+ * زائر بدون حساب (بلا token): بيقدر يقرأ أسئلة الفصل الأول بس (تجربة المقرر قبل التسجيل).
+ * بيرجّع { uid } للمستخدم، أو { uid:'', guest:true } للزائر، أو { err } إذا ما مسموح.
+ * token موجود بس غلط/منتهي → نفس خطأ الجلسة (الواجهة بتمسح الجلسة).
+ */
+function viewer_(req, p) {
+  if (!req.token) {
+    if (p.chapter !== '1') return { err: { ok: false, error: 'NO_SESSION' } };
+    return { uid: '', guest: true };
+  }
+  const a = authUser_(req); if (a.err) return { err: a.err };
+  return { uid: String(a.user.obj.user_id) };
+}
+
 function getComments_(req) {
-  const a = authUser_(req); if (a.err) return a.err;
   const p = place_(req); if (!p) return { ok: false, error: 'BAD_REQUEST' };
-  const uid = String(a.user.obj.user_id);
+  const v = viewer_(req, p); if (v.err) return v.err;
+  const uid = v.uid;
   const list = loadPlaces_([p.key])[p.key] || [];
 
   // آخر Q_LIST_MAX سؤال مع أجوبتها
@@ -303,6 +319,7 @@ function getComments_(req) {
     ok: true,
     comments: out.map(function (c) {
       const pc = pubComment_(c, uid);
+      if (v.guest) pc.name = 'طالب';   // الزائر ما بيشوف الأسماء
       if (c[C_PAR]) pc.by_asker = !!c[C_UID] && askerOf[c[C_PAR]] === c[C_UID];   // توضيح من صاحب السؤال، مو جواب
       return pc;
     }),
@@ -313,8 +330,8 @@ function getComments_(req) {
 
 /** للشريط الصغير تحت الدرس: كم سؤال وكم بلا جواب (من الكاش، رد صغير) */
 function getQaStats_(req) {
-  const a = authUser_(req); if (a.err) return a.err;
   const p = place_(req); if (!p) return { ok: false, error: 'BAD_REQUEST' };
+  const v = viewer_(req, p); if (v.err) return v.err;
   const st = qaStats_(loadPlaces_([p.key])[p.key] || []);
   return { ok: true, questions: st.questions, unanswered: st.unanswered };
 }

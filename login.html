@@ -6,8 +6,8 @@
 <title>تسجيل الدخول — Support Channel</title>
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/style.css?v=20261121a">
-<link rel="stylesheet" href="assets/hub.css?v=20261122a">
+<link rel="stylesheet" href="assets/style.css?v=20261123a">
+<link rel="stylesheet" href="assets/hub.css?v=20261123a">
 </head>
 <body>
 
@@ -41,6 +41,7 @@
         <h2>تسجيل الدخول</h2>
         <p class="sub">دخّل إيميلك الشخصي (غوغل، هوتميل،...) وبنبعتلك رمز تحقق عليه من 6 أرقام. ممكن يوصل على مجلد الرسائل غير المرغوب فيها، فشوف كل المجلدات.</p>
         <p class="notice" id="ref-note" hidden style="margin:0 0 14px;">👋 صديقك دعاك للمنصة! سجّل وبتاخد نجوم ترحيب ⭐</p>
+        <p class="notice" id="course-note" hidden style="margin:0 0 14px;">📚 الفصل الأول من كل مادة مفتوح للكل. سجّل دخولك لتكمل باقي الفصول، وبيضل تقدّمك محفوظ ⭐</p>
         <label class="field"><span>الإيميل</span>
           <input id="email" type="email" dir="ltr" autocomplete="email" inputmode="email" placeholder="name@example.com">
         </label>
@@ -110,11 +111,11 @@
   <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
 </footer>
 
-<script src="assets/config.js?v=20261121a"></script>
-<script src="assets/auth.js?v=20261121a"></script>
-<script src="assets/policy.js?v=20261121a"></script>
-<script src="assets/community.js?v=20261121a" defer></script>
-<script src="assets/slogan.js?v=20261121a" defer></script>
+<script src="assets/config.js?v=20261123a"></script>
+<script src="assets/auth.js?v=20261123a"></script>
+<script src="assets/policy.js?v=20261123a"></script>
+<script src="assets/community.js?v=20261123a" defer></script>
+<script src="assets/slogan.js?v=20261123a" defer></script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -202,6 +203,7 @@
     var m = /[?&]ref=([A-Za-z0-9]{4,12})/.exec(location.search);
     if (m) { try { localStorage.setItem("sc_ref", m[1].toUpperCase()); } catch (e) {} }
     if (savedRef()) $("ref-note").hidden = false;
+    else try { if (/\/courses\//.test(new URLSearchParams(location.search).get("next") || "")) $("course-note").hidden = false; } catch (e) {}
   })();
   function savedRef() { try { return localStorage.getItem("sc_ref") || ""; } catch (e) { return ""; } }
 

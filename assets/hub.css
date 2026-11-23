@@ -421,23 +421,10 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .qa-lvl{ font-size:.7rem; font-weight:700; background:#F3F5F9; border:1px solid var(--border); border-radius:999px; padding:0 7px; color:var(--ink-soft); white-space:nowrap; }
 .cm-lvl{ font-size:.9rem; margin-inline-start:2px; }
 
-/* ---- صفحة المواد للزوار (بدون حساب): المواد بس، وفتح المادة بيطلب تسجيل الدخول ---- */
+/* ---- صفحة المواد للزوار (بدون حساب): بيقدروا يجرّبوا الفصل الأول من كل مادة ---- */
 .is-guest .members-only{ display:none !important; }
-.is-guest .course-card .open-hint::before{ content:"🔒 "; }
-.gate-ov{ position:fixed; inset:0; z-index:90; background:rgba(15,28,46,.55); display:flex; align-items:center; justify-content:center; padding:18px; }
-.gate-ov[hidden]{ display:none; }
-.gate-box{ position:relative; width:100%; max-width:400px; background:#fff; color:var(--ink,#16232E); border-radius:18px; box-shadow:0 14px 44px rgba(15,28,46,.3); padding:26px 22px 20px; text-align:center; animation:gateIn .18s ease-out; }
-.gate-box h2{ margin:6px 0 6px; font-size:1.2rem; }
-.gate-ico{ font-size:2.2rem; line-height:1; }
-.gate-course{ margin:0 0 10px; font-weight:800; color:var(--teal-dark,#138C81); }
-.gate-course:empty{ display:none; }
-.gate-sub{ margin:0 0 16px; color:var(--muted); font-size:.92rem; line-height:1.7; }
-.gate-box .btn + .btn{ margin-top:8px; }
-.gate-no{ background:#F5F7FB; color:var(--muted); border:1px solid var(--border); }
-.gate-no:hover{ background:#EBEFF6; }
-.gate-x{ position:absolute; top:10px; left:10px; width:34px; height:34px; border-radius:50%; border:1px solid var(--border); background:#F5F7FB; font-size:1.1rem; cursor:pointer; color:inherit; }
-@keyframes gateIn{ from{ opacity:0; transform:translateY(8px) scale(.98); } to{ opacity:1; transform:none; } }
-@media (prefers-reduced-motion: reduce){ .gate-box{ animation:none; } }
+.course-card .guest-hint{ display:none; }
+.is-guest .course-card .guest-hint{ display:inline-block; align-self:flex-start; margin-top:8px; font-size:.78rem; font-weight:700; color:#0E6B62; background:#E6F7F4; border:1px solid #BFEDE6; border-radius:999px; padding:3px 10px; }
 
 /* ملاحظة: رمز التحقق ممكن يوصل على Junk/Spam */
 .spam-note{ background:#FFF8E6; border:1px solid #FFD794; border-radius:12px; padding:10px 14px; margin:-6px 0 16px; font-size:.86rem; line-height:1.75; color:#5A4200; }

@@ -430,3 +430,7 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .spam-note ul{ margin:0; padding-inline-start:18px; }
 .spam-note li{ margin:2px 0; }
 .spam-note bdi{ white-space:nowrap; }
+
+/* شارة «مجاني» (الصفحة الرئيسية + صفحة الدخول) */
+.free-badge{ display:inline-block; background:#1E9E6A; color:#fff; font-weight:800; font-size:1.02rem; line-height:1.7; border-radius:16px; padding:8px 18px; margin:6px 0 4px; box-shadow:0 6px 18px rgba(30,158,106,.28); }
+.free-badge b{ color:#FFE08A; font-weight:900; }

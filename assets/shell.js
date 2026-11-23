@@ -81,6 +81,13 @@
     ".scs-gbox p{margin:0 0 16px;color:#5B6478;font-size:.92rem;line-height:1.8}",
     ".scs-gbtn{display:block;width:100%;box-sizing:border-box;text-decoration:none;background:var(--amber,#FF9F1C);color:#1A1200;font:inherit;font-weight:800;border:0;border-radius:12px;padding:12px;cursor:pointer}",
     ".scs-gno{display:block;width:100%;margin-top:8px;background:none;border:0;font:inherit;color:#5B6478;padding:8px;cursor:pointer}",
+    ".scs-free{display:inline-block;background:#1E9E6A;color:#fff;font-weight:900;border-radius:999px;padding:1px 10px;margin-inline-start:4px;font-size:1.02em;letter-spacing:.2px}",
+    ".scs-gfree{display:inline-block;background:#1E9E6A;color:#fff;font-weight:900;font-size:1.15rem;border-radius:999px;padding:6px 18px;margin-bottom:10px;box-shadow:0 4px 14px rgba(30,158,106,.3)}",
+    ".scs-gsmall{display:block;margin:-8px 0 14px;color:#1E7A55;font-weight:700;font-size:.85rem}",
+    ".chapter-card.scs-lk{cursor:pointer;opacity:1}.chapter-card.scs-lk .stamp{background:#E7F7EF;color:#14583D;border:1px solid #BDE8D2}",
+    ".sidebar-link.scs-lk{cursor:pointer}.sidebar-link.scs-lk .scs-free{font-size:.72rem;padding:0 7px}",
+    ".scs-strip{display:block;width:100%;flex:0 0 100%;box-sizing:border-box;background:#E7F7EF;border:1px solid #BDE8D2;color:#14583D;border-radius:14px;padding:12px 16px;margin:16px 0 4px;font-size:.95rem;line-height:1.8;font-family:inherit}",
+    ".scs-strip a{color:#0E6B4A;font-weight:800}",
     ".scs-gx{position:absolute;top:10px;left:10px;width:34px;height:34px;border-radius:50%;border:1px solid #E3E7F0;background:#F5F7FB;font-size:1.1rem;cursor:pointer;color:inherit}"
   ].join("\n");
   var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
@@ -350,12 +357,13 @@
     try { done = typeof window.getChapterState === "function" && !!window.getChapterState("ch1").passed; } catch (e) {}
     var title = (n === 2 && done) ? "🎉 خلصت الفصل الأول!" : n === 2 ? "جاهز للفصل التاني؟"
               : n > 2 ? "سجّل دخولك لتكمل المادة" : "سجّل دخولك لتفتح هالقسم";
-    var text = "سجّل دخولك مشان تنحفظ تقدّمك بالمادة ولوين وصلت بالدراسة، وتكمل باقي الفصول. التسجيل مجاني وبياخد دقيقة: إيميلك وبس، بلا كلمة سر.";
+    var text = "كل المقررات والتسجيل مجانيين. سجّل دخولك مشان تنحفظ تقدّمك بالمادة ولوين وصلت بالدراسة، وتكمل باقي الفصول. بياخد دقيقة: إيميلك وبس.";
     if (!gate) {
       gate = document.createElement("div"); gate.className = "scs-gate"; gate.hidden = true;
       gate.innerHTML = '<div class="scs-gbox" role="dialog" aria-modal="true" aria-labelledby="scs-gt">' +
-        '<button class="scs-gx" type="button" aria-label="إغلاق">×</button><div class="scs-gico" aria-hidden="true">🔑</div>' +
-        '<h2 id="scs-gt"></h2><p></p><a class="scs-gbtn" href="#">تسجيل الدخول</a>' +
+        '<button class="scs-gx" type="button" aria-label="إغلاق">×</button><div class="scs-gfree">✨ مجاني 100%</div>' +
+        '<h2 id="scs-gt"></h2><p></p><a class="scs-gbtn" href="#">🔑 سجّل مجاناً</a>' +
+        '<span class="scs-gsmall" style="margin:8px 0 0">بلا كلمة سر، وبلا أي دفع</span>' +
         '<button class="scs-gno" type="button">مو هلأ</button></div>';
       document.body.appendChild(gate);
       var close = function () { gate.hidden = true; if (gateBack) try { gateBack.focus(); } catch (e) {} };
@@ -381,6 +389,39 @@
     }, true);
   }
 
+  /* للزائر: الفصول المقفولة بتصير «🔑 سجّل دخول · مجاناً» وبتفتح نافذة الدخول (للمسجّل بتضل «مقفول» = لازم ينجح بالقبل) */
+  function markLockedForGuest() {
+    var base = (location.pathname.match(/^(.*\/courses\/[A-Za-z0-9_\-]+\/)/) || [])[1] || "";
+    function chHref(n) { return base + "chapters/chapter-" + n + "-lesson.html"; }
+    function apply() {
+      document.querySelectorAll(".chapter-card.locked:not(.scs-lk)").forEach(function (c) {
+        var n = (/(\d+)/.exec((c.querySelector(".num") || {}).textContent || "") || [])[1];
+        var st = c.querySelector(".stamp"); if (!n || !st) return;
+        c.classList.add("scs-lk"); c.setAttribute("role", "link"); c.tabIndex = 0;
+        st.innerHTML = '🔑 سجّل دخول <span class="scs-free">مجاناً</span>';
+        var go = function () { openGate(chHref(n)); };
+        c.addEventListener("click", go);
+        c.addEventListener("keydown", function (e) { if (e.key === "Enter") go(); });
+      });
+      document.querySelectorAll(".sidebar-link.locked:not(.scs-lk)").forEach(function (l) {
+        var n = (/^\s*(\d+)\./.exec(l.textContent.replace(/^[^\d]*/, "")) || [])[1]; if (!n) return;
+        l.classList.add("scs-lk"); l.title = "سجّل دخول مجاناً لتكمل";
+        var ic = l.querySelector(".sb-icon"); if (ic) ic.textContent = "🔑";
+        var f = document.createElement("span"); f.className = "scs-free"; f.textContent = "مجاناً"; l.appendChild(f);
+        l.addEventListener("click", function () { openGate(chHref(n)); });
+      });
+      var ch = document.getElementById("chapters");
+      if (ch && !document.querySelector(".scs-strip")) {
+        var s = document.createElement("div"); s.className = "scs-strip";
+        s.innerHTML = '📚 هالمادة <b class="scs-free">مجانية بالكامل</b> ' +
+          '<a href="' + esc(loginUrl()) + '">سجّل دخولك مجاناً</a> لتنحفظ تقدّمك وتكمل لآخرها.';
+        ch.insertBefore(s, ch.firstChild);
+      }
+    }
+    apply();
+    try { new MutationObserver(apply).observe(document.body, { childList: true, subtree: true }); } catch (e) {}
+  }
+
   /* زائر بدون حساب (بالصفحات المفتوحة بس): زر دخول بالشريط بدل الأيقونات */
   function showGuest(opts) {
     var bar = document.querySelector(".topbar");
@@ -388,12 +429,12 @@
     if (!bar.querySelector(".scs-guest")) {
       var c = document.createElement("div"); c.className = "scs-cluster scs-guest";
       var trial = isTrialPage();
-      c.innerHTML = '<a class="scs-login" href="' + esc(trial ? loginUrl() : HUB + "login.html") + '">🔑 تسجيل الدخول</a>';
+      c.innerHTML = '<a class="scs-login" href="' + esc(trial ? loginUrl() : HUB + "login.html") + '">🔑 سجّل مجاناً</a>';
       bar.appendChild(c);
     }
     document.body.classList.add("is-guest");
     document.body.classList.remove("guard");
-    if (isTrialPage()) { watchCourseLinks(); trialPing("view"); }
+    if (isTrialPage()) { watchCourseLinks(); trialPing("view"); markLockedForGuest(); }
     if (opts.guest) opts.guest();
   }
 
@@ -450,7 +491,7 @@
     if (!s || !s.token) {
       var l = readPending().filter(function (x) { return !(x.course_id === m[1] && x.exam === String(exam || "")); });
       l.push({ course_id: m[1], exam: String(exam || ""), score: score }); writePending(l);
-      onDom(function () { toast("⭐ برافو! سجّل دخولك لتنحفظلك نجوم هالامتحان"); });
+      onDom(function () { toast("⭐ برافو! سجّل مجاناً لتنحفظلك نجوم هالامتحان"); });
       if (String(exam) === "ch1") trialPing("pass");
       return;
     }

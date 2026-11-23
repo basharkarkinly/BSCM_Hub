@@ -6,11 +6,12 @@
 <title>المقررات — Support Channel</title>
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/style.css?v=20261123a">
-<link rel="stylesheet" href="assets/hub.css?v=20261123a">
+<link rel="stylesheet" href="assets/style.css?v=20261123b">
+<link rel="stylesheet" href="assets/hub.css?v=20261123b">
 <script>
-  // روابط قديمة لصفحة الدخول (كانت index.html): ?next= و ?ref= (رابط الدعوة) و ?deleted=1 → login.html
-  if (/[?&](next|ref|deleted)=/.test(location.search)) location.replace("login.html" + location.search + location.hash);
+  // روابط قديمة لصفحة الدخول (كانت index.html): ?next= و ?deleted=1 → login.html
+  // (رابط الدعوة ?ref= بيضل هون: الزائر بيجرّب المواد أول، والكود بينحفظ للتسجيل)
+  if (/[?&](next|deleted)=/.test(location.search)) location.replace("login.html" + location.search + location.hash);
 </script>
 </head>
 <body class="guard">
@@ -50,6 +51,8 @@
     <a class="btn btn-primary" href="stars.html">نجومي ورابط الدعوة</a>
   </div>
 
+  <div id="ref-banner" class="notice" hidden>👋 <b>صديقك دعاك للمنصة!</b> فوت على أي مادة وجرّبها، ولما تسجّل بتاخد نجوم ترحيب ⭐</div>
+
   <h2 class="section-title">المقررات</h2>
   <div id="courses-grid" class="courses-grid" aria-live="polite">
     <div class="course-card skeleton"></div>
@@ -69,11 +72,11 @@
   <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
 </footer>
 
-<script src="assets/config.js?v=20261123a"></script>
-<script src="assets/auth.js?v=20261123a"></script>
-<script src="assets/shell.js?v=20261123a"></script>
-<script src="assets/community.js?v=20261123a" defer></script>
-<script src="assets/slogan.js?v=20261123a" defer></script>
+<script src="assets/config.js?v=20261123b"></script>
+<script src="assets/auth.js?v=20261123b"></script>
+<script src="assets/shell.js?v=20261123b"></script>
+<script src="assets/community.js?v=20261123b" defer></script>
+<script src="assets/slogan.js?v=20261123b" defer></script>
 <script>
   SCShell.init({
     guest: function () {},
@@ -101,7 +104,6 @@
         '<span class="code-badge">' + esc(c.code) + '</span>' +
         '<h3>' + esc(c.title) + '</h3>' +
         (c.description ? '<p>' + esc(c.description) + '</p>' : '') +
-        '<span class="guest-hint">🎁 الفصل الأول مفتوح بدون تسجيل</span>' +
         '<span class="open-hint">افتح المقرر ←</span></a>';
     }).join("");
   }
@@ -128,6 +130,16 @@
   }
 
   loadCourses();
+
+  // ---- رابط الدعوة: index.html?ref=CODE — منحفظ الكود لحد ما يسجّل، وهو بيجرّب المواد أول ----
+  (function () {
+    var m = /[?&]ref=([A-Za-z0-9]{4,12})/.exec(location.search);
+    var s = SCAuth.getSession(), guest = !(s && s.token), r = "";
+    if (m && guest) { try { localStorage.setItem("sc_ref", m[1].toUpperCase()); } catch (e) {} }
+    if (m) { try { history.replaceState(null, "", location.pathname + location.hash); } catch (e) {} }
+    try { r = localStorage.getItem("sc_ref") || ""; } catch (e) {}
+    if (r && guest) document.getElementById("ref-banner").hidden = false;
+  })();
 
 </script>
 </body>

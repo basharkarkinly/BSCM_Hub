@@ -421,10 +421,8 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .qa-lvl{ font-size:.7rem; font-weight:700; background:#F3F5F9; border:1px solid var(--border); border-radius:999px; padding:0 7px; color:var(--ink-soft); white-space:nowrap; }
 .cm-lvl{ font-size:.9rem; margin-inline-start:2px; }
 
-/* ---- صفحة المواد للزوار (بدون حساب): بيقدروا يجرّبوا الفصل الأول من كل مادة ---- */
+/* ---- صفحة المواد للزوار (بدون حساب) ---- */
 .is-guest .members-only{ display:none !important; }
-.course-card .guest-hint{ display:none; }
-.is-guest .course-card .guest-hint{ display:inline-block; align-self:flex-start; margin-top:8px; font-size:.78rem; font-weight:700; color:#0E6B62; background:#E6F7F4; border:1px solid #BFEDE6; border-radius:999px; padding:3px 10px; }
 
 /* ملاحظة: رمز التحقق ممكن يوصل على Junk/Spam */
 .spam-note{ background:#FFF8E6; border:1px solid #FFD794; border-radius:12px; padding:10px 14px; margin:-6px 0 16px; font-size:.86rem; line-height:1.75; color:#5A4200; }

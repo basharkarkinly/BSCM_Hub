@@ -202,6 +202,9 @@
   (function () {
     var m = /[?&]ref=([A-Za-z0-9]{4,12})/.exec(location.search);
     if (m) { try { localStorage.setItem("sc_ref", m[1].toUpperCase()); } catch (e) {} }
+    // روابط الدعوة القديمة (login.html?ref=) → صفحة المواد ليجرّب أول، والكود محفوظ
+    var ses = window.SCAuth && SCAuth.getSession();
+    if (m && !/[?&]next=/.test(location.search) && !(ses && ses.token)) { location.replace("index.html"); return; }
     if (savedRef()) $("ref-note").hidden = false;
     else try { if (/\/courses\//.test(new URLSearchParams(location.search).get("next") || "")) $("course-note").hidden = false; } catch (e) {}
   })();

@@ -158,8 +158,8 @@
 
   function invite(d) {
     if (!d.ref_code) { document.querySelector(".st-invite").hidden = true; return; }
-    var link = new URL("login.html?ref=" + d.ref_code, location.href).href;
-    var text = "عم أدرس على منصة Support Channel — مقررات مشروحة ومبسّطة مع تدريب وامتحانات، ومجتمع بيساعد بعضو. سجّل من هون: ";
+    var link = new URL("index.html?ref=" + d.ref_code, location.href).href;
+    var text = "عم أدرس على منصة Support Channel — مقررات مشروحة ومبسّطة مع تدريب وامتحانات، ومجتمع بيساعد بعضو. فوت جرّب من هون: ";
     $("inv-link").value = link;
     $("inv-wa").href = "https://wa.me/?text=" + encodeURIComponent(text + link);
     $("inv-tg").href = "https://t.me/share/url?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent(text);

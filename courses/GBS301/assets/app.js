@@ -123,7 +123,16 @@ function renderQuiz(containerId, pool, opts){
   if(mode === "exam" || mode === "final"){
     // امتحان الفصل / الفحص النهائي: عيّنة من أسئلة ما شافها الطالب بمحاولات سابقة (تدوير البنك)
     const count = opts.count || pool.length;
-    pickInfo = pickFresh(pool, count, seenScope);
+    if(mode === "final" && opts.bankShare){
+      // الفحص النهائي: أغلب الأسئلة من بنك الدورات وتمارين الكتاب (origin:"bank")، والباقي من أسئلة الشرح
+      const bank = pool.filter(q => q.origin === "bank"), gen = pool.filter(q => q.origin !== "bank");
+      const nb = Math.min(bank.length, Math.round(count * opts.bankShare));
+      const a = pickFresh(bank, nb, "final_bank"), b = pickFresh(gen, count - nb, "final_gen");
+      pickInfo = { picked: shuffle(a.picked.concat(b.picked)), recycled: a.recycled || b.recycled, freshLeft: a.freshLeft };
+      opts._scopeOf = q => q.origin === "bank" ? "final_bank" : "final_gen";
+    } else {
+      pickInfo = pickFresh(pool, count, seenScope);
+    }
     questions = pickInfo.picked.map(prepQuestionForExam);
   } else {
     questions = pool.map(q => ({...q}));
@@ -139,7 +148,7 @@ function renderQuiz(containerId, pool, opts){
   metaBar.className = "quiz-meta";
   let metaNote;
   if(mode === "exam") metaNote = `<span>النجاح يتطلب <b>90%</b> فأكثر</span>`;
-  else if(mode === "final") metaNote = `<span><b>فحص نهائي شامل</b> — كل سؤال ${opts.marksPerQuestion === 2 ? "علامتين" : (opts.marksPerQuestion || 1) + " علامات"}، وبتقدر تعيد الفحص بأسئلة جديدة</span>`;
+  else if(mode === "final") metaNote = `<span><b>فحص نهائي شامل</b> — كل سؤال ${opts.marksPerQuestion === 2 ? "علامتين" : opts.marksPerQuestion === 2.5 ? "علامتين ونص" : (opts.marksPerQuestion || 1) + " علامات"}، وبتقدر تعيد الفحص بأسئلة جديدة</span>`;
   else metaNote = `<span>تدريب حر — بلا قفل، جاوب وشوف التصحيح فوراً</span>`;
   metaBar.innerHTML = `
     <span>السؤال <b id="qz-answered">0</b> من <b>${questions.length}</b></span>
@@ -167,7 +176,7 @@ function renderQuiz(containerId, pool, opts){
 
   questions.forEach((q, idx) => {
     list.appendChild(buildQuestionCard(q, idx, mode, (ok) => {
-      if(seenScope) markSeen(seenScope, q);
+      if(opts._scopeOf) markSeen(opts._scopeOf(q), q); else if(seenScope) markSeen(seenScope, q);
       onAnswered(ok);
     }));
   });

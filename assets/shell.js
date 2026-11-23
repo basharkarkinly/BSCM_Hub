@@ -350,7 +350,7 @@
     try { done = typeof window.getChapterState === "function" && !!window.getChapterState("ch1").passed; } catch (e) {}
     var title = (n === 2 && done) ? "🎉 خلصت الفصل الأول!" : n === 2 ? "جاهز للفصل التاني؟"
               : n > 2 ? "سجّل دخولك لتكمل المادة" : "سجّل دخولك لتفتح هالقسم";
-    var text = "الفصل الأول مفتوح للكل. لتكمل باقي الفصول والفحص النهائي، سجّل دخولك. التسجيل مجاني وبياخد دقيقة: إيميلك وبس، بلا كلمة سر.";
+    var text = "سجّل دخولك مشان تنحفظ تقدّمك بالمادة ولوين وصلت بالدراسة، وتكمل باقي الفصول. التسجيل مجاني وبياخد دقيقة: إيميلك وبس، بلا كلمة سر.";
     if (!gate) {
       gate = document.createElement("div"); gate.className = "scs-gate"; gate.hidden = true;
       gate.innerHTML = '<div class="scs-gbox" role="dialog" aria-modal="true" aria-labelledby="scs-gt">' +
@@ -364,7 +364,7 @@
       document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !gate.hidden) close(); });
     }
     gate.querySelector("h2").textContent = title;
-    gate.querySelector("p").textContent = text + (n > 1 ? " وتقدّمك بالفصل الأول بيضل محفوظ." : "");
+    gate.querySelector("p").textContent = text;
     gate.querySelector(".scs-gbtn").href = loginUrl(dest.href);
     gateBack = document.activeElement; gate.hidden = false;
     gate.querySelector(".scs-gbtn").focus();

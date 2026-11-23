@@ -6,8 +6,8 @@
 <title>المقررات — Support Channel</title>
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/style.css?v=20261123a">
-<link rel="stylesheet" href="assets/hub.css?v=20261123a">
+<link rel="stylesheet" href="assets/style.css?v=20261123b">
+<link rel="stylesheet" href="assets/hub.css?v=20261123b">
 <script>
   // روابط قديمة لصفحة الدخول (كانت index.html): ?next= و ?ref= (رابط الدعوة) و ?deleted=1 → login.html
   if (/[?&](next|ref|deleted)=/.test(location.search)) location.replace("login.html" + location.search + location.hash);
@@ -69,11 +69,11 @@
   <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
 </footer>
 
-<script src="assets/config.js?v=20261123a"></script>
-<script src="assets/auth.js?v=20261123a"></script>
-<script src="assets/shell.js?v=20261123a"></script>
-<script src="assets/community.js?v=20261123a" defer></script>
-<script src="assets/slogan.js?v=20261123a" defer></script>
+<script src="assets/config.js?v=20261123b"></script>
+<script src="assets/auth.js?v=20261123b"></script>
+<script src="assets/shell.js?v=20261123b"></script>
+<script src="assets/community.js?v=20261123b" defer></script>
+<script src="assets/slogan.js?v=20261123b" defer></script>
 <script>
   SCShell.init({
     guest: function () {},
@@ -101,7 +101,6 @@
         '<span class="code-badge">' + esc(c.code) + '</span>' +
         '<h3>' + esc(c.title) + '</h3>' +
         (c.description ? '<p>' + esc(c.description) + '</p>' : '') +
-        '<span class="guest-hint">🎁 الفصل الأول مفتوح بدون تسجيل</span>' +
         '<span class="open-hint">افتح المقرر ←</span></a>';
     }).join("");
   }

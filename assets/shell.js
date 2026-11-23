@@ -314,6 +314,33 @@
   function isTrialPage() { var c = coursePart(location); return !!(c && OPEN_COURSE_PAGE.test(c.rest)); }
   function loginUrl(next) { return HUB + "login.html?next=" + encodeURIComponent(next || location.href); }
 
+  /* عدّاد التجربة (Trials.gs): رقم عشوائي للجهاز بس، بلا أي معلومة شخصية */
+  var VID_KEY = "sc_vid", VID_DONE = "sc_vid_done";
+  function visitorId() {
+    var v = ""; try { v = localStorage.getItem(VID_KEY) || ""; } catch (e) {}
+    if (!/^v_[a-z0-9]{8,24}$/.test(v)) {
+      v = "v_" + (Date.now().toString(36) + Math.random().toString(36).slice(2, 10)).slice(0, 16);
+      try { localStorage.setItem(VID_KEY, v); } catch (e) {}
+    }
+    return v;
+  }
+  function trialPing(event) {
+    if (!window.SCAuth) return;
+    var c = coursePart(location); if (!c) return;
+    var once = "sc_tp_" + c.course + "_" + event;
+    try { if (sessionStorage.getItem(once)) return; sessionStorage.setItem(once, "1"); } catch (e) {}
+    SCAuth.api("trialPing", { vid: visitorId(), course_id: c.course, event: event }).catch(function () {});
+  }
+  function trialConverted() {
+    var v = "", done = "";
+    try { v = localStorage.getItem(VID_KEY) || ""; done = localStorage.getItem(VID_DONE) || ""; } catch (e) {}
+    if (!v || done) return;
+    var s = SCAuth.getSession(); if (!s || !s.token) return;
+    SCAuth.api("trialConverted", { token: s.token, vid: v }).then(function (res) {
+      if (res && res.ok) try { localStorage.setItem(VID_DONE, "1"); } catch (e) {}
+    }).catch(function () {});
+  }
+
   /* نافذة «سجّل دخولك» لما الزائر يضغط على قسم مقفول من المقرر */
   var gate = null, gateBack = null;
   function openGate(href) {
@@ -366,7 +393,7 @@
     }
     document.body.classList.add("is-guest");
     document.body.classList.remove("guard");
-    if (isTrialPage()) watchCourseLinks();
+    if (isTrialPage()) { watchCourseLinks(); trialPing("view"); }
     if (opts.guest) opts.guest();
   }
 
@@ -391,6 +418,7 @@
         }
         setUser(user);
         flushPendingStars();
+        trialConverted();
         loadNotifs();
         loadTicker();
         if (opts.onReady) opts.onReady(user);
@@ -423,6 +451,7 @@
       var l = readPending().filter(function (x) { return !(x.course_id === m[1] && x.exam === String(exam || "")); });
       l.push({ course_id: m[1], exam: String(exam || ""), score: score }); writePending(l);
       onDom(function () { toast("⭐ برافو! سجّل دخولك لتنحفظلك نجوم هالامتحان"); });
+      if (String(exam) === "ch1") trialPing("pass");
       return;
     }
     sendExam(m[1], exam, score);

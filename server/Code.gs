@@ -31,7 +31,7 @@ const CFG = {
 /* ============ نقاط الدخول ============ */
 
 function doGet() {
-  return json_({ ok: true, service: 'support-channel-auth', version: 'v12-otp-lock' });
+  return json_({ ok: true, service: 'support-channel-auth', version: 'v13-guest-trial' });
 }
 
 function doPost(e) {
@@ -68,6 +68,9 @@ function doPost(e) {
       case 'updateName':    return json_(withLock_(() => updateName_(req)));
       case 'deleteAccount': return json_(withLock_(() => deleteAccount_(req)));
       case 'acceptTerms':   return json_(withLock_(() => acceptTerms_(req)));
+      // عدّاد تجربة الزوار (Trials.gs) — القفل جوّا الدوال نفسها
+      case 'trialPing':      return json_(trialPing_(req));
+      case 'trialConverted': return json_(trialConverted_(req));
       default:             return json_({ ok: false, error: 'UNKNOWN_ACTION' });
     }
   } catch (err) {

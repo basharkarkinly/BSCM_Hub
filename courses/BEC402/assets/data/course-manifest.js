@@ -3,7 +3,11 @@
 const COURSE_TITLE = "BEC402 — التحليل الاقتصادي الجزئي";
 
 const COURSE_CHAPTERS = [
-  {num:1, key:"ch1", title:"أساسيات في علم الاقتصاد", href:"chapters/chapter-1-lesson.html"}
+  {num:1, key:"ch1", title:"أساسيات في علم الاقتصاد", href:"chapters/chapter-1-lesson.html"},
+  {num:2, key:"ch2", title:"العرض والطلب", href:"chapters/chapter-2-lesson.html"},
+  {num:3, key:"ch3", title:"نظرية المستهلك", href:"chapters/chapter-3-lesson.html"},
+  {num:4, key:"ch4", title:"النظرية المعاصرة في تفضيلات المستهلك", href:"chapters/chapter-4-lesson.html"},
+  {num:5, key:"ch5", title:"نظرية الطلب", href:"chapters/chapter-5-lesson.html"}
 ];
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */

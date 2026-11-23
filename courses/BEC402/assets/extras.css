@@ -128,3 +128,62 @@
 .pc-box.neg{ background:#FDECEA; } .pc-box.neg b{ color:#B3261E; }
 .pc-box.zero{ background:#EEF2FF; }
 @media (max-width:640px){ .pc-grid, .pc-out{ grid-template-columns:1fr; } }
+
+/* ---------- 📈 مختبر العرض والطلب (sd-) ---------- */
+.sdl-tabs{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+.sdl-grid{ display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:14px; align-items:start; }
+.sd-svg{ direction:ltr; unicode-bidi:isolate; width:100%; height:auto; display:block; background:#FBFCFE; border:1px solid #E3E7F0; border-radius:12px; }
+.sd-ax{ stroke:#5B6478; stroke-width:1.4; }
+.sd-tk{ font-size:10px; fill:#5B6478; font-family:inherit; }
+.sd-lb{ font-size:11px; fill:#1D3557; font-weight:700; font-family:inherit; }
+.sd-d, .sd-s{ fill:none; stroke-width:3; stroke-linecap:round; }
+.sd-d{ stroke:#2563EB; } .sd-s{ stroke:#EA7A1C; }
+.sd-d.old, .sd-s.old{ opacity:.35; stroke-dasharray:6 5; }
+.sd-d.new, .sd-s.new{ stroke-width:3.5; }
+.sd-e{ fill:#0F1C2E; } .sd-e.new{ fill:#0B7A57; stroke:#fff; stroke-width:2; }
+.sd-pl{ stroke:#0F1C2E; stroke-width:1.5; stroke-dasharray:4 4; }
+.sd-gap{ stroke-width:7; stroke-linecap:round; opacity:.6; } .sd-gap.short{ stroke:#E63946; } .sd-gap.surp{ stroke:#9B5DE5; }
+.sd-leg{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; font-size:.8rem; color:#5B6478; margin-top:6px; }
+.sd-leg .k{ display:inline-block; width:16px; height:4px; border-radius:2px; margin-inline-start:8px; }
+.sd-leg .k.d{ background:#2563EB; } .sd-leg .k.s{ background:#EA7A1C; } .sd-leg .k.e{ background:#0F1C2E; height:8px; width:8px; border-radius:50%; }
+.sdl-sl{ display:block; font-weight:700; margin-bottom:10px; } .sdl-sl input{ width:100%; accent-color:#FF9F1C; margin-top:6px; }
+.sdl-evs{ display:grid; gap:6px; margin-bottom:10px; }
+.sdl-ev{ text-align:right; font:inherit; font-size:.88rem; font-weight:600; padding:8px 10px; border-radius:10px; border:1.5px solid #cfd8e3; background:#fff; cursor:pointer; color:#0F1C2E; }
+.sdl-ev:hover{ border-color:#457b9d; } .sdl-ev.on{ background:#FFF4E2; border-color:#FF9F1C; }
+.sd-why{ display:inline-block; margin-top:4px; color:#334; font-weight:400; }
+@media (max-width:720px){ .sdl-grid{ grid-template-columns:1fr; } }
+
+/* ---------- 🛒 دكانة المنفعة (mus-) ---------- */
+.mus-bud{ background:#F5F7FB; border-radius:10px; padding:8px 12px; font-size:.92rem; margin-bottom:10px; }
+.mus-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.mus-card{ border:1.5px solid #E3E7F0; border-radius:12px; padding:10px 12px; background:#fff; }
+.mus-h{ font-size:1rem; margin-bottom:8px; } .mus-h small{ color:#5B6478; margin-inline-start:6px; }
+.mus-row{ display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.mus-row .tri-sc-b{ width:38px; height:38px; padding:0; font-size:1.2rem; } .mus-row .tri-sc-b:disabled{ opacity:.35; cursor:default; }
+.mus-n{ font-size:1.4rem; font-weight:800; min-width:24px; text-align:center; }
+.mus-t{ width:100%; border-collapse:collapse; font-size:.82rem; text-align:center; }
+.mus-t th{ text-align:right; font-weight:700; color:#5B6478; padding:3px 4px; white-space:nowrap; }
+.mus-t td{ border:1px solid #E3E7F0; padding:4px; } .mus-t td.on{ background:#E7F9F3; font-weight:800; }
+.mus-r{ font-size:.86rem; margin-top:8px; }
+.mus-tot{ margin:12px 0 4px; font-weight:700; }
+@media (max-width:640px){ .mus-grid{ grid-template-columns:1fr; } }
+
+/* ---------- 🗺️ منحنيات السواء (ic-) ---------- */
+.ic-feas{ fill:#2563EB; opacity:.08; }
+.ic-bl{ stroke:#2563EB; stroke-width:3; }
+.ic-u{ fill:none; stroke-width:2.2; } .ic-u.opt{ stroke:#0B7A57; } .ic-u.hi{ stroke:#9aa9b9; stroke-dasharray:5 5; } .ic-u.low{ stroke:#EA7A1C; }
+.ic-pt{ fill:#FF9F1C; stroke:#0F1C2E; stroke-width:2; }
+.ic-box{ display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 10px; } .ic-box span{ background:#F5F7FB; border-radius:8px; padding:5px 9px; font-size:.86rem; }
+.sd-leg .k.bl{ background:#2563EB; } .sd-leg .k.ic{ background:#0B7A57; }
+.sd-leg .k.pt{ background:#FF9F1C; height:9px; width:9px; border-radius:50%; } .sd-leg .k.e2{ background:#0B7A57; height:9px; width:9px; border-radius:50%; }
+
+/* ---------- ⚖️ أثر الإبدال والدخل (si-) ---------- */
+.si-steps{ display:grid; gap:6px; background:#F5F7FB; border-radius:10px; padding:10px 12px; font-size:.9rem; margin-bottom:12px; }
+.si-row{ display:grid; grid-template-columns:110px 1fr 70px; align-items:center; gap:8px; margin-bottom:8px; font-size:.9rem; }
+.si-row b{ text-align:left; font-variant-numeric:tabular-nums; }
+.si-track{ position:relative; height:16px; background:#F5F7FB; border-radius:8px; direction:ltr; }
+.si-mid{ position:absolute; left:50%; top:-3px; bottom:-3px; width:2px; background:#5B6478; }
+.si-bar{ position:absolute; top:0; bottom:0; border-radius:8px; }
+.si-bar.neg{ right:50%; } .si-bar.pos{ left:50%; }
+.si-bar.s{ background:#2563EB; } .si-bar.i{ background:#EA7A1C; } .si-bar.t{ background:#0B7A57; }
+@media (max-width:520px){ .si-row{ grid-template-columns:92px 1fr 56px; font-size:.82rem; } }

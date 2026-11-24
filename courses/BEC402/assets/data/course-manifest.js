@@ -9,7 +9,9 @@ const COURSE_CHAPTERS = [
   {num:4, key:"ch4", title:"النظرية المعاصرة في تفضيلات المستهلك", href:"chapters/chapter-4-lesson.html"},
   {num:5, key:"ch5", title:"نظرية الطلب", href:"chapters/chapter-5-lesson.html"},
   {num:6, key:"ch6", title:"مرونة العرض والطلب", href:"chapters/chapter-6-lesson.html"},
-  {num:7, key:"ch7", title:"التدخل في السوق", href:"chapters/chapter-7-lesson.html"}
+  {num:7, key:"ch7", title:"التدخل في السوق", href:"chapters/chapter-7-lesson.html"},
+  {num:8, key:"ch8", title:"المقاييس النقدية للكسب والخسارة", href:"chapters/chapter-8-lesson.html"},
+  {num:9, key:"ch9", title:"نظرية الإنتاج والتكلفة", href:"chapters/chapter-9-lesson.html"}
 ];
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */

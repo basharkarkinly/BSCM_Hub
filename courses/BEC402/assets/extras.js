@@ -592,3 +592,181 @@ function renderCeilingLab(containerId, cfg){
   }
   draw();
 }
+
+/* ---------- الرغبة الحدية بالدفع وفائض المستهلك (الفصل 8) ---------- */
+function renderMWTP(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  let P = cfg.start;
+  function draw(){
+    let cs = 0, n = 0;
+    const rows = cfg.mwtp.map((w, i) => { const buy = w >= P; if (buy){ n++; cs += w - P; }
+      return `<tr class="${buy ? "" : "mw-no"}"><td>${i + 1}</td><td>${w}</td><td>${buy ? P : "—"}</td><td>${buy ? w - P : "ما بيشتري"}</td></tr>`; }).join("");
+    const mx = Math.max(...cfg.mwtp) + 10;
+    const W = 340, H = 200, L = 36, Bt = 26, T = 10, bw = (W - L - 10) / cfg.mwtp.length;
+    const sy = p => H - Bt - p / mx * (H - Bt - T);
+    const bars = cfg.mwtp.map((w, i) => { const x = L + i * bw + 6;
+      return `<rect x="${x}" y="${sy(w)}" width="${bw - 12}" height="${sy(0) - sy(w)}" fill="#2563EB" opacity=".18"/>`
+        + (w > P ? `<rect x="${x}" y="${sy(w)}" width="${bw - 12}" height="${sy(P) - sy(w)}" fill="#0B7A57" opacity=".55"/>` : "")
+        + `<text class="sd-tk" x="${x + (bw - 12) / 2}" y="${H - Bt + 14}" text-anchor="middle">${i + 1}</text><text class="sd-tk" x="${x + (bw - 12) / 2}" y="${sy(w) - 4}" text-anchor="middle">${w}</text>`; }).join("");
+    root.innerHTML = `
+      <div class="eqs mw">
+        <div class="eqs-head"><span class="gp-tag">🍎 جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <label class="sdl-sl">🏷️ سعر الكيلو بالسوق:<span class="el-f" dir="ltr">P = ${P}</span><input type="range" min="${cfg.min}" max="${cfg.max}" step="${cfg.step}" value="${P}" dir="ltr"></label>
+        <div class="el-grid">
+          <svg class="sd-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="الرغبة الحدية بالدفع">
+            <line class="sd-ax" x1="${L}" y1="${sy(0)}" x2="${W - 6}" y2="${sy(0)}"/><line class="sd-ax" x1="${L}" y1="${sy(0)}" x2="${L}" y2="${T}"/>
+            ${bars}
+            <line x1="${L}" y1="${sy(P)}" x2="${W - 6}" y2="${sy(P)}" stroke="#E63946" stroke-width="2" stroke-dasharray="6 4"/>
+            <text class="sd-lb" x="${L - 4}" y="${sy(P) + 4}" text-anchor="end" fill="#E63946">${P}</text>
+          </svg>
+          <table class="cmp mw-t"><tr><th>الكيلو</th><th>MWTP</th><th>المدفوع</th><th>الفائض</th></tr>${rows}
+            <tr><td colspan="3"><b>فائض المستهلك</b></td><td><b>${cs}</b></td></tr></table>
+        </div>
+        <div class="eqs-msg ok">عند السعر <bdi dir="ltr">${P}</bdi> بيشتري <b>${n}</b> ${n === 1 ? "كيلو" : "كيلوات"}: بيكمّل طالما رغبتو الحدية بالدفع <b>≥ السعر</b>. فائض المستهلك = مجموع الفروقات (الأخضر) = <b>${cs}</b>.</div>
+      </div>`;
+    const sl = root.querySelector("input"); sl.addEventListener("input", () => { P = +sl.value; draw(); root.querySelector("input").focus(); });
+  }
+  draw();
+}
+
+/* ---------- مختبر الفوائض والخسارة الاجتماعية من الضريبة (الفصل 8) ---------- */
+function renderSurplusLab(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  let t = cfg.t; const r2 = v => Math.round(v * 100) / 100;
+  const { dA, dB, sA, sB } = cfg;
+  const Qe = (dA - sA) / (dB + sB), Pe = dA - dB * Qe;
+  function draw(){
+    const Qt = (dA - sA - t) / (dB + sB), Pc = dA - dB * Qt, Pp = Pc - t;
+    const CS = 0.5 * (dA - Pc) * Qt, PS = 0.5 * (Pp - sA) * Qt, REV = t * Qt, DWL = 0.5 * t * (Qe - Qt);
+    const CS0 = 0.5 * (dA - Pe) * Qe, PS0 = 0.5 * (Pe - sA) * Qe;
+    const pl = _mkPlot(360, 260, cfg.qMax, cfg.pMax, 0), { sx, sy } = pl;
+    const poly = (pts, c, o) => `<polygon points="${pts.map(([q, p]) => sx(q) + "," + sy(p)).join(" ")}" fill="${c}" opacity="${o}"/>`;
+    root.innerHTML = `
+      <div class="eqs sp">
+        <div class="eqs-head"><span class="gp-tag">📐 جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <div class="el-grid">
+          <svg class="sd-svg" viewBox="0 0 360 260" role="img" aria-label="الفوائض والخسارة الاجتماعية">
+            ${poly([[0, dA], [0, Pc], [Qt, Pc]], "#2563EB", .25)}
+            ${poly([[0, sA], [0, Pp], [Qt, Pp]], "#EA7A1C", .25)}
+            ${t ? poly([[0, Pc], [Qt, Pc], [Qt, Pp], [0, Pp]], "#9B5DE5", .25) : ""}
+            ${t ? poly([[Qt, Pc], [Qe, Pe], [Qt, Pp]], "#E63946", .55) : ""}
+            ${pl.axes(cfg.qTicks, cfg.pTicks)}
+            <line class="sd-d" x1="${sx(0)}" y1="${sy(dA)}" x2="${sx(dA / dB)}" y2="${sy(0)}"/>
+            <line class="sd-s" x1="${sx(0)}" y1="${sy(sA)}" x2="${sx((cfg.pMax - sA) / sB)}" y2="${sy(cfg.pMax)}"/>
+            <circle class="sd-e" cx="${sx(Qe)}" cy="${sy(Pe)}" r="5"/>
+          </svg>
+          <div>
+            <label class="sdl-sl">💸 ضريبة الوحدة:<span class="el-f" dir="ltr">t = ${t}</span><input type="range" min="0" max="${cfg.tMax}" step="${cfg.tStep}" value="${t}" dir="ltr"></label>
+            <table class="cmp sp-t">
+              <tr><th></th><th>قبل</th><th>بعد</th></tr>
+              <tr><td>🟦 فائض المستهلك</td><td>${r2(CS0)}</td><td>${r2(CS)}</td></tr>
+              <tr><td>🟧 فائض المنتج</td><td>${r2(PS0)}</td><td>${r2(PS)}</td></tr>
+              <tr><td>🟪 إيراد الحكومة</td><td>0</td><td>${r2(REV)}</td></tr>
+              <tr><td>🟥 الخسارة الاجتماعية</td><td>0</td><td><b>${r2(DWL)}</b></td></tr>
+            </table>
+          </div>
+        </div>
+        ${t ? `<div class="eqs-msg bad">المستهلك خسر <b>${r2(CS0 - CS)}</b> والمنتج خسر <b>${r2(PS0 - PS)}</b>، والحكومة كسبت <b>${r2(REV)}</b> بس. الفرق <bdi dir="ltr">${r2(CS0 - CS + PS0 - PS)} − ${r2(REV)} = ${r2(DWL)}</bdi> هو <b>الخسارة الاجتماعية</b> (المثلث الأحمر): مبادلات كانت رح تفيد الطرفين وما صارت لأنو الكمية نزلت من <bdi dir="ltr">${r2(Qe)}</bdi> لـ <bdi dir="ltr">${r2(Qt)}</bdi>.</div>`
+          : '<p class="eqs-hint">حرّك الضريبة لتشوف مين بيخسر وقديش بيضيع عالمجتمع.</p>'}
+        <div class="sd-leg"><span class="k d"></span> الطلب = الرغبة الحدية بالدفع <span class="k s"></span> العرض = التكلفة الحدية</div>
+      </div>`;
+    const sl = root.querySelector("input"); sl.addEventListener("input", () => { t = +sl.value; draw(); root.querySelector("input").focus(); });
+  }
+  draw();
+}
+
+/* ---------- مختبر منحنيات التكلفة (الفصل 9، جدول 3.9) ---------- */
+function renderCostLab(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const FC = cfg.FC, VC = cfg.VC, N = VC.length - 1; let q = cfg.start;
+  const r1 = v => Math.round(v * 10) / 10;
+  const AFC = i => FC / i, AVC = i => VC[i] / i, ATC = i => (FC + VC[i]) / i, MC = i => VC[i] - VC[i - 1];
+  const pl = _mkPlot(360, 250, N + 1, cfg.yMax, 0), { sx, sy } = pl;
+  const path = (f, from) => { let d = ""; for (let i = from; i <= N; i++){ const v = Math.min(f(i), cfg.yMax); d += (d ? " L" : "M") + sx(i) + "," + sy(v); } return d; };
+  const minI = f => { let b = 1; for (let i = 1; i <= N; i++) if (f(i) < f(b) - 1e-9) b = i; return b; };
+  const iAVC = minI(AVC), iATC = minI(ATC);
+  function draw(){
+    const mc = MC(q), atc = ATC(q), avc = AVC(q);
+    const msg = mc < atc - 1e-9 ? "التكلفة الحدية <b>أقل</b> من الوسطية الكلية ← الوسطية <b>عم تنزل</b>."
+      : Math.abs(mc - atc) < 0.6 ? "التكلفة الحدية ≈ الوسطية الكلية ← نحنا <b>بأدنى نقطة</b> للوسطية الكلية."
+      : "التكلفة الحدية <b>أعلى</b> من الوسطية الكلية ← الوسطية <b>عم تطلع</b>.";
+    root.innerHTML = `
+      <div class="eqs cs">
+        <div class="eqs-head"><span class="gp-tag">🏭 جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <label class="sdl-sl">📦 حجم الإنتاج الشهري:<span class="el-f" dir="ltr">Q = ${q}</span><input type="range" min="1" max="${N}" step="1" value="${q}" dir="ltr"></label>
+        <div class="el-grid">
+          <svg class="sd-svg" viewBox="0 0 360 250" role="img" aria-label="منحنيات التكلفة">
+            ${pl.axes(cfg.qTicks, cfg.yTicks)}
+            <path d="${path(AFC, 2)}" fill="none" stroke="#9aa3b2" stroke-width="2" stroke-dasharray="5 4"/>
+            <path d="${path(AVC, 1)}" fill="none" stroke="#0B7A57" stroke-width="2.4"/>
+            <path d="${path(ATC, 2)}" fill="none" stroke="#2563EB" stroke-width="2.6"/>
+            <path d="${path(MC, 1)}" fill="none" stroke="#EA7A1C" stroke-width="2.6"/>
+            <line x1="${sx(q)}" y1="${sy(0)}" x2="${sx(q)}" y2="${sy(cfg.yMax)}" stroke="#E63946" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <circle cx="${sx(iAVC)}" cy="${sy(AVC(iAVC))}" r="4.5" fill="#0B7A57"/><circle cx="${sx(iATC)}" cy="${sy(ATC(iATC))}" r="4.5" fill="#2563EB"/>
+          </svg>
+          <table class="cmp sp-t">
+            <tr><th>البند</th><th>القيمة</th></tr>
+            <tr><td>التكاليف الثابتة FC</td><td>${FC}</td></tr>
+            <tr><td>التكاليف المتغيرة VC</td><td>${VC[q]}</td></tr>
+            <tr><td>التكاليف الكلية TC</td><td>${FC + VC[q]}</td></tr>
+            <tr><td>⬜ متوسط الثابتة AFC</td><td>${r1(AFC(q))}</td></tr>
+            <tr><td>🟩 متوسط المتغيرة AVC</td><td>${r1(avc)}</td></tr>
+            <tr><td>🟦 الوسطية الكلية ATC</td><td>${r1(atc)}</td></tr>
+            <tr><td>🟧 التكلفة الحدية MC</td><td>${mc}</td></tr>
+          </table>
+        </div>
+        <div class="eqs-msg ok">${msg} أدنى <b>AVC</b> عند <bdi dir="ltr">Q = ${iAVC}</bdi> وأدنى <b>ATC</b> عند <bdi dir="ltr">Q = ${iATC}</bdi> (متأخرة لأنو AFC بتضل تنزل).</div>
+        <div class="sd-leg"><span class="k" style="background:#EA7A1C"></span> MC <span class="k" style="background:#2563EB"></span> ATC <span class="k" style="background:#0B7A57"></span> AVC <span class="k" style="background:#9aa3b2"></span> AFC</div>
+      </div>`;
+    const sl = root.querySelector("input"); sl.addEventListener("input", () => { q = +sl.value; draw(); root.querySelector("input").focus(); });
+  }
+  draw();
+}
+
+/* ---------- مختبر المبدأ الحدي (الفصل 9، جدول 4.9) ---------- */
+function renderMarginalLab(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const B = cfg.B, C = cfg.C, N = B.length - 1; let q = cfg.start;
+  const NB = i => B[i] - C[i];
+  let best = 0; for (let i = 0; i <= N; i++) if (NB(i) > NB(best)) best = i;
+  function draw(){
+    const mb = q ? B[q] - B[q - 1] : null, mc = q ? C[q] - C[q - 1] : null;
+    const W = 360, H = 200, L = 40, Bt = 26, T = 10, mn = Math.min(...B.map((_, i) => NB(i))), mx = Math.max(...B.map((_, i) => NB(i)));
+    const lo = cfg.nbMin, hi = mx + 20, bw = (W - L - 8) / (N + 1);
+    const sy = v => H - Bt - (v - lo) / (hi - lo) * (H - Bt - T);
+    const bars = B.map((_, i) => { const v = NB(i), x = L + i * bw + 2, y0 = sy(0), y1 = sy(Math.max(lo, v));
+      return `<rect x="${x}" y="${Math.min(y0, y1)}" width="${bw - 4}" height="${Math.abs(y1 - y0)}" fill="${i === q ? "#FF9F1C" : v >= 0 ? "#2563EB" : "#E63946"}" opacity="${i === q ? .95 : .45}"/>`
+        + (i % 3 === 0 || i === N ? `<text class="sd-tk" x="${x + (bw - 4) / 2}" y="${H - Bt + 14}" text-anchor="middle">${i}</text>` : ""); }).join("");
+    let verdict;
+    if (!q) verdict = "ابدأ زيد الإنتاج: الوحدة الأولى نفعها الحدي 55 وتكلفتها الحدية 10.";
+    else if (mb > mc) verdict = `<b><bdi dir="ltr">MB (${mb}) &gt; MC (${mc})</bdi></b>: الوحدة هاي زادت النفع الصافي بـ ${mb - mc}، فكمّل.`;
+    else if (mb === mc) verdict = `<b><bdi dir="ltr">MB = MC = ${mb}</bdi></b>: النفع الصافي الحدي صفر، وهون النفع الصافي <b>بأعظم قيمة (<bdi dir="ltr">${NB(q)}</bdi>)</b>. هاد هو <b>المبدأ الحدي</b>.`;
+    else verdict = `<b><bdi dir="ltr">MB (${mb}) &lt; MC (${mc})</bdi></b>: الوحدة هاي <b>نقّصت</b> النفع الصافي بـ ${mc - mb}، ارجع لورا.`;
+    root.innerHTML = `
+      <div class="eqs mg">
+        <div class="eqs-head"><span class="gp-tag">⚖️ جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <label class="sdl-sl">🎚️ متغير القرار:<span class="el-f" dir="ltr">Q = ${q}</span><input type="range" min="0" max="${N}" step="1" value="${q}" dir="ltr"></label>
+        <div class="el-grid">
+          <svg class="sd-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="النفع الصافي">
+            <line class="sd-ax" x1="${L}" y1="${sy(0)}" x2="${W - 6}" y2="${sy(0)}"/>
+            ${[lo, 0, Math.round(hi / 50) * 50].map(v => `<text class="sd-tk" x="${L - 5}" y="${sy(v) + 3}" text-anchor="end">${Math.round(v)}</text>`).join("")}
+            ${bars}
+            <text class="sd-lb" x="${L + 4}" y="${T + 8}">NB(Q)</text>
+          </svg>
+          <table class="cmp sp-t">
+            <tr><th>البند</th><th>القيمة</th></tr>
+            <tr><td>النفع الكلي B</td><td>${B[q]}</td></tr>
+            <tr><td>التكاليف الكلية C</td><td>${C[q]}</td></tr>
+            <tr><td><b>النفع الصافي NB</b></td><td><b>${NB(q)}</b></td></tr>
+            <tr><td>النفع الحدي MB</td><td>${q ? mb : "—"}</td></tr>
+            <tr><td>التكلفة الحدية MC</td><td>${q ? mc : "—"}</td></tr>
+            <tr><td>الصافي الحدي MNB</td><td>${q ? mb - mc : "—"}</td></tr>
+          </table>
+        </div>
+        <div class="eqs-msg ${q && mb < mc ? "bad" : "ok"}">${verdict}</div>
+        <p class="eqs-hint">لاحظ: النفع <b>الكلي</b> أعظمي عند <bdi dir="ltr">Q = ${N}</bdi> (لما <bdi dir="ltr">MB = 0</bdi>)، بس النفع <b>الصافي</b> هناك <bdi dir="ltr">${NB(N)}</bdi>. تعظيم النفع الكلي مو هدف عقلاني.</p>
+      </div>`;
+    const sl = root.querySelector("input"); sl.addEventListener("input", () => { q = +sl.value; draw(); root.querySelector("input").focus(); });
+  }
+  draw();
+}

@@ -194,3 +194,5 @@
 .el-f{ display:block; direction:ltr; unicode-bidi:isolate; text-align:right; font-variant-numeric:tabular-nums; margin-top:3px; color:#1D3557; font-weight:600; }
 /* مختبرات الفصل 7 */
 .tri-sc{ display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 12px; }
+.mw-t td, .mw-t th, .sp-t td, .sp-t th{ text-align:center; font-variant-numeric:tabular-nums; }
+.mw-t tr.mw-no td{ color:#9aa3b2; }

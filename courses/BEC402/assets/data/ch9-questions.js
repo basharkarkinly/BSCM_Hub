@@ -601,6 +601,28 @@ const CH9_POOL = [
  {
   "origin": "bank",
   "type": "tf",
+  "question": "الناتج الوسطي دائماً متزايد.",
+  "answer": false,
+  "explanation": "بيزيد ثم بيتناقص (بجدول الكتاب أعلى قيمة 55 عند العامل التاني).",
+  "ref": {
+   "url": "chapters/chapter-9-lesson.html#production",
+   "label": "تابع الإنتاج والعوائد الحدية المتناقصة"
+  }
+ },
+ {
+  "origin": "bank",
+  "type": "tf",
+  "question": "تتقاطع التكلفة الوسطية مع التكلفة الحدية عند أدنى نقطة من التكلفة الوسطية.",
+  "answer": true,
+  "explanation": "صح.",
+  "ref": {
+   "url": "chapters/chapter-9-lesson.html#average-cost",
+   "label": "التكاليف الوسطية والحدية"
+  }
+ },
+ {
+  "origin": "bank",
+  "type": "tf",
   "question": "عندما تنخفض التكلفة الحدية (وهي دون الوسطية) تنخفض معها التكلفة الوسطية.",
   "answer": true,
   "explanation": "بجدول الكتاب الحدية بتنزل لحد Q = 5 والوسطية بتضل تنزل لحد Q = 9.",

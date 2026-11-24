@@ -770,3 +770,100 @@ function renderMarginalLab(containerId, cfg){
   }
   draw();
 }
+
+/* ---------- مختبر المنافسة التامة: المنشأة والسوق مع الدخول والخروج (الفصل 10) ---------- */
+/* المنشأة: TC = F + c·q + q² ← MC = c + 2q ، AC = F/q + c + q ؛ السوق: Qd = a − b·P */
+function renderPCLab(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const { F, c, a, b } = cfg; let N = cfg.N;
+  const r2 = v => Math.round(v * 100) / 100;
+  const qMinAC = Math.sqrt(F), PminAC = 2 * Math.sqrt(F) + c;
+  const NLR = Math.round((a - b * PminAC) / qMinAC);
+  function eq(n){ const P = (a + n * c / 2) / (b + n / 2); return { P, q: (P - c) / 2, Q: a - b * P }; }
+  function draw(){
+    const { P, q, Q } = eq(N), AC = F / q + c + q, prof = (P - AC) * q;
+    const pMax = cfg.pMax;
+    const f = _mkPlot(260, 220, cfg.qFirm, pMax, 0), m = _mkPlot(260, 220, cfg.qMkt, pMax, 0);
+    let ac = ""; for (let x = 1; x <= cfg.qFirm; x += 0.25){ const y = F / x + c + x; if (y <= pMax) ac += (ac ? " L" : "M") + f.sx(x) + "," + f.sy(y); }
+    const mcEnd = Math.min(cfg.qFirm, (pMax - c) / 2);
+    const rect = `<rect x="${f.sx(0)}" y="${f.sy(Math.max(P, AC))}" width="${f.sx(q) - f.sx(0)}" height="${Math.abs(f.sy(P) - f.sy(AC))}" fill="${prof >= 0 ? "#0B7A57" : "#E63946"}" opacity=".25"/>`;
+    const sEnd = Math.min(cfg.qMkt, N * (pMax - c) / 2);
+    const st = Math.abs(N - NLR) < 1e-9 ? "lr" : prof > 0 ? "in" : "out";
+    const msg = st === "lr" ? `<b>توازن طويل الأجل</b>: <bdi dir="ltr">P = MC = min AC = ${r2(P)}</bdi>، الربح الاقتصادي <b>صفر</b> (ربح عادي فقط)، وما في حافز لا للدخول ولا للخروج. وعدد المنشآت <bdi dir="ltr">N = Q ÷ q = ${r2(Q)} ÷ ${r2(q)} = ${N}</bdi>.`
+      : st === "in" ? `السعر <b>أعلى</b> من أدنى تكلفة وسطية ← المنشآت بتحقق <b>ربح اقتصادي</b> (<bdi dir="ltr">${r2(prof)}</bdi> لكل منشأة) ← منشآت جديدة رح <b>تدخل</b>، العرض بينزاح لليمين والسعر بينزل.`
+      : `السعر <b>أدنى</b> من أدنى تكلفة وسطية ← <b>خسارة اقتصادية</b> (<bdi dir="ltr">${r2(prof)}</bdi> لكل منشأة) ← منشآت رح <b>تطلع</b>، العرض بينزاح لليسار والسعر بيطلع.`;
+    root.innerHTML = `
+      <div class="eqs pc">
+        <div class="eqs-head"><span class="gp-tag">🏪 جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <label class="sdl-sl">🏭 عدد المنشآت بالسوق:<span class="el-f" dir="ltr">N = ${N}</span><input type="range" min="${cfg.nMin}" max="${cfg.nMax}" step="5" value="${N}" dir="ltr"></label>
+        <div class="tri-sc"><button class="tri-sc-b" data-go="1">${st === "lr" ? "✅ السوق مستقرة" : st === "in" ? "➡️ خلّي منشآت تدخل" : "⬅️ خلّي منشآت تطلع"}</button></div>
+        <div class="el-grid">
+          <div><div class="pc-cap">🧍 المنشأة (q)</div>
+          <svg class="sd-svg" viewBox="0 0 260 220" role="img" aria-label="المنشأة">
+            ${rect}${f.axes(cfg.qfTicks, cfg.pTicks)}
+            <path d="${ac}" fill="none" stroke="#2563EB" stroke-width="2.4"/>
+            <line x1="${f.sx(0)}" y1="${f.sy(c)}" x2="${f.sx(mcEnd)}" y2="${f.sy(c + 2 * mcEnd)}" stroke="#EA7A1C" stroke-width="2.4"/>
+            <line x1="${f.sx(0)}" y1="${f.sy(P)}" x2="${f.sx(cfg.qFirm)}" y2="${f.sy(P)}" stroke="#E63946" stroke-width="2" stroke-dasharray="6 4"/>
+            <text class="sd-lb" x="${f.sx(cfg.qFirm) - 2}" y="${f.sy(P) - 5}" text-anchor="end" fill="#E63946">P = d = MR</text>
+            <circle class="sd-e new" cx="${f.sx(q)}" cy="${f.sy(P)}" r="5"/>
+          </svg></div>
+          <div><div class="pc-cap">👥 السوق (Q)</div>
+          <svg class="sd-svg" viewBox="0 0 260 220" role="img" aria-label="السوق">
+            ${m.axes(cfg.qmTicks, cfg.pTicks)}
+            <line class="sd-d" x1="${m.sx(Math.min(cfg.qMkt, a - b * pMax))}" y1="${m.sy(pMax)}" x2="${m.sx(Math.min(cfg.qMkt, a))}" y2="${m.sy((a - Math.min(cfg.qMkt, a)) / b)}"/>
+            <line class="sd-s" x1="${m.sx(0)}" y1="${m.sy(c)}" x2="${m.sx(sEnd)}" y2="${m.sy(c + 2 * sEnd / N)}"/>
+            <line class="sd-pl" x1="${m.L}" y1="${m.sy(P)}" x2="${m.sx(Q)}" y2="${m.sy(P)}"/>
+            <circle class="sd-e" cx="${m.sx(Q)}" cy="${m.sy(P)}" r="5"/>
+            <text class="sd-lb" x="${m.sx(sEnd) - 4}" y="${m.sy(c + 2 * sEnd / N) + 14}" text-anchor="end">S = ΣMC</text>
+          </svg></div>
+        </div>
+        <div class="si-steps"><div><b>📊 الأرقام:</b><span class="el-f" dir="ltr">P = ${r2(P)} | q = ${r2(q)} | AC = ${r2(AC)} | Q = ${r2(Q)} | π = ${r2(prof)}</span></div></div>
+        <div class="eqs-msg ${st === "out" ? "bad" : "ok"}">${msg}</div>
+        <div class="sd-leg"><span class="k" style="background:#EA7A1C"></span> MC (= عرض المنشأة) <span class="k" style="background:#2563EB"></span> AC <span class="k d"></span> طلب السوق <span class="k s"></span> عرض السوق</div>
+      </div>`;
+    const sl = root.querySelector("input"); sl.addEventListener("input", () => { N = +sl.value; draw(); root.querySelector("input").focus(); });
+    root.querySelector("[data-go]").addEventListener("click", () => { if (N !== NLR){ N += N < NLR ? Math.min(10, NLR - N) : -Math.min(10, N - NLR); draw(); } });
+  }
+  draw();
+}
+
+/* ---------- مختبر انزياح الطلب مع حرية الدخول والخروج (الفصل 11) ---------- */
+function renderLRShiftLab(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const { F, c, b, a0 } = cfg; let a = cfg.a1, stage = 0;
+  const r2 = v => Math.round(v * 100) / 100;
+  const qm = Math.sqrt(F), Pm = 2 * Math.sqrt(F) + c, N0 = (a0 - b * Pm) / qm;
+  const srEq = (aa, n) => { const P = (aa + n * c / 2) / (b + n / 2); return { P, q: (P - c) / 2, Q: aa - b * P }; };
+  function draw(){
+    const pl = _mkPlot(360, 250, cfg.qMax, cfg.pMax, 0), { sx, sy } = pl;
+    const aa = stage === 0 ? a0 : a, N = stage === 2 ? (a - b * Pm) / qm : N0;
+    const e = stage === 2 ? { P: Pm, q: qm, Q: a - b * Pm } : srEq(aa, N0);
+    const AC = F / e.q + c + e.q, prof = (e.P - AC) * e.q;
+    const dLine = (A, cls) => `<line class="${cls}" x1="${sx(Math.max(0, A - b * cfg.pMax))}" y1="${sy(Math.min(cfg.pMax, A / b))}" x2="${sx(Math.min(cfg.qMax, A))}" y2="${sy((A - Math.min(cfg.qMax, A)) / b)}"/>`;
+    const sN = (n, cls) => { const qEnd = Math.min(cfg.qMax, n * (cfg.pMax - c) / 2); return `<line class="${cls}" x1="${sx(0)}" y1="${sy(c)}" x2="${sx(qEnd)}" y2="${sy(c + 2 * qEnd / n)}"/>`; };
+    const txt = [
+      `التوازن الأصلي: <bdi dir="ltr">P = ${r2(Pm)} = min AC</bdi> و <bdi dir="ltr">${r2(N0)}</bdi> منشأة، وكل منشأة بتنتج <bdi dir="ltr">q = ${r2(qm)}</bdi>. حرّك الطلب ولاحق المراحل.`,
+      `<b>الأمد القصير (عدد ثابت):</b> الإقبال رفع السعر لـ <bdi dir="ltr">${r2(e.P)}</bdi> على منحنى <bdi dir="ltr">S₁ = ΣMC</bdi>، وكل منشأة رفعت إنتاجها لـ <bdi dir="ltr">${r2(e.q)}</bdi> وصار عندها ${prof >= 0 ? "ربح اقتصادي" : "خسارة"} <bdi dir="ltr">${r2(prof)}</bdi> ← ${prof > 0.005 ? "منشآت جديدة رح تدخل." : prof < -0.005 ? "منشآت رح تطلع." : "ما في حافز."}`,
+      `<b>بعد الدخول/الخروج:</b> السعر <b>رجع</b> لـ <bdi dir="ltr">${r2(Pm)}</bdi> وإنتاج المنشأة <b>رجع</b> لـ <bdi dir="ltr">${r2(qm)}</bdi>. اللي تغيّر هو <b>عدد المنشآت</b>: <bdi dir="ltr">${r2(N0)} → ${r2(N)}</bdi>، والكمية <bdi dir="ltr">Q = ${r2(e.Q)}</bdi>. يعني منحنى العرض بحرية الدخول والخروج <b>أفقي</b> عند <b>min AC</b>.`][stage];
+    root.innerHTML = `
+      <div class="eqs lr">
+        <div class="eqs-head"><span class="gp-tag">📈 جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <label class="sdl-sl">🛒 الطلب الجديد (المقطع):<span class="el-f" dir="ltr">Qd = ${a} − ${b}P</span><input type="range" min="${cfg.aMin}" max="${cfg.aMax}" step="20" value="${a}" dir="ltr"></label>
+        <div class="tri-sc">${["① قبل", "② أمد قصير", "③ بعد الدخول/الخروج"].map((t, i) => `<button class="tri-sc-b${i === stage ? " on" : ""}" data-s="${i}">${t}</button>`).join("")}</div>
+        <svg class="sd-svg" viewBox="0 0 360 250" role="img" aria-label="انزياح الطلب بالأمد الطويل" style="max-width:520px;display:block;margin:auto">
+          ${pl.axes(cfg.qTicks, cfg.pTicks)}
+          <line x1="${sx(0)}" y1="${sy(Pm)}" x2="${sx(cfg.qMax)}" y2="${sy(Pm)}" stroke="#9B5DE5" stroke-width="2.6"/>
+          <text class="sd-lb" x="${sx(cfg.qMax) - 2}" y="${sy(Pm) + 14}" text-anchor="end" fill="#9B5DE5">S₂ (حرية دخول/خروج)</text>
+          ${sN(N0, "sd-s")}${stage === 2 ? sN(N, "sd-s new") : ""}
+          ${dLine(a0, stage === 0 ? "sd-d" : "sd-d old")}${stage > 0 ? dLine(a, "sd-d") : ""}
+          <line class="sd-pl" x1="${pl.L}" y1="${sy(e.P)}" x2="${sx(e.Q)}" y2="${sy(e.P)}"/>
+          <circle class="sd-e new" cx="${sx(e.Q)}" cy="${sy(e.P)}" r="6"/>
+        </svg>
+        <div class="eqs-msg ok">${txt}</div>
+        <div class="sd-leg"><span class="k d"></span> الطلب <span class="k s"></span> S₁ = ΣMC بعدد ثابت <span class="k" style="background:#9B5DE5"></span> S₂ الأفقي عند min AC</div>
+      </div>`;
+    root.querySelectorAll("[data-s]").forEach(bt => bt.addEventListener("click", () => { stage = +bt.dataset.s; draw(); }));
+    const sl = root.querySelector("input"); sl.addEventListener("input", () => { a = +sl.value; if (!stage) stage = 1; draw(); root.querySelector("input").focus(); });
+  }
+  draw();
+}

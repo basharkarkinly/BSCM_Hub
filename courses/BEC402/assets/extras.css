@@ -196,3 +196,4 @@
 .tri-sc{ display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 12px; }
 .mw-t td, .mw-t th, .sp-t td, .sp-t th{ text-align:center; font-variant-numeric:tabular-nums; }
 .mw-t tr.mw-no td{ color:#9aa3b2; }
+.pc-cap{ font-weight:800; font-size:.86rem; color:#1D3557; margin-bottom:4px; }

@@ -177,6 +177,48 @@ function qzMarksLabel(m){
   return m ? m + " علامات" : "";
 }
 
+/* التدريب الحر: 20–25 سؤال موزّعين على أقسام الدرس (سؤالين أو تلاتة عن كل فكرة).
+   الأسئلة اللي ما انحلّت بالتدريبات السابقة أولاً، وأسئلة الدورات قبل أسئلة الشرح. */
+function pickPractice(pool, scope){
+  const MIN = 20, MAX = 25;
+  if(pool.length <= MAX) return pool.map(q => ({...q}));
+  const d = loadSeen();
+  let seen = new Set(d[scope] || []);
+  if(!pool.some(q => !seen.has(qHash(q)))){
+    d[scope] = []; saveSeen(d); seen = new Set();   // انحلّت كل أسئلة البنك بالتدريب: دورة جديدة
+  }
+  const groups = [], byKey = {};
+  pool.forEach(q => {
+    const k = (q.ref && q.ref.url) || "_";
+    if(!byKey[k]){ byKey[k] = []; groups.push(byKey[k]); }
+    byKey[k].push(q);
+  });
+  const pri = a => a.filter(q => q.origin === "bank").concat(a.filter(q => q.origin !== "bank"));
+  const ordered = groups.map(g => pri(shuffle(g.filter(q => !seen.has(qHash(q))))).concat(pri(shuffle(g.filter(q => seen.has(qHash(q)))))));
+  const per = Math.max(2, Math.ceil(MIN / groups.length));
+  const take = ordered.map(g => Math.min(per, g.length));
+  let total = take.reduce((a, b) => a + b, 0);
+  while(total < MIN){
+    let best = -1;
+    ordered.forEach((g, i) => { if(take[i] < g.length && (best < 0 || g.length - take[i] > ordered[best].length - take[best])) best = i; });
+    if(best < 0) break;
+    take[best]++; total++;
+  }
+  while(total > MAX){
+    let best = -1;
+    take.forEach((t, i) => { if(t > 1 && (best < 0 || t > take[best])) best = i; });
+    if(best < 0){
+      // أقسام كتيرة (أكتر من 25): منشيل سؤال من الأقسام الأصغر لحد ما نوصل للحد
+      shuffle(take.map((t, i) => i)).forEach(i => { if(take[i] > 0 && (best < 0 || ordered[i].length < ordered[best].length)) best = i; });
+      if(best < 0) break;
+    }
+    take[best]--; total--;
+  }
+  const out = [];
+  ordered.forEach((g, i) => { g.slice(0, take[i]).forEach(q => out.push({...q})); });
+  return out;
+}
+
 const FINAL_RESULT_KEY = "bec402_final_result_v1";
 function renderQuiz(containerId, pool, opts){
   const container = document.getElementById(containerId);
@@ -218,6 +260,7 @@ function renderQuiz(containerId, pool, opts){
 
   let questions, pickInfo = null, saved = null;
   const seenScope = mode === "final" ? "final" : (opts.chapterKey || null);
+  const practiceScope = "practice:" + location.pathname;
   if(mode === "final" && opts.bankShare){
     opts._scopeOf = q => q.origin === "bank" ? "final_bank" : "final_gen";
   }
@@ -240,15 +283,19 @@ function renderQuiz(containerId, pool, opts){
     }
     questions = pickInfo.picked.map(prepQuestionForExam);
   } else {
-    questions = pool.map(q => ({...q}));
-    const st = qzResumeGet(containerId);
-    if(st && st.mode === "practice" && st.ans && Object.keys(st.ans).length) saved = st;
+    // التدريب الحر: 20–25 سؤال بيغطّوا أقسام الدرس (2–3 عن كل فكرة)، وكل تدريب جديد بيجيب أسئلة تانية
+    const st = opts._freshPractice ? null : qzResumeGet(containerId);
+    opts._freshPractice = false;
+    const qs = (st && st.mode === "practice") ? qzRebuild(st, pool) : null;
+    if(qs){ questions = qs; saved = st; }
+    else {
+      qzResumeClear(containerId);
+      questions = pickPractice(pool, practiceScope);
+    }
   }
 
   // حالة المحاولة اللي بتنحفظ أول بأول
-  const state = isTest
-    ? { mode, qs: questions.map(q => ({ h: qHash(q), o: q.type === "mcq" ? q.options : null })), ans: {}, elapsed: (saved && saved.elapsed) || 0 }
-    : { mode, ans: {} };
+  const state = { mode, qs: questions.map(q => ({ h: qHash(q), o: q.type === "mcq" ? q.options : null })), ans: {}, elapsed: (saved && saved.elapsed) || 0 };
   const savedAns = (saved && saved.ans) || {};
   let finished = false;
 
@@ -268,7 +315,7 @@ function renderQuiz(containerId, pool, opts){
       ? `<span><b>فحص نهائي شامل</b> — كل سؤال ${mk}، وبتقدر تعيد الفحص بأسئلة جديدة</span>`
       : `<span><b>فحص نهائي شامل</b> — إجابة واحدة لكل سؤال</span>`;
   }
-  else metaNote = `<span>تدريب حر — بلا قفل، جاوب وشوف التصحيح فوراً، وإجاباتك بتنحفظ إذا طلعت ورجعت</span>`;
+  else metaNote = `<span>تدريب حر — ${questions.length} سؤال بيغطّوا أفكار الفصل، بلا قفل وبلا علامة، وإجاباتك بتنحفظ إذا طلعت ورجعت</span>`;
   metaBar.innerHTML = `
     <span>السؤال <b id="qz-answered">0</b> من <b>${questions.length}</b></span>
     <div class="progress-bar-track"><div class="progress-bar-fill" id="qz-bar"></div></div>
@@ -282,15 +329,18 @@ function renderQuiz(containerId, pool, opts){
     note.innerHTML = "<b>ملاحظة:</b> خلّصت كل أسئلة البنك — هاي دورة جديدة، فممكن تطلعلك أسئلة شفتها قبل.";
     container.appendChild(note);
   }
-  if(!isTest && saved){
+  const newPractice = () => {
+    qzResumeClear(containerId);
+    opts._freshPractice = true;
+    window.scrollTo(0, 0);
+    renderQuiz(containerId, pool, opts);
+  };
+  if(!isTest && saved && Object.keys(savedAns).length){
     const note = document.createElement("div");
     note.className = "resource-box";
-    note.innerHTML = `<b>رجّعنالك إجاباتك السابقة</b> بهالتدريب (${Object.keys(savedAns).length} سؤال)، فكمّل من وين وقفت. <button class="btn btn-ghost" data-qz="reset" style="margin-inline-start:8px; padding:6px 14px;">🔄 امسحها وابدأ من جديد</button>`;
+    note.innerHTML = `<b>رجّعنالك تدريبك</b> متل ما تركتو (جاوبت ${Object.keys(savedAns).length} من ${questions.length})، فكمّل من وين وقفت. <button class="btn btn-ghost" data-qz="reset" style="margin-inline-start:8px; padding:6px 14px;">🔄 تدريب جديد بأسئلة تانية</button>`;
     container.appendChild(note);
-    note.querySelector('[data-qz="reset"]').addEventListener("click", () => {
-      qzResumeClear(containerId);
-      renderQuiz(containerId, pool, opts);
-    });
+    note.querySelector('[data-qz="reset"]').addEventListener("click", newPractice);
   }
   // تايمر الوقت المستهلك فقط (بدون عدّ تنازلي)، وبيكمّل من الوقت المحفوظ إذا رجع الطالب
   const startedAt = Date.now() - (isTest ? state.elapsed : 0);
@@ -320,8 +370,9 @@ function renderQuiz(containerId, pool, opts){
   const cards = [];
   questions.forEach((q, idx) => {
     const card = buildQuestionCard(q, idx, mode, (ok, val) => {
-      if(opts._scopeOf) markSeen(opts._scopeOf(q), q); else if(seenScope) markSeen(seenScope, q);
-      if(val !== undefined) state.ans[isTest ? String(idx) : qHash(q)] = val;
+      if(!isTest) markSeen(practiceScope, q);
+      else if(opts._scopeOf) markSeen(opts._scopeOf(q), q); else if(seenScope) markSeen(seenScope, q);
+      if(val !== undefined) state.ans[String(idx)] = val;
       if(isTest && !finished) qzDirty = true;
       onAnswered(ok);
       persist();
@@ -329,6 +380,15 @@ function renderQuiz(containerId, pool, opts){
     cards.push(card);
     list.appendChild(card);
   });
+
+  // آخر التدريب الحر: النتيجة + تدريب جديد بأسئلة تانية
+  let practiceEnd = null;
+  if(!isTest){
+    practiceEnd = document.createElement("div");
+    practiceEnd.className = "result-card";
+    practiceEnd.style.display = "none";
+    container.appendChild(practiceEnd);
+  }
 
   if(isTest){
     const submitWrap = document.createElement("div");
@@ -345,7 +405,7 @@ function renderQuiz(containerId, pool, opts){
 
   // رجّع الإجابات المحفوظة (نفس الاختيارات، مع التصحيح والشرح متل ما كانوا)
   questions.forEach((q, idx) => {
-    const key = isTest ? String(idx) : qHash(q);
+    const key = String(idx);
     if(key in savedAns && cards[idx].__answer) cards[idx].__answer(savedAns[key]);
   });
 
@@ -356,6 +416,20 @@ function renderQuiz(containerId, pool, opts){
     document.getElementById("qz-bar").style.width = (answered / questions.length * 100) + "%";
     if(isTest && answered === questions.length){
       document.getElementById("qz-submit").disabled = false;
+    }
+    if(practiceEnd && answered === questions.length){
+      const examUrl = location.pathname.replace(/-practice\.html$/, "-exam.html");
+      const hasExam = examUrl !== location.pathname;
+      practiceEnd.innerHTML = `
+        <h2>خلّصت هالتدريب 👏</h2>
+        <p>جاوبت صح على <b>${correctCount}</b> من <b>${questions.length}</b>.</p>
+        <p style="font-size:.92rem;">بدك تتدرّب أكتر؟ التدريب الجديد بيجيبلك أسئلة تانية عن نفس أفكار الفصل.</p>
+        <div class="cta-row" style="justify-content:center; display:flex; gap:14px; flex-wrap:wrap;">
+          <button class="btn btn-teal" data-qz="again">🔄 تدريب جديد بأسئلة تانية</button>
+          ${hasExam ? `<a class="btn btn-primary" href="${examUrl}">📝 روح عامتحان الفصل</a>` : ""}
+        </div>`;
+      practiceEnd.style.display = "";
+      practiceEnd.querySelector('[data-qz="again"]').addEventListener("click", newPractice);
     }
   }
 

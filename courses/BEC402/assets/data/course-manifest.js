@@ -13,7 +13,8 @@ const COURSE_CHAPTERS = [
   {num:8, key:"ch8", title:"المقاييس النقدية للكسب والخسارة", href:"chapters/chapter-8-lesson.html"},
   {num:9, key:"ch9", title:"نظرية الإنتاج والتكلفة", href:"chapters/chapter-9-lesson.html"},
   {num:10, key:"ch10", title:"نموذج المنافسة التامة", href:"chapters/chapter-10-lesson.html"},
-  {num:11, key:"ch11", title:"خصائص المنافسة التامة", href:"chapters/chapter-11-lesson.html"}
+  {num:11, key:"ch11", title:"خصائص المنافسة التامة", href:"chapters/chapter-11-lesson.html"},
+  {num:12, key:"ch12", title:"الاحتكار", href:"chapters/chapter-12-lesson.html"}
 ];
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */

@@ -867,3 +867,94 @@ function renderLRShiftLab(containerId, cfg){
   }
   draw();
 }
+
+/* ---------- مختبر الاحتكار: MR = MC مقابل P = MC (الفصل 12) ---------- */
+/* الطلب P = A − B·Q ، الإيراد الحدي MR = A − 2B·Q ، تكلفة حدية ثابتة c */
+function renderMonoLab(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const { A, B } = cfg; let c = cfg.c, view = "mono";
+  const r2 = v => Math.round(v * 100) / 100;
+  function draw(){
+    const Qm = (A - c) / (2 * B), Pm = A - B * Qm, Qc = (A - c) / B, Pc = c;
+    const prof = (Pm - c) * Qm, csM = 0.5 * (A - Pm) * Qm, csC = 0.5 * (A - Pc) * Qc, dwl = 0.5 * (Pm - c) * (Qc - Qm);
+    const eps = -(Pm / Qm) / B;
+    const pl = _mkPlot(360, 260, cfg.qMax, A, 0), { sx, sy } = pl;
+    const poly = (pts, col, o) => `<polygon points="${pts.map(([q, p]) => sx(q) + "," + sy(p)).join(" ")}" fill="${col}" opacity="${o}"/>`;
+    const isM = view === "mono", Q = isM ? Qm : Qc, P = isM ? Pm : Pc;
+    root.innerHTML = `
+      <div class="eqs mo">
+        <div class="eqs-head"><span class="gp-tag">👑 جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <label class="sdl-sl">⚙️ التكلفة الحدية (ثابتة):<span class="el-f" dir="ltr">MC = ${c}</span><input type="range" min="0" max="${cfg.cMax}" step="5" value="${c}" dir="ltr"></label>
+        <div class="tri-sc"><button class="tri-sc-b${isM ? " on" : ""}" data-v="mono">👑 محتكر: MR = MC</button><button class="tri-sc-b${!isM ? " on" : ""}" data-v="comp">🏪 تنافسي: P = MC</button></div>
+        <div class="el-grid">
+          <svg class="sd-svg" viewBox="0 0 360 260" role="img" aria-label="الاحتكار">
+            ${poly([[0, A], [0, P], [Q, P]], "#2563EB", .2)}
+            ${isM ? poly([[0, Pm], [Qm, Pm], [Qm, c], [0, c]], "#0B7A57", .28) + poly([[Qm, Pm], [Qc, c], [Qm, c]], "#E63946", .5) : ""}
+            ${pl.axes(cfg.qTicks, cfg.pTicks)}
+            <line class="sd-d" x1="${sx(0)}" y1="${sy(A)}" x2="${sx(A / B)}" y2="${sy(0)}"/>
+            <line x1="${sx(0)}" y1="${sy(A)}" x2="${sx(A / (2 * B))}" y2="${sy(0)}" stroke="#9B5DE5" stroke-width="2.4"/>
+            <line x1="${sx(0)}" y1="${sy(c)}" x2="${sx(cfg.qMax)}" y2="${sy(c)}" stroke="#EA7A1C" stroke-width="2.4"/>
+            <text class="sd-lb" x="${sx(A / (2 * B)) + 4}" y="${sy(0) - 6}" fill="#9B5DE5">MR</text>
+            <text class="sd-lb" x="${sx(cfg.qMax) - 2}" y="${sy(c) - 5}" text-anchor="end" fill="#EA7A1C">MC</text>
+            <text class="sd-lb" x="${sx(A / B) - 4}" y="${sy(0) - 6}" text-anchor="end">D</text>
+            <line class="sd-pl" x1="${pl.L}" y1="${sy(P)}" x2="${sx(Q)}" y2="${sy(P)}"/><line class="sd-pl" x1="${sx(Q)}" y1="${sy(P)}" x2="${sx(Q)}" y2="${sy(0)}"/>
+            <circle class="sd-e new" cx="${sx(Q)}" cy="${sy(P)}" r="6"/>
+          </svg>
+          <table class="cmp sp-t">
+            <tr><th></th><th>👑 احتكار</th><th>🏪 تنافسي</th></tr>
+            <tr><td>الكمية Q</td><td>${r2(Qm)}</td><td>${r2(Qc)}</td></tr>
+            <tr><td>السعر P</td><td>${r2(Pm)}</td><td>${r2(Pc)}</td></tr>
+            <tr><td>🟦 فائض المستهلك</td><td>${r2(csM)}</td><td>${r2(csC)}</td></tr>
+            <tr><td>🟩 ربح المحتكر</td><td>${r2(prof)}</td><td>0</td></tr>
+            <tr><td>🟥 الخسارة الاجتماعية</td><td><b>${r2(dwl)}</b></td><td>0</td></tr>
+          </table>
+        </div>
+        <div class="eqs-msg ${isM ? "bad" : "ok"}">${isM
+          ? `المحتكر بينتج لحد <bdi dir="ltr">MR = MC</bdi> ← <bdi dir="ltr">Q = ${r2(Qm)}</bdi> وبيطلب أعلى سعر بيقبلو السوق لهالكمية <bdi dir="ltr">P = ${r2(Pm)}</bdi> (فوق MC). المرونة عند هالنقطة <bdi dir="ltr">${r2(eps)}</bdi>: المحتكر دايماً على <b>الجزء المرن</b> لأنو MR موجب. ومثلث الخسارة الاجتماعية: وحدات المستهلك مستعد يدفع فيها أكتر من تكلفتها وما انتجت.`
+          : `لو السوق تنافسية: <bdi dir="ltr">P = MC = ${c}</bdi> والكمية <bdi dir="ltr">${r2(Qc)}</bdi> (ضعف كمية المحتكر بالطلب الخطي)، والفائض كلو للمستهلك وما في خسارة اجتماعية.`}</div>
+        <div class="sd-leg"><span class="k d"></span> الطلب = السعر <span class="k" style="background:#9B5DE5"></span> الإيراد الحدي (نص المسافة للمحور العمودي) <span class="k" style="background:#EA7A1C"></span> التكلفة الحدية</div>
+      </div>`;
+    root.querySelectorAll("[data-v]").forEach(bt => bt.addEventListener("click", () => { view = bt.dataset.v; draw(); }));
+    const sl = root.querySelector("input"); sl.addEventListener("input", () => { c = +sl.value; draw(); root.querySelector("input").focus(); });
+  }
+  draw();
+}
+
+/* ---------- جدول الإيراد للمحتكر (الفصل 12، شكل 2.12) ---------- */
+function renderMonoRevenue(containerId, cfg){
+  const root = document.getElementById(containerId); if (!root) return;
+  const { A, B } = cfg; let Q = cfg.start;
+  function draw(){
+    const P = A - B * Q, TR = P * Q, MR = A - 2 * B * Q, e = Q ? -(P / Q) / B : null;
+    const zone = MR > 0 ? "مرن" : MR === 0 ? "متكافئ المرونة" : "غير مرن";
+    const W = 360, H = 180, L = 44, Bt = 24, T = 10, qMax = A / B, trMax = A * A / (4 * B);
+    const sx = q => L + q / qMax * (W - L - 10), sy = v => H - Bt - v / (trMax * 1.1) * (H - Bt - T);
+    let d = ""; for (let q = 0; q <= qMax; q += qMax / 50) d += (d ? " L" : "M") + sx(q) + "," + sy((A - B * q) * q);
+    root.innerHTML = `
+      <div class="eqs mr">
+        <div class="eqs-head"><span class="gp-tag">💵 جرّب بإيدك</span><h4>${cfg.title}</h4></div>
+        <label class="sdl-sl">📦 الكمية اللي بدو يبيعها المحتكر:<span class="el-f" dir="ltr">Q = ${Q}  →  P = ${P}</span><input type="range" min="0" max="${qMax}" step="5" value="${Q}" dir="ltr"></label>
+        <div class="el-grid">
+          <svg class="sd-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="الإيراد الكلي">
+            <line class="sd-ax" x1="${L}" y1="${sy(0)}" x2="${W - 6}" y2="${sy(0)}"/><line class="sd-ax" x1="${L}" y1="${sy(0)}" x2="${L}" y2="${T}"/>
+            <path d="${d}" fill="none" stroke="#0B7A57" stroke-width="2.6"/>
+            ${[0, qMax / 4, qMax / 2, 3 * qMax / 4, qMax].map(q => `<text class="sd-tk" x="${sx(q)}" y="${H - 8}" text-anchor="middle">${q}</text>`).join("")}
+            <text class="sd-tk" x="${L - 5}" y="${sy(trMax) + 3}" text-anchor="end">${trMax}</text>
+            <line x1="${sx(Q)}" y1="${sy(0)}" x2="${sx(Q)}" y2="${sy(TR)}" stroke="#E63946" stroke-dasharray="4 3"/>
+            <circle cx="${sx(Q)}" cy="${sy(TR)}" r="5" fill="#E63946"/>
+            <text class="sd-lb" x="${L + 4}" y="${T + 8}">TR</text>
+          </svg>
+          <table class="cmp sp-t">
+            <tr><th>البند</th><th>القيمة</th></tr>
+            <tr><td>السعر P</td><td>${P}</td></tr>
+            <tr><td>الإيراد الكلي TR</td><td>${TR}</td></tr>
+            <tr><td>الإيراد الحدي MR</td><td>${MR}</td></tr>
+            <tr><td>المرونة</td><td><bdi dir="ltr">${e === null ? "−∞" : Math.round(e * 100) / 100}</bdi></td></tr>
+          </table>
+        </div>
+        <div class="eqs-msg ${MR >= 0 ? "ok" : "bad"}">الطلب هون <b>${zone}</b>: ${MR > 0 ? "زيادة الكمية (وتنزيل السعر) <b>بتزيد</b> الإيراد الكلي." : MR === 0 ? "الإيراد الكلي <b>بأقصاه</b> والإيراد الحدي صفر." : "زيادة الكمية <b>بتنقّص</b> الإيراد الكلي لأنو MR سالب."} ولاحظ إنو <bdi dir="ltr">MR &lt; P</bdi> دايماً: السعر الأدنى بينسحب على <b>كل</b> الكمية.</div>
+      </div>`;
+    const sl = root.querySelector("input"); sl.addEventListener("input", () => { Q = +sl.value; draw(); root.querySelector("input").focus(); });
+  }
+  draw();
+}

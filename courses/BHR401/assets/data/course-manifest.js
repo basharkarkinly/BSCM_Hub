@@ -26,7 +26,7 @@ const COURSE_EXTRA_LINKS = [
   {title:"⚡ مراجعة سريعة + لعبة الوصل", href:"pages/quick-reference.html"},
 ];
 
-/* يحسب حالة الفتح لكل فصل بالترتيب (فتح متسلسل حسب اجتياز امتحان الفصل السابق بـ90%+) */
+/* يحسب حالة الفتح لكل فصل بالترتيب (فتح متسلسل: كل فصل بينفتح بعد ما يخلص الطالب امتحان الفصل اللي قبلو) */
 function computeChapterUnlockStatus(){
   let unlocked = true;
   return COURSE_CHAPTERS.map(ch => {
@@ -34,7 +34,9 @@ function computeChapterUnlockStatus(){
     if(unlocked){
       const state = getChapterState(ch.key);
       withActive.passed = !!state.passed;
-      unlocked = !!state.passed;
+      withActive.attempted = state.attempts > 0;
+      // الفصل اللي بعدو بينفتح أول ما الطالب يخلّص امتحان هالفصل (أي علامة)، و90%+ = إتقان
+      unlocked = !!state.passed || state.attempts > 0;
     } else {
       withActive.passed = false;
     }

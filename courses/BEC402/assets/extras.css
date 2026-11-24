@@ -1,0 +1,199 @@
+/* ============================================================
+   BEC402 — مكوّنات تفاعلية إضافية (لعبة التصنيف، مقياس المسؤولية، ...)
+   منفصلة عن style.css المشترك حتى ما نلمس المحرك الأساسي.
+   ============================================================ */
+
+/* ---------- لعبة التصنيف (Tap-to-sort) ---------- */
+.x-sort{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow-sm); }
+.x-sort-top{ display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:.85rem; color:var(--muted); margin-bottom:10px; flex-wrap:wrap; }
+.x-sort-bar{ flex:1; min-width:120px; height:8px; border-radius:99px; background:#EEF1F7; overflow:hidden; }
+.x-sort-bar > div{ height:100%; width:0; background:linear-gradient(90deg,var(--teal),var(--amber)); transition:width .3s ease; }
+.x-sort-card{ background:var(--ink); color:#fff; border-radius:14px; padding:22px 18px; text-align:center; font-weight:700; font-size:1.02rem; line-height:1.8; min-height:92px; display:flex; align-items:center; justify-content:center; transition:background .25s ease, transform .25s ease; }
+.x-sort-card.ok{ background:var(--success); transform:scale(1.02); }
+.x-sort-card.no{ background:var(--danger); animation:shake .35s ease; }
+.x-sort-btns{ display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-top:14px; }
+.x-sort-btns button{ font-family:inherit; font-weight:700; font-size:.92rem; padding:12px 10px; border-radius:12px; border:2px solid var(--border); background:#fff; color:var(--ink); cursor:pointer; transition:all .15s ease; }
+.x-sort-btns button:hover{ border-color:var(--teal); background:#F1FBFA; }
+.x-sort-btns button:disabled{ opacity:.5; cursor:default; }
+.x-sort-hint{ min-height:1.6em; margin-top:12px; font-size:.9rem; color:var(--muted); text-align:center; }
+.x-sort-hint b{ color:var(--ink); }
+.x-sort-done{ text-align:center; padding:8px 4px; }
+.x-sort-done .big{ font-size:2rem; font-weight:900; color:var(--teal-dark); }
+.x-sort-buckets{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:16px; text-align:right; }
+.x-sort-buckets > div{ background:#F7F9FC; border:1px dashed var(--border); border-radius:12px; padding:10px 12px; font-size:.82rem; }
+.x-sort-buckets h5{ margin:0 0 6px; font-size:.86rem; color:var(--ink); }
+.x-sort-buckets ul{ margin:0; padding:0 16px 0 0; color:var(--muted); }
+
+/* ---------- قصة الفصل (بطل الحكاية) ---------- */
+.story{ background:linear-gradient(135deg,#FFF9EE,#F1FBFA); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; margin:16px 0; }
+.story .tag{ display:inline-block; font-size:.75rem; font-weight:800; color:var(--amber-dark); margin-bottom:4px; }
+.story p{ margin:0; font-size:.95rem; }
+
+@media (max-width:640px){
+  .x-sort-card{ font-size:.95rem; padding:18px 12px; }
+  .x-slider-row .val{ min-width:0; }
+}
+
+/* ---------- توقيع الإعداد بالفوتر ---------- */
+.prepared-by{ margin:8px 0 4px; font-weight:800; font-size:.95rem; letter-spacing:.02em; direction:ltr; color:#FF9F1C; opacity:.95; }
+/* اسم المقرر بالهيدر أطول → نسمح له يلتف على الموبايل بدل ما يكسر الشريط */
+.topbar .brand{ line-height:1.35; }
+@media (max-width:640px){ .topbar .brand{ font-size:.86rem; } }
+
+/* ---------- شارة أدوات «جرّب بإيدك» ---------- */
+.gp-tag{ background:var(--teal); color:#fff; font-size:.72rem; font-weight:800; padding:3px 10px; border-radius:99px; }
+
+/* ---------- مكوّنات عامة: مقدمة الفصل، بانر التنبيه، الحالة العملية ---------- */
+/* ---------- بانر تنبيه (هاي منصة مراجعة فقط) ---------- */
+.disclaimer-banner{
+  background:#FFF3E0; border:1px solid #FFD794; color:var(--amber-dark);
+  border-radius:var(--radius); padding:16px 20px; margin:0 0 26px;
+  font-size:.92rem; line-height:1.8; display:flex; gap:12px; align-items:flex-start;
+}
+.disclaimer-banner .ico{ font-size:1.3rem; flex-shrink:0; }
+.disclaimer-banner b{ color:#8A5300; }
+/* ---------- بطاقة الحالة العملية ---------- */
+.case-card{
+  background:linear-gradient(135deg, #F4FBFA, #FFFFFF);
+  border:1px solid var(--border); border-radius:var(--radius);
+  padding:22px 24px; margin:18px 0;
+}
+.case-tag{
+  display:inline-block; background:var(--teal); color:#fff;
+  font-size:.72rem; font-weight:800; padding:4px 12px; border-radius:999px; margin-bottom:10px;
+}
+.case-card h4{ margin:0 0 10px; font-size:1.05rem; }
+.case-scenario{ color:var(--text); margin:0 0 14px; }
+.case-question{ margin:0 0 12px; }
+/* ---------- بطاقة كلمة مفتاحية (تظهر بمقدمة كل فصل) ---------- */
+.keyword-chip{
+  display:inline-block; background:#EAF1FF; color:#2C5CC5;
+  font-size:.8rem; padding:5px 12px; border-radius:999px; margin:3px 4px 3px 0;
+}
+.chapter-intro-box{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:20px 22px; margin-bottom:24px;
+}
+.chapter-intro-box h4{ margin:0 0 10px; font-size:.95rem; color:var(--teal-dark); }
+.chapter-intro-box ul{ margin:0; padding-inline-start:20px; }
+.chapter-intro-box li{ margin-bottom:5px; font-size:.92rem; }
+
+/* ---------- أساس البطاقات التفاعلية (اسحب وفلت) ---------- */
+.eqs{ background:#fff; border:1px solid var(--border,#E3E7F0); border-radius:18px; padding:18px; margin:18px 0; box-shadow:0 10px 30px -18px rgba(15,28,46,.35); }
+.eqs-head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.eqs-head h4{ margin:0; font-size:1.05rem; }
+.eqs-drop{ min-height:48px; border:2px dashed rgba(15,28,46,.18); border-radius:10px; padding:6px; background:rgba(255,255,255,.7); transition:background .2s,border-color .2s; cursor:pointer; }
+.eqs-drop.over{ background:#fff; border-color:#FF9F1C; box-shadow:0 0 0 3px rgba(255,159,28,.25) inset; }
+.eqs-tray{ display:flex; flex-wrap:wrap; gap:8px; min-height:40px; }
+.eqs-chip{ font:inherit; font-size:.88rem; font-weight:700; padding:8px 12px; border-radius:12px; border:2px solid #1D3557; background:#fff; color:#0F1C2E; cursor:grab; touch-action:none; user-select:none; box-shadow:0 3px 0 #1D3557; }
+.eqs-chip b{ margin-inline-start:4px; }
+.eqs-chip.sel{ background:#FFF4E2; border-color:#FF9F1C; box-shadow:0 3px 0 #FF9F1C; }
+.eqs-chip.lifting{ opacity:.35; }
+.eqs-chip:disabled{ opacity:.4; cursor:default; }
+.eqs-chip.shake{ animation:eqsShake .45s; border-color:#B4402B; }
+@keyframes eqsShake{ 20%,60%{ transform:translateX(-6px); } 40%,80%{ transform:translateX(6px); } }
+.eqs-ghost{ position:fixed; z-index:9999; pointer-events:none; transform:rotate(-4deg) scale(1.06); box-shadow:0 14px 26px -10px rgba(0,0,0,.45); cursor:grabbing; }
+.eqs-hint{ font-size:.78rem; color:#5B6478; margin:8px 0 0; }
+.eqs-msg{ margin-top:8px; font-size:.9rem; line-height:1.8; }
+.eqs-msg.bad{ color:#B4402B; } .eqs-msg.ok{ color:#0B7A57; }
+.eqs-msg.ok b{ color:#0B7A57; }
+@media (max-width:640px){ .eqs{ padding:12px; } }
+
+/* ---------- أزرار الخيارات الصغيرة (مشتركة) ---------- */
+.tri-sc-b{ font:inherit; font-size:.84rem; font-weight:700; padding:7px 12px; border-radius:999px; border:1.5px solid #1D3557; background:#fff; cursor:pointer; color:#0F1C2E; }
+.tri-sc-b:hover{ background:#FFF4E2; border-color:#FF9F1C; }
+.tri-sc-b.on{ background:#FFF4E2; border-color:#FF9F1C; }
+
+
+/* ---------- 🔢 رتّب الخطوات ---------- */
+.og-done{ list-style:none; counter-reset:og; padding:0; margin:8px 0 10px; }
+.og-done li{ counter-increment:og; display:flex; gap:10px; align-items:center; padding:7px 10px; margin-bottom:6px; border-radius:10px; background:#E7F9F3; font-weight:700; font-size:.9rem; }
+.og-done li::before{ content:counter(og); flex:none; width:24px; height:24px; border-radius:50%; background:#0B7A57; color:#fff; display:grid; place-items:center; font-size:.8rem; }
+.og-done li.og-next{ background:#F5F7FB; color:#9AA6BA; }
+.og-done li.og-next::before{ background:#9AA6BA; }
+.og-chip{ cursor:pointer; }
+
+/* ---------- 💰 حاسبة الربح (pc-) ---------- */
+.pc-pre{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+.pc-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.pc-f{ display:flex; flex-direction:column; gap:5px; font-size:.86rem; font-weight:700; color:#1D3557; }
+.pc-f input{ font:inherit; font-size:1rem; padding:8px 10px; border:1.5px solid #cfd8e3; border-radius:10px; width:100%; box-sizing:border-box; text-align:left; }
+.pc-out{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:14px; }
+.pc-box{ background:#F5F7FB; border-radius:12px; padding:10px 12px; display:flex; flex-direction:column; gap:3px; }
+.pc-box small{ font-weight:700; color:#5B6478; }
+.pc-box b{ font-size:1.25rem; color:#0F1C2E; text-align:right; font-variant-numeric:tabular-nums; }
+.pc-box em{ font-style:normal; font-size:.8rem; color:#5B6478; }
+.pc-box.imp{ background:#FFF8EB; }
+.pc-box.pos{ background:#E7F9F3; } .pc-box.pos b{ color:#0B7A57; }
+.pc-box.neg{ background:#FDECEA; } .pc-box.neg b{ color:#B3261E; }
+.pc-box.zero{ background:#EEF2FF; }
+@media (max-width:640px){ .pc-grid, .pc-out{ grid-template-columns:1fr; } }
+
+/* ---------- 📈 مختبر العرض والطلب (sd-) ---------- */
+.sdl-tabs{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+.sdl-grid{ display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:14px; align-items:start; }
+.sd-svg{ direction:ltr; unicode-bidi:isolate; width:100%; height:auto; display:block; background:#FBFCFE; border:1px solid #E3E7F0; border-radius:12px; }
+.sd-ax{ stroke:#5B6478; stroke-width:1.4; }
+.sd-tk{ font-size:10px; fill:#5B6478; font-family:inherit; }
+.sd-lb{ font-size:11px; fill:#1D3557; font-weight:700; font-family:inherit; }
+.sd-d, .sd-s{ fill:none; stroke-width:3; stroke-linecap:round; }
+.sd-d{ stroke:#2563EB; } .sd-s{ stroke:#EA7A1C; }
+.sd-d.old, .sd-s.old{ opacity:.35; stroke-dasharray:6 5; }
+.sd-d.new, .sd-s.new{ stroke-width:3.5; }
+.sd-e{ fill:#0F1C2E; } .sd-e.new{ fill:#0B7A57; stroke:#fff; stroke-width:2; }
+.sd-pl{ stroke:#0F1C2E; stroke-width:1.5; stroke-dasharray:4 4; }
+.sd-gap{ stroke-width:7; stroke-linecap:round; opacity:.6; } .sd-gap.short{ stroke:#E63946; } .sd-gap.surp{ stroke:#9B5DE5; }
+.sd-leg{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; font-size:.8rem; color:#5B6478; margin-top:6px; }
+.sd-leg .k{ display:inline-block; width:16px; height:4px; border-radius:2px; margin-inline-start:8px; }
+.sd-leg .k.d{ background:#2563EB; } .sd-leg .k.s{ background:#EA7A1C; } .sd-leg .k.e{ background:#0F1C2E; height:8px; width:8px; border-radius:50%; }
+.sdl-sl{ display:block; font-weight:700; margin-bottom:10px; } .sdl-sl input{ width:100%; accent-color:#FF9F1C; margin-top:6px; }
+.sdl-evs{ display:grid; gap:6px; margin-bottom:10px; }
+.sdl-ev{ text-align:right; font:inherit; font-size:.88rem; font-weight:600; padding:8px 10px; border-radius:10px; border:1.5px solid #cfd8e3; background:#fff; cursor:pointer; color:#0F1C2E; }
+.sdl-ev:hover{ border-color:#457b9d; } .sdl-ev.on{ background:#FFF4E2; border-color:#FF9F1C; }
+.sd-why{ display:inline-block; margin-top:4px; color:#334; font-weight:400; }
+@media (max-width:720px){ .sdl-grid{ grid-template-columns:1fr; } }
+
+/* ---------- 🛒 دكانة المنفعة (mus-) ---------- */
+.mus-bud{ background:#F5F7FB; border-radius:10px; padding:8px 12px; font-size:.92rem; margin-bottom:10px; }
+.mus-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.mus-card{ border:1.5px solid #E3E7F0; border-radius:12px; padding:10px 12px; background:#fff; }
+.mus-h{ font-size:1rem; margin-bottom:8px; } .mus-h small{ color:#5B6478; margin-inline-start:6px; }
+.mus-row{ display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.mus-row .tri-sc-b{ width:38px; height:38px; padding:0; font-size:1.2rem; } .mus-row .tri-sc-b:disabled{ opacity:.35; cursor:default; }
+.mus-n{ font-size:1.4rem; font-weight:800; min-width:24px; text-align:center; }
+.mus-t{ width:100%; border-collapse:collapse; font-size:.82rem; text-align:center; }
+.mus-t th{ text-align:right; font-weight:700; color:#5B6478; padding:3px 4px; white-space:nowrap; }
+.mus-t td{ border:1px solid #E3E7F0; padding:4px; } .mus-t td.on{ background:#E7F9F3; font-weight:800; }
+.mus-r{ font-size:.86rem; margin-top:8px; }
+.mus-tot{ margin:12px 0 4px; font-weight:700; }
+@media (max-width:640px){ .mus-grid{ grid-template-columns:1fr; } }
+
+/* ---------- 🗺️ منحنيات السواء (ic-) ---------- */
+.ic-feas{ fill:#2563EB; opacity:.08; }
+.ic-bl{ stroke:#2563EB; stroke-width:3; }
+.ic-u{ fill:none; stroke-width:2.2; } .ic-u.opt{ stroke:#0B7A57; } .ic-u.hi{ stroke:#9aa9b9; stroke-dasharray:5 5; } .ic-u.low{ stroke:#EA7A1C; }
+.ic-pt{ fill:#FF9F1C; stroke:#0F1C2E; stroke-width:2; }
+.ic-box{ display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 10px; } .ic-box span{ background:#F5F7FB; border-radius:8px; padding:5px 9px; font-size:.86rem; }
+.sd-leg .k.bl{ background:#2563EB; } .sd-leg .k.ic{ background:#0B7A57; }
+.sd-leg .k.pt{ background:#FF9F1C; height:9px; width:9px; border-radius:50%; } .sd-leg .k.e2{ background:#0B7A57; height:9px; width:9px; border-radius:50%; }
+
+/* ---------- ⚖️ أثر الإبدال والدخل (si-) ---------- */
+.si-steps{ display:grid; gap:6px; background:#F5F7FB; border-radius:10px; padding:10px 12px; font-size:.9rem; margin-bottom:12px; }
+.si-row{ display:grid; grid-template-columns:110px 1fr 70px; align-items:center; gap:8px; margin-bottom:8px; font-size:.9rem; }
+.si-row b{ text-align:left; font-variant-numeric:tabular-nums; }
+.si-track{ position:relative; height:16px; background:#F5F7FB; border-radius:8px; direction:ltr; }
+.si-mid{ position:absolute; left:50%; top:-3px; bottom:-3px; width:2px; background:#5B6478; }
+.si-bar{ position:absolute; top:0; bottom:0; border-radius:8px; }
+.si-bar.neg{ right:50%; } .si-bar.pos{ left:50%; }
+.si-bar.s{ background:#2563EB; } .si-bar.i{ background:#EA7A1C; } .si-bar.t{ background:#0B7A57; }
+@media (max-width:520px){ .si-row{ grid-template-columns:92px 1fr 56px; font-size:.82rem; } }
+
+/* مختبر المرونة */
+.el-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:start; }
+@media (max-width:720px){ .el-grid{ grid-template-columns:1fr; } }
+.el-f{ display:block; direction:ltr; unicode-bidi:isolate; text-align:right; font-variant-numeric:tabular-nums; margin-top:3px; color:#1D3557; font-weight:600; }
+/* مختبرات الفصل 7 */
+.tri-sc{ display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 12px; }
+.mw-t td, .mw-t th, .sp-t td, .sp-t th{ text-align:center; font-variant-numeric:tabular-nums; }
+.mw-t tr.mw-no td{ color:#9aa3b2; }
+.pc-cap{ font-weight:800; font-size:.86rem; color:#1D3557; margin-bottom:4px; }

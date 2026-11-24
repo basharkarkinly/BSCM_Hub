@@ -115,19 +115,189 @@ function fillAnswerMatches(userAnswer, acceptable){
  * @param {Array}  pool          - بنك الأسئلة الكامل
  * @param {Object} opts          - { mode: 'practice' | 'exam', count, chapterKey, nextUrl, chapterTitle }
  */
+/* ---------- «كمّل من وين وقفت»: حفظ المحاولة المفتوحة على جهاز الطالب ----------
+   الامتحان والفحص النهائي: بتنحفظ نفس الأسئلة بترتيب خياراتها + الأجوبة + الوقت المستهلك.
+   التدريب الحر: بتنحفظ الأجوبة بس. وأي محاولة مفتوحة أقدم من 7 أيام بتنمسح. */
+const RESUME_KEY = PROGRESS_KEY.replace("_progress_", "_resume_");
+const RESUME_TTL = 7 * 24 * 3600 * 1000;
+function qzPageId(containerId){ return location.pathname + "#" + containerId; }
+function qzLoadAll(){
+  try{ return JSON.parse(localStorage.getItem(RESUME_KEY) || "{}"); }catch(e){ return {}; }
+}
+function qzResumeGet(containerId){
+  const st = qzLoadAll()[qzPageId(containerId)];
+  if(!st) return null;
+  if(Date.now() - (st.t || 0) > RESUME_TTL){ qzResumeClear(containerId); return null; }
+  return st;
+}
+function qzResumeSet(containerId, st){
+  try{
+    const all = qzLoadAll(), now = Date.now();
+    Object.keys(all).forEach(k => { if(now - (all[k].t || 0) > RESUME_TTL) delete all[k]; });
+    st.t = now;
+    all[qzPageId(containerId)] = st;
+    localStorage.setItem(RESUME_KEY, JSON.stringify(all));
+  }catch(e){ /* تجاهل بصمت */ }
+}
+function qzResumeClear(containerId){
+  try{
+    const all = qzLoadAll();
+    delete all[qzPageId(containerId)];
+    localStorage.setItem(RESUME_KEY, JSON.stringify(all));
+  }catch(e){ /* تجاهل بصمت */ }
+}
+/* بيرجّع أسئلة المحاولة المحفوظة بنفس ترتيبها وترتيب خياراتها، أو null إذا البنك تغيّر بعد الحفظ */
+function qzRebuild(st, pool){
+  if(!st || !Array.isArray(st.qs) || !st.qs.length) return null;
+  const byHash = {};
+  pool.forEach(q => { byHash[qHash(q)] = q; });
+  const out = [];
+  for(const s of st.qs){
+    const q = byHash[s.h];
+    if(!q) return null;
+    const c = {...q};
+    if(c.type === "mcq" && Array.isArray(s.o)){
+      if(s.o.length !== q.options.length || s.o.some(o => q.options.indexOf(o) < 0)) return null;
+      c.options = s.o.slice();
+      c.answerIndex = c.options.indexOf(q.options[q.answerIndex]);
+    }
+    out.push(c);
+  }
+  return out;
+}
+/* تحذير المتصفح إذا الطالب حاول يسكّر الصفحة بنص امتحان أو فحص */
+let qzDirty = false;
+window.addEventListener("beforeunload", function(e){
+  if(qzDirty){ e.preventDefault(); e.returnValue = ""; }
+});
+function qzMarksLabel(m){
+  if(m === 1) return "علامة";
+  if(m === 2) return "علامتين";
+  if(m === 2.5) return "علامتين ونص";
+  return m ? m + " علامات" : "";
+}
+
+/* التدريب الحر: 20–25 سؤال موزّعين على أقسام الدرس (سؤالين أو تلاتة عن كل فكرة).
+   الأسئلة اللي ما انحلّت بالتدريبات السابقة أولاً، وأسئلة الدورات قبل أسئلة الشرح. */
+function pickPractice(pool, scope){
+  const MIN = 20, MAX = 25;
+  if(pool.length <= MAX) return pool.map(q => ({...q}));
+  const d = loadSeen();
+  let seen = new Set(d[scope] || []);
+  if(!pool.some(q => !seen.has(qHash(q)))){
+    d[scope] = []; saveSeen(d); seen = new Set();   // انحلّت كل أسئلة البنك بالتدريب: دورة جديدة
+  }
+  const groups = [], byKey = {};
+  pool.forEach(q => {
+    const k = (q.ref && q.ref.url) || "_";
+    if(!byKey[k]){ byKey[k] = []; groups.push(byKey[k]); }
+    byKey[k].push(q);
+  });
+  const pri = a => a.filter(q => q.origin === "bank").concat(a.filter(q => q.origin !== "bank"));
+  const ordered = groups.map(g => pri(shuffle(g.filter(q => !seen.has(qHash(q))))).concat(pri(shuffle(g.filter(q => seen.has(qHash(q)))))));
+  const per = Math.max(2, Math.ceil(MIN / groups.length));
+  const take = ordered.map(g => Math.min(per, g.length));
+  let total = take.reduce((a, b) => a + b, 0);
+  while(total < MIN){
+    let best = -1;
+    ordered.forEach((g, i) => { if(take[i] < g.length && (best < 0 || g.length - take[i] > ordered[best].length - take[best])) best = i; });
+    if(best < 0) break;
+    take[best]++; total++;
+  }
+  while(total > MAX){
+    let best = -1;
+    take.forEach((t, i) => { if(t > 1 && (best < 0 || t > take[best])) best = i; });
+    if(best < 0){
+      // أقسام كتيرة (أكتر من 25): منشيل سؤال من الأقسام الأصغر لحد ما نوصل للحد
+      shuffle(take.map((t, i) => i)).forEach(i => { if(take[i] > 0 && (best < 0 || ordered[i].length < ordered[best].length)) best = i; });
+      if(best < 0) break;
+    }
+    take[best]--; total--;
+  }
+  const out = [];
+  ordered.forEach((g, i) => { g.slice(0, take[i]).forEach(q => out.push({...q})); });
+  return out;
+}
+
+const FINAL_RESULT_KEY = "gbl401_final_result_v1";
 function renderQuiz(containerId, pool, opts){
   const container = document.getElementById(containerId);
   const mode = opts.mode || "practice"; // 'practice' | 'exam' | 'final'
-  let questions, pickInfo = null;
+  const isTest = mode === "exam" || mode === "final";
+
+  // في امتحان أو فحص ما خلص؟ منسأل الطالب: يكمّل من وين وقف، أو يبدأ من جديد
+  if(isTest && !opts._resumeChecked){
+    opts._resumeChecked = true;
+    const st = qzResumeGet(containerId);
+    const qs = (st && st.mode === mode) ? qzRebuild(st, pool) : null;
+    if(qs){
+      const done = Object.keys(st.ans || {}).length;
+      const what = mode === "final" ? "فحص نهائي" : "امتحان";
+      const timeTxt = (opts.timer && st.elapsed) ? ` خلال <b dir="ltr">${fmtTime(st.elapsed)}</b>` : "";
+      container.innerHTML = `
+        <div class="result-card qz-resume">
+          <div class="result-stamp" style="background:linear-gradient(135deg,#FF9F1C,#F4C04E);">⏸️</div>
+          <h2>عندك ${what} ما خلّصتو</h2>
+          <p>جاوبت على <b>${done}</b> من <b>${qs.length}</b> سؤال${timeTxt}. بدك تكمّل من وين وقفت؟</p>
+          <p style="font-size:.9rem;">إذا بلّشت من جديد بتطلعلك أسئلة جديدة غير اللي شفتها.</p>
+          <div class="cta-row" style="justify-content:center; display:flex; gap:14px; flex-wrap:wrap;">
+            <button class="btn btn-primary" data-qz="go">▶️ كمّل من وين وقفت</button>
+            <button class="btn btn-ghost" data-qz="new">🔄 ابدأ من جديد</button>
+          </div>
+        </div>`;
+      container.querySelector('[data-qz="go"]').addEventListener("click", () => {
+        opts._resume = { qs, st };
+        renderQuiz(containerId, pool, opts);
+      });
+      container.querySelector('[data-qz="new"]').addEventListener("click", () => {
+        qzResumeClear(containerId);
+        renderQuiz(containerId, pool, opts);
+      });
+      return;
+    }
+    if(st) qzResumeClear(containerId);
+  }
+
+  let questions, pickInfo = null, saved = null;
   const seenScope = mode === "final" ? "final" : (opts.chapterKey || null);
-  if(mode === "exam" || mode === "final"){
+  const practiceScope = "practice:" + location.pathname;
+  if(mode === "final" && opts.bankShare){
+    opts._scopeOf = q => q.origin === "bank" ? "final_bank" : "final_gen";
+  }
+  if(isTest && opts._resume){
+    // كمّل المحاولة المحفوظة بنفس الأسئلة ونفس ترتيب الخيارات
+    questions = opts._resume.qs;
+    saved = opts._resume.st;
+    opts._resume = null;
+  } else if(isTest){
     // امتحان الفصل / الفحص النهائي: عيّنة من أسئلة ما شافها الطالب بمحاولات سابقة (تدوير البنك)
     const count = opts.count || pool.length;
-    pickInfo = pickFresh(pool, count, seenScope);
+    if(mode === "final" && opts.bankShare){
+      // الفحص النهائي: أغلب الأسئلة من بنك الدورات وتمارين الكتاب (origin:"bank")، والباقي من أسئلة الشرح
+      const bank = pool.filter(q => q.origin === "bank"), gen = pool.filter(q => q.origin !== "bank");
+      const nb = Math.min(bank.length, Math.round(count * opts.bankShare));
+      const a = pickFresh(bank, nb, "final_bank"), b = pickFresh(gen, count - nb, "final_gen");
+      pickInfo = { picked: shuffle(a.picked.concat(b.picked)), recycled: a.recycled || b.recycled, freshLeft: a.freshLeft };
+    } else {
+      pickInfo = pickFresh(pool, count, seenScope);
+    }
     questions = pickInfo.picked.map(prepQuestionForExam);
   } else {
-    questions = pool.map(q => ({...q}));
+    // التدريب الحر: 20–25 سؤال بيغطّوا أقسام الدرس (2–3 عن كل فكرة)، وكل تدريب جديد بيجيب أسئلة تانية
+    const st = opts._freshPractice ? null : qzResumeGet(containerId);
+    opts._freshPractice = false;
+    const qs = (st && st.mode === "practice") ? qzRebuild(st, pool) : null;
+    if(qs){ questions = qs; saved = st; }
+    else {
+      qzResumeClear(containerId);
+      questions = pickPractice(pool, practiceScope);
+    }
   }
+
+  // حالة المحاولة اللي بتنحفظ أول بأول
+  const state = { mode, qs: questions.map(q => ({ h: qHash(q), o: q.type === "mcq" ? q.options : null })), ans: {}, elapsed: (saved && saved.elapsed) || 0 };
+  const savedAns = (saved && saved.ans) || {};
+  let finished = false;
 
   let answered = 0;
   let correctCount = 0;
@@ -138,9 +308,14 @@ function renderQuiz(containerId, pool, opts){
   const metaBar = document.createElement("div");
   metaBar.className = "quiz-meta";
   let metaNote;
-  if(mode === "exam") metaNote = `<span>النجاح يتطلب <b>90%</b> فأكثر</span>`;
-  else if(mode === "final") metaNote = `<span><b>فحص نهائي شامل</b> — كل سؤال علامتين، وبتقدر تعيد الفحص بأسئلة جديدة</span>`;
-  else metaNote = `<span>تدريب حر — بلا قفل، جاوب وشوف التصحيح فوراً</span>`;
+  if(mode === "exam") metaNote = `<span>جاوب على كل الأسئلة وسلّم، وبينفتحلك الفصل اللي بعدو — و<b>90%</b> فأكثر يعني أتقنت الفصل</span>`;
+  else if(mode === "final"){
+    const mk = qzMarksLabel(opts.marksPerQuestion);
+    metaNote = mk
+      ? `<span><b>فحص نهائي شامل</b> — كل سؤال ${mk}، وبتقدر تعيد الفحص بأسئلة جديدة</span>`
+      : `<span><b>فحص نهائي شامل</b> — إجابة واحدة لكل سؤال</span>`;
+  }
+  else metaNote = `<span>تدريب حر — ${questions.length} سؤال بيغطّوا أفكار الفصل، بلا قفل وبلا علامة، وإجاباتك بتنحفظ إذا طلعت ورجعت</span>`;
   metaBar.innerHTML = `
     <span>السؤال <b id="qz-answered">0</b> من <b>${questions.length}</b></span>
     <div class="progress-bar-track"><div class="progress-bar-fill" id="qz-bar"></div></div>
@@ -154,25 +329,68 @@ function renderQuiz(containerId, pool, opts){
     note.innerHTML = "<b>ملاحظة:</b> خلّصت كل أسئلة البنك — هاي دورة جديدة، فممكن تطلعلك أسئلة شفتها قبل.";
     container.appendChild(note);
   }
-  // تايمر الوقت المستهلك فقط (بدون عدّ تنازلي)
-  const startedAt = Date.now();
+  const newPractice = () => {
+    qzResumeClear(containerId);
+    opts._freshPractice = true;
+    window.scrollTo(0, 0);
+    renderQuiz(containerId, pool, opts);
+  };
+  if(!isTest && saved && Object.keys(savedAns).length){
+    const note = document.createElement("div");
+    note.className = "resource-box";
+    note.innerHTML = `<b>رجّعنالك تدريبك</b> متل ما تركتو (جاوبت ${Object.keys(savedAns).length} من ${questions.length})، فكمّل من وين وقفت. <button class="btn btn-ghost" data-qz="reset" style="margin-inline-start:8px; padding:6px 14px;">🔄 تدريب جديد بأسئلة تانية</button>`;
+    container.appendChild(note);
+    note.querySelector('[data-qz="reset"]').addEventListener("click", newPractice);
+  }
+  // تايمر الوقت المستهلك فقط (بدون عدّ تنازلي)، وبيكمّل من الوقت المحفوظ إذا رجع الطالب
+  const startedAt = Date.now() - (isTest ? state.elapsed : 0);
   let timerId = null;
   if(opts.timer){
     const timerEl = document.getElementById("qz-timer");
+    timerEl.textContent = "⏱ " + fmtTime(Date.now() - startedAt);
     timerId = setInterval(() => { timerEl.textContent = "⏱ " + fmtTime(Date.now() - startedAt); }, 1000);
   }
+
+  function persist(){
+    if(finished || !Object.keys(state.ans).length) return;
+    if(isTest) state.elapsed = Date.now() - startedAt;
+    qzResumeSet(containerId, state);
+  }
+  // منحفظ الوقت المستهلك كمان لما الطالب يسكّر الصفحة أو يبدّل التاب
+  const token = {};
+  window.__qzToken = window.__qzToken || {};
+  window.__qzToken[containerId] = token;
+  const onHide = () => { if(isTest && window.__qzToken[containerId] === token) persist(); };
+  window.addEventListener("pagehide", onHide);
+  document.addEventListener("visibilitychange", () => { if(document.visibilityState === "hidden") onHide(); });
 
   const list = document.createElement("div");
   container.appendChild(list);
 
+  const cards = [];
   questions.forEach((q, idx) => {
-    list.appendChild(buildQuestionCard(q, idx, mode, (ok) => {
-      if(seenScope) markSeen(seenScope, q);
+    const card = buildQuestionCard(q, idx, mode, (ok, val) => {
+      if(!isTest) markSeen(practiceScope, q);
+      else if(opts._scopeOf) markSeen(opts._scopeOf(q), q); else if(seenScope) markSeen(seenScope, q);
+      if(val !== undefined) state.ans[String(idx)] = val;
+      if(isTest && !finished) qzDirty = true;
       onAnswered(ok);
-    }));
+      persist();
+    });
+    cards.push(card);
+    list.appendChild(card);
   });
 
-  if(mode === "exam" || mode === "final"){
+  // آخر التدريب الحر: النتيجة + تدريب جديد بأسئلة تانية
+  let practiceEnd = null;
+  if(!isTest){
+    practiceEnd = document.createElement("div");
+    practiceEnd.className = "result-card";
+    practiceEnd.style.display = "none";
+    container.appendChild(practiceEnd);
+  }
+
+  if(isTest){
     const submitWrap = document.createElement("div");
     submitWrap.style.textAlign = "center";
     submitWrap.style.marginTop = "10px";
@@ -185,21 +403,48 @@ function renderQuiz(containerId, pool, opts){
     });
   }
 
+  // رجّع الإجابات المحفوظة (نفس الاختيارات، مع التصحيح والشرح متل ما كانوا)
+  questions.forEach((q, idx) => {
+    const key = String(idx);
+    if(key in savedAns && cards[idx].__answer) cards[idx].__answer(savedAns[key]);
+  });
+
   function onAnswered(isCorrect){
     answered += 1;
     if(isCorrect) correctCount += 1;
     document.getElementById("qz-answered").textContent = answered;
     document.getElementById("qz-bar").style.width = (answered / questions.length * 100) + "%";
-    if((mode === "exam" || mode === "final") && answered === questions.length){
+    if(isTest && answered === questions.length){
       document.getElementById("qz-submit").disabled = false;
+    }
+    if(practiceEnd && answered === questions.length){
+      const examUrl = location.pathname.replace(/-practice\.html$/, "-exam.html");
+      const hasExam = examUrl !== location.pathname;
+      practiceEnd.innerHTML = `
+        <h2>خلّصت هالتدريب 👏</h2>
+        <p>جاوبت صح على <b>${correctCount}</b> من <b>${questions.length}</b>.</p>
+        <p style="font-size:.92rem;">بدك تتدرّب أكتر؟ التدريب الجديد بيجيبلك أسئلة تانية عن نفس أفكار الفصل.</p>
+        <div class="cta-row" style="justify-content:center; display:flex; gap:14px; flex-wrap:wrap;">
+          <button class="btn btn-teal" data-qz="again">🔄 تدريب جديد بأسئلة تانية</button>
+          ${hasExam ? `<a class="btn btn-primary" href="${examUrl}">📝 روح عامتحان الفصل</a>` : ""}
+        </div>`;
+      practiceEnd.style.display = "";
+      practiceEnd.querySelector('[data-qz="again"]').addEventListener("click", newPractice);
     }
   }
 
-  function finishExam(qs, opts){
+  function endAttempt(){
+    finished = true;
+    qzDirty = false;
+    qzResumeClear(containerId);
     if(timerId){ clearInterval(timerId); timerId = null; }
+  }
+
+  function finishExam(qs, opts){
+    endAttempt();
     const scorePercent = Math.round((correctCount / qs.length) * 100);
     const result = recordAttempt(opts.chapterKey, scorePercent);
-    if(window.SCStars) SCStars.examDone(opts.chapterKey, scorePercent);   // ⭐ نجوم الامتحان (أول نجاح بس)
+    if(window.SCStars) SCStars.examDone(opts.chapterKey, scorePercent);   // ⭐ نجوم الامتحان (أول مرة بـ90% فأكثر)
     renderResult(container, {
       scorePercent, correctCount, total: qs.length,
       passed: scorePercent >= PASS_THRESHOLD,
@@ -207,19 +452,19 @@ function renderQuiz(containerId, pool, opts){
       bestScore: result.bestScore,
       nextUrl: opts.nextUrl,
       chapterTitle: opts.chapterTitle,
-      retakeFn: () => renderQuiz(containerId, pool, opts)
+      retakeFn: () => { window.scrollTo(0, 0); renderQuiz(containerId, pool, opts); }
     });
   }
 
   function finishFinal(qs, opts){
-    if(timerId){ clearInterval(timerId); timerId = null; }
     const elapsedMs = Date.now() - startedAt;
+    endAttempt();
     const scorePercent = Math.round((correctCount / qs.length) * 100);
     if(window.SCStars) SCStars.examDone("final", scorePercent);          // ⭐ نجوم الفحص النهائي (أول مرة ≥ 90)
     const marksPer = opts.marksPerQuestion || 1;
     const marks = correctCount * marksPer, totalMarks = qs.length * marksPer;
     try{
-      localStorage.setItem("gbl401_final_result_v1", JSON.stringify({
+      localStorage.setItem(FINAL_RESULT_KEY, JSON.stringify({
         scorePercent, correctCount, total: qs.length, marks, totalMarks,
         seconds: Math.round(elapsedMs / 1000), date: new Date().toISOString()
       }));
@@ -274,7 +519,7 @@ function buildQuestionCard(q, idx, mode, onAnswered){
         el.classList.add("selected", isCorrect ? "correct" : "wrong");
         if(!isCorrect) list.children[q.answerIndex].classList.add("correct");
         showFeedback(feedback, isCorrect, q.explanation, null, q.ref);
-        onAnswered(isCorrect);
+        onAnswered(isCorrect, i);
       });
       list.appendChild(el);
     });
@@ -297,7 +542,7 @@ function buildQuestionCard(q, idx, mode, onAnswered){
         const correctIdx = q.answer ? 0 : 1;
         list.children[correctIdx].classList.add("correct");
         showFeedback(feedback, isCorrect, q.explanation, null, q.ref);
-        onAnswered(isCorrect);
+        onAnswered(isCorrect, i);
       });
       list.appendChild(el);
     });
@@ -319,13 +564,23 @@ function buildQuestionCard(q, idx, mode, onAnswered){
       input.disabled = true;
       btn.disabled = true;
       showFeedback(feedback, isCorrect, q.explanation, isCorrect ? null : q.acceptable[0], q.ref);
-      onAnswered(isCorrect);
+      onAnswered(isCorrect, input.value);
     });
     card.appendChild(input);
     card.appendChild(btn);
   }
 
   card.appendChild(feedback);
+  // بتعيد إجابة محفوظة (لما الطالب يرجع يكمّل محاولتو)
+  card.__answer = v => {
+    if(q.type === "fill"){
+      const inp = card.querySelector(".fill-input"), b = card.querySelector(".check-btn");
+      if(inp && b){ inp.value = v; b.click(); }
+    } else {
+      const o = card.querySelectorAll(".opt-list > .opt")[v];
+      if(o) o.click();
+    }
+  };
   return card;
 }
 
@@ -344,14 +599,23 @@ function renderResult(container, r){
   container.innerHTML = "";
   const card = document.createElement("div");
   card.className = "result-card";
+  const hasNext = !!r.nextUrl && r.nextUrl !== "#";
+  const toFinal = hasNext && /final-exam/.test(r.nextUrl);
+  const opened = hasNext ? (toFinal ? "وصلت للفحص النهائي الشامل. " : "انفتحلك الفصل اللي بعدو. ") : "";
+  const again = "وإذا عدت المحاولة <b>بتطلعلك أسئلة جديدة</b> غير اللي امتحنت فيها.";
+  const note = r.passed
+    ? opened + "فيك تعيد الامتحان وقت ما بدك للمراجعة، " + again
+    : opened + "وإذا بدك <b>تتقن</b> الفصل جرّب توصل لـ<b>90%</b>، " + again;
+  const nextLabel = !r.nextUrl || r.nextUrl === "#" ? "قريباً: الفصل التالي" : toFinal ? "روح عالفحص النهائي" : "روح عالفصل التالي";
   card.innerHTML = `
-    <div class="result-stamp ${r.passed ? "pass" : "fail"}">${r.scorePercent}%</div>
-    <h2>${r.passed ? "مبروك، فتحت الفصل يلي بعدو! 🎉" : "قريب... بس لسا مو كفاية"}</h2>
-    <p>جاوبت صح على ${r.correctCount} من ${r.total} (المطلوب 90% فأكثر) — هاي محاولتك رقم ${r.attempts}، أفضل نتيجة إلك: ${r.bestScore}%</p>
+    <div class="result-stamp ${r.passed ? "pass" : ""}"${r.passed ? "" : ' style="background:linear-gradient(135deg,#FF9F1C,#F4C04E); box-shadow:0 12px 30px -8px rgba(255,159,28,.5);"'}>${r.scorePercent}%</div>
+    <h2>${r.passed ? "ممتاز، أتقنت الفصل! 🎉" : "خلّصت الفصل ✔️"}</h2>
+    <p>جاوبت صح على ${r.correctCount} من ${r.total} — هاي محاولتك رقم ${r.attempts}، وأفضل نتيجة إلك: ${r.bestScore}%</p>
+    <p style="font-size:.92rem;">${note}</p>
     <div class="cta-row" style="justify-content:center; display:flex; gap:14px; flex-wrap:wrap;">
-      <button class="btn btn-teal" id="retake-btn">أعد الامتحان</button>
-      ${r.passed ? `<a class="btn btn-primary" href="${r.nextUrl}">${r.nextUrl === "#" ? "قريباً: الفصل التالي" : "روح عالفصل التالي"}</a>` : ""}
-      <a class="btn btn-ghost" href="index.html">رجوع لخارطة المقرر</a>
+      ${r.nextUrl ? `<a class="btn btn-primary" href="${r.nextUrl}">${nextLabel}</a>` : ""}
+      <button class="btn btn-teal" id="retake-btn">🔄 أعد المحاولة بأسئلة جديدة</button>
+      <a class="btn btn-ghost" href="${window.SITE_PREFIX || ""}index.html">رجوع لخارطة المقرر</a>
     </div>
   `;
   container.appendChild(card);
@@ -522,10 +786,11 @@ function renderChapterGrid(gridId, chapters){
   let doneCount = 0;
   grid.innerHTML = chapters.map(ch => {
     const state = ch.active ? getChapterState(ch.key) : null;
-    if(state && state.passed) doneCount++;
+    const tried = !!(state && state.attempts > 0), mastered = !!(state && state.passed);
+    if(tried || mastered) doneCount++;
     const locked = !ch.active;
-    const stampClass = locked ? "locked" : (state && state.passed ? "done" : "open");
-    const stampLabel = locked ? "🔒 مقفول" : (state && state.passed ? "✓ مكتمل" : "متاح الآن");
+    const stampClass = locked ? "locked" : ((tried || mastered) ? "done" : "open");
+    const stampLabel = locked ? "🔒 مقفول" : (mastered ? "✅ متقن (90%+)" : tried ? "✔️ مكتمل" : "متاح الآن");
     const scoreLabel = (state && state.attempts > 0) ? `<span class="score-pill">أفضل نتيجة: ${state.bestScore}%</span>` : "";
     const cardTag = locked ? "div" : "a";
     const hrefAttr = locked ? "" : `href="${ch.href}"`;
@@ -561,7 +826,7 @@ function initSidebar(){
   if(typeof COURSE_CHAPTERS === "undefined") return;
   const prefix = window.SITE_PREFIX || "";
   const chapters = computeChapterUnlockStatus();
-  const doneCount = chapters.filter(c => c.passed).length;
+  const doneCount = chapters.filter(c => c.passed || c.attempted).length;
 
   const toggleBtn = document.createElement("button");
   toggleBtn.className = "sidebar-toggle";
@@ -583,7 +848,7 @@ function initSidebar(){
 
   const chapterItems = chapters.map(ch => {
     const locked = !ch.active;
-    const icon = ch.passed ? "✅" : (locked ? "🔒" : "▫️");
+    const icon = ch.passed ? "✅" : ch.attempted ? "🟡" : (locked ? "🔒" : "▫️");
     const cls = locked ? "sidebar-link locked" : "sidebar-link";
     const tag = locked ? "div" : "a";
     const hrefAttr = locked ? "" : `href="${prefix}${ch.href}"`;

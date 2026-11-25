@@ -202,3 +202,6 @@
   table.cmp{ display:block; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; font-size:.84rem; }
   table.cmp th, table.cmp td{ padding:7px 8px; min-width:72px; }
 }
+/* quick-reference: small drawing per situational factor */
+td.fx-pic{ width:170px; min-width:150px; vertical-align:middle; background:#fff !important; }
+td.fx-pic svg{ display:block; width:160px; height:auto; margin:auto; }

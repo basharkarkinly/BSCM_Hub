@@ -193,3 +193,12 @@
 .chapter-intro-box h4{ margin:0 0 10px; font-size:.95rem; color:var(--teal-dark); }
 .chapter-intro-box ul{ margin:0; padding-inline-start:20px; }
 .chapter-intro-box li{ margin-bottom:5px; font-size:.92rem; }
+
+/* سطر مثال توضيحي تحت الفكرة (الدروس) */
+.ex-line{ display:block; margin-top:8px; padding:6px 10px; border-radius:8px; background:#FFF6E6; color:#7A4E00; font-size:.86rem; font-weight:600; line-height:1.7; }
+.timeline p.ex-line{ margin-top:6px; }
+/* mobile: wide comparison tables scroll inside themselves instead of widening the page */
+@media (max-width:600px){
+  table.cmp{ display:block; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; font-size:.84rem; }
+  table.cmp th, table.cmp td{ padding:7px 8px; min-width:72px; }
+}

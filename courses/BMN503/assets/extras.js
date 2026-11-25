@@ -32,7 +32,7 @@ function renderSortGame(containerId, cfg){
         <div class="x-sort-btns">
           ${buckets.map(b => `<button data-k="${b.key}">${b.label}</button>`).join("")}
         </div>
-        <div class="x-sort-hint" id="${containerId}-hint">هاي الخاصية لأي نوع شركة؟</div>
+        <div class="x-sort-hint" id="${containerId}-hint">${cfg.hint || "هاي الخاصية لأي نوع شركة؟"}</div>
       </div>`;
     const card = document.getElementById(`${containerId}-card`);
     const hint = document.getElementById(`${containerId}-hint`);

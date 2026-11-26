@@ -347,20 +347,19 @@
 
   /* عدّاد التجربة (Trials.gs): رقم عشوائي للجهاز بس، بلا أي معلومة شخصية */
   var VID_KEY = "sc_vid", VID_DONE = "sc_vid_done";
-  function visitorId() {
-    var v = ""; try { v = localStorage.getItem(VID_KEY) || ""; } catch (e) {}
-    if (!/^v_[a-z0-9]{8,24}$/.test(v)) {
-      v = "v_" + (Date.now().toString(36) + Math.random().toString(36).slice(2, 10)).slice(0, 16);
-      try { localStorage.setItem(VID_KEY, v); } catch (e) {}
-    }
-    return v;
-  }
+  function visitorId() { return SCAuth.visitorId ? SCAuth.visitorId() : ""; }
+  // event: "home" (الصفحة الرئيسية) | "view" (فتح مادة) | "pass" (نجح بامتحان الفصل الأول)
   function trialPing(event) {
-    if (!window.SCAuth) return;
-    var c = coursePart(location); if (!c) return;
-    var once = "sc_tp_" + c.course + "_" + event;
+    if (!window.SCAuth || !SCAuth.visitorId) return;
+    var course = "";
+    if (event !== "home") { var c = coursePart(location); if (!c) return; course = c.course; }
+    var once = "sc_tp_" + (course || "HOME") + "_" + event;
     try { if (sessionStorage.getItem(once)) return; sessionStorage.setItem(once, "1"); } catch (e) {}
-    SCAuth.api("trialPing", { vid: visitorId(), course_id: c.course, event: event }).catch(function () {});
+    SCAuth.api("trialPing", { vid: visitorId(), course_id: course, event: event, ua: SCAuth.uaTag() }).catch(function () {});
+  }
+  function isHubHome() {
+    var here = location.href.split(/[?#]/)[0];
+    return !!HUB && (here === HUB || here === HUB + "index.html");
   }
   function trialConverted() {
     var v = "", done = "";
@@ -459,6 +458,7 @@
     document.body.classList.add("is-guest");
     document.body.classList.remove("guard");
     if (isTrialPage()) { watchCourseLinks(); trialPing("view"); markLockedForGuest(); }
+    else if (isHubHome()) trialPing("home");
     if (opts.guest) opts.guest();
   }
 

@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
 <style>.guard{visibility:hidden}</style>
 <link rel="stylesheet" href="../assets/style.css">
-<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="../assets/extras.css?v=20261126">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body class="guard">
@@ -72,11 +72,21 @@
         <h2><span class="idx">3</span> جمع المصفوفات وضربها بعدد</h2>
         <p><b>الجمع:</b> بشرط نفس المرتبة، منجمع كل عنصر مع مقابله. تبديلي وتجميعي، والحيادي \(O\)، ونظير \(X\) هو \(-X\).</p>
         <p><div class="sol"><div class="sol-step"><span class="sol-lbl"><b>الضرب بعدد:</b></span><div class="m">\(\alpha X\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">كل عنصر بينضرب بـ\(\alpha\)</div></div></p>
-        <details class="accordion">
-          <summary>✍️ مثال: \(3A-2B\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <p>\(A=\begin{bmatrix}1&2&0\\3&-1&4\end{bmatrix}\) و \(B=\begin{bmatrix}-1&1&1\\-2&3&5\end{bmatrix}\)</p>
-          <div class="sol"><div class="sol-step m">\(3A=\begin{bmatrix}3&6&0\\9&-3&12\end{bmatrix}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(2B=\begin{bmatrix}-2&2&2\\-4&6&10\end{bmatrix}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(3A-2B=\begin{bmatrix}5&4&-2\\13&-9&2\end{bmatrix}\)</div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال</span>
+<span class="sum-q">عندنا المصفوفتين التاليتين. <b>احسب \(3A-2B\)</b></span>
+<span class="sum-m">\(\displaystyle A=\begin{bmatrix}1&2&0\\3&-1&4\end{bmatrix}\)</span>
+<span class="sum-m">\(\displaystyle B=\begin{bmatrix}-1&1&1\\-2&3&5\end{bmatrix}\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منضرب كل عنصر بـ A بـ 3</div><div class="m">\(\displaystyle 3A=\begin{bmatrix}3&6&0\\9&-3&12\end{bmatrix}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منضرب كل عنصر بـ B بـ 2</div><div class="m">\(\displaystyle 2B=\begin{bmatrix}-2&2&2\\-4&6&10\end{bmatrix}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منطرح عنصر من عنصر بنفس المكان</div><div class="m">\(\displaystyle 3A-2B=\begin{bmatrix}3-(-2)&6-2&0-2\\9-(-4)&-3-6&12-10\end{bmatrix}\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle 3A-2B=\begin{bmatrix}5&4&-2\\13&-9&2\end{bmatrix}\)</div></div>
+</div></details>
       </div>
 
       <div class="block" id="mult">
@@ -86,10 +96,22 @@
           <p>عدد <b>أعمدة</b> الأولى = عدد <b>أسطر</b> التانية: \(X_{(m,n)}\cdot Y_{(n,p)}=Z_{(m,p)}\)</p>
         </div>
         <p>العنصر \(z_{ik}\) = السطر \(i\) من الأولى «ضرب» العمود \(k\) من التانية (عنصر بعنصر ومنجمع): \(z_{ik}=\sum_j x_{ij}\,y_{jk}\).</p>
-        <details class="accordion">
-          <summary>✍️ مثال: \(\begin{bmatrix}2&-1\\1&1\end{bmatrix}\cdot\begin{bmatrix}1&3\\0&2\end{bmatrix}\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step m">\(z_{11}=2(1)+(-1)(0)=2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(z_{12}=2(3)+(-1)(2)=4\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(z_{21}=1(1)+1(0)=1\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(z_{22}=1(3)+1(2)=5\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الناتج</span><div class="m">\(\begin{bmatrix}2&4\\1&5\end{bmatrix}\)</div></div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال</span>
+<span class="sum-q"><b>احسب جداء المصفوفتين التاليتين</b></span>
+<span class="sum-m">\(\displaystyle \begin{bmatrix}2&-1\\1&1\end{bmatrix}\cdot\begin{bmatrix}1&3\\0&2\end{bmatrix}\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>العنصر \(z_{11}\): السطر 1 من الأولى × العمود 1 من التانية</div><div class="m">\(\displaystyle z_{11}=2(1)+(-1)(0)=2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>العنصر \(z_{12}\): السطر 1 × العمود 2</div><div class="m">\(\displaystyle z_{12}=2(3)+(-1)(2)=4\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>العنصر \(z_{21}\): السطر 2 × العمود 1</div><div class="m">\(\displaystyle z_{21}=1(1)+1(0)=1\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>العنصر \(z_{22}\): السطر 2 × العمود 2</div><div class="m">\(\displaystyle z_{22}=1(3)+1(2)=5\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle \begin{bmatrix}2&4\\1&5\end{bmatrix}\)</div></div>
+</div></details>
         <table class="cmp" style="margin-top:10px;">
           <tr><th>خاصة</th><th>ملاحظة</th></tr>
           <tr><td>مو تبديلي</td><td>\(AB\ne BA\) عادةً (إلا مع \(I\) أو القطريات)</td></tr>

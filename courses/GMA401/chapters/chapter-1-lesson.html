@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
 <style>.guard{visibility:hidden}</style>
 <link rel="stylesheet" href="../assets/style.css">
-<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="../assets/extras.css?v=20261126">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body class="guard">
@@ -88,10 +88,32 @@
           <tr><td>\([a,\infty[\) · \(]-\infty,b]\)</td><td>\(x\ge a\) · \(x\le b\)</td><td>اللانهاية دايماً مفتوحة</td></tr>
         </table>
         <p style="margin-top:10px;"><b>مركز</b> المجال \(\alpha=\frac{a+b}{2}\) و<b>نصف قطره</b> \(\varepsilon=b-\alpha\). و<b>جوار</b> النقطة \(x_0\) مجال مفتوح مركزه \(x_0\): \(N_{x_0}=]x_0-\varepsilon,\ x_0+\varepsilon[\).</p>
-        <details class="accordion">
-          <summary>✍️ مثال محلول (تمارين الفصل): \(A=\{x\ge-2\}\)، \(B=\{x\lt4\}\)، \(C=\{-1\lt x\le5\}\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step">ارسم كل مجموعة على محور الأعداد</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl"><b>الاجتماع</b> \(\cup\) = كل نقطة موجودة بواحدة منهم على الأقل</span><div class="m">\(B\cup C=]-\infty,5]\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl"><b>التقاطع</b> \(\cap\) = الجزء المشترك بس</span><div class="m">\(B\cap C=]-1,4[\) · \(A\cap B=[-2,4[\) · \(A\cap C=]-1,5]\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">انتبه للأطراف: الطرف بيكون داخل التقاطع بس إذا كان داخل <b>المجالين</b> سوا</div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال محلول (تمارين الفصل)</span>
+<span class="sum-q">عندنا المجموعات التالية. <b>أوجد الاجتماع والتقاطع المطلوبين</b></span>
+<span class="sum-m">\(\displaystyle A=\{x\ge-2\}\)</span>
+<span class="sum-m">\(\displaystyle B=\{x\lt4\}\)</span>
+<span class="sum-m">\(\displaystyle C=\{-1\lt x\le5\}\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منكتب كل مجموعة كمجال، ومنرسمها على محور الأعداد</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>A: من \(-2\) (داخل) لـ \(+\infty\)</div><div class="m">\(\displaystyle A=\left[-2,+\infty\right[\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>B: كل الأعداد الأصغر من 4 (و 4 برّا)</div><div class="m">\(\displaystyle B=\left]-\infty,4\right[\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>C: أكبر من \(-1\) (برّا) لحد 5 (داخل)</div><div class="m">\(\displaystyle C=\left]-1,5\right]\)</div></div>
+<div class="sol-part">أ) الاجتماع \(\cup\): كل نقطة موجودة بواحدة منهم على الأقل</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>B بتغطي لحد 4، و C بتكمّل لحد 5</div><div class="m">\(\displaystyle B\cup C=\left]-\infty,5\right]\)</div></div>
+<div class="sol-part">ب) التقاطع \(\cap\): الجزء المشترك بس</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>المشترك بين B و C</div><div class="m">\(\displaystyle B\cap C=\left]-1,4\right[\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑦</span>المشترك بين A و B</div><div class="m">\(\displaystyle A\cap B=\left[-2,4\right[\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑧</span>المشترك بين A و C</div><div class="m">\(\displaystyle A\cap C=\left]-1,5\right]\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle \begin{aligned}B\cup C&=\left]-\infty,5\right]\\ B\cap C&=\left]-1,4\right[\\ A\cap B&=\left[-2,4\right[\\ A\cap C&=\left]-1,5\right]\end{aligned}\)</div><div class="sol-ans-txt">⚠️ انتبه للأطراف: الطرف بيكون داخل التقاطع بس إذا كان داخل <b>المجالين</b> سوا</div></div>
+</div></details>
         <div class="example">
           <span class="tag">⚠️ فخ امتحان</span>
           <p>\(]a,b]\) ما بتشمل \(a\)، بتشمل \(b\). والجوار دايماً مجال <b>مفتوح</b>.</p>
@@ -107,10 +129,40 @@
           <div class="quick-card"><b>🔺 متراجحة المثلث</b>\(|x+y|\le|x|+|y|\) · \(|x-y|\ge|x|-|y|\) · \(\big||x|-|y|\big|\le|x-y|\)</div>
           <div class="quick-card"><b>✖️ الجداء والقسمة</b>\(|x\cdot y|=|x|\cdot|y|\) · \(\left|\frac xy\right|=\frac{|x|}{|y|}\) · \(|x^n|=|x|^n\)</div>
         </div>
-        <details class="accordion">
-          <summary>✍️ مثال محلول: \(|1-\sqrt2|\) و \(|2x-3|\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step m">\(\sqrt2\approx1.41\gt1\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(1-\sqrt2\lt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">منضربه بـ\(-1\)</span><div class="m">\(|1-\sqrt2|=\sqrt2-1\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">\(|2x-3|=2x-3\) إذا \(x\gt\frac32\) · \(=3-2x\) إذا \(x\lt\frac32\) · \(=0\) إذا \(x=\frac32\)</div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال محلول (1)</span>
+<span class="sum-q"><b>اكتب العبارة التالية بدون إشارة القيمة المطلقة</b></span>
+<span class="sum-m">\(\displaystyle |1-\sqrt2|\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منشوف إشارة اللي جوّا القيمة المطلقة: منقارن \(\sqrt2\) مع 1</div><div class="m">\(\displaystyle \sqrt2\approx1.41\gt1\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>يعني اللي جوّا سالب، لأنو 1 أصغر من \(\sqrt2\)</div><div class="m">\(\displaystyle 1-\sqrt2\lt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>اللي جوّا سالب ← منضربه بـ \((-1)\) لنشيل القيمة المطلقة</div><div class="m">\(\displaystyle |1-\sqrt2|=-(1-\sqrt2)\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منفك القوس</div><div class="m">\(\displaystyle |1-\sqrt2|=\sqrt2-1\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle |1-\sqrt2|=\sqrt2-1\)</div></div>
+</div></details>
+<details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال محلول (2)</span>
+<span class="sum-q"><b>اكتب العبارة التالية بدون إشارة القيمة المطلقة، حسب قيم \(x\)</b></span>
+<span class="sum-m">\(\displaystyle |2x-3|\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>أول شي منلاقي القيمة اللي بتصفّر اللي جوّا</div><div class="m">\(\displaystyle 2x-3=0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>يعني اللي جوّا بيصير صفر عند</div><div class="m">\(\displaystyle x=\frac32\)</div></div>
+<div class="sol-part">الحالة الأولى: \(x\) أكبر من \(\frac32\)</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>هون اللي جوّا موجب، فمنتركه متل ما هو</div><div class="m">\(\displaystyle x\gt\frac32\ \Rightarrow\ |2x-3|=2x-3\)</div></div>
+<div class="sol-part">الحالة التانية: \(x\) أصغر من \(\frac32\)</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>هون اللي جوّا سالب، فمنضربه بـ \((-1)\)</div><div class="m">\(\displaystyle x\lt\frac32\ \Rightarrow\ |2x-3|=-(2x-3)=3-2x\)</div></div>
+<div class="sol-part">الحالة التالتة: \(x\) بيساوي \(\frac32\)</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>اللي جوّا صفر</div><div class="m">\(\displaystyle x=\frac32\ \Rightarrow\ |2x-3|=0\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle |2x-3|=\begin{cases}2x-3 & x\gt\frac32\\[4pt] 3-2x & x\lt\frac32\\[4pt] 0 & x=\frac32\end{cases}\)</div></div>
+</div></details>
         <div class="example">
           <span class="tag">⚠️ فخ امتحان</span>
           <p>القيمة المطلقة <b>ما بتكون سالبة أبداً</b>. و \(|x+y|\) مو دايماً \(=|x|+|y|\): \(|-8+3|=5\) بس \(|-8|+|3|=11\).</p>
@@ -148,10 +200,34 @@
           <span class="tag">💡 الجذور الجبرية</span>
           <p>دليل <b>زوجي</b>: العدد الموجب إله جذرين متناظرين، والسالب <b>ما إله جذر حقيقي</b>. دليل <b>فردي</b>: جذر وحيد بنفس الإشارة: \(\sqrt[3]{-8}=-2\). و \(\sqrt[n]{0}=0\) دايماً.</p>
         </div>
-        <details class="accordion">
-          <summary>✍️ مثال محلول (تمارين الفصل): \(3\sqrt[3]{16}\) و \(\sqrt[3]2\cdot\sqrt[3]{32}\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step m">\(16=2^3\cdot2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\sqrt[3]{16}=2\sqrt[3]2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(3\sqrt[3]{16}=6\sqrt[3]2\)</div><div class="sol-arrow">⬇</div><div class="sol-step">\(\sqrt[3]2\cdot\sqrt[3]{32}=\sqrt[3]{64}=4\) لأن \(4^3=64\)</div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال محلول (تمارين الفصل)</span>
+<span class="sum-q"><b>بسّط العبارة التالية</b></span>
+<span class="sum-m">\(\displaystyle 3\sqrt[3]{16}\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منفكك 16 لمكعّب كامل ضرب الباقي، لأنو \(2^3=8\)</div><div class="m">\(\displaystyle 16=2^3\cdot2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>المكعّب الكامل بيطلع برّا الجذر التكعيبي</div><div class="m">\(\displaystyle \sqrt[3]{16}=\sqrt[3]{2^3}\cdot\sqrt[3]2=2\sqrt[3]2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منضرب بالـ 3 اللي برّا</div><div class="m">\(\displaystyle 3\sqrt[3]{16}=3\cdot2\sqrt[3]2=6\sqrt[3]2\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle 3\sqrt[3]{16}=6\sqrt[3]2\)</div></div>
+</div></details>
+<details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال محلول (تمارين الفصل)</span>
+<span class="sum-q"><b>احسب الجداء التالي</b></span>
+<span class="sum-m">\(\displaystyle \sqrt[3]2\cdot\sqrt[3]{32}\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>الجذرين من نفس الدليل (3)، فمنجمعهم تحت جذر واحد</div><div class="m">\(\displaystyle \sqrt[3]2\cdot\sqrt[3]{32}=\sqrt[3]{2\times32}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منضرب اللي جوّا</div><div class="m">\(\displaystyle \sqrt[3]{64}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>64 مكعّب كامل</div><div class="m">\(\displaystyle 4^3=64\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle \sqrt[3]2\cdot\sqrt[3]{32}=4\)</div></div>
+</div></details>
         <div class="example">
           <span class="tag">⚠️ فخ امتحان</span>
           <p>\(\sqrt{100}=10\) مو \(\pm10\) — الجذر الحسابي موجب حسب المقرر. و \(\sqrt{x}\cdot\sqrt{y}\ne\sqrt{x+y}\).</p>
@@ -169,11 +245,24 @@
           <tr><td>\(\log_a x^n=n\log_a x\) · \(\log_a\sqrt[n]x=\frac1n\log_a x\)</td><td>\(2\log5=\log25\)</td></tr>
           <tr><td>\(\log_a b=\frac{1}{\log_b a}\) · \(\log_{a^m}x^n=\frac nm\log_a x\)</td><td>\(\log_4 8=\log_{2^2}2^3=\frac32\)</td></tr>
         </table>
-        <details class="accordion">
-          <summary>✍️ مثال المقرر (14-1): فائدة مركّبة <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <p>512 ل.س بفائدة 3% سنوياً، بعد كم سنة بتصير 650؟ القانون \(S_n=S(1+i)^n\):</p>
-          <div class="sol"><div class="sol-step m">\(512(1.03)^n=650\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\((1.03)^n=\frac{325}{256}\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">ناخد لوغاريتم الطرفين</span><div class="m">\(n\log1.03=\log\frac{325}{256}\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">\(n=\frac{\log(325/256)}{\log1.03}\approx8\) سنوات</div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال المقرر (14-1): فائدة مركّبة</span>
+<span class="sum-q">مبلغ 512 ل.س بفائدة مركّبة 3% سنوياً. <b>بعد كم سنة بيصير 650 ل.س؟</b></span>
+<span class="sum-m">\(\displaystyle S_n=S(1+i)^n\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منعوّض بالقانون: \(S=512\) ، \(i=0.03\) ، \(S_n=650\)</div><div class="m">\(\displaystyle 512(1.03)^n=650\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منقسم الطرفين على 512</div><div class="m">\(\displaystyle (1.03)^n=\frac{650}{512}=\frac{325}{256}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>المجهول بالأس ← ناخد لوغاريتم الطرفين</div><div class="m">\(\displaystyle \log(1.03)^n=\log\frac{325}{256}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>الأس بينزل ضرب قدّام اللوغاريتم</div><div class="m">\(\displaystyle n\log1.03=\log\frac{325}{256}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منقسم على \(\log1.03\)</div><div class="m">\(\displaystyle n=\frac{\log(325/256)}{\log1.03}\approx8\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle n\approx8\)</div><div class="sol-ans-txt">يعني تقريباً بعد 8 سنوات</div></div>
+</div></details>
       </div>
 
       <div id="case-study-mount"></div>

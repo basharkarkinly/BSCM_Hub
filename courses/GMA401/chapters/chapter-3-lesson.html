@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
 <style>.guard{visibility:hidden}</style>
 <link rel="stylesheet" href="../assets/style.css">
-<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="../assets/extras.css?v=20261126">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body class="guard">
@@ -62,14 +62,40 @@
       <div class="block" id="deg1">
         <h2><span class="idx">2</span> المتراجحات ذات المجهول الواحد</h2>
         <p><b>درجة أولى:</b> متل المعادلة، وإذا قسمت على سالب اعكس. <b>درجة تانية:</b> اوجد الجذور بالمميز، وبعدين جدول الإشارة: برّا الجذرين متل \(a\)، بينهم عكس \(a\).</p>
-        <details class="accordion">
-          <summary>✍️ مثال المقرر (1-3): \(2x+3\lt9-x\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step m">\(2x+x\lt9-3\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(3x\lt6\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x\lt2\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الحل</span><div class="m">\(x\in]-\infty,2[\)</div></div></div>
-        </details>
-        <details class="accordion">
-          <summary>✍️ مثال المقرر (2-3): \(x^2\gt2x+3\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step m">\(x^2-2x-3\gt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\((x+1)(x-3)\gt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step">الجذور: \(-1\) و \(3\)</div><div class="sol-arrow">⬇</div><div class="sol-step">\(a=1\gt0\): موجب برّا الجذرين</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الحل</span><div class="m">\(]-\infty,-1[\,\cup\,]3,\infty[\)</div></div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال المقرر (1-3)</span>
+<span class="sum-q"><b>حل المتراجحة التالية</b></span>
+<span class="sum-m">\(\displaystyle 2x+3\lt9-x\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منجمّع حدود \(x\) بطرف والأعداد بالطرف التاني (اللي بينقل بتتغير إشارته)</div><div class="m">\(\displaystyle 2x+x\lt9-3\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منجمع</div><div class="m">\(\displaystyle 3x\lt6\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منقسم على 3 (عدد موجب ← اتجاه المتراجحة ما بيتغير)</div><div class="m">\(\displaystyle x\lt2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>يعني \(x\) أصغر من 2، ومنكتبها كمجال (2 برّا)</div><div class="m">\(\displaystyle x\in\left]-\infty,2\right[\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x\in\left]-\infty,2\right[\)</div></div>
+</div></details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال المقرر (2-3)</span>
+<span class="sum-q"><b>حل المتراجحة التالية</b></span>
+<span class="sum-m">\(\displaystyle x^2\gt2x+3\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منجيب كل شي لطرف واحد ليصير الطرف التاني صفر</div><div class="m">\(\displaystyle x^2-2x-3\gt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منحلل: عددين جداؤهم \(-3\) ومجموعهم \(-2\)</div><div class="m">\(\displaystyle (x+1)(x-3)\gt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>الجذور</div><div class="m">\(\displaystyle x=-1\qquad x=3\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>أمثال \(x^2\) موجب ← العبارة موجبة <b>برّا</b> الجذرين</div><div class="m">\(\displaystyle a=1\gt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>بدنا الموجب (أكبر من صفر)، يعني قبل \(-1\) أو بعد 3</div><div class="m">\(\displaystyle x\lt-1\quad\text{أو}\quad x\gt3\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x\in\left]-\infty,-1\right[\cup\left]3,+\infty\right[\)</div></div>
+</div></details>
         <table class="cmp" style="margin-top:10px;">
           <tr><th>\(x\)</th><th>\(-\infty\)</th><th>\(-1\)</th><th>\(3\)</th><th>\(+\infty\)</th></tr>
           <tr><td>\(x+1\)</td><td>\(-\)</td><td>\(+\)</td><td>\(+\)</td><td></td></tr>
@@ -82,19 +108,53 @@
       <div class="block" id="double">
         <h2><span class="idx">3</span> المتراجحات المضاعفة (المزدوجة)</h2>
         <p><div class="sol"><div class="sol-step">\(a\lt f(x)\lt b\iff a\lt f(x)\) و \(f(x)\lt b\)</div><div class="sol-arrow">⬇</div><div class="sol-step">منحل كل وحدة</div><div class="sol-arrow">⬇</div><div class="sol-step">\(I_1\) و \(I_2\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الحل</span><div class="m">\(I=I_1\cap I_2\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">وإذا \(I=\varnothing\) فالمتراجحة <b>مستحيلة الحل</b></div></div></p>
-        <details class="accordion">
-          <summary>✍️ مثال المقرر (5-3): \(-2+3x\lt7x\lt x+2\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step m">\(-2+3x\lt7x\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(4x\gt-2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x\gt-\frac12\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(7x\lt x+2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(6x\lt2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x\lt\frac13\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">التقاطع</span><div class="m">\(]-\frac12,\frac13[\)</div></div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال المقرر (5-3)</span>
+<span class="sum-q"><b>حل المتراجحة المضاعفة التالية</b></span>
+<span class="sum-m">\(\displaystyle -2+3x\lt7x\lt x+2\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منفصلها لمتراجحتين ومنحل كل وحدة لحالها</div></div>
+<div class="sol-part">المتراجحة الأولى</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>الطرف الأيسر مع الأوسط</div><div class="m">\(\displaystyle -2+3x\lt7x\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منجمّع \(x\) بطرف</div><div class="m">\(\displaystyle -2\lt4x\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منقسم على 4. يعني \(x\) أكبر من \(-\frac12\)</div><div class="m">\(\displaystyle x\gt-\frac12\)</div></div>
+<div class="sol-part">المتراجحة التانية</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>الأوسط مع الطرف الأيمن</div><div class="m">\(\displaystyle 7x\lt x+2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>منجمّع \(x\) بطرف</div><div class="m">\(\displaystyle 6x\lt2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑦</span>منقسم على 6. يعني \(x\) أصغر من \(\frac13\)</div><div class="m">\(\displaystyle x\lt\frac13\)</div></div>
+<div class="sol-part">الحل المشترك</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑧</span>لازم يتحققوا الاتنين سوا ← تقاطع المجالين</div><div class="m">\(\displaystyle -\frac12\lt x\lt\frac13\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x\in\left]-\frac12,\frac13\right[\)</div></div>
+</div></details>
       </div>
 
       <div class="block" id="product">
         <h2><span class="idx">4</span> المتراجحات ذات الجداء والكسرية</h2>
         <p>حلّل كل حد لعوامل من الدرجة الأولى، وحط <b>كل الجذور</b> (البسط والمقام) بجدول إشارة واحد، واستثنِ أصفار المقام. ما تضرب بالمقام إذا إشارته مجهولة.</p>
-        <details class="accordion">
-          <summary>✍️ مثال المقرر (12-3): \(\frac{2x+3}{x-1}\lt2\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step m">\(\frac{2x+3}{x-1}-2\lt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\frac{2x+3-2x+2}{x-1}\lt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\frac{5}{x-1}\lt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">البسط موجب، فلازم</span><div class="m">\(x-1\lt0\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الحل</span><div class="m">\(x\in]-\infty,1[\)</div></div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال المقرر (12-3)</span>
+<span class="sum-q"><b>حل المتراجحة التالية</b></span>
+<span class="sum-m">\(\displaystyle \frac{2x+3}{x-1}\lt2\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>ما منضرب بالمقام لأنو ما منعرف إشارته. منجيب الـ 2 للطرف الأيسر</div><div class="m">\(\displaystyle \frac{2x+3}{x-1}-2\lt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منوحّد المقامات</div><div class="m">\(\displaystyle \frac{2x+3-2(x-1)}{x-1}\lt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منفك القوس ومنبسّط البسط</div><div class="m">\(\displaystyle \frac{5}{x-1}\lt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>البسط 5 موجب، فالكسر بيكون سالب بس إذا المقام سالب</div><div class="m">\(\displaystyle x-1\lt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>يعني \(x\) أصغر من 1</div><div class="m">\(\displaystyle x\lt1\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x\in\left]-\infty,1\right[\)</div></div>
+</div></details>
       </div>
 
       <div class="block" id="twovar">
@@ -109,42 +169,128 @@
       <div class="block" id="radical">
         <h2><span class="idx">6</span> المعادلات الجذرية (الصماء)</h2>
         <p>المجهول تحت إشارة الجذر. منربّع (ممكن مرتين) لنتخلص من الجذور، ومنحل. <b>إلزامي</b> نتحقق من كل جذر بالتعويض بالمعادلة الأصلية، لأن التربيع ممكن يعطي جذور غريبة.</p>
-        <details class="accordion">
-          <summary>✍️ مثال: \(\sqrt{x^2-3x}=2\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step"><span class="sol-lbl">نربّع</span><div class="m">\(x^2-3x=4\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x^2-3x-4=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\((x-4)(x+1)=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">تحقق \(x=4\)</span><div class="m">\(\sqrt{16-12}=2\) ✓</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">تحقق \(x=-1\)</span><div class="m">\(\sqrt{1+3}=2\) ✓</div></div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الحل</span><div class="m">\(\{-1,\ 4\}\)</div></div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال</span>
+<span class="sum-q"><b>حل المعادلة التالية</b></span>
+<span class="sum-m">\(\displaystyle \sqrt{x^2-3x}=2\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منربّع الطرفين لنشيل الجذر</div><div class="m">\(\displaystyle x^2-3x=4\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منجيب كل شي لطرف واحد</div><div class="m">\(\displaystyle x^2-3x-4=0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منحلل: عددين جداؤهم \(-4\) ومجموعهم \(-3\)</div><div class="m">\(\displaystyle (x-4)(x+1)=0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>الحلول المرشّحة</div><div class="m">\(\displaystyle x=4\qquad x=-1\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>بعد التربيع لازم نتحقق. منعوّض \(x=4\)</div><div class="m">\(\displaystyle \sqrt{16-12}=\sqrt4=2\ \checkmark\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>منعوّض \(x=-1\)</div><div class="m">\(\displaystyle \sqrt{1+3}=\sqrt4=2\ \checkmark\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x\in\{-1,\ 4\}\)</div></div>
+</div></details>
       </div>
 
       <div class="block" id="absq">
         <h2><span class="idx">7</span> معادلات القيمة المطلقة</h2>
         $$|A|=|B|\iff A=B\ \text{ or }\ A=-B\qquad\quad |A|=c\ (c\ge0)\iff A=\pm c$$
         <p>وإذا \(c\lt0\) ما في حل.</p>
-        <details class="accordion">
-          <summary>✍️ نموذج امتحاني: \(|5x+7|=|3x-5|\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step"><span class="sol-lbl">الحالة الأولى</span><div class="m">\(5x+7=3x-5\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(2x=-12\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x=-6\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الحالة التانية</span><div class="m">\(5x+7=-3x+5\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(8x=-2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x=-\frac14\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الحل</span><div class="m">\(\{-6,\ -\frac14\}\)</div></div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ نموذج امتحاني</span>
+<span class="sum-q"><b>حل المعادلة التالية</b></span>
+<span class="sum-m">\(\displaystyle |5x+7|=|3x-5|\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>قيمتين مطلقتين متساويتين ← يا اللي جوّا متساوي، يا واحد عكس التاني</div></div>
+<div class="sol-part">الحالة الأولى: متساويين</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منساوي اللي جوّا القيمتين المطلقتين مباشرة</div><div class="m">\(\displaystyle 5x+7=3x-5\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منجمّع \(x\) بطرف والأعداد بطرف</div><div class="m">\(\displaystyle 2x=-12\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منقسم على 2</div><div class="m">\(\displaystyle x=-6\)</div></div>
+<div class="sol-part">الحالة التانية: واحد عكس التاني</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منساوي الأولى بعكس التانية (منضرب التانية بـ \(-1\))</div><div class="m">\(\displaystyle 5x+7=-(3x-5)=-3x+5\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>منجمّع \(x\) بطرف والأعداد بطرف</div><div class="m">\(\displaystyle 8x=-2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑦</span>منقسم على 8</div><div class="m">\(\displaystyle x=-\frac14\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x\in\left\{-6,\ -\frac14\right\}\)</div></div>
+</div></details>
       </div>
 
       <div class="block" id="expq">
         <h2><span class="idx">8</span> المعادلات الأسية</h2>
         <p>المجهول بالأس. ثلاث طرق: <b>1)</b> وحّد الأساس وساوِ الأسس <b>2)</b> فرض \(t=e^x\gt0\) <b>3)</b> لوغاريتم الطرفين.</p>
-        <details class="accordion">
-          <summary>✍️ مثال المقرر (31-3): \(\frac{2^{4x+2}}{8^{3x+4}}=1\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step m">\(8=2^3\): \(8^{3x+4}=2^{9x+12}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(2^{4x+2}=2^{9x+12}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(4x+2=9x+12\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(-5x=10\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x=-2\)</div></div>
-        </details>
-        <details class="accordion">
-          <summary>✍️ مثال: \(e^{2x}-5e^x+4=0\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step"><span class="sol-lbl">نفرض \(t=e^x\gt0\)</span><div class="m">\(t^2-5t+4=0\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\((t-1)(t-4)=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(e^x=1\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(e^x=4\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x=\ln4\)</div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال المقرر (31-3)</span>
+<span class="sum-q"><b>حل المعادلة التالية</b></span>
+<span class="sum-m">\(\displaystyle \frac{2^{4x+2}}{8^{3x+4}}=1\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>كسر بيساوي 1 ← البسط بيساوي المقام</div><div class="m">\(\displaystyle 2^{4x+2}=8^{3x+4}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منكتب 8 كقوة للأساس 2</div><div class="m">\(\displaystyle 8=2^3\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>قوة لقوة ← الأسس بتنضرب</div><div class="m">\(\displaystyle 8^{3x+4}=2^{3(3x+4)}=2^{9x+12}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>صار الأساس نفسه بالطرفين</div><div class="m">\(\displaystyle 2^{4x+2}=2^{9x+12}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>الأساسات متساوية ← منساوي الأسس</div><div class="m">\(\displaystyle 4x+2=9x+12\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>منجمّع \(x\) بطرف والأعداد بطرف</div><div class="m">\(\displaystyle -5x=10\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑦</span>منقسم على \(-5\)</div><div class="m">\(\displaystyle x=-2\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x=-2\)</div></div>
+</div></details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال</span>
+<span class="sum-q"><b>حل المعادلة التالية</b></span>
+<span class="sum-m">\(\displaystyle e^{2x}-5e^x+4=0\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>لاحظ إنو \(e^{2x}=(e^x)^2\). منفرض متغير جديد (وهو دايماً موجب)</div><div class="m">\(\displaystyle t=e^x\gt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>المعادلة بتصير تربيعية بـ \(t\)</div><div class="m">\(\displaystyle t^2-5t+4=0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منحلل: عددين جداؤهم 4 ومجموعهم \(-5\)</div><div class="m">\(\displaystyle (t-1)(t-4)=0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>الحلول بـ \(t\) (الاتنين موجبين فمقبولين)</div><div class="m">\(\displaystyle t=1\qquad t=4\)</div></div>
+<div class="sol-part">منرجع لـ \(x\)</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>أول حل</div><div class="m">\(\displaystyle e^x=1\ \Rightarrow\ x=\ln1=0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>تاني حل</div><div class="m">\(\displaystyle e^x=4\ \Rightarrow\ x=\ln4\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x=0\qquad x=\ln4\)</div></div>
+</div></details>
       </div>
 
       <div class="block" id="logq">
         <h2><span class="idx">9</span> المعادلات اللوغاريتمية</h2>
         <p><b>أول شي الشرط:</b> كل مضمون لوغاريتم \(\gt0\). بعدين اجمع اللوغاريتمات بالخواص وساوِ المضامين، وارفض أي جذر برّا الشرط.</p>
-        <details class="accordion">
-          <summary>✍️ مثال المقرر (34-3): \(2\log x=\log(7x+8)\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step"><span class="sol-lbl">الشرط</span><div class="m">\(x\gt0\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\log x^2=\log(7x+8)\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x^2-7x-8=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\((x-8)(x+1)=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step">\(x=8\) مقبول · \(x=-1\) مرفوض</div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال المقرر (34-3)</span>
+<span class="sum-q"><b>حل المعادلة التالية</b></span>
+<span class="sum-m">\(\displaystyle 2\log x=\log(7x+8)\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>شرط اللوغاريتم: اللي جوّا لازم يكون موجب</div><div class="m">\(\displaystyle x\gt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>الـ 2 اللي قدّام بتطلع أس</div><div class="m">\(\displaystyle \log x^2=\log(7x+8)\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>لوغاريتمين متساويين ← اللي جوّاتهم متساوي</div><div class="m">\(\displaystyle x^2=7x+8\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منجيب كل شي لطرف واحد</div><div class="m">\(\displaystyle x^2-7x-8=0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منحلل: عددين جداؤهم \(-8\) ومجموعهم \(-7\)</div><div class="m">\(\displaystyle (x-8)(x+1)=0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>منتحقق من الشرط \(x\gt0\): الـ 8 مقبول</div><div class="m">\(\displaystyle x=8\ \checkmark\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑦</span>والـ \(-1\) سالب ← مرفوض</div><div class="m">\(\displaystyle x=-1\ \times\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x=8\)</div></div>
+</div></details>
         <div class="example">
           <span class="tag">⚠️ فخ امتحان</span>
           <p><div class="sol"><div class="sol-step">إذا كل الجذور طلعت برّا الشرط (متل \(2\ln x=\ln(x+4)+\ln(2x)\)) فالمعادلة <b>ما إلها حل</b></div><div class="sol-arrow">⬇</div><div class="sol-step">دوّر على «غير ذلك»</div></div></p>

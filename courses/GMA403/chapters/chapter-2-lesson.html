@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
 <style>.guard{visibility:hidden}</style>
 <link rel="stylesheet" href="../assets/style.css">
-<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="../assets/extras.css?v=20261126">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body class="guard">
@@ -26,21 +26,137 @@
 <div class="chapter-intro-box"><h4>🔑 كلمات مفتاحية</h4><div><span class="keyword-chip">Linear function</span><span class="keyword-chip">Slope</span><span class="keyword-chip">Quadratic</span><span class="keyword-chip">Discriminant</span><span class="keyword-chip">Profit</span><span class="keyword-chip">Supply & Demand</span><span class="keyword-chip">Equilibrium</span><span class="keyword-chip">MPC / MPS</span></div><h4 style="margin-top:14px;">🎯 بعد هالفصل لازم تقدر:</h4><ul><li>تحسب ميل مستقيم وتدرس إشارة تابع من الدرجة الأولى والثانية</li><li>تحل جملة معادلتين خطيتين بالحذف أو التعويض</li><li>تكتب توابع التكاليف والإيرادات والربح وتعرف <b>متى المعمل رابح</b></li><li>تحسب <b>سعر وكمية التوازن</b> بمساواة العرض بالطلب</li><li>تحسب <b>الدخل التوازني</b> والنزعة الحدية للاستهلاك والادخار</li></ul></div>
 <div class="block" id="linear"><h2><span class="idx">1</span> تابع الدرجة الأولى: الميل والإشارة</h2>
 <p>الشكل العام \(y=ax+b\): خطه البياني <b>مستقيم دايماً</b>، ميله \(a\)، وجذره \(x=-\frac ba\). ومنرسمه بنقطتين.</p>
-<table class="cmp"><tr><th>الإشارة</th><th>قبل الجذر \(-\frac ba\)</th><th>بعد الجذر</th></tr><tr><td>\(y=ax+b\)</td><td>عكس إشارة \(a\)</td><td>نفس إشارة \(a\)</td></tr></table><details class="accordion"><summary>✍️ سؤال دورات: ميل المستقيم \(2y=4x-10\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(2y=4x-10\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">نقسم على 2</span><div class="m">\(y=2x-5\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">الميل \(a=2\)</div></div></details><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>الميل مو 4: لازم أول شي نخلي \(y\) لحالها.</p></div></div>
-<div class="block" id="systems"><h2><span class="idx">2</span> حل جملة معادلتين خطيتين</h2><div class="quick-grid"><div class="quick-card"><b>بيانياً</b>نرسم المستقيمين (نقطتين لكل واحد)، و<strong>نقطة التقاطع</strong> هي الحل المشترك.</div><div class="quick-card"><b>جبرياً</b>بالحذف (نضرب ونجمع/نطرح) أو بالتعويض (مجهول بدلالة التاني).</div></div><details class="accordion"><summary>✍️ \(y=x\) و \(y=6x-10\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(x=6x-10\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(5x=10\)</div><div class="sol-arrow">⬇</div><div class="sol-step">\(x=2\) ، \(y=2\)</div></div></details></div>
+<table class="cmp"><tr><th>الإشارة</th><th>قبل الجذر \(-\frac ba\)</th><th>بعد الجذر</th></tr><tr><td>\(y=ax+b\)</td><td>عكس إشارة \(a\)</td><td>نفس إشارة \(a\)</td></tr></table><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ سؤال دورات</span>
+<span class="sum-q"><b>شو ميل المستقيم التالي؟</b></span>
+<span class="sum-m">\(\displaystyle 2y=4x-10\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>لازم أول شي نخلي \(y\) لحالها: منقسم الطرفين على 2</div><div class="m">\(\displaystyle y=2x-5\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>صارت بالشكل \(y=ax+b\)، والميل هو أمثال \(x\)</div><div class="m">\(\displaystyle a=2\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle a=2\)</div><div class="sol-ans-txt">مو 4! لازم نخلي \(y\) لحالها أول شي</div></div>
+</div></details><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>الميل مو 4: لازم أول شي نخلي \(y\) لحالها.</p></div></div>
+<div class="block" id="systems"><h2><span class="idx">2</span> حل جملة معادلتين خطيتين</h2><div class="quick-grid"><div class="quick-card"><b>بيانياً</b>نرسم المستقيمين (نقطتين لكل واحد)، و<strong>نقطة التقاطع</strong> هي الحل المشترك.</div><div class="quick-card"><b>جبرياً</b>بالحذف (نضرب ونجمع/نطرح) أو بالتعويض (مجهول بدلالة التاني).</div></div><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ تمرين</span>
+<span class="sum-q"><b>أوجد نقطة تقاطع المستقيمين التاليين</b></span>
+<span class="sum-m">\(\displaystyle y=x\)</span>
+<span class="sum-m">\(\displaystyle y=6x-10\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>بنقطة التقاطع الـ \(y\) نفسها، فمنساوي الطرفين</div><div class="m">\(\displaystyle x=6x-10\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منجمّع \(x\) بطرف والأعداد بطرف</div><div class="m">\(\displaystyle 10=5x\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منقسم على 5</div><div class="m">\(\displaystyle x=2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منعوّض بالأولى لنلاقي \(y\)</div><div class="m">\(\displaystyle y=x=2\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle (x,y)=(2,\,2)\)</div></div>
+</div></details></div>
 <div class="block" id="quadratic"><h2><span class="idx">3</span> تابع الدرجة الثانية والمميز</h2>
 <p>\(ax^2+bx+c=0\): إذا أمثال \(x^2\) مو 1 منحسب المميز \(\Delta=b^2-4ac\)، وإذا 1 فينا نحلل مباشرة (عددين جداؤهم \(c\) ومجموعهم \(b\)).</p>
 <table class="cmp"><tr><th>\(\Delta\)</th><th>الحلول</th></tr><tr><td>\(\Delta\gt0\)</td><td>حلّين \(x=\frac{-b\pm\sqrt\Delta}{2a}\)</td></tr><tr><td>\(\Delta=0\)</td><td>حل وحيد (مضاعف)</td></tr><tr><td>\(\Delta\lt0\)</td><td><b>ما في حلول حقيقية</b> (مستحيلة)</td></tr></table>
 <p style="margin-top:10px"><b>الإشارة:</b> برّا الجذرين متل إشارة \(a\)، وبينهم عكسها. وإذا \(\Delta\lt0\) الإشارة دايماً متل \(a\) (مثلاً \(x^2+8\) دوماً موجبة).</p>
-<details class="accordion"><summary>✍️ سؤال دورات: حلول \(3x^2-27=0\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(3x^2=27\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x^2=9\)</div><div class="sol-arrow">⬇</div><div class="sol-step">\(x=+3\) أو \(x=-3\)</div></div></details></div>
-<div class="block" id="cost"><h2><span class="idx">4</span> الإيرادات والتكاليف والربح</h2><table class="cmp"><tr><th>التابع</th><th>القانون</th></tr><tr><td>التكاليف الكلية</td><td>\(C(x)=F_c+V(x)\) (ثابتة <b>+</b> متغيرة)</td></tr><tr><td>الإيرادات (الدخل الكلي)</td><td>\(R(x)=P(x)\cdot x\) (السعر × الكمية)</td></tr><tr><td>تابع الطلب = تابع السعر</td><td>\(D(x)=P(x)\)</td></tr><tr><td>الربح</td><td>\(F(x)=R(x)-C(x)\)</td></tr></table><div class="quick-grid"><div class="quick-card"><b>متى المعمل رابح؟</b>\(F(x)\gt0\): نحل بالمميز وندرس الإشارة</div><div class="quick-card"><b>متى الربح أعظمي؟</b>\(F'(x)=0\) ونتأكد \(F''\lt0\)</div></div><details class="accordion"><summary>✍️ مثال الملخص: \(P(x)=50-0.3x\) و \(C(x)=2.3x^2+4x+60\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(R(x)=(50-0.3x)x=50x-0.3x^2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(F(x)=R-C=-2.6x^2+46x-60\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">جذور الربح</span><div class="m">\(x_1\approx1.42\) ، \(x_2\approx16.27\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(a\lt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step">موجب بين الجذرين</div><div class="sol-arrow">⬇</div><div class="sol-step">رابح لما \(x\in]1.42,\,16.27[\)</div></div></details><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>«التكاليف الكلية = الثابتة − المتغيرة» ← <b>خطأ</b>، الصح <b>+</b>.</p></div></div>
+<details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ سؤال دورات</span>
+<span class="sum-q"><b>أوجد حلول المعادلة التالية</b></span>
+<span class="sum-m">\(\displaystyle 3x^2-27=0\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منقل 27 للطرف التاني</div><div class="m">\(\displaystyle 3x^2=27\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منقسم على 3</div><div class="m">\(\displaystyle x^2=9\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>ناخد الجذر، وما ننسى الإشارتين</div><div class="m">\(\displaystyle x=\pm\sqrt9\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x=3\qquad x=-3\)</div></div>
+</div></details></div>
+<div class="block" id="cost"><h2><span class="idx">4</span> الإيرادات والتكاليف والربح</h2><table class="cmp"><tr><th>التابع</th><th>القانون</th></tr><tr><td>التكاليف الكلية</td><td>\(C(x)=F_c+V(x)\) (ثابتة <b>+</b> متغيرة)</td></tr><tr><td>الإيرادات (الدخل الكلي)</td><td>\(R(x)=P(x)\cdot x\) (السعر × الكمية)</td></tr><tr><td>تابع الطلب = تابع السعر</td><td>\(D(x)=P(x)\)</td></tr><tr><td>الربح</td><td>\(F(x)=R(x)-C(x)\)</td></tr></table><div class="quick-grid"><div class="quick-card"><b>متى المعمل رابح؟</b>\(F(x)\gt0\): نحل بالمميز وندرس الإشارة</div><div class="quick-card"><b>متى الربح أعظمي؟</b>\(F'(x)=0\) ونتأكد \(F''\lt0\)</div></div><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال الملخص</span>
+<span class="sum-q">تابع السعر وتابع التكاليف هنن التاليين. <b>متى المعمل رابح؟</b></span>
+<span class="sum-m">\(\displaystyle P(x)=50-0.3x\)</span>
+<span class="sum-m">\(\displaystyle C(x)=2.3x^2+4x+60\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>الإيرادات = السعر × الكمية</div><div class="m">\(\displaystyle R(x)=(50-0.3x)\,x=50x-0.3x^2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>الربح = الإيرادات − التكاليف</div><div class="m">\(\displaystyle F(x)=50x-0.3x^2-(2.3x^2+4x+60)\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منجمع الحدود المتشابهة</div><div class="m">\(\displaystyle F(x)=-2.6x^2+46x-60\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>المعمل رابح لما الربح موجب</div><div class="m">\(\displaystyle -2.6x^2+46x-60\gt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منوجد جذور الربح بالمميز</div><div class="m">\(\displaystyle x_1\approx1.42\qquad x_2\approx16.27\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>أمثال \(x^2\) سالب ← العبارة موجبة <b>بين</b> الجذرين</div><div class="m">\(\displaystyle a=-2.6\lt0\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x\in\left]1.42,\ 16.27\right[\)</div><div class="sol-ans-txt">يعني المعمل رابح لما الكمية بين 1.42 و 16.27</div></div>
+</div></details><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>«التكاليف الكلية = الثابتة − المتغيرة» ← <b>خطأ</b>، الصح <b>+</b>.</p></div></div>
 <div class="block" id="market"><h2><span class="idx">5</span> العرض والطلب وسعر التوازن</h2>
 <p>الطلب \(D=a-bP\) (علاقة <b>عكسية</b> مع السعر)، العرض \(S=-c+dP\) (علاقة <b>طردية</b>). <b>التوازن:</b> \(D=S\) ← الحل المشترك (نقطة تقاطع المنحنيين).</p>
-<div class="quick-grid"><div class="quick-card"><b>السلعة البديلة</b>سعر سلعة ↑ ← الطلب على بديلتها ↑ : <strong>طردية</strong></div><div class="quick-card"><b>السلعة المكملة</b>سعر سلعة ↑ ← الطلب على مكملتها ↓ : <strong>عكسية</strong></div><div class="quick-card"><b>مو دايماً خطية</b>العرض والطلب ممكن يكونو غير خطيين (درجة ثانية، كسر...)</div></div><details class="accordion"><summary>✍️ سؤال دورات: \(Q_D=120-0.3P\) و \(Q_S=-90+0.4P\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(120-0.3P=-90+0.4P\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(210=0.7P\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(P^*=300\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الكمية</span><div class="m">\(Q^*=120-0.3(300)=30\)</div></div></div></details>
+<div class="quick-grid"><div class="quick-card"><b>السلعة البديلة</b>سعر سلعة ↑ ← الطلب على بديلتها ↑ : <strong>طردية</strong></div><div class="quick-card"><b>السلعة المكملة</b>سعر سلعة ↑ ← الطلب على مكملتها ↓ : <strong>عكسية</strong></div><div class="quick-card"><b>مو دايماً خطية</b>العرض والطلب ممكن يكونو غير خطيين (درجة ثانية، كسر...)</div></div><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ سؤال دورات</span>
+<span class="sum-q">تابع الطلب وتابع العرض هنن التاليين. <b>أوجد سعر وكمية التوازن</b></span>
+<span class="sum-m">\(\displaystyle Q_D=120-0.3P\)</span>
+<span class="sum-m">\(\displaystyle Q_S=-90+0.4P\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>بالتوازن الطلب بيساوي العرض</div><div class="m">\(\displaystyle 120-0.3P=-90+0.4P\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منجمّع \(P\) بطرف والأعداد بطرف</div><div class="m">\(\displaystyle 120+90=0.4P+0.3P\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منجمع</div><div class="m">\(\displaystyle 210=0.7P\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منقسم على 0.7</div><div class="m">\(\displaystyle P^*=\frac{210}{0.7}=300\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منعوّض السعر بتابع الطلب لنلاقي الكمية</div><div class="m">\(\displaystyle Q^*=120-0.3(300)=120-90\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle P^*=300\qquad Q^*=30\)</div></div>
+</div></details>
 <div id="activity-sort" style="margin-top:16px;"></div>
 <p style="margin-top:10px"><b>طلب غير خطي بدلالة الزمن:</b> إذا \(Q(P)\) و \(P(t)\) معطيين، منعوّض \(P(t)\) بـ\(Q\) لنحصل \(Q(t)\)، و«اللحظة الحالية» يعني \(t=0\).</p>
 <div class="example"><span class="tag">⚠️ فخ امتحان</span><p>إذا الناتج (300) مو بالخيارات ← الجواب «غير ذلك»، لا تختار 210 (هي \(0.7P\) مو \(P\)).</p></div></div>
-<div class="block" id="income"><h2><span class="idx">6</span> الدخل القومي: الاستهلاك والادخار</h2><table class="cmp"><tr><th>الفكرة</th><th>القانون</th></tr><tr><td>الدخل</td><td>\(Y=C+I\) (استهلاك + ادخار/استثمار)</td></tr><tr><td>تابع الاستهلاك</td><td>\(C=\alpha+\beta Y\)</td></tr><tr><td>النزعة الحدية للاستهلاك</td><td>\(MPC=\beta\)</td></tr><tr><td>النزعة الحدية للادخار</td><td>\(MPS=1-\beta\) ، و \(MPC+MPS=1\)</td></tr><tr><td>مع حكومة وضرائب</td><td>\(Y=C+I+G\) ، \(C=\alpha+\beta(Y-T)\) ، \(T=rY\)</td></tr></table><details class="accordion"><summary>✍️ سؤال دورات: \(C=70+0.8Y\) و \(I=20\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(Y=70+0.8Y+20\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(0.2Y=90\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(Y^*=450\)</div></div></details><details class="accordion"><summary>✍️ مثال الملخص: \(C=30+0.8(Y-T)\) ، \(T=0.2Y\) ، \(I=30\) ، \(G=18\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(Y=30+0.8(Y-0.2Y)+30+18\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(Y=78+0.64Y\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(0.36Y=78\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(Y^*\approx216.67\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">حصيلة الضريبة</span><div class="m">\(T=0.2Y\approx43.33\)</div></div></div></details><div class="callout"><span class="tag">💡 الادخار</span><p>إذا \(Y=C+S\) و \(C=aY+b\) ← \(S=Y-C=(1-a)Y-b\).</p></div></div>
+<div class="block" id="income"><h2><span class="idx">6</span> الدخل القومي: الاستهلاك والادخار</h2><table class="cmp"><tr><th>الفكرة</th><th>القانون</th></tr><tr><td>الدخل</td><td>\(Y=C+I\) (استهلاك + ادخار/استثمار)</td></tr><tr><td>تابع الاستهلاك</td><td>\(C=\alpha+\beta Y\)</td></tr><tr><td>النزعة الحدية للاستهلاك</td><td>\(MPC=\beta\)</td></tr><tr><td>النزعة الحدية للادخار</td><td>\(MPS=1-\beta\) ، و \(MPC+MPS=1\)</td></tr><tr><td>مع حكومة وضرائب</td><td>\(Y=C+I+G\) ، \(C=\alpha+\beta(Y-T)\) ، \(T=rY\)</td></tr></table><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ سؤال دورات</span>
+<span class="sum-q">تابع الاستهلاك والاستثمار هنن التاليين. <b>أوجد الدخل التوازني</b></span>
+<span class="sum-m">\(\displaystyle C=70+0.8Y\)</span>
+<span class="sum-m">\(\displaystyle I=20\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>الدخل = الاستهلاك + الاستثمار</div><div class="m">\(\displaystyle Y=C+I\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منعوّض</div><div class="m">\(\displaystyle Y=70+0.8Y+20\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منجمّع \(Y\) بطرف</div><div class="m">\(\displaystyle Y-0.8Y=90\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منبسّط</div><div class="m">\(\displaystyle 0.2Y=90\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منقسم على 0.2</div><div class="m">\(\displaystyle Y^*=\frac{90}{0.2}\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle Y^*=450\)</div></div>
+</div></details><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال الملخص</span>
+<span class="sum-q">اقتصاد فيه حكومة وضرائب بالمعطيات التالية. <b>أوجد الدخل التوازني وحصيلة الضريبة</b></span>
+<span class="sum-m">\(\displaystyle C=30+0.8(Y-T)\)</span>
+<span class="sum-m">\(\displaystyle T=0.2Y\qquad I=30\qquad G=18\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>الدخل = الاستهلاك + الاستثمار + الإنفاق الحكومي</div><div class="m">\(\displaystyle Y=C+I+G\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منعوّض \(C\)، ومكان \(T\) منحط \(0.2Y\)</div><div class="m">\(\displaystyle Y=30+0.8(Y-0.2Y)+30+18\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>اللي جوّا القوس \(0.8Y\)، ومنضربه بـ 0.8</div><div class="m">\(\displaystyle Y=78+0.64Y\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منجمّع \(Y\) بطرف</div><div class="m">\(\displaystyle Y-0.64Y=78\ \Rightarrow\ 0.36Y=78\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منقسم على 0.36</div><div class="m">\(\displaystyle Y^*=\frac{78}{0.36}\approx216.67\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>حصيلة الضريبة</div><div class="m">\(\displaystyle T=0.2\times216.67\approx43.33\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle Y^*\approx216.67\qquad T\approx43.33\)</div></div>
+</div></details><div class="callout"><span class="tag">💡 الادخار</span><p>إذا \(Y=C+S\) و \(C=aY+b\) ← \(S=Y-C=(1-a)Y-b\).</p></div></div>
 <div id="case-study-mount"></div>
 <div class="block" id="flash"><h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2><div id="activity-flash"></div></div>
 <div class="next-actions">

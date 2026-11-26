@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
 <style>.guard{visibility:hidden}</style>
 <link rel="stylesheet" href="../assets/style.css">
-<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="../assets/extras.css?v=20261126">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body class="guard">
@@ -30,14 +30,67 @@
 <p style="margin-top:10px"><b>أولويات العمليات:</b> الأقواس ← القوى والجذور ← الضرب والقسمة ← الجمع والطرح. يعني <b>في ترتيب محدد</b>، مو «أي ترتيب».</p>
 <div class="quick-grid"><div class="quick-card"><b>المجال المغلق \([a,b]\)</b>\(a\le x\le b\) — بيضم الطرفين</div><div class="quick-card"><b>المجال المفتوح \(]a,b[\)</b>\(a\lt x\lt b\) — ما بيضم ولا طرف</div><div class="quick-card"><b>نصف مفتوح \(]a,b]\)</b>بيضم \(b\) بس، و<strong>ما بيضم \(a\)</strong></div></div><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>سؤال دورات: «\(]a,b]\) جميع الأعداد بين \(a\) و \(b\) بما فيها \(a\)» ← <b>خطأ</b>، لأن القوس مفتوح من جهة \(a\).</p></div></div>
 <div class="block" id="percent"><h2><span class="idx">2</span> النسب المئوية وتطبيقاتها</h2>
-<table class="cmp"><tr><th>الفكرة</th><th>القانون</th></tr><tr><td>النسبة المئوية</td><td>(الجزء ÷ الكل) × 100</td></tr><tr><td>معدل التضخم / نسبة التغير</td><td>(السعر الجديد − السعر القديم) ÷ السعر القديم × 100</td></tr><tr><td>مؤشر تغير الأسعار</td><td>الجديد ÷ القديم (مثلاً \(\frac{585}{500}=1.17\) يعني زيادة 17%)</td></tr><tr><td>السعر قبل الضريبة</td><td>\(P=\) سعر البيع ÷ \((1+t)\)</td></tr></table><details class="accordion"><summary>✍️ سؤال دورات: سعر بيع 1540 متضمناً ضريبة 10%، شو سعر التكلفة قبل الضريبة؟ <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(1540=P+0.1P\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(1540=P(1+0.1)=1.1P\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(P=\frac{1540}{1.1}=1400\)</div></div></details><details class="accordion"><summary>✍️ مثال الملخص: سلعة سعرها 200 وصار 250، شو معدل التضخم؟ <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(\frac{250-200}{200}\times100\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(=25\%\)</div></div></details><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>السعر قبل الضريبة <b>مو</b> \(1540-10\%\times1540=1386\)! الضريبة محسوبة على السعر الأصلي \(P\)، فمنقسم على \(1.1\).</p></div></div>
+<table class="cmp"><tr><th>الفكرة</th><th>القانون</th></tr><tr><td>النسبة المئوية</td><td>(الجزء ÷ الكل) × 100</td></tr><tr><td>معدل التضخم / نسبة التغير</td><td>(السعر الجديد − السعر القديم) ÷ السعر القديم × 100</td></tr><tr><td>مؤشر تغير الأسعار</td><td>الجديد ÷ القديم (مثلاً \(\frac{585}{500}=1.17\) يعني زيادة 17%)</td></tr><tr><td>السعر قبل الضريبة</td><td>\(P=\) سعر البيع ÷ \((1+t)\)</td></tr></table><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ سؤال دورات</span>
+<span class="sum-q">سعر بيع سلعة 1540 وهو متضمّن ضريبة 10%. <b>شو سعر التكلفة قبل الضريبة؟</b></span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منسمّي السعر قبل الضريبة \(P\). سعر البيع = السعر + الضريبة عليه</div><div class="m">\(\displaystyle 1540=P+0.1P\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منطلّع \(P\) عامل مشترك</div><div class="m">\(\displaystyle 1540=P(1+0.1)=1.1P\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منقسم الطرفين على 1.1</div><div class="m">\(\displaystyle P=\frac{1540}{1.1}\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle P=1400\)</div></div>
+</div></details><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال الملخص</span>
+<span class="sum-q">سلعة كان سعرها 200 وصار 250. <b>شو معدل التضخم؟</b></span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>القانون: (الجديد − القديم) ÷ القديم × 100</div><div class="m">\(\displaystyle \frac{250-200}{200}\times100\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منحسب البسط</div><div class="m">\(\displaystyle \frac{50}{200}\times100\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle 25\%\)</div></div>
+</div></details><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>السعر قبل الضريبة <b>مو</b> \(1540-10\%\times1540=1386\)! الضريبة محسوبة على السعر الأصلي \(P\)، فمنقسم على \(1.1\).</p></div></div>
 <div class="block" id="powers"><h2><span class="idx">3</span> الأسس والجذور واللوغاريتم (تذكير)</h2><div class="quick-grid"><div class="quick-card"><b>القوة</b>\(a^n=a\times a\times\dots\times a\) (\(n\) مرة) · \(a^0=1\) · \(a^{-n}=\frac1{a^n}\)</div><div class="quick-card"><b>الجذر</b>\(\sqrt[n]{a}=a^{1/n}\) · \(\sqrt[n]{0}=0\) قيمة وحدة</div><div class="quick-card"><b>اللوغاريتم</b>\(\log 1=0\) · \(\log_x x=1\) · \(\ln=\log_e\)</div></div>
 <p style="margin-top:10px">القواعد التفصيلية للأسس واللوغاريتم رح نرجعلها بالفصل الخامس.</p>
-<details class="accordion"><summary>✍️ احسب \(2^3\times3^2\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step">\(2^3=8\) ، \(3^2=9\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(8\times9=72\)</div></div></details></div>
+<details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ تمرين</span>
+<span class="sum-q"><b>احسب</b></span>
+<span class="sum-m">\(\displaystyle 2^3\times3^2\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منحسب كل قوة لحالها</div><div class="m">\(\displaystyle 2^3=2\times2\times2=8\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>والتانية</div><div class="m">\(\displaystyle 3^2=3\times3=9\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منضربهم</div><div class="m">\(\displaystyle 8\times9\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle 72\)</div></div>
+</div></details></div>
 <div class="block" id="deriv"><h2><span class="idx">4</span> تذكير بالمشتق: التزايد والتقعر</h2><table class="cmp"><tr><th>الإشارة</th><th>المعنى</th></tr><tr><td>\(f'(x)\gt0\)</td><td>التابع <b>متزايد</b></td></tr><tr><td>\(f'(x)\lt0\)</td><td>التابع <b>متناقص</b></td></tr><tr><td>\(f'(x)=0\) و \(f''(x)\lt0\)</td><td>تقعر نحو العينات السالبة (للأسفل) ← <b>نهاية عظمى</b></td></tr><tr><td>\(f'(x)=0\) و \(f''(x)\gt0\)</td><td>تقعر نحو العينات الموجبة (للأعلى) ← <b>نهاية صغرى</b></td></tr></table><div class="callout"><span class="tag">💡 بالاقتصاد</span><p>المشتق الأول لأي تابع اقتصادي (دخل، ربح، تكاليف) هو <b>التابع الحدي</b> (الهامشي) — تفاصيله بالفصل السادس.</p></div></div>
 <div class="block" id="apps"><h2><span class="idx">5</span> تطبيق: موازنة الدعاية والمبيعات</h2>
 <p>العلاقة بين المبيعات \(V\) وموازنة الدعاية \(P\) خطية: \(V=5000+10P\).</p>
-<details class="accordion"><summary>✍️ بدون دعاية؟ ولنوصل لمبيعات 20000 قديش لازم ندفع دعاية؟ <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step"><span class="sol-lbl">بدون دعاية</span><div class="m">\(V=5000+10(0)=5000\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(20000=5000+10P\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(P=\frac{15000}{10}=1500\)</div></div></details></div>
+<details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ تطبيق: الدعاية والمبيعات</span>
+<span class="sum-q">العلاقة بين المبيعات \(V\) وموازنة الدعاية \(P\) هي التالية. <b>أ) قديش المبيعات بدون دعاية؟ ب) قديش لازم ندفع دعاية لنوصل لمبيعات 20000؟</b></span>
+<span class="sum-m">\(\displaystyle V=5000+10P\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-part">أ) بدون دعاية</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>بدون دعاية يعني \(P=0\). منعوّض</div><div class="m">\(\displaystyle V=5000+10(0)\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>النتيجة</div><div class="m">\(\displaystyle V=5000\)</div></div>
+<div class="sol-part">ب) لنوصل لمبيعات 20000</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منعوّض \(V=20000\)</div><div class="m">\(\displaystyle 20000=5000+10P\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منطرح 5000 من الطرفين</div><div class="m">\(\displaystyle 15000=10P\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منقسم على 10</div><div class="m">\(\displaystyle P=\frac{15000}{10}=1500\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="sol-ans-txt">أ) المبيعات بدون دعاية 5000 &nbsp;·&nbsp; ب) لازم دعاية بـ 1500</div></div>
+</div></details></div>
 <div id="case-study-mount"></div>
 <div class="block" id="flash"><h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2><div id="activity-flash"></div></div>
 <div class="next-actions">

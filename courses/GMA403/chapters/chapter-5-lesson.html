@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
 <style>.guard{visibility:hidden}</style>
 <link rel="stylesheet" href="../assets/style.css">
-<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="../assets/extras.css?v=20261126">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body class="guard">
@@ -28,14 +28,87 @@
 <div class="block" id="cobb"><h2><span class="idx">2</span> تابع الإنتاج كوب-دوغلاس ودرجة التجانس</h2>
 $$Q=A\,K^{\alpha}L^{\beta}$$
 <p>\(K\) رأس المال، \(L\) العمل، \(A\) ثابت موجب. حد وحيد (ما في + أو −). \(\alpha\) مرونة \(Q\) بالنسبة لـ\(K\)، و\(\beta\) مرونته بالنسبة لـ\(L\).</p>
-<div class="quick-grid"><div class="quick-card"><b>درجة التجانس</b>\(t=\alpha+\beta\)</div><div class="quick-card"><b>الأثر</b>إذا ضربنا \(K\) و\(L\) بـ\(\lambda\) ← \(Q\) بتنضرب بـ\(\lambda^{t}\)</div></div><details class="accordion"><summary>✍️ درجة التجانس 2 وضربنا العوامل بـ\(\lambda=3\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(\lambda^t=3^2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(=9\)</div><div class="sol-arrow">⬇</div><div class="sol-step">الإنتاج بيتضاعف 9 مرات</div></div></details><details class="accordion"><summary>✍️ سؤال دورات: درجة التجانس 0.5 و \(\lambda=4\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(4^{0.5}=\sqrt4=2\)</div><div class="sol-arrow">⬇</div><div class="sol-step">الإنتاج بيتضاعف مرتين</div></div></details></div>
+<div class="quick-grid"><div class="quick-card"><b>درجة التجانس</b>\(t=\alpha+\beta\)</div><div class="quick-card"><b>الأثر</b>إذا ضربنا \(K\) و\(L\) بـ\(\lambda\) ← \(Q\) بتنضرب بـ\(\lambda^{t}\)</div></div><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ تمرين</span>
+<span class="sum-q">تابع إنتاج درجة تجانسه 2، وضربنا العوامل بـ \(\lambda=3\). <b>كيف بيتغير الإنتاج؟</b></span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>الإنتاج بينضرب بـ \(\lambda^t\)، حيث \(t\) درجة التجانس</div><div class="m">\(\displaystyle \lambda^t=3^2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منحسب</div><div class="m">\(\displaystyle 3^2=9\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle \times9\)</div><div class="sol-ans-txt">الإنتاج بيتضاعف 9 مرات</div></div>
+</div></details><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ سؤال دورات</span>
+<span class="sum-q">تابع إنتاج درجة تجانسه 0.5، وضربنا العوامل بـ \(\lambda=4\). <b>كيف بيتغير الإنتاج؟</b></span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>الإنتاج بينضرب بـ \(\lambda^t\)</div><div class="m">\(\displaystyle \lambda^t=4^{0.5}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>الأس 0.5 يعني جذر تربيعي</div><div class="m">\(\displaystyle 4^{0.5}=\sqrt4=2\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle \times2\)</div><div class="sol-ans-txt">الإنتاج بيتضاعف مرتين</div></div>
+</div></details></div>
 <div class="block" id="logs"><h2><span class="idx">3</span> اللوغاريتم وخواصه</h2>
 <p>\(\log_a M=n \iff a^n=M\). نوعين: <b>طبيعي</b> \(\ln\) أساسه \(e\approx2.71828\)، و<b>عشري</b> أساسه 10. ومعرّف بس للأعداد <b>الموجبة</b>.</p>
-<table class="cmp"><tr><th>الخاصة</th><th>الصيغة</th></tr><tr><td>أساسيات</td><td>\(\log_a1=0\) ، \(\log_aa=1\)</td></tr><tr><td>الجداء</td><td>\(\log(xy)=\log x+\log y\)</td></tr><tr><td>القسمة</td><td>\(\log\frac xy=\log x-\log y\)</td></tr><tr><td>القوة</td><td>\(\log x^n=n\log x\)</td></tr></table><details class="accordion"><summary>✍️ \(\log_5125\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(5^n=125=5^3\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\log_5125=3\)</div></div></details><details class="accordion"><summary>✍️ \(4\ln x-3\ln y+5\ln z\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(=\ln x^4-\ln y^3+\ln z^5\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(=\ln\left(\frac{x^4}{y^3}z^5\right)\)</div></div></details></div>
+<table class="cmp"><tr><th>الخاصة</th><th>الصيغة</th></tr><tr><td>أساسيات</td><td>\(\log_a1=0\) ، \(\log_aa=1\)</td></tr><tr><td>الجداء</td><td>\(\log(xy)=\log x+\log y\)</td></tr><tr><td>القسمة</td><td>\(\log\frac xy=\log x-\log y\)</td></tr><tr><td>القوة</td><td>\(\log x^n=n\log x\)</td></tr></table><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ تمرين</span>
+<span class="sum-q"><b>احسب</b></span>
+<span class="sum-m">\(\displaystyle \log_5125\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منسأل: 5 أس شو بيعطي 125؟</div><div class="m">\(\displaystyle 5^n=125\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منكتب 125 كقوة لـ 5</div><div class="m">\(\displaystyle 125=5^3\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle \log_5125=3\)</div></div>
+</div></details><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ تمرين</span>
+<span class="sum-q"><b>اكتب العبارة التالية كلوغاريتم واحد</b></span>
+<span class="sum-m">\(\displaystyle 4\ln x-3\ln y+5\ln z\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>العدد اللي قدّام كل لوغاريتم بيطلع أس</div><div class="m">\(\displaystyle \ln x^4-\ln y^3+\ln z^5\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>الطرح بيصير قسمة، والجمع بيصير ضرب</div><div class="m">\(\displaystyle \ln\left(\frac{x^4}{y^3}\cdot z^5\right)\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle \ln\frac{x^4z^5}{y^3}\)</div></div>
+</div></details></div>
 <div class="block" id="growth"><h2><span class="idx">4</span> النمو الاقتصادي بالشكل الأسي</h2>
 $$G_t=G_0\,e^{r\,t}\qquad\Longrightarrow\qquad r=\frac{\ln G_t-\ln G_0}{t}=\frac1t\ln\frac{G_t}{G_0}$$
 <p>ولمعرفة <b>الزمن</b>: منقسم على الأمثال ونأخد \(\ln\) للطرفين.</p>
-<details class="accordion"><summary>✍️ مثال الملخص: \(y=20e^{0.05x}\): أول قيمة؟ ومتى يصل لـ40؟ <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step"><span class="sol-lbl">أول قيمة</span><div class="m">\(x=0\) ← \(y=20\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(40=20e^{0.05x}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(e^{0.05x}=2\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(0.05x=\ln2=0.693\)</div><div class="sol-arrow">⬇</div><div class="sol-step">\(x\approx13.86\approx14\) سنة</div></div></details><details class="accordion"><summary>✍️ \(G_0=15\) ، \(G_t=20\) ، \(t=1\): معدل النمو <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(r=\ln20-\ln15\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(=\ln\frac43\approx0.288\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(r\approx28.8\%\)</div></div></details><div class="callout"><span class="tag">💡 معدل النمو السنوي</span><p>من \(y=20e^{0.05x}\): \(\frac{y_{x+1}-y_x}{y_x}=e^{0.05}-1\approx5.13\%\).</p></div></div>
+<details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال الملخص</span>
+<span class="sum-q">قيمة متغير اقتصادي بتتطور حسب العلاقة التالية. <b>أ) شو أول قيمة؟ ب) بعد كم سنة بتوصل لـ 40؟</b></span>
+<span class="sum-m">\(\displaystyle y=20e^{0.05x}\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-part">أ) أول قيمة</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>أول قيمة يعني \(x=0\)</div><div class="m">\(\displaystyle y=20e^{0}=20\times1=20\)</div></div>
+<div class="sol-part">ب) متى بتوصل لـ 40</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منعوّض \(y=40\)</div><div class="m">\(\displaystyle 40=20e^{0.05x}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منقسم على 20</div><div class="m">\(\displaystyle e^{0.05x}=2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>ناخد \(\ln\) للطرفين</div><div class="m">\(\displaystyle 0.05x=\ln2\approx0.693\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منقسم على 0.05</div><div class="m">\(\displaystyle x\approx13.86\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="sol-ans-txt">أ) أول قيمة 20 &nbsp;·&nbsp; ب) تقريباً بعد 14 سنة</div></div>
+</div></details><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ تمرين</span>
+<span class="sum-q">ناتج كان 15 وصار 20 خلال سنة وحدة. <b>شو معدل النمو؟</b></span>
+<span class="sum-m">\(\displaystyle G_0=15\qquad G_t=20\qquad t=1\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>قانون معدل النمو</div><div class="m">\(\displaystyle r=\frac{\ln G_t-\ln G_0}{t}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منعوّض</div><div class="m">\(\displaystyle r=\frac{\ln20-\ln15}{1}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>طرح اللوغاريتمات قسمة</div><div class="m">\(\displaystyle r=\ln\frac{20}{15}=\ln\frac43\approx0.288\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle r\approx28.8\%\)</div></div>
+</div></details><div class="callout"><span class="tag">💡 معدل النمو السنوي</span><p>من \(y=20e^{0.05x}\): \(\frac{y_{x+1}-y_x}{y_x}=e^{0.05}-1\approx5.13\%\).</p></div></div>
 <div id="case-study-mount"></div>
 <div class="block" id="flash"><h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2><div id="activity-flash"></div></div>
 <div class="next-actions">

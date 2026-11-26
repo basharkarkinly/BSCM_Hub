@@ -80,9 +80,36 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .open-hint{ margin-top:auto; padding-top:10px; font-size:.85rem; font-weight:700; color:var(--amber-dark); }
 .course-card.skeleton{ background:linear-gradient(90deg,#EEF1F7,#F8F9FC,#EEF1F7); background-size:200% 100%; animation:sk 1.2s linear infinite; border-color:transparent; box-shadow:none; }
 @keyframes sk{ to{ background-position:-200% 0; } }
+/* ---- الصفحة الرئيسية: المواد مجمّعة ببلوكات (أساسية / مشتركة / اختصاصات) ---- */
+.course-groups{ display:flex; flex-direction:column; gap:18px; }
+.cg{ border-radius:var(--radius); padding:16px; border:1px solid; }
+.cg-basic{ background:#FFF6E6; border-color:#FFD79A; }
+.cg-common{ background:#EFFBF8; border-color:#BFEDE6; }
+.cg-track{ background:#F3F1FE; border-color:#D9D4FA; }
+.cg-head{ display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+.cg-head h3{ margin:0; font-size:1.1rem; }
+.cg-icon{ font-size:1.25rem; line-height:1; }
+.cg-count{ font-size:.78rem; font-weight:800; border-radius:999px; padding:1px 10px; background:#fff; border:1px solid currentColor; }
+.cg-basic .cg-head{ color:#7A4B00; } .cg-common .cg-head{ color:var(--teal-dark); } .cg-track .cg-head{ color:#4A3FA8; }
+.cg .courses-grid{ grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; }
+.cg .course-card{ min-height:0; padding:14px; gap:4px; box-shadow:none; }
+.cg .course-card h3{ font-size:.98rem; line-height:1.6; }
+.cg .open-hint{ padding-top:6px; font-size:.8rem; }
+.cg-tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+.cg-tab{ font:inherit; font-size:.88rem; font-weight:700; border-radius:999px; padding:6px 16px; cursor:pointer;
+  background:#fff; color:#4A3FA8; border:1.5px solid #D9D4FA; }
+.cg-tab.on{ background:#5B4FD1; border-color:#5B4FD1; color:#fff; }
+.cg-tab:focus-visible{ outline:2px solid #5B4FD1; outline-offset:2px; }
+.cg-soon{ text-align:center; font-weight:700; color:#5B4FD1; background:#fff; border:1.5px dashed #D9D4FA; border-radius:var(--radius-sm); padding:22px; }
 @media (max-width:520px){
   .courses-grid{ grid-template-columns:1fr; }
   .course-card{ min-height:0; padding:18px; }
+  .cg{ padding:12px; }
+  .cg .courses-grid{ grid-template-columns:1fr 1fr; gap:8px; }
+  .cg .course-card{ padding:10px; }
+  .cg .course-card h3{ font-size:.9rem; }
+  .cg .code-badge{ font-size:.68rem; padding:2px 8px; }
+  .cg .open-hint{ display:none; }
   .topbar{ padding:12px 16px; }
   .nav-pills{ order:3; width:100%; flex-wrap:nowrap; }
   .nav-pills{ align-items:stretch; }

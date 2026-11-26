@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
 <style>.guard{visibility:hidden}</style>
 <link rel="stylesheet" href="../assets/style.css">
-<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="../assets/extras.css?v=20261126">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body class="guard">
@@ -75,10 +75,28 @@
           <div class="quick-card"><b>➕ إشارة \(ax^2+bx+c\)</b>\(\Delta\gt0\): بين الجذرين <strong>عكس</strong> \(a\)، وبرّاهم <strong>متل</strong> \(a\) · \(\Delta=0\): متل \(a\) (وصفر عند الجذر) · \(\Delta\lt0\): <strong>دايماً متل</strong> \(a\)</div>
           <div class="quick-card"><b>🧩 متطابقات شهيرة</b>\((a\pm b)^2=a^2\pm2ab+b^2\) · \(a^2-b^2=(a-b)(a+b)\) · \(a^3\pm b^3=(a\pm b)(a^2\mp ab+b^2)\) · \((a\pm b)^3=a^3\pm3a^2b+3ab^2\pm b^3\)</div>
         </div>
-        <details class="accordion">
-          <summary>✍️ مثال المقرر (12-1): \(15x^2-32x-47=0\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step m">\(\Delta=(-32)^2-4(15)(-47)=1024+2820=3844\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(\sqrt\Delta=62\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x_{1,2}=\frac{32\pm62}{30}\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x_1=\frac{94}{30}=\frac{47}{15}\) · \(x_2=\frac{-30}{30}=-1\)</div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال المقرر (12-1)</span>
+<span class="sum-q"><b>حل المعادلة التالية</b></span>
+<span class="sum-m">\(\displaystyle 15x^2-32x-47=0\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منحدد الأمثال</div><div class="m">\(\displaystyle a=15\quad b=-32\quad c=-47\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منحسب المميز</div><div class="m">\(\displaystyle \Delta=b^2-4ac=(-32)^2-4(15)(-47)\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منكمّل الحساب</div><div class="m">\(\displaystyle \Delta=1024+2820=3844\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>المميز موجب ← في حلّين. منوجد جذره</div><div class="m">\(\displaystyle \sqrt\Delta=62\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منعوّض بقانون الحل</div><div class="m">\(\displaystyle x_{1,2}=\frac{-b\pm\sqrt\Delta}{2a}=\frac{32\pm62}{30}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>الحل الأول (مع +)</div><div class="m">\(\displaystyle x_1=\frac{32+62}{30}=\frac{94}{30}=\frac{47}{15}\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑦</span>الحل التاني (مع −)</div><div class="m">\(\displaystyle x_2=\frac{32-62}{30}=\frac{-30}{30}=-1\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x_1=\frac{47}{15}\qquad x_2=-1\)</div></div>
+</div></details>
         <div class="example">
           <span class="tag">⚠️ فخ امتحان</span>
           <p>انتبه لإشارة \(c\) بـ\(-4ac\). وتحقق من أي تحليل بفك الأقواس: \((x-6)(x+5)=x^2-x-30\) مو \(x^2-x-2\).</p>
@@ -100,24 +118,68 @@
           <li><span class="marker">4</span><h4>اقسم على \((x-x_1)\)</h4><p>بيطلع ناتج \(h(x)\) من الدرجة \(n-1\).</p></li>
           <li><span class="marker">5</span><h4>كرّر أو حل الدرجة التانية</h4><p>بالمميز أو التحليل.</p></li>
         </ol>
-        <details class="accordion">
-          <summary>✍️ مثال محلول (تمارين الفصل): \(x^3-4x^2-17x+60=0\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step"><span class="sol-lbl">قواسم 60</span><div class="m">\(\pm1,\pm2,\pm3,\pm4,\pm5,\pm6,\pm10,\pm12,\pm15,\pm20,\pm30,\pm60\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x=3\): \(27-36-51+60=0\) ✓</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">القسمة على \((x-3)\)</span><div class="m">\(x^2-x-20\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x^2-x-20=(x-5)(x+4)\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الجذور</span><div class="m">\(\{3,\ 5,\ -4\}\)</div></div></div>
-        </details>
-        <details class="accordion">
-          <summary>✍️ طريقة أسرع أحياناً: التجميع \(x^3-3x^2-16x+48=0\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step m">\(x(x^2-16)-3(x^2-16)=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\((x^2-16)(x-3)=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\((x-4)(x+4)(x-3)=0\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الجذور</span><div class="m">\(\{3,\ 4,\ -4\}\)</div></div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال محلول (تمارين الفصل)</span>
+<span class="sum-q"><b>حل المعادلة التالية</b></span>
+<span class="sum-m">\(\displaystyle x^3-4x^2-17x+60=0\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>الحلول الصحيحة الممكنة هي قواسم الحد الثابت 60</div><div class="m">\(\displaystyle \pm1,\pm2,\pm3,\pm4,\pm5,\pm6,\pm10,\pm12,\pm15,\pm20,\pm30,\pm60\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منجرّب \(x=3\) بالمعادلة</div><div class="m">\(\displaystyle 27-36-51+60=0\ \checkmark\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>طلع 3 حل ← منقسم كثير الحدود على \((x-3)\)</div><div class="m">\(\displaystyle x^3-4x^2-17x+60=(x-3)(x^2-x-20)\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منحلل التربيعية: عددين جداؤهم \(-20\) ومجموعهم \(-1\)</div><div class="m">\(\displaystyle x^2-x-20=(x-5)(x+4)\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>كل قوس منساويه بالصفر</div><div class="m">\(\displaystyle (x-3)(x-5)(x+4)=0\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x\in\{3,\ 5,\ -4\}\)</div></div>
+</div></details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ طريقة أسرع أحياناً: التجميع</span>
+<span class="sum-q"><b>حل المعادلة التالية بطريقة التجميع</b></span>
+<span class="sum-m">\(\displaystyle x^3-3x^2-16x+48=0\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منجمّع أول حدّين سوا وآخر حدّين سوا، ومنطلّع العامل المشترك من كل مجموعة</div><div class="m">\(\displaystyle x(x^2-16)-3(x^2-16)=0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>\((x^2-16)\) صار عامل مشترك، فمنطلّعه</div><div class="m">\(\displaystyle (x^2-16)(x-3)=0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>\(x^2-16\) فرق مربعين</div><div class="m">\(\displaystyle (x-4)(x+4)(x-3)=0\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x\in\{3,\ 4,\ -4\}\)</div></div>
+</div></details>
         <div id="activity-sort" style="margin-top:16px;"></div>
       </div>
 
       <div class="block" id="frac">
         <h2><span class="idx">5</span> المعادلات الكسرية</h2>
         <p>حدودها كسور فيها مجهول بالمقام. الحل: <b>1)</b> اشترط المقامات \(\ne0\) <b>2)</b> وحّد المقامات <b>3)</b> حل المعادلة الناتجة <b>4)</b> ارفض أي جذر بيصفّر مقام.</p>
-        <details class="accordion">
-          <summary>✍️ مثال المقرر (4-2): \(\frac{x^2+3x+4}{x-2}-\frac47=\frac{x^3+4x-1}{x^2-4}\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary>
-          <div class="sol"><div class="sol-step">الشرط: \(x\ne\pm2\) (لأن \(x^2-4=(x-2)(x+2)\))</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">توحيد المقامات</span><div class="m">\(7(x+2)(x^2+3x+4)-4(x^2-4)=7(x^3+4x-1)\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">بتطلع معادلة من الدرجة التالتة ومنحلها متل ما شفنا</div></div>
-        </details>
+        <details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال المقرر (4-2)</span>
+<span class="sum-q"><b>حل المعادلة التالية</b></span>
+<span class="sum-m">\(\displaystyle \frac{x^2+3x+4}{x-2}-\frac47=\frac{x^3+4x-1}{x^2-4}\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>أول شي شرط المقامات: ما لازم يصيروا صفر. ولاحظ إنو</div><div class="m">\(\displaystyle x^2-4=(x-2)(x+2)\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>يعني الشرط</div><div class="m">\(\displaystyle x\ne2\quad\text{و}\quad x\ne-2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>المقام المشترك \(7(x-2)(x+2)\). منضرب كل الطرفين فيه</div><div class="m">\(\displaystyle 7(x+2)(x^2+3x+4)-4(x^2-4)=7(x^3+4x-1)\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منفك الأقواس بالطرف الأيسر</div><div class="m">\(\displaystyle 7x^3+35x^2+70x+56-4x^2+16\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منجمع الحدود المتشابهة</div><div class="m">\(\displaystyle 7x^3+31x^2+70x+72=7x^3+28x-7\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>\(7x^3\) بتنحذف من الطرفين، وبيضل معادلة من الدرجة التانية</div><div class="m">\(\displaystyle 31x^2+42x+79=0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑦</span>منحسب المميز</div><div class="m">\(\displaystyle \Delta=42^2-4(31)(79)=1764-9796=-8032\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑧</span>المميز سالب</div><div class="m">\(\displaystyle \Delta\lt0\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="sol-ans-txt">المميز سالب ← المعادلة <b>ما إلها حلول حقيقية</b></div></div>
+</div></details>
         <div class="example">
           <span class="tag">⚠️ فخ امتحان</span>
           <p><div class="sol"><div class="sol-step">\(\frac{x}{x-3}=\frac{3}{x-3}\) بتعطي \(x=3\)، بس هي القيمة الممنوعة</div><div class="sol-arrow">⬇</div><div class="sol-step">المعادلة <b>ما إلها حل</b></div></div></p>

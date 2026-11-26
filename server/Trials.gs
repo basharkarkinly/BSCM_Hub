@@ -12,11 +12,12 @@
  *
  * التبويبات:
  *   trials         : vid, first_at, last_at, courses, visits, passed, converted_at, new_account, home_visits, code_at, ua
- *   trials_summary : أرقام جاهزة بمعادلات (مجموع، لكل مادة، نسبة التسجيل). بيتحدّث لحالو.
- *   funnel         : رحلة الزائر من تاريخ بتختارو (زار ← فتح مادة ← طلب كود ← سجّل) + قائمة اللي طلبوا كود وما سجّلوا.
+ *   funnel         : كل التحليل بمكان واحد، من تاريخ بتختارو: رحلة الزائر (زار ← فتح مادة ← نجح بالفصل الأول ←
+ *                    طلب كود ← سجّل)، جدول لكل مادة، الأجهزة والمتصفحات، وقائمة اللي طلبوا كود وما سجّلوا.
+ *   (تبويب trials_summary القديم انلغى: setupTrials() بيمسحو إذا لقاه، وكل أرقامو صارت بـ funnel.)
  *
  * بعد اللصق: شغّل setupTrials() مرة وحدة من المحرر. وإذا ضفت مادة جديدة بتبويب courses، شغّلها مرة كمان
- * لتنضاف للجدول بالملخص.
+ * لتنضاف لجدول المواد بـ funnel.
  */
 
 const TRIALS_COLS_ = ['vid', 'first_at', 'last_at', 'courses', 'visits', 'passed', 'converted_at', 'new_account',
@@ -38,48 +39,9 @@ function setupTrials() {
   ensureSheet_('trials', TRIALS_COLS_);
   ensureCols_('trials', TRIALS_COLS_);
   ensureCols_('otp', OTP_EXTRA_COLS_);
-  let sh = ss_().getSheetByName('trials_summary');
-  if (!sh) sh = ss_().insertSheet('trials_summary');
-  sh.clear();
-
-  const rows = [
-    ['📊 تجربة الزوار (الفصل الأول بدون تسجيل)', ''],
-    ['', ''],
-    ['زوار جرّبوا (فتحوا مادة)', '=COUNTIF(trials!D2:D,"?*")'],
-    ['نجحوا بامتحان فصل أول', '=COUNTIF(trials!F2:F,"?*")'],
-    ['سجّلوا دخول بعد التجربة', '=COUNTIFS(trials!G2:G,"<>",trials!D2:D,"?*")'],
-    ['منهم حسابات جديدة', '=COUNTIF(trials!H2:H,TRUE)'],
-    ['نسبة التسجيل', '=IFERROR(B5/B3,0)'],
-    ['آخر 7 أيام: زوار جدد', '=SUMPRODUCT((LEN(trials!D2:D)>0)*(LEFT(trials!B2:B,10)>=TEXT(TODAY()-7,"yyyy-mm-dd")))'],
-    ['', ''],
-    ['المادة', 'جرّبوها', 'نجحوا بالفصل الأول', 'سجّلوا']
-  ];
-  // الصفوف الأولى إلها عمودين؛ منكمّلها لأربعة لتصير مستطيل وحد
-  const grid = rows.map(function (r) { while (r.length < 4) r.push(''); return r; });
-
-  let courses = [];
-  try {
-    const t = table_('courses');
-    const c = t.col('course_id');
-    courses = t.rows.map(function (r) { return String(r[c] || '').trim(); }).filter(Boolean);
-  } catch (e) { /* ما في تبويب courses */ }
-  const start = grid.length + 1;
-  courses.forEach(function (id, i) {
-    const r = start + i;
-    grid.push([id,
-      '=COUNTIF(trials!D2:D,"*,"&A' + r + '&",*")',
-      '=COUNTIF(trials!F2:F,"*,"&A' + r + '&",*")',
-      '=COUNTIFS(trials!D2:D,"*,"&A' + r + '&",*",trials!G2:G,"<>")']);
-  });
-
-  sh.getRange(1, 1, grid.length, 4).setValues(grid);
-  sh.getRange('A1').setFontWeight('bold').setFontSize(13);
-  sh.getRange('A3:A8').setFontWeight('bold');
-  sh.getRange('B7').setNumberFormat('0%');
-  sh.getRange(start - 1, 1, 1, 4).setFontWeight('bold').setBackground('#EEF1F6');
-  sh.setColumnWidth(1, 230);
-  sh.setRightToLeft(true);
-  console.log('trials: جاهز. ' + courses.length + ' مادة بالملخص.');
+  // الملخص القديم: كل أرقامو صارت بـ funnel. معادلات بس (ما فيه بيانات)، فمسحو آمن.
+  const old = ss_().getSheetByName('trials_summary');
+  if (old) ss_().deleteSheet(old);
   setupFunnel_();
 }
 
@@ -181,7 +143,7 @@ function trialConverted_(req) {
 
   return markConverted_(vid, s.user.obj.created_at);}
 
-/** القائمة محفوظة بشكل ",BQM607,GMA401," حتى يشتغل البحث بالملخص بدون ما يخلط BMN401 و BMN4011 */
+/** القائمة محفوظة بشكل ",BQM607,GMA401," حتى يشتغل البحث بجدول المواد بدون ما يخلط BMN401 و BMN4011 */
 function addTo_(list, id) {
   const l = list && list.charAt(0) === ',' ? list : ',';
   return l.indexOf(',' + id + ',') >= 0 ? l : l + id + ',';
@@ -209,7 +171,7 @@ function setupFunnel_() {
     return name + '!' + s + '2:' + s;
   }
   const T = {}, O = {}, U = {};
-  ['vid', 'first_at', 'courses', 'converted_at', 'new_account', 'code_at', 'ua'].forEach(function (c) { T[c] = L('trials', c); });
+  ['vid', 'first_at', 'courses', 'passed', 'converted_at', 'new_account', 'code_at', 'ua'].forEach(function (c) { T[c] = L('trials', c); });
   ['email', 'created_at', 'used', 'first_at', 'sends_total', 'wrong_total', 'sends', 'fails'].forEach(function (c) { O[c] = L('otp', c); });
   ['email', 'created_at'].forEach(function (c) { U[c] = L('users', c); });
 
@@ -227,20 +189,43 @@ function setupFunnel_() {
     ['1. زاروا الموقع بلا حساب', '=SUMPRODUCT(' + M + ')', '=IF(B6,1,0)', 'أجهزة (مش أشخاص) فتحت أي صفحة وهي مش مسجّلة دخول'],
     ['2. فتحوا مادة', '=SUMPRODUCT(' + M + '*(LEN(' + T.courses + ')>2))', '=IFERROR(B7/B6,0)', 'من الزوار، فاتوا على مادة وحدة على الأقل'],
     ['   فتحوا الموقع بس (بلا مادة)', '=B6-B7', '=IFERROR(B8/B6,0)', 'ما فاتوا على ولا مادة'],
-    ['3. طلبوا كود', '=SUMPRODUCT(' + M + '*(LEN(' + T.code_at + ')>0))', '=IFERROR(B9/B6,0)', 'حطّوا إيميلهن وكبسوا «إرسال الرمز»'],
-    ['4. سجّلوا دخول', '=SUMPRODUCT(' + M + '*(LEN(' + T.converted_at + ')>0))', '=IFERROR(B10/B6,0)', 'كمّلوا ودخلوا من نفس الجهاز'],
+    ['   نجحوا بامتحان فصل أول', '=SUMPRODUCT(' + M + '*(LEN(' + T.passed + ')>2))', '=IFERROR(B9/B6,0)', 'خلّصوا امتحان الفصل الأول بمادة وحدة على الأقل قبل ما يسجّلوا'],
+    ['3. طلبوا كود', '=SUMPRODUCT(' + M + '*(LEN(' + T.code_at + ')>0))', '=IFERROR(B10/B6,0)', 'حطّوا إيميلهن وكبسوا «إرسال الرمز»'],
+    ['4. سجّلوا دخول', '=SUMPRODUCT(' + M + '*(LEN(' + T.converted_at + ')>0))', '=IFERROR(B11/B6,0)', 'كمّلوا ودخلوا من نفس الجهاز'],
     ['   منهم حسابات جديدة', '=SUMPRODUCT(' + M + '*(LEN(' + T.converted_at + ')>0)*(' + T.new_account + '&""="TRUE"))', '', 'الباقي كان عندهن حساب ودخلوا من جهاز جديد'],
-    ['   زاروا وما سجّلوا', '=B6-B10', '=IFERROR(B12/B6,0)', ''],
-    ['   طلبوا كود وما كمّلوا', '=B9-SUMPRODUCT(' + M + '*(LEN(' + T.code_at + ')>0)*(LEN(' + T.converted_at + ')>0))', '=IFERROR(B13/B9,0)', 'النسبة هون من اللي طلبوا كود'],
+    ['   زاروا وما سجّلوا', '=B6-B11', '=IFERROR(B13/B6,0)', ''],
+    ['   طلبوا كود وما كمّلوا', '=B10-SUMPRODUCT(' + M + '*(LEN(' + T.code_at + ')>0)*(LEN(' + T.converted_at + ')>0))', '=IFERROR(B14/B10,0)', 'النسبة هون من اللي طلبوا كود'],
     ['', '', '', ''],
     ['من جهة الإيميلات والحسابات', '', '', ''],
     ['حسابات جديدة بهالفترة', '=SUMPRODUCT((LEN(' + U.email + ')>0)*(LEFT(' + U.created_at + ',10)>=' + D + '))', '', 'من تبويب users، مهما كان الجهاز'],
     ['إيميلات طلبت كود وما سجّلت', '=ARRAYFORMULA(SUMPRODUCT(' + notDone + '))', '', 'القائمة تحت. قبل 26 نوفمبر كانت بتنمسح كل ليلة'],
     ['', '', '', ''],
-    ['📋 طلبوا كود وما سجّلوا (الأحدث أول)', '', '', ''],
-    ['الإيميل', 'أول طلب', 'مرات طلب الكود', 'محاولات غلط']
+    ['📚 حسب المادة (نفس التاريخ)', '', '', ''],
+    ['المادة', 'فتحوها', 'نجحوا بالفصل الأول', 'سجّلوا']
   ];
-  sh.getRange(1, 1, grid.length, 4).setValues(grid);
+
+  // جدول المواد: صف لكل مادة من تبويب courses. البحث بـ ",CODE," حتى ما يختلط BMN401 مع BMN4011
+  let courses = [];
+  try {
+    const ct = table_('courses');
+    const cc = ct.col('course_id');
+    courses = ct.rows.map(function (r) { return String(r[cc] || '').trim(); }).filter(Boolean);
+  } catch (e) { /* ما في تبويب courses */ }
+  const courseHead = grid.length;            // رقم صف عناوين جدول المواد
+  courses.forEach(function (id) {
+    const r = grid.length + 1;
+    const has = function (rng) { return 'ISNUMBER(SEARCH(","&$A' + r + '&",",' + rng + '))'; };
+    grid.push([id,
+      '=SUMPRODUCT(' + M + '*' + has(T.courses) + ')',
+      '=SUMPRODUCT(' + M + '*' + has(T.passed) + ')',
+      '=SUMPRODUCT(' + M + '*' + has(T.courses) + '*(LEN(' + T.converted_at + ')>0))']);
+  });
+  if (!courses.length) grid.push(['ما في تبويب courses', '', '', '']);
+
+  grid.push(['', '', '', '']);
+  const listTitle = grid.length + 1;
+  grid.push(['📋 طلبوا كود وما سجّلوا (الأحدث أول)', '', '', '']);
+  grid.push(['الإيميل', 'أول طلب', 'مرات طلب الكود', 'محاولات غلط']);
   sh.getRange('E3').setFormula('=IF(ISNUMBER(B3),TEXT(B3,"yyyy-mm-dd"),TRIM(B3&""))').setFontColor('#B0B7C3').setFontSize(8);
   sh.getRange(grid.length + 1, 1).setFormula(
     '=ARRAYFORMULA(IFERROR(SORT(FILTER({' + O.email + ',' + otpFirst + ',IF(LEN(' + O.sends_total + ')>0,N(+' + O.sends_total + '),N(+' + O.sends + ')),IF(LEN(' + O.wrong_total + ')>0,N(+' + O.wrong_total + '),N(+' + O.fails + '))},' + notDone + '),2,FALSE),"ما في حدا 👌"))');
@@ -252,14 +237,15 @@ function setupFunnel_() {
   sh.getRange('H6').setFormula('=MAP(F6:F30,LAMBDA(u,IF(OR(u="",u="لسا ما في بيانات"),"",SUMPRODUCT((' + T.ua + '=u)*' + M + '*(LEN(' + T.converted_at + ')>0)))))');
 
   sh.getRange('B3').setNumberFormat('yyyy-mm-dd');
-  sh.getRange('C6:C13').setNumberFormat('0%');
+  sh.getRange('C6:C14').setNumberFormat('0%');
   sh.getRange('A1').setFontWeight('bold').setFontSize(13);
   sh.getRange('A3:B3').setFontWeight('bold').setBackground('#FFF6E6');
-  [5, 20].forEach(function (r) { sh.getRange(r, 1, 1, 4).setFontWeight('bold').setBackground('#EEF1F6'); });
+  [5, courseHead, grid.length].forEach(function (r) { sh.getRange(r, 1, 1, 4).setFontWeight('bold').setBackground('#EEF1F6'); });
   sh.getRange('F5:H5').setFontWeight('bold').setBackground('#EEF1F6');
-  sh.getRange('A6:B13').setFontWeight('bold');
-  sh.getRange('A15').setFontWeight('bold'); sh.getRange('A19').setFontWeight('bold').setFontSize(12);
+  sh.getRange('A6:B14').setFontWeight('bold');
+  sh.getRange('A16').setFontWeight('bold');
+  [courseHead - 1, listTitle].forEach(function (r) { sh.getRange(r, 1).setFontWeight('bold').setFontSize(12); });
   sh.setColumnWidth(1, 260); sh.setColumnWidth(2, 170); sh.setColumnWidth(4, 330); sh.setColumnWidth(6, 170);
   sh.setRightToLeft(true);
-  console.log('funnel: جاهز (من ' + from + ').');
+  console.log('funnel: جاهز (من ' + from + '، ' + courses.length + ' مادة).');
 }

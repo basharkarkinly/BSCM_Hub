@@ -92,9 +92,32 @@
     });
   }
 
+  /* رحلة الزائر (Trials.gs): رقم عشوائي للجهاز بس، ونوع الجهاز والمتصفح. بلا أي معلومة شخصية */
+  var VID_KEY = "sc_vid";
+  function visitorId() {
+    var v = ""; try { v = localStorage.getItem(VID_KEY) || ""; } catch (e) {}
+    if (!/^v_[a-z0-9]{8,24}$/.test(v)) {
+      v = "v_" + (Date.now().toString(36) + Math.random().toString(36).slice(2, 10)).slice(0, 16);
+      try { localStorage.setItem(VID_KEY, v); } catch (e) {}
+    }
+    return v;
+  }
+  // متل "iOS-Safari" أو "Android-Telegram": بيساعد نفهم ليش نفس الشخص أحياناً بينعدّ زائرين
+  function uaTag() {
+    var u = navigator.userAgent || "";
+    var os = /iPhone|iPad|iPod/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1) ? "iOS"
+      : /Android/.test(u) ? "Android" : /Windows/.test(u) ? "Windows" : /Mac OS X/.test(u) ? "Mac" : /Linux|CrOS/.test(u) ? "Linux" : "Other";
+    var app = (/Telegram/i.test(u) || window.TelegramWebviewProxy || window.Telegram) ? "Telegram"
+      : /Instagram/.test(u) ? "Instagram" : /FBAN|FBAV|FB_IAB/.test(u) ? "Facebook" : /WhatsApp/.test(u) ? "WhatsApp"
+      : /; wv\)/.test(u) ? "WebView" : /SamsungBrowser/.test(u) ? "Samsung" : /EdgA?\/|EdgiOS/.test(u) ? "Edge"
+      : /OPR\/|Opera|OPT\//.test(u) ? "Opera" : /Firefox|FxiOS/.test(u) ? "Firefox" : /CriOS|Chrome\//.test(u) ? "Chrome"
+      : /Safari\//.test(u) ? "Safari" : "Other";
+    return os + "-" + app;
+  }
+
   window.SCAuth = {
     api: api, getSession: getSession, saveSession: saveSession,
     clearSession: clearSession, check: check, logout: logout, requireLogin: requireLogin,
-    hubUrl: hubUrl, toLogin: toLogin
+    hubUrl: hubUrl, toLogin: toLogin, visitorId: visitorId, uaTag: uaTag
   };
 })();

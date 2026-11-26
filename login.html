@@ -6,8 +6,8 @@
 <title>تسجيل الدخول — Support Channel</title>
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/style.css?v=20261123c">
-<link rel="stylesheet" href="assets/hub.css?v=20261123c">
+<link rel="stylesheet" href="assets/style.css?v=20261126b">
+<link rel="stylesheet" href="assets/hub.css?v=20261126b">
 </head>
 <body>
 
@@ -46,6 +46,7 @@
         <label class="field"><span>الإيميل</span>
           <input id="email" type="email" dir="ltr" autocomplete="email" inputmode="email" placeholder="name@example.com">
         </label>
+        <p class="email-hint" id="email-hint" hidden></p>
         <button id="btn-send" class="btn btn-primary btn-block" type="button">إرسال الرمز</button>
         <div id="google-wrap" hidden>
           <div class="divider">أو</div>
@@ -81,6 +82,14 @@
           <button id="btn-back" class="linkbtn" type="button">تغيير الإيميل</button>
         </div>
         <p id="msg-code" class="msg" role="alert"></p>
+        <div class="help-box" id="help-box">
+          <strong class="help-title">🤔 ما وصلك الرمز بعد كم دقيقة؟</strong>
+          <ul>
+            <li>تأكد إنك كاتب الإيميل صح: <bdi id="help-email" dir="ltr"></bdi> — إذا في غلط كبس <b>«تغيير الإيميل»</b>.</li>
+            <li>إذا لسا ما وصل، تواصل معنا على غروب الدعم ومنساعدك تدخل.</li>
+          </ul>
+          <a class="btn-tg" href="https://t.me/karkinlySupportGroup" target="_blank" rel="noopener">💬 تواصل معنا على غروب الدعم</a>
+        </div>
       </div>
 
       <!-- الخطوة 3: الموافقة على الخصوصية وشروط الاستخدام (بعد الدخول) -->
@@ -113,11 +122,11 @@
   <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
 </footer>
 
-<script src="assets/config.js?v=20261123c"></script>
-<script src="assets/auth.js?v=20261123c"></script>
-<script src="assets/policy.js?v=20261123c"></script>
-<script src="assets/community.js?v=20261123c" defer></script>
-<script src="assets/slogan.js?v=20261123c" defer></script>
+<script src="assets/config.js?v=20261126b"></script>
+<script src="assets/auth.js?v=20261126b"></script>
+<script src="assets/policy.js?v=20261126b"></script>
+<script src="assets/community.js?v=20261126b" defer></script>
+<script src="assets/slogan.js?v=20261126b" defer></script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -229,12 +238,15 @@
     var email = $("email").value.trim().toLowerCase();
     if (!isResend) { msg("msg-email", ""); }
     if (!email) { msg("msg-email", ERR.INVALID_EMAIL); return; }
+    // أول مرة بس: إذا الإيميل شكلو فيه غلطة، منوقّف ومنبيّن الاقتراح. الكبسة التانية بتبعت متل ما هو
+    if (!isResend && state.warned !== email && showHint()) { state.warned = email; return; }
     var btn = isResend ? $("btn-resend") : $("btn-send");
     btn.disabled = true;
-    SCAuth.api("requestOtp", { email: email }).then(function (res) {
+    SCAuth.api("requestOtp", { email: email, vid: SCAuth.visitorId(), ua: SCAuth.uaTag() }).then(function (res) {
       if (res && res.ok) {
         state.email = email;
         $("code-sub").textContent = "بعتنا الرمز إلى \u2068" + email + "\u2069.";
+        $("help-email").textContent = email;
         $("spam-note").hidden = false;
         show("step-code"); $("code").value = ""; $("code").focus();
         msg("msg-code", "");
@@ -257,7 +269,7 @@
     var code = $("code").value.replace(/\D/g, "");
     if (code.length !== 6) { msg("msg-code", "الرمز مؤلف من 6 أرقام."); return; }
     $("btn-verify").disabled = true;
-    SCAuth.api("verifyOtp", { email: state.email, code: code, name: $("name").value.trim(), device: device(), ref: savedRef() })
+    SCAuth.api("verifyOtp", { email: state.email, code: code, name: $("name").value.trim(), device: device(), ref: savedRef(), vid: SCAuth.visitorId() })
       .then(function (res) {
         if (res && res.ok) return saveAndGo(res);
         if (res && res.error === "NAME_REQUIRED") { $("name-field").hidden = false; $("name").focus(); return msg("msg-code", ERR.NAME_REQUIRED, true); }
@@ -266,6 +278,39 @@
       .catch(function () { msg("msg-code", ERR.NET); })
       .then(function () { $("btn-verify").disabled = false; });
   }
+
+  // ---- اقتراح تصحيح الإيميل (gmial.com ← gmail.com). ما بيمنع الإرسال، بس بينبّه ----
+  var DOMAINS = ["gmail.com", "hotmail.com", "outlook.com", "yahoo.com", "icloud.com", "live.com", "msn.com"];
+  function dist(a, b) {
+    var d = [], i, j;
+    for (i = 0; i <= a.length; i++) { d[i] = [i]; }
+    for (j = 1; j <= b.length; j++) d[0][j] = j;
+    for (i = 1; i <= a.length; i++) for (j = 1; j <= b.length; j++)
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[a.length][b.length];
+  }
+  function suggestEmail(email) {
+    var m = /^([^\s@]+)@([^\s@]+)$/.exec(email); if (!m) return "";
+    var dom = m[2].replace(/\.+$/, "");
+    if (DOMAINS.indexOf(dom) >= 0) return "";
+    var best = "", bd = 3;
+    DOMAINS.forEach(function (d) {
+      var name = d.split(".")[0];
+      var k = Math.min(dist(dom, d), dom.indexOf(".") < 0 ? dist(dom, name) : 9);
+      if (k < bd) { bd = k; best = d; }
+    });
+    return best && bd <= 2 ? m[1] + "@" + best : "";
+  }
+  function showHint() {
+    var email = $("email").value.trim().toLowerCase(), sug = suggestEmail(email), h = $("email-hint");
+    if (!sug) { h.hidden = true; h.innerHTML = ""; return false; }
+    h.innerHTML = "قصدك <bdi></bdi>؟ <button type=\"button\" class=\"linkbtn\">إي، صحّحه</button>";
+    h.querySelector("bdi").textContent = sug;
+    h.querySelector("button").onclick = function () { $("email").value = sug; h.hidden = true; $("email").focus(); };
+    h.hidden = false; return true;
+  }
+  $("email").addEventListener("blur", showHint);
+  $("email").addEventListener("input", function () { if (!$("email-hint").hidden) showHint(); });
 
   // أزرار
   $("btn-send").addEventListener("click", function () { sendCode(false); });
@@ -277,6 +322,7 @@
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg("msg-email", "اكتب إيميلك أول، نفس الإيميل اللي بعتّو للإدارة."); $("email").focus(); return; }
     state.email = email;
     $("code-sub").textContent = "اكتب الرمز اللي وصلك من الإدارة لـ \u2068" + email + "\u2069.";
+    $("help-email").textContent = email;
     $("spam-note").hidden = true;
     show("step-code"); $("code").value = ""; $("code").focus();
     msg("msg-code", "");
@@ -300,7 +346,7 @@
         client_id: SC_CONFIG.GOOGLE_CLIENT_ID,
         callback: function (resp) {
           msg("msg-email", "");
-          SCAuth.api("googleLogin", { idToken: resp.credential, device: device(), ref: savedRef() })
+          SCAuth.api("googleLogin", { idToken: resp.credential, device: device(), ref: savedRef(), vid: SCAuth.visitorId() })
             .then(function (res) { if (res && res.ok) saveAndGo(res); else msg("msg-email", errText(res)); })
             .catch(function () { msg("msg-email", ERR.NET); });
         }

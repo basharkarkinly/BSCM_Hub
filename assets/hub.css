@@ -434,3 +434,13 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 /* شارة «مجاني» (الصفحة الرئيسية + صفحة الدخول) */
 .free-badge{ display:inline-block; background:#1E9E6A; color:#fff; font-weight:800; font-size:1.02rem; line-height:1.7; border-radius:16px; padding:8px 18px; margin:6px 0 4px; box-shadow:0 6px 18px rgba(30,158,106,.28); }
 .free-badge b{ color:#FFE08A; font-weight:900; }
+
+/* صفحة الدخول: اقتراح تصحيح الإيميل + مساعدة إذا ما وصل الرمز */
+.email-hint{ margin:-6px 0 12px; font-size:.88rem; color:#7A4B00; background:#FFF6E5; border:1px solid #FFD79A; border-radius:10px; padding:8px 12px; }
+.email-hint bdi{ font-weight:800; direction:ltr; unicode-bidi:isolate; }
+.email-hint button{ margin-inline-start:6px; }
+.help-box{ background:#EEF6FF; border:1px solid #C9DDF7; border-radius:12px; padding:10px 14px; margin:14px 0 0; font-size:.86rem; line-height:1.75; color:#1E3A5F; }
+.help-box .help-title{ display:block; margin-bottom:4px; color:#123A6B; }
+.help-box ul{ margin:0 0 8px; padding-inline-start:18px; }
+.help-box .btn-tg{ display:inline-flex; align-items:center; gap:6px; background:#229ED9; color:#fff; font-weight:800; text-decoration:none; border-radius:999px; padding:7px 14px; font-size:.88rem; }
+.help-box .btn-tg:hover{ background:#1B8BC0; }

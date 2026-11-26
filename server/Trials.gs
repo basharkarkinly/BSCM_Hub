@@ -226,6 +226,7 @@ function setupFunnel_() {
   const listTitle = grid.length + 1;
   grid.push(['📋 طلبوا كود وما سجّلوا (الأحدث أول)', '', '', '']);
   grid.push(['الإيميل', 'أول طلب', 'مرات طلب الكود', 'محاولات غلط']);
+  sh.getRange(1, 1, grid.length, 4).setValues(grid);
   sh.getRange('E3').setFormula('=IF(ISNUMBER(B3),TEXT(B3,"yyyy-mm-dd"),TRIM(B3&""))').setFontColor('#B0B7C3').setFontSize(8);
   sh.getRange(grid.length + 1, 1).setFormula(
     '=ARRAYFORMULA(IFERROR(SORT(FILTER({' + O.email + ',' + otpFirst + ',IF(LEN(' + O.sends_total + ')>0,N(+' + O.sends_total + '),N(+' + O.sends + ')),IF(LEN(' + O.wrong_total + ')>0,N(+' + O.wrong_total + '),N(+' + O.fails + '))},' + notDone + '),2,FALSE),"ما في حدا 👌"))');

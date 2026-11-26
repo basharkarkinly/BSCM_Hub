@@ -12,6 +12,7 @@
  *   🏠 رجوع لكل المقررات · 🔔 الإشعارات · 🚪 خروج.
  * - "أهلاً الاسم" بالشريط العلوي جنب الأيقونات.
  * - تحت الشريط العلوي: شريط أبيض فيو أخبار متحرّكة (من تبويب ticker بالشيت) بعرض كامل، وبيختفي إذا ما في أخبار.
+ *   خبر فيه رابط بينكتب «النص || الرابط» (https:// أو مسار صفحة من الموقع) وبيصير قابل للكبس.
  *   مو ثابت: بيطلع مع التمرير. موجود بكل الصفحات (الهب والمقررات). greet:false بيلغي الترحيب والشريط.
  * - إذا ما في .topbar بالصفحة بينشئ واحد.
  * - خيارات: { greet:false, onReady:function(user){}, guest:function(){} }
@@ -46,6 +47,8 @@
     ".scs-tk:hover,.scs-tk.hold{animation-play-state:paused}",
     ".scs-g{display:flex;align-items:center;flex:none}",
     ".scs-it{white-space:nowrap}",
+    "a.scs-it{color:inherit;text-decoration:none;border-bottom:1px dashed #1FB6A8;cursor:pointer}a.scs-it:hover,a.scs-it:focus-visible{color:#0E7C86;border-bottom-style:solid;outline:none}",
+    ".scs-lk{font-size:.85em;margin-inline-start:4px}",
     ".scs-sep{flex:none;width:7px;height:7px;margin:0 26px;background:var(--amber,#FF9F1C);transform:rotate(45deg);border-radius:1px}",
     "@keyframes scsTk{from{transform:translateX(0)}to{transform:translateX(var(--scs-w,0px))}}",
     "@media (prefers-reduced-motion:reduce){.scs-tk{animation:none}.scs-sa{overflow-x:auto;-webkit-mask-image:none;mask-image:none}}",
@@ -181,7 +184,12 @@
     tkItems = items || [];
     if (!tkItems.length) { area.innerHTML = ""; tkSig = ""; strip.hidden = true; return; }
     strip.hidden = false;   // لازم يكون ظاهر قبل القياس تحت
-    var cycle = tkItems.map(function (t) { return '<span class="scs-it">' + esc(t) + '</span><i class="scs-sep" aria-hidden="true"></i>'; }).join("");
+    var cycle = tkItems.map(function (t) {
+      var p = tkParse(t), sep = '<i class="scs-sep" aria-hidden="true"></i>';
+      if (!p.url) return '<span class="scs-it">' + esc(p.text) + '</span>' + sep;
+      var ext = p.ext ? ' target="_blank" rel="noopener"' : '';
+      return '<a class="scs-it" href="' + esc(p.url) + '"' + ext + '>' + esc(p.text) + '<span class="scs-lk" aria-hidden="true">🔗</span></a>' + sep;
+    }).join("");
     var tk = document.createElement("div"); tk.className = "scs-tk";
     var g = document.createElement("div"); g.className = "scs-g"; g.innerHTML = cycle;
     tk.appendChild(g); area.innerHTML = ""; area.appendChild(tk);
@@ -196,6 +204,22 @@
     if (!tkFonts && document.fonts && document.fonts.ready) {   // بعد ما ينزل الخط بيتغيّر العرض، فنعيد الحساب مرة
       tkFonts = true; document.fonts.ready.then(function () { renderTicker(tkItems); });
     }
+  }
+
+  // خبر فيه رابط: «النص || الرابط». الرابط لازم يبلش بـ https:// (أو http://)، أو يكون مسار صفحة من الموقع (مثل courses/BMN503/index.html)
+  function tkParse(raw) {
+    var s = String(raw || ""), i = s.lastIndexOf("||");
+    if (i < 0) return { text: s };
+    var text = s.slice(0, i).trim(), u = s.slice(i + 2).trim();
+    if (!text) text = u;
+    var url = "", ext = false;
+    if (/^https?:\/\/[^\s"'<>]+$/i.test(u)) {
+      try { var x = new URL(u); url = x.href; ext = x.origin !== location.origin; } catch (e) {}
+    } else if (/^[A-Za-z0-9_\-][A-Za-z0-9_\-.\/#?=&%]*$/.test(u) && u.indexOf(":") < 0) {
+      var root = location.pathname.replace(/courses\/.*$/, "").replace(/[^\/]*$/, "");
+      url = root + u;
+    }
+    return url ? { text: text, url: url, ext: ext } : { text: text };
   }
 
   function loadTicker() {

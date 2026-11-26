@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
 <link rel="stylesheet" href="assets/style.css?v=20261126b">
-<link rel="stylesheet" href="assets/hub.css?v=20261126b">
+<link rel="stylesheet" href="assets/hub.css?v=20261126c">
 <script>
   // روابط قديمة لصفحة الدخول (كانت index.html): ?next= و ?deleted=1 → login.html
   // (رابط الدعوة ?ref= بيضل هون: الزائر بيجرّب المواد أول، والكود بينحفظ للتسجيل)
@@ -55,10 +55,12 @@
   <div id="ref-banner" class="notice" hidden>👋 <b>صديقك دعاك للمنصة المجانية!</b> فوت على أي مادة وجرّبها، ولما تسجّل (<b>مجاناً</b>) بتاخد نجوم ترحيب ⭐</div>
 
   <h2 class="section-title">المقررات</h2>
-  <div id="courses-grid" class="courses-grid" aria-live="polite">
-    <div class="course-card skeleton"></div>
-    <div class="course-card skeleton"></div>
-    <div class="course-card skeleton"></div>
+  <div id="courses-grid" class="course-groups" aria-live="polite">
+    <div class="courses-grid">
+      <div class="course-card skeleton"></div>
+      <div class="course-card skeleton"></div>
+      <div class="course-card skeleton"></div>
+    </div>
   </div>
   <p id="courses-msg" class="msg err" hidden></p>
   <div style="height:36px"></div>
@@ -97,17 +99,67 @@
 
   function esc(t) { return (t == null ? "" : String(t)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
 
+  // التجميع حسب عمود الوصف بتبويب courses (نوع المادة): أساسية / مشتركة / تسويق / موارد بشرية / مصارف / لغة
+  var TRACKS = [
+    { id: "mk", name: "تسويق",       re: /تسويق/ },
+    { id: "hr", name: "موارد بشرية", re: /موارد\s*بشري/ },
+    { id: "fb", name: "مصارف",       re: /مصارف|مصرف|مالية|تمويل/ }
+  ];
+  function kindOf(c) {
+    var d = String(c.description || "");
+    if (/[اأ]ساسي|لغة|English/i.test(d)) return "basic";
+    if (TRACKS.some(function (t) { return t.re.test(d); })) return "track";
+    return "common";   // مشتركة، أو أي وصف ما منعرفو
+  }
+  function byCode(a, b) { return String(a.code).localeCompare(String(b.code), "en", { numeric: true }); }
+
+  function card(c) {
+    return '<a class="course-card" data-id="' + esc(c.course_id) + '" href="' + esc(c.url) + '">' +
+      '<span class="code-badge">' + esc(c.code) + '</span>' +
+      '<h3>' + esc(c.title) + '</h3>' +
+      '<span class="open-hint">افتح المقرر ←</span></a>';
+  }
+  function block(cls, icon, title, count, inner) {
+    return '<section class="cg cg-' + cls + '"><div class="cg-head"><span class="cg-icon" aria-hidden="true">' + icon + '</span>' +
+      '<h3>' + title + '</h3>' + (count != null ? '<span class="cg-count">' + count + '</span>' : '') + '</div>' + inner + '</section>';
+  }
+
+  var openTrack = "mk";
   function render(list) {
     list.forEach(function (c) { coursesById[c.course_id] = c; });
-    if (!list.length) { grid.innerHTML = '<div class="soon-box" style="grid-column:1/-1">ما في مقررات متاحة حالياً.</div>'; return; }
-    grid.innerHTML = list.map(function (c) {
-      return '<a class="course-card" data-id="' + esc(c.course_id) + '" href="' + esc(c.url) + '">' +
-        '<span class="code-badge">' + esc(c.code) + '</span>' +
-        '<h3>' + esc(c.title) + '</h3>' +
-        (c.description ? '<p>' + esc(c.description) + '</p>' : '') +
-        '<span class="open-hint">افتح المقرر ←</span></a>';
+    if (!list.length) { grid.innerHTML = '<div class="soon-box">ما في مقررات متاحة حالياً.</div>'; return; }
+    var basic = [], common = [];
+    list.forEach(function (c) { var k = kindOf(c); if (k === "basic") basic.push(c); else if (k === "common") common.push(c); });
+    var isLang = function (c) { return /لغة|English/i.test(String(c.description || "")); };
+    basic.sort(function (a, b) { return (isLang(a) - isLang(b)) || byCode(a, b); });   // الإنكليزي آخر الأساسية
+    common.sort(byCode);
+    var per = TRACKS.map(function (t) {
+      return list.filter(function (c) { return t.re.test(String(c.description || "")); }).sort(byCode);
+    });
+
+    var tabs = '<div class="cg-tabs" role="tablist">' + TRACKS.map(function (t, i) {
+      return '<button type="button" role="tab" class="cg-tab' + (t.id === openTrack ? " on" : "") + '" data-t="' + t.id + '" aria-selected="' + (t.id === openTrack) + '">' +
+        esc(t.name) + (per[i].length ? ' · ' + per[i].length : '') + '</button>';
+    }).join("") + '</div>';
+    var panes = TRACKS.map(function (t, i) {
+      return '<div class="cg-pane" data-t="' + t.id + '"' + (t.id === openTrack ? '' : ' hidden') + '>' +
+        (per[i].length ? '<div class="courses-grid">' + per[i].map(card).join("") + '</div>' : '<div class="cg-soon">قريباً</div>') + '</div>';
     }).join("");
+
+    grid.innerHTML =
+      (basic.length ? block("basic", "🎓", "مواد أساسية", basic.length, '<div class="courses-grid">' + basic.map(card).join("") + '</div>') : '') +
+      (common.length ? block("common", "📚", "مواد مشتركة", common.length, '<div class="courses-grid">' + common.map(card).join("") + '</div>') : '') +
+      block("track", "🎯", "الاختصاصات", null, tabs + panes);
   }
+
+  // أزرار الاختصاصات
+  grid.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest(".cg-tab");
+    if (!b) return;
+    openTrack = b.getAttribute("data-t");
+    grid.querySelectorAll(".cg-tab").forEach(function (x) { var on = x === b; x.classList.toggle("on", on); x.setAttribute("aria-selected", on); });
+    grid.querySelectorAll(".cg-pane").forEach(function (p) { p.hidden = p.getAttribute("data-t") !== openTrack; });
+  });
 
   function loadCourses() {
     var cached = null;

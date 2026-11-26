@@ -173,3 +173,22 @@
 td .sol{ margin:0; }
 td .sol-step{ padding:2px 8px; border:none; background:transparent; }
 .callout .sol-step, .example .sol-step{ background:rgba(255,255,255,.7); }
+
+/* ---------- الأمثلة المحلولة v2: سؤال واضح + خطوة = شرح فوق ومعادلة تحت ---------- */
+details.sol-v2 summary{ align-items:flex-start; gap:10px; }
+details.sol-v2 summary::after{ margin-top:4px; }
+.sum-body{ display:flex; flex-direction:column; gap:6px; flex:1; min-width:0; }
+.sum-tag{ font-size:.8rem; font-weight:700; color:var(--muted); }
+.sum-q{ font-weight:600; line-height:1.9; }
+.sum-q b{ font-weight:800; }
+.sum-m{ direction:ltr; text-align:center; font-weight:400; background:#fff; border:1px solid var(--border); border-radius:10px; padding:6px 10px; overflow-x:auto; }
+.sum-body .sol-hint{ font-size:.8rem; }
+details.sol-v2 > .sol{ margin:12px 14px 14px; gap:4px; }
+.sol-why{ font-weight:700; font-size:.93rem; line-height:1.8; color:var(--ink); }
+.sol-n{ display:inline-block; min-width:1.6em; height:1.6em; line-height:1.6em; text-align:center; border-radius:50%; background:var(--teal); color:#fff; font-size:.8rem; margin-left:6px; }
+details.sol-v2 .sol-step .m{ margin-top:4px; padding:4px 0; overflow-x:auto; overflow-y:hidden; }
+.sol-part{ font-weight:800; color:var(--teal-dark); margin:10px 2px 2px; padding-right:8px; border-right:3px solid var(--teal); }
+.sol-ans{ background:#ECFDF5; border:2px solid var(--success); border-radius:12px; padding:8px 12px; margin-top:8px; }
+.sol-ans .sol-lbl{ color:#047857; font-size:.9rem; }
+.sol-ans .m{ direction:ltr; text-align:center; margin-top:4px; overflow-x:auto; }
+.sol-ans-txt{ text-align:center; font-weight:700; margin-top:4px; line-height:1.8; }

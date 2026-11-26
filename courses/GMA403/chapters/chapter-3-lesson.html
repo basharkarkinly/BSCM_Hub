@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
 <style>.guard{visibility:hidden}</style>
 <link rel="stylesheet" href="../assets/style.css">
-<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="../assets/extras.css?v=20261126">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 <body class="guard">
@@ -27,14 +27,101 @@
 <div class="block" id="props"><h2><span class="idx">1</span> خواص المتراجحات</h2><table class="cmp"><tr><th>العملية</th><th>الاتجاه</th></tr><tr><td>إضافة (أو طرح) عدد حقيقي للطرفين</td><td><b>ما بيتغير</b></td></tr><tr><td>ضرب (أو قسمة) الطرفين بعدد <b>موجب</b></td><td><b>ما بيتغير</b></td></tr><tr><td>ضرب (أو قسمة) الطرفين بعدد <b>سالب</b></td><td><b>بيتعكس</b></td></tr><tr><td>قلب الطرفين (\(\frac1a,\frac1b\)) لعددين بنفس الإشارة</td><td><b>بيتعكس</b>: \(2\lt3\) ← \(\frac12\gt\frac13\)</td></tr><tr><td>جمع متراجحتين بنفس الاتجاه</td><td>نفس الاتجاه</td></tr></table><div id="activity-sort" style="margin-top:16px;"></div><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>«ضرب طرفي المتراجحة بعدد حقيقي لا يغير اتجاهها» ← <b>خطأ</b>، لأنه بيعتمد على إشارة العدد.</p></div></div>
 <div class="block" id="onevar"><h2><span class="idx">2</span> حل متراجحة بمتغير وحيد</h2>
 <p>الحل مجال مو قيمة وحدة. الخطية متل المعادلة (مع انتباه للسالب)، والتربيعية: منوجد الجذور وندرس الإشارة (برّا الجذرين متل \(a\)).</p>
-<details class="accordion"><summary>✍️ \(2x-4\lt0\) و \(3x+12\lt0\) (جملة) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step">\(x\lt2\) و \(x\lt-4\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">الحل المشترك = تقاطع المجالين</span><div class="m">\(x\in]-\infty,-4[\)</div></div></div></details><details class="accordion"><summary>✍️ \(x^2+2x-3\ge0\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\((x+3)(x-1)\ge0\)</div><div class="sol-arrow">⬇</div><div class="sol-step">الجذرين \(-3\) و \(1\) ، و \(a\gt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step">موجب برّا</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x\in]-\infty,-3]\cup[1,+\infty[\)</div></div></details><div class="callout"><span class="tag">💡 هل القيمة حل؟</span><p>عوّض القيمة بكل متراجحة: إذا حققت <b>الكل</b> ← حل مشترك، وإذا فشلت بوحدة ← «لا تحقق المتراجحتين معاً».</p></div><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>\(x^2\gt0\) حلها كل الأعداد الحقيقية <b>عدا الصفر</b> (لأنو \(0^2=0\) مو أكبر من 0).</p></div></div>
+<details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ تمرين</span>
+<span class="sum-q"><b>حل جملة المتراجحتين التالية</b></span>
+<span class="sum-m">\(\displaystyle 2x-4\lt0\)</span>
+<span class="sum-m">\(\displaystyle 3x+12\lt0\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-part">المتراجحة الأولى</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منقل 4 ومنقسم على 2. يعني \(x\) أصغر من 2</div><div class="m">\(\displaystyle 2x\lt4\ \Rightarrow\ x\lt2\)</div></div>
+<div class="sol-part">المتراجحة التانية</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منقل 12 ومنقسم على 3. يعني \(x\) أصغر من \(-4\)</div><div class="m">\(\displaystyle 3x\lt-12\ \Rightarrow\ x\lt-4\)</div></div>
+<div class="sol-part">الحل المشترك</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>لازم يتحققوا الاتنين سوا ← تقاطع المجالين (أصغر من \(-4\) بتحقق الاتنين)</div><div class="m">\(\displaystyle x\lt-4\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x\in\left]-\infty,-4\right[\)</div></div>
+</div></details><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ تمرين</span>
+<span class="sum-q"><b>حل المتراجحة التالية</b></span>
+<span class="sum-m">\(\displaystyle x^2+2x-3\ge0\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منحلل: عددين جداؤهم \(-3\) ومجموعهم 2</div><div class="m">\(\displaystyle (x+3)(x-1)\ge0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>الجذور</div><div class="m">\(\displaystyle x=-3\qquad x=1\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>أمثال \(x^2\) موجب ← العبارة موجبة <b>برّا</b> الجذرين</div><div class="m">\(\displaystyle a=1\gt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>بدنا أكبر أو يساوي الصفر، فالجذرين داخل الحل</div><div class="m">\(\displaystyle x\le-3\quad\text{أو}\quad x\ge1\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle x\in\left]-\infty,-3\right]\cup\left[1,+\infty\right[\)</div></div>
+</div></details><div class="callout"><span class="tag">💡 هل القيمة حل؟</span><p>عوّض القيمة بكل متراجحة: إذا حققت <b>الكل</b> ← حل مشترك، وإذا فشلت بوحدة ← «لا تحقق المتراجحتين معاً».</p></div><div class="example"><span class="tag">⚠️ فخ امتحان</span><p>\(x^2\gt0\) حلها كل الأعداد الحقيقية <b>عدا الصفر</b> (لأنو \(0^2=0\) مو أكبر من 0).</p></div></div>
 <div class="block" id="twovar"><h2><span class="idx">3</span> جملة متراجحات بمتغيرين</h2>
 <p>منحوّل كل متراجحة لمعادلة، منرسم المستقيم (نقطتين: \(x=0\) ثم \(y=0\))، منوجد نقطة التقاطع بالحل المشترك، ومنحدد المنطقة المشتركة. <b>الرسم بيشتغل بس لمتغيرين</b> (مو لأي عدد متغيرات).</p>
-<details class="accordion"><summary>✍️ \(4x+y\ge20\) و \(3x+2y\ge30\): نقطة التقاطع <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step m">\(8x+2y=40\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(3x+2y=30\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">بالطرح</span><div class="m">\(5x=10\) ← \(x=2\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(y=12\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(M(2,12)\)</div></div></details></div>
-<div class="block" id="breakeven"><h2><span class="idx">4</span> القيود الاقتصادية: الربح ونقطة التعادل</h2><table class="cmp"><tr><th>السؤال</th><th>المتراجحة</th></tr><tr><td>متى المحل رابح؟</td><td>\(F(x)=R(x)-C(x)\gt0\)</td></tr><tr><td>كم قطعة لتغطية التكاليف الثابتة؟</td><td>\(R(x)\ge F_c\)</td></tr></table><details class="accordion"><summary>✍️ مثال الملخص: ثابتة 5000، تكلفة القطعة 100، سعر بيعها 150 <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step">\(C(x)=5000+100x\) ، \(R(x)=150x\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(F(x)=50x-5000\gt0\)</div><div class="sol-arrow">⬇</div><div class="sol-step">رابح لما \(x\gt100\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">تغطية الثابتة</span><div class="m">\(150x\ge5000\) ← \(x\ge33.33\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step">يعني 34 قطعة على الأقل</div></div></details></div>
+<details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ تمرين</span>
+<span class="sum-q"><b>أوجد نقطة تقاطع مستقيمَي المتراجحتين التاليتين</b></span>
+<span class="sum-m">\(\displaystyle 4x+y\ge20\)</span>
+<span class="sum-m">\(\displaystyle 3x+2y\ge30\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منحوّل المتراجحتين لمعادلتين</div><div class="m">\(\displaystyle 4x+y=20\qquad 3x+2y=30\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منضرب الأولى بـ 2 ليصير أمثال \(y\) نفسه</div><div class="m">\(\displaystyle 8x+2y=40\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منطرح التانية من الأولى ← بتنحذف \(y\)</div><div class="m">\(\displaystyle (8x+2y)-(3x+2y)=40-30\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منبسّط</div><div class="m">\(\displaystyle 5x=10\ \Rightarrow\ x=2\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منعوّض \(x=2\) بالأولى</div><div class="m">\(\displaystyle 4(2)+y=20\ \Rightarrow\ y=12\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle M(2,\,12)\)</div></div>
+</div></details></div>
+<div class="block" id="breakeven"><h2><span class="idx">4</span> القيود الاقتصادية: الربح ونقطة التعادل</h2><table class="cmp"><tr><th>السؤال</th><th>المتراجحة</th></tr><tr><td>متى المحل رابح؟</td><td>\(F(x)=R(x)-C(x)\gt0\)</td></tr><tr><td>كم قطعة لتغطية التكاليف الثابتة؟</td><td>\(R(x)\ge F_c\)</td></tr></table><details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ مثال الملخص</span>
+<span class="sum-q">محل تكاليفه الثابتة 5000، وتكلفة القطعة 100، وسعر بيعها 150. <b>أ) متى المحل رابح؟ ب) كم قطعة لازم يبيع ليغطي التكاليف الثابتة؟</b></span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>التكاليف = الثابتة + المتغيرة</div><div class="m">\(\displaystyle C(x)=5000+100x\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>الإيرادات = السعر × الكمية</div><div class="m">\(\displaystyle R(x)=150x\)</div></div>
+<div class="sol-part">أ) متى رابح</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>الربح = الإيرادات − التكاليف، وبدنا يكون موجب</div><div class="m">\(\displaystyle F(x)=150x-(5000+100x)\gt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منبسّط</div><div class="m">\(\displaystyle 50x-5000\gt0\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منقل 5000 ومنقسم على 50. يعني \(x\) أكبر من 100</div><div class="m">\(\displaystyle x\gt100\)</div></div>
+<div class="sol-part">ب) تغطية التكاليف الثابتة</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑥</span>الإيرادات لازم تكون أكبر أو تساوي الثابتة</div><div class="m">\(\displaystyle 150x\ge5000\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑦</span>منقسم على 150</div><div class="m">\(\displaystyle x\ge33.33\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="sol-ans-txt">أ) رابح لما يبيع أكتر من 100 قطعة &nbsp;·&nbsp; ب) لازم يبيع 34 قطعة على الأقل</div></div>
+</div></details></div>
 <div class="block" id="lp"><h2><span class="idx">5</span> البرمجة الخطية</h2><div class="quick-grid"><div class="quick-card"><b>دالة الهدف</b>تعظيم ربح <strong>Max</strong> أو تخفيض تكلفة <strong>Min</strong></div><div class="quick-card"><b>القيود</b>متراجحات تمثل الموارد المحدودة</div><div class="quick-card"><b>شرط عدم السلبية</b>كل المتغيرات \(\ge0\)</div></div>
 <p style="margin-top:10px">الحل: نحول القيود لمعادلات، نرسمها، نوجد نقطة التقاطع بالحل المشترك، ونعوّضها بدالة الهدف. (قيود ≤ ← المنطقة تحت المستقيمات وغالباً Max، وقيود ≥ ← فوقها وغالباً Min.)</p>
-<details class="accordion"><summary>✍️ \(\max Z=10x_1+15x_2\) مع \(2x_1+4x_2\le40\) و \(6x_1+2x_2\le60\) <span class="sol-hint">— اضغط عالسهم لترى الحل</span></summary><div class="sol"><div class="sol-step">\(2x_1+4x_2=40\) و \(12x_1+4x_2=120\)</div><div class="sol-arrow">⬇</div><div class="sol-step"><span class="sol-lbl">بالطرح</span><div class="m">\(10x_1=80\) ← \(x_1=8\)</div></div><div class="sol-arrow">⬇</div><div class="sol-step m">\(x_2=6\)</div><div class="sol-arrow">⬇</div><div class="sol-step m">\(Z=10(8)+15(6)=170\)</div></div></details></div>
+<details class="accordion sol-v2">
+<summary><span class="sum-body">
+<span class="sum-tag">✍️ برمجة خطية</span>
+<span class="sum-q"><b>أوجد القيمة العظمى لدالة الهدف مع القيود التالية</b></span>
+<span class="sum-m">\(\displaystyle \max Z=10x_1+15x_2\)</span>
+<span class="sum-m">\(\displaystyle 2x_1+4x_2\le40\)</span>
+<span class="sum-m">\(\displaystyle 6x_1+2x_2\le60\)</span>
+<span class="sol-hint">اضغط لتشوف الحل خطوة خطوة ⬇</span></span></summary>
+<div class="sol">
+<div class="sol-step"><div class="sol-why"><span class="sol-n">①</span>منحوّل القيود لمعادلات</div><div class="m">\(\displaystyle 2x_1+4x_2=40\qquad 6x_1+2x_2=60\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">②</span>منضرب التانية بـ 2 ليصير أمثال \(x_2\) نفسه</div><div class="m">\(\displaystyle 12x_1+4x_2=120\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">③</span>منطرح الأولى منها ← بتنحذف \(x_2\)</div><div class="m">\(\displaystyle 10x_1=80\ \Rightarrow\ x_1=8\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">④</span>منعوّض \(x_1=8\) بالأولى</div><div class="m">\(\displaystyle 2(8)+4x_2=40\ \Rightarrow\ x_2=6\)</div></div>
+<div class="sol-arrow">⬇</div>
+<div class="sol-step"><div class="sol-why"><span class="sol-n">⑤</span>منعوّض نقطة التقاطع بدالة الهدف</div><div class="m">\(\displaystyle Z=10(8)+15(6)=80+90\)</div></div>
+<div class="sol-ans"><span class="sol-lbl">✅ الجواب</span><div class="m">\(\displaystyle Z_{\max}=170\)</div><div class="sol-ans-txt">عند \(x_1=8\) و \(x_2=6\)</div></div>
+</div></details></div>
 <div id="case-study-mount"></div>
 <div class="block" id="flash"><h2><span class="idx">🗂️</span> بطاقات فلاش — اضغط على البطاقة لتقلبها</h2><div id="activity-flash"></div></div>
 <div class="next-actions">

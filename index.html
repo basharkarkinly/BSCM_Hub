@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
 <link rel="stylesheet" href="assets/style.css?v=20261126b">
-<link rel="stylesheet" href="assets/hub.css?v=20261126d">
+<link rel="stylesheet" href="assets/hub.css?v=20261126e">
 <script>
   // روابط قديمة لصفحة الدخول (كانت index.html): ?next= و ?deleted=1 → login.html
   // (رابط الدعوة ?ref= بيضل هون: الزائر بيجرّب المواد أول، والكود بينحفظ للتسجيل)
@@ -142,7 +142,7 @@
     }).join("") + '</div>';
 
     grid.innerHTML =
-      (basic.length ? block("basic", "🎓", "مواد أساسية", basic.length, '<div class="courses-grid">' + basic.map(card).join("") + '</div>') : '') +
+      (basic.length ? block("basic", "🎓", "مواد أساسية", basic.length, '<div class="courses-grid cg-4">' + basic.map(card).join("") + '</div>') : '') +
       (common.length ? block("common", "📚", "مواد مشتركة", common.length, '<div class="courses-grid cg-4">' + common.map(card).join("") + '</div>') : '') +
       block("track", "🎯", "الاختصاصات", null, tracks);
   }

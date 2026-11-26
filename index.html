@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
 <link rel="stylesheet" href="assets/style.css?v=20261126b">
-<link rel="stylesheet" href="assets/hub.css?v=20261126c">
+<link rel="stylesheet" href="assets/hub.css?v=20261126e">
 <script>
   // روابط قديمة لصفحة الدخول (كانت index.html): ?next= و ?deleted=1 → login.html
   // (رابط الدعوة ?ref= بيضل هون: الزائر بيجرّب المواد أول، والكود بينحفظ للتسجيل)
@@ -124,7 +124,6 @@
       '<h3>' + title + '</h3>' + (count != null ? '<span class="cg-count">' + count + '</span>' : '') + '</div>' + inner + '</section>';
   }
 
-  var openTrack = "mk";
   function render(list) {
     list.forEach(function (c) { coursesById[c.course_id] = c; });
     if (!list.length) { grid.innerHTML = '<div class="soon-box">ما في مقررات متاحة حالياً.</div>'; return; }
@@ -137,29 +136,16 @@
       return list.filter(function (c) { return t.re.test(String(c.description || "")); }).sort(byCode);
     });
 
-    var tabs = '<div class="cg-tabs" role="tablist">' + TRACKS.map(function (t, i) {
-      return '<button type="button" role="tab" class="cg-tab' + (t.id === openTrack ? " on" : "") + '" data-t="' + t.id + '" aria-selected="' + (t.id === openTrack) + '">' +
-        esc(t.name) + (per[i].length ? ' · ' + per[i].length : '') + '</button>';
+    var tracks = '<div class="cg-tracks">' + TRACKS.map(function (t, i) {
+      return '<div class="cg-sub"><div class="cg-sub-head">' + esc(t.name) + (per[i].length ? '<span class="cg-count">' + per[i].length + '</span>' : '') + '</div>' +
+        (per[i].length ? '<div class="cg-list">' + per[i].map(card).join("") + '</div>' : '<div class="cg-soon">قريباً</div>') + '</div>';
     }).join("") + '</div>';
-    var panes = TRACKS.map(function (t, i) {
-      return '<div class="cg-pane" data-t="' + t.id + '"' + (t.id === openTrack ? '' : ' hidden') + '>' +
-        (per[i].length ? '<div class="courses-grid">' + per[i].map(card).join("") + '</div>' : '<div class="cg-soon">قريباً</div>') + '</div>';
-    }).join("");
 
     grid.innerHTML =
-      (basic.length ? block("basic", "🎓", "مواد أساسية", basic.length, '<div class="courses-grid">' + basic.map(card).join("") + '</div>') : '') +
-      (common.length ? block("common", "📚", "مواد مشتركة", common.length, '<div class="courses-grid">' + common.map(card).join("") + '</div>') : '') +
-      block("track", "🎯", "الاختصاصات", null, tabs + panes);
+      (basic.length ? block("basic", "🎓", "مواد أساسية", basic.length, '<div class="courses-grid cg-4">' + basic.map(card).join("") + '</div>') : '') +
+      (common.length ? block("common", "📚", "مواد مشتركة", common.length, '<div class="courses-grid cg-4">' + common.map(card).join("") + '</div>') : '') +
+      block("track", "🎯", "الاختصاصات", null, tracks);
   }
-
-  // أزرار الاختصاصات
-  grid.addEventListener("click", function (e) {
-    var b = e.target.closest && e.target.closest(".cg-tab");
-    if (!b) return;
-    openTrack = b.getAttribute("data-t");
-    grid.querySelectorAll(".cg-tab").forEach(function (x) { var on = x === b; x.classList.toggle("on", on); x.setAttribute("aria-selected", on); });
-    grid.querySelectorAll(".cg-pane").forEach(function (p) { p.hidden = p.getAttribute("data-t") !== openTrack; });
-  });
 
   function loadCourses() {
     var cached = null;

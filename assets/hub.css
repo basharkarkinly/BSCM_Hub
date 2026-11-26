@@ -95,17 +95,20 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .cg .course-card{ min-height:0; padding:14px; gap:4px; box-shadow:none; }
 .cg .course-card h3{ font-size:.98rem; line-height:1.6; }
 .cg .open-hint{ padding-top:6px; font-size:.8rem; }
-.cg-tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
-.cg-tab{ font:inherit; font-size:.88rem; font-weight:700; border-radius:999px; padding:6px 16px; cursor:pointer;
-  background:#fff; color:#4A3FA8; border:1.5px solid #D9D4FA; }
-.cg-tab.on{ background:#5B4FD1; border-color:#5B4FD1; color:#fff; }
-.cg-tab:focus-visible{ outline:2px solid #5B4FD1; outline-offset:2px; }
-.cg-soon{ text-align:center; font-weight:700; color:#5B4FD1; background:#fff; border:1.5px dashed #D9D4FA; border-radius:var(--radius-sm); padding:22px; }
+.cg .courses-grid.cg-4{ grid-template-columns:repeat(4,minmax(0,1fr)); }
+.cg-tracks{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.cg-sub{ background:rgba(255,255,255,.55); border:1px solid #D9D4FA; border-radius:var(--radius-sm); padding:12px; display:flex; flex-direction:column; gap:10px; }
+.cg-sub-head{ display:flex; align-items:center; gap:8px; font-weight:800; color:#4A3FA8; }
+.cg-list{ display:flex; flex-direction:column; gap:8px; }
+.cg-soon{ flex:1; display:flex; align-items:center; justify-content:center; font-weight:700; color:#5B4FD1; background:#fff; border:1.5px dashed #D9D4FA; border-radius:var(--radius-sm); padding:22px; }
+@media (max-width:900px){ .cg .courses-grid.cg-4{ grid-template-columns:repeat(3,minmax(0,1fr)); } .cg-tracks{ grid-template-columns:1fr; } }
 @media (max-width:520px){
   .courses-grid{ grid-template-columns:1fr; }
   .course-card{ min-height:0; padding:18px; }
   .cg{ padding:12px; }
   .cg .courses-grid{ grid-template-columns:1fr 1fr; gap:8px; }
+  .cg .courses-grid.cg-4{ grid-template-columns:1fr 1fr; }
+  .cg-list{ display:grid; grid-template-columns:1fr 1fr; }
   .cg .course-card{ padding:10px; }
   .cg .course-card h3{ font-size:.9rem; }
   .cg .code-badge{ font-size:.68rem; padding:2px 8px; }

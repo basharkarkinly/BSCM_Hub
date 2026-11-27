@@ -117,7 +117,8 @@
     ls(K.pend, null);
     var box = open(
       '<h2>' + (reason === "gate" ? "ولا يهمك! بس قبل ما تروح 🙏" : "رأيك بيهمنا 🙏") + '</h2>' +
-      '<p class="scf-p">شو اللي خلاك ما تسجّل؟ رأيك بيساعدنا نعرف شو لازم نحسّن.</p>' +
+      '<p class="scf-p">لهلّق ما اشتركت بالمنصة؟! 🤔 التسجيل عالمنصة <b>مجاني</b>، وضروري حتى تضل حافظ وين صرت بالدراسة وتكمّل صح.<br>' +
+      'رأيك بيساعدنا نعرف شو لازم نحسّن، حتى اللي عم يزور المنصة بس، يصير من العيلة ❤️</p>' +
       starsHtml() + chipsHtml(FB_CHIPS) + '<div class="scf-sols"></div>' +
       '<textarea class="scf-ta" maxlength="400" placeholder="اكتب هون... (إجباري)"></textarea>' +
       '<div class="scf-err" role="alert"></div>' +
@@ -234,13 +235,27 @@
     }).catch(function () {});
   }
 
+  function allCourses() {
+    var l = []; try { l = JSON.parse(localStorage.getItem("sc_courses") || "null") || []; } catch (e) {}
+    return l.slice().sort(function (x, y) { return String(x.code).localeCompare(String(y.code), "en", { numeric: true }); });
+  }
   function showMemberReview(token, name, used) {
     if (!canShow()) return;
-    var courses = {}; try { (JSON.parse(localStorage.getItem("sc_courses") || "null") || []).forEach(function (c) { courses[c.course_id] = c.title; }); } catch (e) {}
-    var opts = used.filter(function (id) { return courses[id]; });
-    var sel = opts.length ? '<label class="scf-lbl" for="scf-c">عن أي مادة؟</label><select id="scf-c" class="scf-sel">' +
-      opts.map(function (id) { return '<option value="' + esc(id) + '">' + esc(courses[id]) + '</option>'; }).join("") +
-      '<option value="">المنصة بشكل عام</option></select>' : '';
+    var list = allCourses();
+    if (!list.length) {   // ما في نسخة من المواد عالجهاز → منجيبها أول
+      SCAuth.api("getCourses", { token: token }).then(function (res) {
+        if (res && res.ok) try { localStorage.setItem("sc_courses", JSON.stringify(res.courses || [])); } catch (e) {}
+        drawMemberReview(token, name, allCourses());
+      }).catch(function () { drawMemberReview(token, name, []); });
+      return;
+    }
+    drawMemberReview(token, name, list);
+  }
+  function drawMemberReview(token, name, list) {
+    if (!canShow()) return;
+    var sel = '<label class="scf-lbl" for="scf-c">عن أي مادة عم تحكي؟</label><select id="scf-c" class="scf-sel">' +
+      '<option value="">ما في مادة محددة</option>' +
+      list.map(function (c) { return '<option value="' + esc(c.course_id) + '">' + esc(c.title) + '</option>'; }).join("") + '</select>';
     var sent = false;
     var box = open('<h2>أهلاً ' + esc(name || "") + '! شو رأيك بالمنصة؟ 💬</h2>' +
       '<p class="scf-p">رأيك بيساعد طلاب غيرك يعرفوا إذا المنصة بتفيدهم. ولما ينعرض بالصفحة الرئيسية بتاخد <b>3 نجوم ⭐</b></p>' +

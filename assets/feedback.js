@@ -43,6 +43,7 @@
     ".scf-chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}",
     ".scf-chip{font:inherit;font-size:.8rem;font-weight:700;border:1.5px solid #E3E7F0;background:#fff;color:#3A465A;border-radius:999px;padding:5px 12px;cursor:pointer}",
     ".scf-chip.on{background:#EFFBF8;border-color:#1FB6A8;color:#0E7C86}",
+    ".scf-chip.fix.on{background:#FFF6E5;border-color:#FF9F1C;color:#7A4B00}",
     ".scf-sol{background:#EFFBF8;border:1px solid #BFEDE6;color:#0B5F58;border-radius:12px;padding:9px 12px;font-size:.84rem;line-height:1.8;margin:0 0 8px}",
     ".scf-sol a{color:#0E7C86;font-weight:800}",
     ".scf-mail{display:flex;gap:6px;margin-top:8px}",
@@ -211,7 +212,8 @@
   }
 
   /* ================= العضو ================= */
-  var RV_CHIPS = ["الشرح بسيط وواضح", "أسئلة الدورات فادتني", "التدريب ساعدني بالامتحان", "بلاقي جواب لأسئلتي"];
+  var RV_GOOD = ["الشرح بسيط وواضح", "أسئلة الدورات فادتني", "التدريب ساعدني بالامتحان", "بلاقي جواب لأسئلتي"];
+  var RV_FIX = ["بدي مواد أكتر", "في شرح مو واضح", "بدي أسئلة أكتر", "الموقع بطيء أحياناً"];
 
   function usedCourses() {
     var ids = [];
@@ -258,8 +260,10 @@
       list.map(function (c) { return '<option value="' + esc(c.course_id) + '">' + esc(c.title) + '</option>'; }).join("") + '</select>';
     var sent = false;
     var box = open('<h2>أهلاً ' + esc(name || "") + '! شو رأيك بالمنصة؟ 💬</h2>' +
-      '<p class="scf-p">رأيك بيساعد طلاب غيرك يعرفوا إذا المنصة بتفيدهم. ولما ينعرض بالصفحة الرئيسية بتاخد <b>3 نجوم ⭐</b></p>' +
-      starsHtml() + chipsHtml(RV_CHIPS) + sel +
+      '<p class="scf-p">قلّنا الحلو والمو حلو، رأيك الصريح بيساعدنا نحسّن وبيساعد طلاب غيرك. ولما ينعرض بالصفحة الرئيسية بتاخد <b>3 نجوم ⭐</b></p>' +
+      starsHtml() +
+      '<span class="scf-lbl">👍 شو عجبك؟</span>' + chipsHtml(RV_GOOD) +
+      '<span class="scf-lbl">🛠️ شو بدو تحسين؟</span>' + chipsHtml(RV_FIX).replace(/scf-chip"/g, 'scf-chip fix"') + sel +
       '<textarea class="scf-ta" maxlength="400" placeholder="اكتب رأيك بكلماتك... (إجباري)"></textarea>' +
       '<div class="scf-err" role="alert"></div>' +
       '<div class="scf-row"><button type="button" class="scf-btn scf-send">إرسال</button><button type="button" class="scf-btn2 scf-later">لاحقاً</button></div>',

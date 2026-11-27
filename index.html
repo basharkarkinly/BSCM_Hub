@@ -6,8 +6,8 @@
 <title>المقررات — Support Channel</title>
 <link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon.png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/style.css?v=20261127b">
-<link rel="stylesheet" href="assets/hub.css?v=20261127b">
+<link rel="stylesheet" href="assets/style.css?v=20261127c">
+<link rel="stylesheet" href="assets/hub.css?v=20261127c">
 <script>
   // روابط قديمة لصفحة الدخول (كانت index.html): ?next= و ?deleted=1 → login.html
   // (رابط الدعوة ?ref= بيضل هون: الزائر بيجرّب المواد أول، والكود بينحفظ للتسجيل)
@@ -80,11 +80,11 @@
   <div class="copyright"> جميع الحقوق محفوظة Support Channel 🔵 2026</div>
 </footer>
 
-<script src="assets/config.js?v=20261127b"></script>
-<script src="assets/auth.js?v=20261127b"></script>
-<script src="assets/shell.js?v=20261127b"></script>
-<script src="assets/community.js?v=20261127b" defer></script>
-<script src="assets/slogan.js?v=20261127b" defer></script>
+<script src="assets/config.js?v=20261127c"></script>
+<script src="assets/auth.js?v=20261127c"></script>
+<script src="assets/shell.js?v=20261127c"></script>
+<script src="assets/community.js?v=20261127c" defer></script>
+<script src="assets/slogan.js?v=20261127c" defer></script>
 <script>
   SCShell.init({
     guest: function () {},
@@ -178,6 +178,7 @@
   // ---- شريط الآراء (من تبويب reviews، الموافَق عليها بس). ما بيطلع قبل 3 آراء ----
   (function () {
     var sec = document.getElementById("reviews"), row = document.getElementById("reviews-row");
+    var FIX = ["بدي مواد أكتر", "في شرح مو واضح", "بدي أسئلة أكتر", "الموقع بطيء أحياناً"];
     function stars(n) { var h = ""; for (var i = 1; i <= 5; i++) h += i <= n ? "★" : "☆"; return h; }
     function show(list) {
       if (!list || list.length < 3) { sec.hidden = true; return; }
@@ -185,7 +186,7 @@
         return '<article class="rv-card"><div class="rv-top"><b>' + esc(r.name) + '</b><span class="rv-st" aria-label="' + r.stars + ' من 5">' + stars(r.stars) + '</span></div>' +
           (r.course ? '<div class="rv-c">عن مادة ' + esc(r.course) + '</div>' : '') +
           '<p>' + esc(r.text) + '</p>' +
-          ((r.chips || []).length ? '<div class="rv-tags">' + r.chips.map(function (c) { return '<span>' + esc(c) + '</span>'; }).join("") + '</div>' : '') +
+          ((r.chips || []).length ? '<div class="rv-tags">' + r.chips.map(function (c) { return '<span' + (FIX.indexOf(c) >= 0 ? ' class="fix"' : '') + '>' + esc(c) + '</span>'; }).join("") + '</div>' : '') +
           '</article>';
       }).join("");
       sec.hidden = false;

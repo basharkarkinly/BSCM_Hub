@@ -486,3 +486,4 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .rv-tags{ display:flex; flex-wrap:wrap; gap:4px; margin-top:auto; }
 .rv-tags span{ font-size:.72rem; font-weight:700; color:var(--teal-dark); background:#EFFBF8; border:1px solid #BFEDE6; border-radius:999px; padding:1px 8px; }
 @media (max-width:520px){ .rv-card{ flex-basis:82%; } }
+.rv-tags span.fix{ color:#7A4B00; background:#FFF6E5; border-color:#FFD79A; }

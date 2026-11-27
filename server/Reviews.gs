@@ -37,6 +37,36 @@ const RV_CHIPS_ = ['الشرح بسيط وواضح', 'أسئلة الدورات 
 const EMAIL_RE_ = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
 
 /* ============ الإعداد (مرة وحدة) ============ */
+/** مربعات approved بس لصفوف الآراء. لو حطيناها للعمود كلو، الشيت بيعتبر الصفوف الفاضية «مليانة»
+ *  وبيصير appendRow يكتب الآراء الجديدة بعد الصف 1000. */
+function reviewCheckbox_(sh, fromRow, n) {
+  if (n < 1) return;
+  sh.getRange(fromRow, REVIEWS_COLS_.indexOf('approved') + 1, n, 1)
+    .setDataValidation(SpreadsheetApp.newDataValidation().requireCheckbox('TRUE', 'FALSE').setAllowInvalid(true).build());
+}
+
+/** تشغيل مرة وحدة: بيشيل الصفوف الفاضية (ما إلها review_id) من تبويب reviews، وبيطلّع الآراء لفوق
+ *  (بعد صف العناوين مباشرة)، وبيحط مربعات الموافقة بس للآراء. الأعمدة والقيم ما بتتغير. */
+function fixReviewsSheet() {
+  return withLock_(function () {
+    const sh = ss_().getSheetByName('reviews');
+    const lastCol = sh.getLastColumn(), maxRows = sh.getMaxRows();
+    if (maxRows < 2) return;
+    const head = sh.getRange(1, 1, 1, lastCol).getValues()[0].map(String);
+    const idc = head.indexOf('review_id');
+    const all = sh.getRange(2, 1, maxRows - 1, lastCol).getValues();
+    const keep = all.filter(function (r) { return String(r[idc] || '').trim(); });
+    const body = sh.getRange(2, 1, maxRows - 1, lastCol);
+    body.clearDataValidations(); body.clearContent();
+    if (keep.length) {
+      sh.getRange(2, 1, keep.length, lastCol).setValues(keep);
+      reviewCheckbox_(sh, 2, keep.length);
+    }
+    cache_().remove('pub_reviews');
+    console.log('reviews: ' + keep.length + ' رأي، والصفوف الفاضية انشالت ✔');
+  });
+}
+
 function setupReviews() {
   ensureSheet_('feedback', FEEDBACK_COLS_); ensureCols_('feedback', FEEDBACK_COLS_);
   ensureSheet_('reviews', REVIEWS_COLS_);   ensureCols_('reviews', REVIEWS_COLS_);
@@ -51,11 +81,8 @@ function setupReviews() {
                       daily_cap: '', enabled: 'TRUE', show: 'TRUE' });
     }
   }
-  const rv = ss_().getSheetByName('reviews');
-  rv.setFrozenRows(1);
-  const ap = REVIEWS_COLS_.indexOf('approved') + 1;
-  rv.getRange(2, ap, Math.max(rv.getMaxRows() - 1, 1), 1)
-    .setDataValidation(SpreadsheetApp.newDataValidation().requireCheckbox('TRUE', 'FALSE').setAllowInvalid(true).build());
+  ss_().getSheetByName('reviews').setFrozenRows(1);
+  fixReviewsSheet();
   ss_().getSheetByName('feedback').setFrozenRows(1);
   clearStarsCaches_();
   cache_().remove('pub_reviews');
@@ -193,6 +220,7 @@ function submitReview_(req) {
     email: s.email, name: String(o.name || ''), stars: stars, chips: chips.join(' · '), text: text,
     course_id: course, approved: false, stars_granted: ''
   });
+  reviewCheckbox_(t.sh, t.sh.getLastRow(), 1);   // مربع الموافقة للصف الجديد بس
   const u = table_('users'), i = findEmailRow_(u, s.email);
   if (i >= 0) updateRow_(u, i, { review_state: 'done' });
   return { ok: true };

@@ -6,12 +6,12 @@
 <link rel="icon" type="image/png" sizes="192x192" href="../../../assets/img/favicon.png">
 <link rel="apple-touch-icon" href="../../../assets/img/favicon.png">
 <style>.guard{visibility:hidden}</style>
-<link rel="stylesheet" href="../assets/style.css">
-<link rel="stylesheet" href="../assets/extras.css">
+<link rel="stylesheet" href="../assets/style.css?v=20261127a">
+<link rel="stylesheet" href="../assets/extras.css?v=20261127a">
 </head>
 <body class="guard">
 <div class="topbar">
-  <div class="brand"><a href="../../../index.html" title="الصفحة الرئيسية" style="display:flex;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"></a><a href="../index.html" style="text-decoration:none;">BAC402 — مبادئ المحاسبة 1</a></div>
+  <div class="brand"><a href="../../../index.html" title="الصفحة الرئيسية" style="display:flex;"><img src="../assets/img/support-channel-logo.png" alt="Support Channel" class="brand-logo"></a><a href="../index.html" style="text-decoration:none;">BAC402 — مبادئ المحاسبة 2</a></div>
   <nav><a href="../index.html">خارطة المقرر</a></nav>
 </div>
 <div class="lesson-header">
@@ -25,39 +25,44 @@
   <div class="block" id="formulas">
     <h2><span class="idx">🧮</span> ورقة القوانين</h2>
     <table class="cmp"><tr><th>المطلوب</th><th>القانون</th></tr>
-      <tr><td><b>حقوق الملكية</b></td><td>الأصول − الالتزامات</td></tr>
-      <tr><td><b>تغيّر الأصول</b></td><td>تغيّر الالتزامات + تغيّر حقوق الملكية</td></tr>
-      <tr><td><b>صافي الربح</b></td><td>الإيرادات − المصاريف</td></tr>
-      <tr><td><b>حقوق الملكية آخر المدة</b></td><td>أول المدة + الاستثمارات + صافي الربح − المسحوبات</td></tr>
-      <tr><td><b>مصروف القرطاسية</b></td><td>رصيد القرطاسية − الباقي بالجرد</td></tr>
-      <tr><td><b>قسط المدفوع مقدماً</b></td><td>المبلغ ÷ عدد الأشهر × الأشهر اللي مرقت</td></tr>
-      <tr><td><b>القيمة الدفترية</b></td><td>التكلفة − مجمع الاهتلاك</td></tr>
-      <tr><td><b>صافي المبيعات</b></td><td>المبيعات − المردودات والمسموحات − الخصم الممنوح</td></tr>
-      <tr><td><b>صافي المشتريات</b></td><td>المشتريات + نقل المشتريات − المردودات − الخصم المكتسب</td></tr>
+      <tr><td><b>الرصيد الفعلي للمصروف أو الإيراد</b></td><td>ما يخص العام (الشهري × 12، أو المبلغ × النسبة × الأشهر ÷ 12)</td></tr>
+      <tr><td><b>الرصيد الدفتري المعدّل</b></td><td>رصيد الميزان + المقدّم المدوّر − المستحق المدوّر</td></tr>
+      <tr><td><b>تكلفة المخزون</b></td><td>سعر الشراء + كل مصاريف جلبو ووضعو بمكانو</td></tr>
+      <tr><td><b>متوسط التكلفة (جرد دوري)</b></td><td>تكلفة المتاح للبيع ÷ وحدات المتاح للبيع</td></tr>
+      <tr><td><b>السعر السوقي للمخزون</b></td><td>الوسطى بين: الاستبدال، صافي القيمة البيعية، وصافيها ناقص هامش الربح</td></tr>
+      <tr><td><b>مخصص هبوط الأسعار المطلوب</b></td><td>التكلفة − السوق (إذا السوق أقل)</td></tr>
+      <tr><td><b>مخصص د.م.فيها (طريقة الميزانية)</b></td><td>(المدينون − الدين المعدوم) × النسبة</td></tr>
+      <tr><td><b>الديون الجيدة</b></td><td>المدينون − المعدوم − مخصص د.م.فيها</td></tr>
+      <tr><td><b>مخصص الحسم الممنوح</b></td><td>الديون الجيدة × النسبة</td></tr>
+      <tr><td><b>الديون الممتازة</b></td><td>الديون الجيدة − مخصص الحسم الممنوح</td></tr>
+      <tr><td><b>فائدة الورقة</b></td><td>الاسمية × النسبة × الأيام ÷ 360</td></tr>
+      <tr><td><b>مخصص الأجيو</b></td><td>الاسمية × معدل الخصم × متوسط الأشهر ÷ 12</td></tr>
+      <tr><td><b>قسط الاهتلاك الثابت</b></td><td>(التكلفة − النفاية) ÷ العمر الإنتاجي</td></tr>
+      <tr><td><b>نسبة الاهتلاك</b></td><td>1 ÷ العمر الإنتاجي</td></tr>
+      <tr><td><b>صافي القيمة الدفترية</b></td><td>التكلفة − مجمع الاهتلاك</td></tr>
+      <tr><td><b>صافي المبيعات</b></td><td>المبيعات − المردودات − المسموحات − الحسم الممنوح</td></tr>
       <tr><td><b>تكلفة البضاعة المباعة</b></td><td>أول المدة + صافي المشتريات − آخر المدة</td></tr>
       <tr><td><b>مجمل الربح</b></td><td>صافي المبيعات − تكلفة البضاعة المباعة</td></tr>
-      <tr><td><b>الفائدة</b></td><td>المبلغ × المعدل × المدة (أيام/360 أو أشهر/12)</td></tr>
-      <tr><td><b>المسدّد بخصم تعجيل الدفع</b></td><td>(الفاتورة − المردودات) × (1 − نسبة الخصم)</td></tr>
+      <tr><td><b>حقوق الملكية آخر الفترة</b></td><td>أول الفترة + صافي الربح + الإضافات − المسحوبات</td></tr>
     </table>
-    <div class="callout" style="margin-top:12px"><span class="tag">💡 «أمم»</span><b>أ</b>صول، <b>م</b>صاريف، <b>م</b>سحوبات ← بتزيد بالمدين ورصيدها مدين. الالتزامات ورأس المال والإيرادات بتزيد بالدائن.</div>
+    <div class="callout" style="margin-top:12px"><span class="tag">💡 قاعدة المخصصات</span>المطلوب <b>أكبر</b> من المدوّر ← <b>ترميم</b> بالفرق. <b>أصغر</b> ← <b>فائض</b> لملخص الدخل. <b>متساويين</b> ← ولا قيد. وكل مخصص بيظهر مطروح من أصلو.</div>
   </div>
   <div class="block" id="match1">
     <h2><span class="idx">🎮</span>لعبة الوصل - الجولة الأولى — الفصول 1–3 (اضغط على المصطلح، ثم على المعنى)</h2>
     <div id="match1-mount"></div>
   </div>
   <div class="block" id="match2">
-    <h2><span class="idx">🎮</span> لعبة الوصل - الجولة الثانية — الفصول 4–6 (اضغط على المصطلح، ثم على المعنى)</h2>
+    <h2><span class="idx">🎮</span> لعبة الوصل - الجولة الثانية — الفصول 3–5 (اضغط على المصطلح، ثم على المعنى)</h2>
     <div id="match2-mount"></div>
   </div>
   <div class="block" id="summary">
     <h2><span class="idx">📋</span> كل فصل بجملة وحدة</h2>
     <table class="cmp"><tr><th>الفصل</th><th>الخلاصة</th></tr>
-      <tr><td><a href="../chapters/chapter-1-lesson.html"><b>1. المحاسبة وبيئة الأعمال</b></a></td><td>المحاسبة لغة الأعمال؛ المبادئ والفروض؛ <b>الأصول = الالتزامات + حقوق الملكية</b> وكل عملية إلها أثرين؛ القوائم الثلاث.</td></tr>
-      <tr><td><a href="../chapters/chapter-2-lesson.html"><b>2. التسجيل المحاسبي ونظرية القيد المزدوج</b></a></td><td>الحساب T و«أمم» بالمدين؛ اليومية ← الأستاذ ← الترصيد ← <b>ميزان المراجعة</b> (وما بيكشف كل الأخطاء).</td></tr>
-      <tr><td><a href="../chapters/chapter-3-lesson.html"><b>3. التسويات الجردية للإيرادات والمصروفات</b></a></td><td>أساس الاستحقاق؛ التسويات الأربع (مقدّمات ومستحقات) — حساب دخل + حساب ميزانية وبدون نقدية؛ الاهتلاك؛ الميزان المعدّل.</td></tr>
-      <tr><td><a href="../chapters/chapter-4-lesson.html"><b>4. إكمال الدورة المحاسبية والأخطاء المحاسبية</b></a></td><td>ورقة العمل (اختيارية)؛ قيود الإقفال الأربعة؛ الميزان بعد الإقفال؛ الدورة 9 خطوات؛ تصحيح الأخطاء؛ الميزانية المبوّبة.</td></tr>
-      <tr><td><a href="../chapters/chapter-5-lesson.html"><b>5. المحاسبة عن بيع وشراء البضاعة</b></a></td><td>الجرد المستمر والدوري؛ النقل والمردودات والخصومات؛ <b>صافي المبيعات − التكلفة = مجمل الربح</b>.</td></tr>
-      <tr><td><a href="../chapters/chapter-6-lesson.html"><b>6. المحاسبة عن الأوراق التجارية</b></a></td><td>الكمبيالة والسند الأذني؛ الاستحقاق والفائدة؛ التحصيل والخصم والتظهير والرفض والتجديد.</td></tr>
+      <tr><td><a href="../chapters/chapter-1-lesson.html"><b>1. مدخل إلى مفهوم الجرد والتسويات الجردية</b></a></td><td>الجرد وأهدافو، أساس الاستحقاق مقابل النقدي، المبادئ، الدورة المحاسبية، والنماذج الأربعة للتسويات.</td></tr>
+      <tr><td><a href="../chapters/chapter-2-lesson.html"><b>2. التسويات الجردية للإيرادات والمصروفات</b></a></td><td>الدفتري مقابل الفعلي ← مقدّم أو مستحق، الأرصدة المدوّرة أول شي، ومنقفل بالفعلي.</td></tr>
+      <tr><td><a href="../chapters/chapter-3-lesson.html"><b>3. المحاسبة عن الأصول المتداولة</b></a></td><td>المخزون (التكلفة أو السوق، العجز والتالف)، المدينون (المعدوم والمخصصات)، أوراق القبض (الأجيو)، الاستثمارات، والصندوق والمصرف.</td></tr>
+      <tr><td><a href="../chapters/chapter-4-lesson.html"><b>4. التسويات الجردية للأصول غير المتداولة</b></a></td><td>التكلفة الأولية، طرق الاهتلاك، مجمع الاهتلاك، البيع بنهاية العمر، والمبادلة.</td></tr>
+      <tr><td><a href="../chapters/chapter-5-lesson.html"><b>5. القوائم المالية</b></a></td><td>قائمة الدخل بمرحلة وحدة ومتعددة، المتاجرة وأ.خ، التغير بحقوق المالكين، والميزانية.</td></tr>
     </table>
   </div>
 </div>
@@ -77,9 +82,9 @@
 <script src="../../../assets/shell.js"></script>
 <script>SCShell.init();</script>
 <script>window.SITE_PREFIX = "../";</script>
-<script src="../assets/app.js"></script>
-<script src="../assets/data/course-manifest.js"></script>
-<script src="../assets/data/matching-terms.js"></script>
+<script src="../assets/app.js?v=20261127a"></script>
+<script src="../assets/data/course-manifest.js?v=20261127a"></script>
+<script src="../assets/data/matching-terms.js?v=20261127a"></script>
 <script>
 renderMatchGame("match1-mount", TERMS_ROUND_1);
 renderMatchGame("match2-mount", TERMS_ROUND_2);

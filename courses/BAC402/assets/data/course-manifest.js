@@ -5,12 +5,9 @@ const COURSE_TITLE = "BAC402 — مبادئ المحاسبة 2";
 const COURSE_CHAPTERS = [
   {num:1, key:"ch1", title:"مدخل إلى مفهوم الجرد والتسويات الجردية", href:"chapters/chapter-1-lesson.html"},
   {num:2, key:"ch2", title:"التسويات الجردية لحسابات الإيرادات والمصروفات", href:"chapters/chapter-2-lesson.html"},
-  {num:3, key:"ch3", title:"التسويات الجردية للمخزون السلعي", href:"chapters/chapter-3-lesson.html"},
-  {num:4, key:"ch4", title:"التسويات الجردية للمدينين والديون المشكوك فيها", href:"chapters/chapter-4-lesson.html"},
-  {num:5, key:"ch5", title:"أوراق القبض والاستثمارات قصيرة الأجل", href:"chapters/chapter-5-lesson.html"},
-  {num:6, key:"ch6", title:"الأموال الجاهزة: الصندوق والمصرف", href:"chapters/chapter-6-lesson.html"},
-  {num:7, key:"ch7", title:"الأصول غير المتداولة والاهتلاك", href:"chapters/chapter-7-lesson.html"},
-  {num:8, key:"ch8", title:"القوائم المالية", href:"chapters/chapter-8-lesson.html"}
+  {num:3, key:"ch3", title:"المحاسبة عن الأصول المتداولة", href:"chapters/chapter-3-lesson.html"},
+  {num:4, key:"ch4", title:"التسويات الجردية للأصول غير المتداولة", href:"chapters/chapter-4-lesson.html"},
+  {num:5, key:"ch5", title:"القوائم المالية", href:"chapters/chapter-5-lesson.html"}
 ];
 
 /* صفحات مساعدة تظهر بالقائمة الجانبية تحت الفصول */

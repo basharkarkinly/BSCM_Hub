@@ -35,7 +35,7 @@ const CFG = {
 /* ============ نقاط الدخول ============ */
 
 function doGet() {
-  return json_({ ok: true, service: 'support-channel-auth', version: 'v15-funnel' });
+  return json_({ ok: true, service: 'support-channel-auth', version: 'v16-reviews' });
 }
 
 function doPost(e) {
@@ -75,6 +75,12 @@ function doPost(e) {
       // عدّاد تجربة الزوار (Trials.gs) — القفل جوّا الدوال نفسها
       case 'trialPing':      return json_(trialPing_(req));
       case 'trialConverted': return json_(trialConverted_(req));
+      // الآراء (Reviews.gs): رأي الزائر اللي ما سجّل، ورأي العضو، وشريط الآراء العام
+      case 'submitFeedback': return json_(submitFeedback_(req));
+      case 'reviewState':    return json_(reviewState_(req));
+      case 'reviewLater':    return json_(withLock_(() => reviewLater_(req)));
+      case 'submitReview':   return json_(withLock_(() => submitReview_(req)));
+      case 'getReviews':     return json_(getReviews_());
       default:             return json_({ ok: false, error: 'UNKNOWN_ACTION' });
     }
   } catch (err) {
@@ -573,7 +579,11 @@ function dailyCleanup() {
     // 3) أرشفة النقاشات القديمة
     const aMoved = archiveOldComments_(now - CFG.ARCHIVE_COMMENTS_DAYS * 86400000);
 
-    console.log('تنظيف: جلسات ' + sDel + ' · رموز ' + oDel + ' · تعليقات مؤرشفة ' + aMoved);
+    // 4) تذكير الزوار اللي تركوا إيميلهن (Reviews.gs): إيميل واحد بعد يوم
+    let rSent = 0;
+    try { rSent = sendFeedbackReminders_(); } catch (e) { console.error(e); }
+
+    console.log('تنظيف: جلسات ' + sDel + ' · رموز ' + oDel + ' · تعليقات مؤرشفة ' + aMoved + ' · تذكيرات ' + rSent);
   }, 60000);
 }
 
@@ -626,6 +636,8 @@ function onSheetEdit(e) {
         if (ids.length) withLock_(function () { onCommentsHidden_(ids); }, 30000);
       }
       bumpCommentsCache_();
+    } else if (name === 'reviews') {
+      onReviewsEdited_();   // Reviews.gs: TRUE بعمود approved → نجوم + إشعار + تحديث الشريط
     } else if (['star_rules', 'banned_words', 'courses', 'users', 'levels', 'badges'].indexOf(name) >= 0) {
       clearStarsCaches_();
     }

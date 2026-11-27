@@ -371,6 +371,17 @@
     }).catch(function () {});
   }
 
+  /* نوافذ الرأي (feedback.js): بتنحمّل عند الحاجة بس */
+  var VER = (SELF.split("?")[1] || "");
+  function withFeedback(cb) {
+    if (window.SCFeedback) return cb(window.SCFeedback);
+    if (!HUB) return;
+    var sc = document.createElement("script");
+    sc.src = HUB + "assets/feedback.js" + (VER ? "?" + VER : "");
+    sc.onload = function () { if (window.SCFeedback) cb(window.SCFeedback); };
+    document.head.appendChild(sc);
+  }
+
   /* نافذة «سجّل دخولك» لما الزائر يضغط على قسم مقفول من المقرر */
   var gate = null, gateBack = null;
   function openGate(href) {
@@ -389,7 +400,10 @@
         '<span class="scs-gsmall" style="margin:8px 0 0">بلا كلمة سر، وبلا أي دفع</span>' +
         '<button class="scs-gno" type="button">مو هلأ</button></div>';
       document.body.appendChild(gate);
-      var close = function () { gate.hidden = true; if (gateBack) try { gateBack.focus(); } catch (e) {} };
+      var close = function () {
+        gate.hidden = true; if (gateBack) try { gateBack.focus(); } catch (e) {}
+        withFeedback(function (F) { setTimeout(F.afterGate, 300); });   // ما بدو يسجّل هلّق → منسأله ليش
+      };
       gate.querySelector(".scs-gx").onclick = close; gate.querySelector(".scs-gno").onclick = close;
       gate.addEventListener("click", function (e) { if (e.target === gate) close(); });
       document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !gate.hidden) close(); });
@@ -459,6 +473,7 @@
     document.body.classList.remove("guard");
     if (isTrialPage()) { watchCourseLinks(); trialPing("view"); markLockedForGuest(); }
     else if (isHubHome()) trialPing("home");
+    withFeedback(function (F) { F.initGuest(); });
     if (opts.guest) opts.guest();
   }
 
@@ -486,6 +501,7 @@
         trialConverted();
         loadNotifs();
         loadTicker();
+        if (isHubHome()) withFeedback(function (F) { F.member(user); });   // نافذة «شو رأيك بالمنصة؟»
         if (opts.onReady) opts.onReady(user);
       }, onInvalid);
     });

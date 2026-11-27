@@ -474,3 +474,16 @@ a.course-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); borde
 .help-box ul{ margin:0 0 8px; padding-inline-start:18px; }
 .help-box .btn-tg{ display:inline-flex; align-items:center; gap:6px; background:#229ED9; color:#fff; font-weight:800; text-decoration:none; border-radius:999px; padding:7px 14px; font-size:.88rem; }
 .help-box .btn-tg:hover{ background:#1B8BC0; }
+
+/* ---- الصفحة الرئيسية: شريط آراء الطلاب ---- */
+.rv-sec[hidden]{ display:none; }
+.rv-row{ display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding:2px 2px 10px; -webkit-overflow-scrolling:touch; }
+.rv-card{ flex:0 0 300px; scroll-snap-align:start; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow-sm); display:flex; flex-direction:column; gap:6px; }
+.rv-top{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.rv-st{ color:var(--amber); letter-spacing:1px; font-size:1rem; }
+.rv-c{ font-size:.78rem; color:var(--muted); }
+.rv-card p{ margin:0; font-size:.92rem; line-height:1.8; }
+.rv-tags{ display:flex; flex-wrap:wrap; gap:4px; margin-top:auto; }
+.rv-tags span{ font-size:.72rem; font-weight:700; color:var(--teal-dark); background:#EFFBF8; border:1px solid #BFEDE6; border-radius:999px; padding:1px 8px; }
+@media (max-width:520px){ .rv-card{ flex-basis:82%; } }
+.rv-tags span.fix{ color:#7A4B00; background:#FFF6E5; border-color:#FFD79A; }

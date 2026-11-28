@@ -14,7 +14,8 @@
 
   var SELF = document.currentScript && document.currentScript.src || "";
   var HUB = SELF ? new URL("../", SELF).href : "";
-  var SUPPORT = "https://t.me/karkinlySupportGroup";
+  // بوت الدعم مع كود الصفحة (نفس رابط زر الدعم العائم بـ support.js)
+  var SUPPORT = "https://t.me/HelpTeamSupportChannel_bot?start=" + ((/\/courses\/([A-Za-z0-9_\-]+)\//.exec(location.pathname) || [])[1] || "hub").toLowerCase();
   var STEP_MS = 7 * 60 * 1000, TICK = 5000, MAX_PER_VISIT = 3;
   var K = { t: "sc_fb_t", next: "sc_fb_next", n: "sc_fb_n", done: "sc_fb_done", day: "sc_fb_day", pend: "sc_fb_pend" };
 
@@ -103,7 +104,7 @@
   /* ================= الزائر ================= */
   var FB_CHIPS = [
     { t: "ما عرفت إنو مجاني", s: "🎁 <b>المنصة مجانية بالكامل</b>، والتسجيل كمان مجاني، وبلا كلمة سر." },
-    { t: "ما بدي أعطي إيميلي", s: '💬 تواصل مع الدعم، ومنعملك حساب <b>بدون إيميل</b>. <a href="' + SUPPORT + '" target="_blank" rel="noopener">غروب الدعم ←</a>' },
+    { t: "ما بدي أعطي إيميلي", s: '💬 تواصل مع الدعم، ومنعملك حساب <b>بدون إيميل</b>. <a href="' + SUPPORT + '" target="_blank" rel="noopener">بوت الدعم ←</a>' },
     { t: "ما لقيت مادتي", s: "📚 اكتب بالمربع تحت <b>أسماء المواد</b> اللي بدك ياها، ومنحطها بالخطة.", ph: "اكتب أسماء المواد اللي بدك ياها..." },
     { t: "الكود ما وصلني", s: '📩 شوف مجلد <b>الرسائل غير المرغوب فيها (Spam)</b>، الكود بيكون هونيك. أو <a href="' + SUPPORT + '" target="_blank" rel="noopener">تواصل مع الدعم ←</a>' },
     { t: "الشرح مو واضح", s: "✍️ اكتبلنا شو اللي ما كان واضح وبأي مادة، ومنصلّحه.", ph: "شو اللي ما كان واضح؟ وبأي مادة؟" },

@@ -10,6 +10,7 @@
  *
  * - بيحمي الصفحة (نفس requireLogin) وبيبني على يسار الشريط العلوي (.topbar):
  *   🏠 رجوع لكل المقررات · 🔔 الإشعارات · 🚪 خروج.
+ * - بيحمّل support.js: زر «الدعم» العائم تحت عالشمال (بوت الدعم على تلغرام).
  * - "أهلاً الاسم" بالشريط العلوي جنب الأيقونات.
  * - تحت الشريط العلوي: شريط أبيض فيو أخبار متحرّكة (من تبويب ticker بالشيت) بعرض كامل، وبيختفي إذا ما في أخبار.
  *   خبر فيه رابط بينكتب «النص || الرابط» (https:// أو مسار صفحة من الموقع) وبيصير قابل للكبس.
@@ -381,6 +382,15 @@
     sc.onload = function () { if (window.SCFeedback) cb(window.SCFeedback); };
     document.head.appendChild(sc);
   }
+
+  /* زر الدعم العائم (support.js): بينحمّل بكل الصفحات، للزوار والأعضاء */
+  (function () {
+    if (window.SCSupport || !HUB) return;
+    var sc = document.createElement("script");
+    sc.src = HUB + "assets/support.js" + (VER ? "?" + VER : "");
+    sc.defer = true;
+    document.head.appendChild(sc);
+  })();
 
   /* نافذة «سجّل دخولك» لما الزائر يضغط على قسم مقفول من المقرر */
   var gate = null, gateBack = null;

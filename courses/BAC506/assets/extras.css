@@ -399,3 +399,7 @@ table.memo td.n{ direction:ltr; text-align:left; }
 @media (max-width:640px){ .clab-grid{ grid-template-columns:1fr; } }
 .feedback .fb-body{ flex:1; min-width:0; }
 .qx{ width:100%; }
+/* 📈 خريطة التعادل */
+.be-svg{ width:100%; max-width:560px; display:block; margin:8px auto 0; direction:ltr; }
+.be-legend{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; font-size:.8rem; color:var(--muted); margin:2px 0 8px; }
+.be-legend i{ display:inline-block; width:14px; height:4px; border-radius:2px; vertical-align:middle; margin-left:4px; }

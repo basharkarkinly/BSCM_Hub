@@ -526,3 +526,51 @@ function renderCostLab(containerId, cfg){
   }
   r.addEventListener("input", upd); upd();
 }
+
+/* ============================================================
+   📈 خريطة التعادل التفاعلية — غيّر السعر والمتغيرة والثابتة وشوف نقطة التعادل
+   cfg = { title, price, vc, fixed, qty, max }
+   ============================================================ */
+function renderBreakEven(containerId, cfg){
+  const root = document.getElementById(containerId);
+  const f = n => (Math.round(n*100)/100).toLocaleString("en-US");
+  const fld = (k, lbl, v) => `<label>${lbl}<input type="number" data-k="${k}" value="${v}" min="0"></label>`;
+  root.innerHTML = `
+    <div class="eqs">
+      <div class="eqs-head"><span class="gp-tag">📈 جرّب</span><h4>${cfg.title}</h4></div>
+      <p class="eqs-hint">غيّر الأرقام وشوف كيف بتتحرك نقطة التعادل على الرسم، وكيف بيتغير هامش الأمان.</p>
+      <div class="cc-grid">${fld("price","سعر بيع الوحدة",cfg.price)}${fld("vc","التكلفة المتغيرة للوحدة",cfg.vc)}${fld("fixed","التكاليف الثابتة",cfg.fixed)}${fld("qty","كمية المبيعات المخططة",cfg.qty)}</div>
+      <svg class="be-svg" viewBox="0 0 520 300" role="img" aria-label="خريطة التعادل"></svg>
+      <div class="be-legend"><span><i style="background:#1FB6A8"></i>الإيرادات الكلية</span><span><i style="background:#E4572E"></i>التكاليف الكلية</span><span><i style="background:#FF9F1C"></i>التكاليف الثابتة</span></div>
+      <div class="cc-out" data-k="out"></div>
+    </div>`;
+  const svg = root.querySelector("svg"), out = root.querySelector('[data-k="out"]');
+  const get = k => +root.querySelector(`[data-k="${k}"]`).value || 0;
+  function draw(){
+    const p = get("price"), v = get("vc"), F = get("fixed"), q = get("qty");
+    const cm = p - v;
+    if(cm <= 0){ svg.innerHTML = ""; out.innerHTML = `<div class="cc-row hi"><span>⚠️ هامش المساهمة سالب أو صفر</span><b>ما في نقطة تعادل</b></div>`; return; }
+    const be = F / cm, maxQ = Math.max(q, be) * 1.4 || 1, maxY = p * maxQ;
+    const X = x => 50 + x / maxQ * 450, Y = y => 270 - y / maxY * 250;
+    const line = (x1,y1,x2,y2,c,w) => `<line x1="${X(x1)}" y1="${Y(y1)}" x2="${X(x2)}" y2="${Y(y2)}" stroke="${c}" stroke-width="${w||3}" stroke-linecap="round"/>`;
+    svg.innerHTML =
+      `<line x1="50" y1="270" x2="505" y2="270" stroke="#94A3B8"/><line x1="50" y1="15" x2="50" y2="270" stroke="#94A3B8"/>` +
+      `<polygon points="${X(be)},${Y(p*be)} ${X(maxQ)},${Y(p*maxQ)} ${X(maxQ)},${Y(F+v*maxQ)}" fill="#1FB6A8" opacity=".12"/>` +
+      `<polygon points="${X(0)},${Y(0)} ${X(be)},${Y(p*be)} ${X(0)},${Y(F)}" fill="#E4572E" opacity=".10"/>` +
+      line(0,F,maxQ,F,"#FF9F1C") + line(0,F,maxQ,F+v*maxQ,"#E4572E") + line(0,0,maxQ,p*maxQ,"#1FB6A8") +
+      `<line x1="${X(be)}" y1="${Y(p*be)}" x2="${X(be)}" y2="270" stroke="#334155" stroke-dasharray="4 4"/>` +
+      `<circle cx="${X(be)}" cy="${Y(p*be)}" r="7" fill="#fff" stroke="#334155" stroke-width="3"/>` +
+      (q ? `<line x1="${X(q)}" y1="270" x2="${X(q)}" y2="${Y(p*q)}" stroke="#7C3AED" stroke-dasharray="2 4" stroke-width="2"/>` : "") +
+      `<text x="${X(be)}" y="290" text-anchor="middle" font-size="12" fill="#334155">نقطة التعادل</text>` +
+      `<text x="${X(maxQ)-6}" y="${Y(p*maxQ)+40}" text-anchor="end" font-size="12" fill="#0E7C86">منطقة الربح</text>` +
+      `<text x="60" y="${Y(F)-8}" font-size="12" fill="#B45309">منطقة الخسارة</text>`;
+    const ms = q - be;
+    out.innerHTML = [
+      ["هامش المساهمة للوحدة", f(cm)], ["نسبة هامش المساهمة", f(cm/p*100) + "%"],
+      ["نقطة التعادل بالكمية", f(be)], ["نقطة التعادل بالقيمة", f(be*p)],
+      ["هامش الأمان بالكمية", f(ms)], ["معدل هامش الأمان", q ? f(ms/q*100) + "%" : "—"],
+      ["صافي الربح عند الكمية المخططة", f(cm*q - F)]
+    ].map((r,i) => `<div class="cc-row${i===2||i===6?" hi":""}"><span>${r[0]}</span><b>${r[1]}</b></div>`).join("");
+  }
+  root.querySelectorAll("input").forEach(i => i.addEventListener("input", draw)); draw();
+}
